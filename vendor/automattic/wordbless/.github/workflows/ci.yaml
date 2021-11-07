@@ -1,0 +1,291 @@
+# https://docs.github.com/en/actions
+
+name: "CI"
+
+on:
+  pull_request:
+    branches:
+      - "master"
+  push:
+    branches:
+      - "master"
+
+env:
+  PHP_EXTENSIONS: "mbstring"
+
+jobs:
+  coding-standards:
+    name: "Coding Standards"
+
+    runs-on: "ubuntu-18.04"
+
+    strategy:
+      matrix:
+        php-version:
+          - "7.4"
+
+        dependencies:
+          - "locked"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v2.3.2"
+
+      - name: "Install PHP with extensions"
+        uses: "shivammathur/setup-php@2.8.0"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.PHP_EXTENSIONS }}"
+          coverage: "none"
+          tools: "composer:v1"
+
+      - name: "Validate composer.json and composer.lock"
+        run: "composer validate --strict"
+
+      - name: "Determine composer cache directory"
+        shell: "bash"
+        run: "echo \"COMPOSER_CACHE_DIR=$(composer config cache-dir)\" >> $GITHUB_ENV"
+
+      - name: "Cache PHAR files installed with phive"
+        uses: "actions/cache@v2.1.0"
+        with:
+          path: "${{ runner.temp }}/.phive"
+          key: "php-${{ matrix.php-version }}-phive-${{ matrix.dependencies }}-${{ hashFiles('.phive/phars.xml') }}"
+          restore-keys: "php-${{ matrix.php-version }}-phive-${{ matrix.dependencies }}-"
+
+      - name: "Install PHIVE"
+        uses: "szepeviktor/phive@v1"
+        with:
+          home: "${{ runner.temp }}/.phive"
+
+      - name: "Install PHP tools with PHIVE"
+        uses: "szepeviktor/phive-install@v1"
+        with:
+          home: "${{ runner.temp }}/.phive"
+          trustGpgKeys: "C00543248C87FB13,31C7E470E2138192"
+
+      - name: "Cache dependencies installed with composer"
+        uses: "actions/cache@v2.1.0"
+        with:
+          path: "${{ env.COMPOSER_CACHE_DIR }}"
+          key: "php-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-${{ hashFiles('composer.lock') }}"
+          restore-keys: "php-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-"
+
+      - name: "Install lowest dependencies from composer.json"
+        if: "matrix.dependencies == 'lowest'"
+        run: "composer update --no-interaction --no-progress --no-suggest --prefer-lowest"
+
+      - name: "Install locked dependencies from composer.lock"
+        if: "matrix.dependencies == 'locked'"
+        run: "composer install --no-interaction --no-progress --no-suggest"
+
+      - name: "Install highest dependencies from composer.json"
+        if: "matrix.dependencies == 'highest'"
+        run: "composer update --no-interaction --no-progress --no-suggest"
+
+      - name: "Run ergebnis/composer-normalize"
+        run: "tools/composer-normalize normalize --dry-run"
+
+      - name: "Run wp-coding-standards/wpcs"
+        run: |
+          composer require --working-dir=tools "wp-coding-standards/wpcs:^2.3.0"
+          tools/phpcs --config-set installed_paths tools/vendor/wp-coding-standards/wpcs
+          tools/phpcs -s --standard=WordPress-Core --exclude=WordPress.Files.FileName src/
+
+  static-code-analysis:
+    name: "Static Code Analysis"
+
+    runs-on: "ubuntu-18.04"
+
+    strategy:
+      matrix:
+        php-version:
+          - "7.4"
+
+        dependencies:
+          - "locked"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v2.3.2"
+
+      - name: "Install PHP with extensions"
+        uses: "shivammathur/setup-php@2.8.0"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.PHP_EXTENSIONS }}"
+          coverage: "none"
+          tools: "composer:v1"
+
+      - name: "Determine composer cache directory"
+        shell: "bash"
+        run: "echo \"COMPOSER_CACHE_DIR=$(composer config cache-dir)\" >> $GITHUB_ENV"
+
+      - name: "Cache PHAR files installed with phive"
+        uses: "actions/cache@v2.1.0"
+        with:
+          path: "${{ runner.temp }}/.phive"
+          key: "php-${{ matrix.php-version }}-phive-${{ matrix.dependencies }}-${{ hashFiles('.phive/phars.xml') }}"
+          restore-keys: "php-${{ matrix.php-version }}-phive-${{ matrix.dependencies }}-"
+
+      - name: "Install PHIVE"
+        uses: "szepeviktor/phive@v1"
+        with:
+          home: "${{ runner.temp }}/.phive"
+
+      - name: "Install PHP tools with PHIVE"
+        uses: "szepeviktor/phive-install@v1"
+        with:
+          home: "${{ runner.temp }}/.phive"
+          trustGpgKeys: "C00543248C87FB13,31C7E470E2138192"
+
+      - name: "Cache dependencies installed with composer"
+        uses: "actions/cache@v2.1.0"
+        with:
+          path: "${{ env.COMPOSER_CACHE_DIR }}"
+          key: "php-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-${{ hashFiles('composer.lock') }}"
+          restore-keys: "php-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-"
+
+      - name: "Install lowest dependencies from composer.json"
+        if: "matrix.dependencies == 'lowest'"
+        run: "composer update --no-interaction --no-progress --no-suggest --prefer-lowest"
+
+      - name: "Install locked dependencies from composer.lock"
+        if: "matrix.dependencies == 'locked'"
+        run: "composer install --no-interaction --no-progress --no-suggest"
+
+      - name: "Install highest dependencies from composer.json"
+        if: "matrix.dependencies == 'highest'"
+        run: "composer update --no-interaction --no-progress --no-suggest"
+
+      - name: "Create cache directory for phpstan/phpstan"
+        run: "mkdir -p .build/phpstan"
+
+      - name: "Cache cache directory for phpstan/phpstan"
+        uses: "actions/cache@v2.1.0"
+        with:
+          path: ".build/phpstan"
+          key: "php-${{ matrix.php-version }}-phpstan-${{ github.sha }}"
+          restore-keys: "php-${{ matrix.php-version }}-phpstan-"
+
+      - name: "Run phpstan/phpstan"
+        run: |
+          composer require --working-dir=tools "szepeviktor/phpstan-wordpress:^0.6.2"
+          tools/vendor/bin/phpstan analyze src/
+
+  tests:
+    name: "Tests"
+
+    runs-on: "ubuntu-18.04"
+
+    strategy:
+      matrix:
+        php-version:
+          - "8.0"
+          - "7.4"
+          - "7.3"
+          - "7.2"
+
+        dependencies:
+          - "lowest"
+          - "locked"
+          - "highest"
+
+        exclude:
+          # Locked dependencies require PHP 7.3+.
+          - php-version: "7.2"
+            dependencies: "locked"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v2.3.2"
+
+      - name: "Install PHP with extensions"
+        uses: "shivammathur/setup-php@2.8.0"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.PHP_EXTENSIONS }}"
+          coverage: "none"
+          tools: "composer:v1"
+
+      - name: "Determine composer cache directory"
+        shell: "bash"
+        run: "echo \"COMPOSER_CACHE_DIR=$(composer config cache-dir)\" >> $GITHUB_ENV"
+
+      - name: "Cache dependencies installed with composer"
+        uses: "actions/cache@v2.1.0"
+        with:
+          path: "${{ env.COMPOSER_CACHE_DIR }}"
+          key: "php-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-${{ hashFiles('composer.lock') }}"
+          restore-keys: "php-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-"
+
+      - name: "Install lowest dependencies from composer.json"
+        if: "matrix.dependencies == 'lowest'"
+        run: |
+          composer require --no-update --no-interaction --no-progress --no-suggest --dev 'phpunit/phpunit:^6.5 || ^7.5 || ^9.0'
+          composer update --no-interaction --no-progress --no-suggest --prefer-lowest --dev
+
+      - name: "Install locked dependencies from composer.lock"
+        if: "matrix.dependencies == 'locked'"
+        run: "composer install --no-interaction --no-progress --no-suggest"
+
+      - name: "Install highest dependencies from composer.json"
+        if: "matrix.dependencies == 'highest'"
+        run: "composer update --no-interaction --no-progress --no-suggest"
+
+      - name: "Run integration tests with phpunit/phpunit"
+        run: "cp -f src/dbless-wpdb.php wordpress/wp-content/db.php && vendor/bin/phpunit --colors=always"
+
+  tests-old:
+    name: "Tests on unsupported PHP"
+
+    runs-on: "ubuntu-18.04"
+
+    strategy:
+      matrix:
+        php-version:
+          - "7.1"
+          - "7.0"
+          - "5.6"
+
+        dependencies:
+          - "lowest"
+          - "highest"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v2.3.2"
+
+      - name: "Install PHP with extensions"
+        uses: "shivammathur/setup-php@2.8.0"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.PHP_EXTENSIONS }}"
+          coverage: "none"
+          tools: "composer:v1"
+
+      - name: "Determine composer cache directory"
+        shell: "bash"
+        run: "echo \"COMPOSER_CACHE_DIR=$(composer config cache-dir)\" >> $GITHUB_ENV"
+
+      - name: "Cache dependencies installed with composer"
+        uses: "actions/cache@v2.1.0"
+        with:
+          path: "${{ env.COMPOSER_CACHE_DIR }}"
+          key: "php-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-${{ hashFiles('composer.lock') }}"
+          restore-keys: "php-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-"
+
+      - name: "Install lowest dependencies from composer.json"
+        if: "matrix.dependencies == 'lowest'"
+        run: "composer update --no-interaction --no-progress --no-suggest --prefer-lowest"
+
+      - name: "Install locked dependencies from composer.lock"
+        if: "matrix.dependencies == 'locked'"
+        run: "composer install --no-interaction --no-progress --no-suggest"
+
+      - name: "Install highest dependencies from composer.json"
+        if: "matrix.dependencies == 'highest'"
+        run: "composer update --no-interaction --no-progress --no-suggest"
+
+      - name: "Run integration tests with phpunit/phpunit"
+        run: "cp -f src/dbless-wpdb.php wordpress/wp-content/db.php && vendor/bin/phpunit --colors=always"
