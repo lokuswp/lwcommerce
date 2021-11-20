@@ -163,17 +163,17 @@ class Post_Types
         }
 
         if ( 'price' === $column ) {
-            if(lsdc_get_price( $post_id ) == 0 ){
-                _e('Gratis', 'lsdcommerce');
-                return;
-            }
+            // if(lsdc_get_price( $post_id ) == 0 ){
+            //     _e('Gratis', 'lsdcommerce');
+            //     return;
+            // }
 
-            if( lsdc_get_price_discount( $post_id ) ){
-                echo '<span style="text-decoration: line-through">' . lsdc_currency_format( true, lsdc_get_price( $post_id ) ) .  '</span><br>';
-                echo lsdc_currency_format( true, lsdc_get_price_discount( $post_id ) );
-            }else{
-                echo lsdc_currency_format( true, lsdc_get_price( $post_id ) );
-            }
+            // if( lsdc_get_price_discount( $post_id ) ){
+            //     echo '<span style="text-decoration: line-through">' . lsdc_currency_format( true, lsdc_get_price( $post_id ) ) .  '</span><br>';
+            //     echo lsdc_currency_format( true, lsdc_get_price_discount( $post_id ) );
+            // }else{
+            //     echo lsdc_currency_format( true, lsdc_get_price( $post_id ) );
+            // }
         }
     }
 }

@@ -294,22 +294,22 @@ class Metabox
             return 'cannot edit post';
         }
 
-        update_post_meta($post_id, '_price_normal', abs(sanitize_text_field(lwpc_currency_cleanup($_POST['price_normal']))));
-        update_post_meta($post_id, '_price_discount', abs(sanitize_text_field(lwpc_currency_cleanup($_POST['price_discount']))));
+        // update_post_meta($post_id, '_price_normal', abs(sanitize_text_field(lwpc_currency_cleanup($_POST['price_normal']))));
+        // update_post_meta($post_id, '_price_discount', abs(sanitize_text_field(lwpc_currency_cleanup($_POST['price_discount']))));
 
-        update_post_meta($post_id, '_stock', empty($_POST['stock']) ? 1 : abs(sanitize_text_field($_POST['stock'])));
-        update_post_meta($post_id, '_stock_unit', sanitize_text_field($_POST['stock_unit']));
+        // update_post_meta($post_id, '_stock', empty($_POST['stock']) ? 1 : abs(sanitize_text_field($_POST['stock'])));
+        // update_post_meta($post_id, '_stock_unit', sanitize_text_field($_POST['stock_unit']));
 
-        update_post_meta($post_id, '_shipping_type', sanitize_text_field($_POST['shipping_tabs']));
-        update_post_meta($post_id, '_product_type', sanitize_text_field($_POST['shipping_tabs']));
+        // update_post_meta($post_id, '_shipping_type', sanitize_text_field($_POST['shipping_tabs']));
+        // update_post_meta($post_id, '_product_type', sanitize_text_field($_POST['shipping_tabs']));
 
-        // Digital
-        update_post_meta($post_id, '_digital_url', sanitize_text_field($_POST['digital_url']));
-        update_post_meta($post_id, '_digital_version', isset($_POST['digital_version']) && $_POST['digital_version'] != null ? sanitize_text_field($_POST['digital_version']) : '1.0.0');
+        // // Digital
+        // update_post_meta($post_id, '_digital_url', sanitize_text_field($_POST['digital_url']));
+        // update_post_meta($post_id, '_digital_version', isset($_POST['digital_version']) && $_POST['digital_version'] != null ? sanitize_text_field($_POST['digital_version']) : '1.0.0');
 
-        // Physical
-        update_post_meta($post_id, '_physical_weight', lwpc_currency_cleanup($_POST['physical_weight']));
-        update_post_meta($post_id, '_physical_volume', lwpc_currency_cleanup($_POST['physical_volume']));
+        // // Physical
+        // update_post_meta($post_id, '_physical_weight', lwpc_currency_cleanup($_POST['physical_weight']));
+        // update_post_meta($post_id, '_physical_volume', lwpc_currency_cleanup($_POST['physical_volume']));
     }
 }
 
