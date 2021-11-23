@@ -178,4 +178,4 @@ class Post_Types
     }
 }
 
-new Post_Types;
+// new Post_Types;

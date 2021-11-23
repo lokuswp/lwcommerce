@@ -1,4 +1,4 @@
 # LWPCommerce
 
-Plugin Berdagang Digital WordPress
+Plugin WordPress untuk Niaga Digital \
 Membantu berjualan produk digital dan fisik secara online.

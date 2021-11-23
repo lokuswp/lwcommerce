@@ -31,5 +31,5 @@ $classmap = array(
 );
 
 require_once LWPC_PATH . 'src/includes/plugin.php';
-include_once LWPC_PATH . 'src/includes/wordpress/posttypes.php';
-include_once LWPC_PATH . 'src/includes/wordpress/metabox.php';
+include_once LWPC_PATH . 'src/includes/modules/product/class-posttype-product.php';
+// include_once LWPC_PATH . 'src/includes/wordpress/metabox.php';

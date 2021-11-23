@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @wordpress-plugin
  * 
@@ -15,8 +16,10 @@
  * 
  */
 
-// Exit if accessed directly
-// if (!defined('ABSPATH')) exit;
+// Checking Test Env and Direct Access File
+if (!defined('WPTEST')) {
+  defined('ABSPATH') or die("Direct access to files is prohibited");
+}
 
 /**
  * Currently plugin version.
@@ -31,22 +34,5 @@ defined('LWPC_URL') or define('LWPC_URL', plugin_dir_url(__FILE__));
 defined('LWPC_STORAGE') or define('LWPC_STORAGE', wp_get_upload_dir()['basedir'] . '/lwpcommerce');
 defined('LWPC_STRING_TEXT') or define('LWPC_STRING_TEXT', '0.0.1'); // String Version
 
-
 // Requirement Minimum System
 require_once LWPC_PATH . 'src/autoload.php';
-
-require __DIR__ . '/vendor/autoload.php';
-
-$options = array(
-  'cluster' => 'ap1',
-  'useTLS' => true
-);
-$pusher = new Pusher\Pusher(
-  'c20f19f900376b9e80cb',
-  '607509d0157ffde00922',
-  '1300845',
-  $options
-);
-
-$data['message'] = 'LOKI/IDR 1/600.000';
-$pusher->trigger('my-channel', 'my-event', $data);
