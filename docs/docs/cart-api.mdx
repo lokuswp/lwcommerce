@@ -1,0 +1,769 @@
+---      
+sidebar_position: 3
+---
+# Cart API
+
+Disini berisi semua endpoint yang ada pada **Cart API**
+
+## Schema
+
+Skema mendefinisikan semua field atau kolom yang ada dalam database `lokawp-carts`. Response apa pun dari endpoint **Cart - API** berisi skema di bawah ini.
+
+| Field                   	| Deskripsi                                                                  	|
+|-------------------------	|----------------------------------------------------------------------------	|
+| **id**<br/>`integer`           	<img width="441" height="1"/>| Unique identifier for the cart.<br/>`Read only`<br/>Context: **embed**, **view**, **edit** 	<img width="441" height="1"/>|
+| **title**<br/>`string`         	<img width="441" height="1"/>| Title for cart item.<br/>Context: **embed**, **view**, **edit**                         	<img width="441" height="1"/>|
+| **price**<br/>`string`         	<img width="441" height="1"/>| Price for cart item.<br/>Context: **embed**, **view**, **edit**                         	<img width="441" height="1"/>|
+| **quantity**<br/>`integer`     	<img width="441" height="1"/>| Quantity for cart item.<br/>Context: **embed**, **view**, **edit**                      	<img width="441" height="1"/>|
+| **max_purchase**<br/>`integer` 	<img width="441" height="1"/>| Maximum purchase for cart item.<br/>Context: **embed**, **view**, **edit**              	<img width="441" height="1"/>|
+| **min_purchase**<br/>`integer` 	<img width="441" height="1"/>| Minimum purchase for cart item.<br/>Context: **embed**, **view**, **edit**              	<img width="441" height="1"/>|
+| **tax**<br/>`string`           	<img width="441" height="1"/>| Tax for cart item.<br/>Context: **embed**, **view**, **edit**                           	<img width="441" height="1"/>|
+| **weight**<br/>`integer`       	<img width="441" height="1"/>| Weight for cart item.<br/>Context: **embed**, **view**, **edit**                        	<img width="441" height="1"/>|
+| **variation**<br/>`string`     	<img width="441" height="1"/>| Variation for cart item.<br/>Context: **embed**, **view**, **edit**                     	<img width="441" height="1"/>|
+| **product_type**<br/>`string`  	<img width="441" height="1"/>| Type of Product for cart item.<br/>Context: **embed**, **view**, **edit**               	<img width="441" height="1"/>|
+| **thumbnail**<br/>`string`     	<img width="441" height="1"/>| Link thumbnail URL for cart item.<br/>Context: **embed**, **view**, **edit**            	<img width="441" height="1"/>|
+
+## Cart Endpoints
+
+### <code class="method-request-get">GET</code> `/lokawp/v1/cart`
+
+Pakai endpoint ini untuk mengambil data keranjang sesuai user. [Response](#response) bisa di kontrol dan di filter menggunakan [parameter Arguments](#arguments) dibawah ini:
+
+##### Arguments
+
+| Name     	| Type    	| In    	| Description                                                                                                  	|
+|----------	|---------	|-------	|--------------------------------------------------------------------------------------------------------------	|
+| `Authorization`   	| bearer  	| header 	| Token menggunakan **JWT**                	|
+| `contex`   	| string  	| query 	| Scope under which the request is made; determines fields present in response.<br/>default: `view`               	|
+| `order`    	| string  	| query 	| Order sort attribute ascending or descending.<br/>default: `asc`<br/>allowed value: `asc` `desc`                    	|
+| `orderby`  	| string  	| query 	| Sort collection by cart attribute.<br/>default: `id`<br/>allowd value: semua filed dalam skema kecuali `thumbnail` 	|
+| `page`     	| integer 	| query 	| Current page of the collection.                                                                              	|
+| `per_page` 	| integer 	| query 	| Maximum number of items to be returned in result set.<br/>default: `10`                                         	|
+| `search`   	| string  	| query 	| Limit results to those matching a string.                                                                    	|
+
+###### Code samples
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+    groupId="codeGroup1"
+    defaultValue="shell"
+    values={[
+    {label: 'Shell', value: 'shell'},
+    {label: 'Javascript (fetch)', value: 'javascript(fetch)'},
+    {label: 'NodeJs (axios)', value: 'nodejs(axios)'},
+    {label: 'PHP', value: 'php'},
+]}>
+<TabItem value="shell">
+
+```shell
+curl --location --request GET 'http://domain.com/wp-json/lokawp/v1/cart' \
+     --header 'Authorization: Bearer Token Kamu'
+```
+
+</TabItem>
+
+<TabItem value="javascript(fetch)">
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer Token Kamu");
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch("http://domain.com/wp-json/lokawp/v1/cart", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+```
+
+</TabItem>
+
+<TabItem value="nodejs(axios)">
+
+```javascript
+var axios = require('axios');
+
+var config = {
+    method: 'get',
+    url: 'http://domain.com/wp-json/lokawp/v1/cart',
+    headers: {
+        'Authorization': 'Bearer Token Kamu'
+    }
+};
+
+axios(config)
+    .then(function (response) {
+        console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+
+```
+
+</TabItem>
+
+<TabItem value="php">
+
+```php
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'http://domain.com/wp-json/lokawp/v1/cart',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer Token Kamu'
+  ),
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+echo $response;
+```
+
+</TabItem>
+
+</Tabs>
+
+##### Response
+`Status: 200 OK`
+```json
+{
+    "d03502c43d74a30b936740a9517dc4ea2b2ad7168caa0a774cefe793ce0b33e7": {
+        "token": "fb10f28067",
+        "currency": {
+            "code": "IDR",
+            "symbol": "Rp"
+        },
+        "items": [
+            {
+                "id": "30",
+                "title": "tahu goreng ala-ala",
+                "price": "2000",
+                "quantity": "10000",
+                "max_purchase": "100",
+                "min_purchase": "1",
+                "tax": "",
+                "weight": "0.2",
+                "variation": "gurih",
+                "product_type": "makanan",
+                "thumbnail": "https://asset-a.grid.id/crop/0x0:0x0/700x465/photo/2018/07/10/432760395.jpg"
+            },
+            {
+                "id": "31",
+                "title": "Logo Google",
+                "price": "540000",
+                "quantity": "10000",
+                "max_purchase": "10",
+                "min_purchase": "1",
+                "tax": "",
+                "weight": "0",
+                "variation": "HD",
+                "product_type": "digital",
+                "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/368px-Google_2015_logo.svg.png"
+            }
+        ],
+        "item_count": 1,
+        "items_weight": 0,
+        "cross_sells": []
+    }
+}
+```
+
+### <code class="method-request-get">GET</code> `/lokawp/v1/cart/{id}`
+
+Pakai endpoint ini untuk mengambil data keranjang sesuai dari parameter `{id}` dari keranjang. [Response](#response-1) bisa di kontrol dan di filter menggunakan [parameter Arguments](#arguments-1) dibawah ini:
+
+##### Arguments
+
+| Name     	| Type    	| In    	| Description                                                                                                  	|
+|----------	|---------	|-------	|--------------------------------------------------------------------------------------------------------------	|
+| `Authorization`   	| bearer  	| header 	| Token menggunakan **JWT**                	<img width="441" height="1"/>|
+
+##### Code samples
+
+<Tabs
+groupId="codeGroup1"
+defaultValue="shell"
+values={[
+{label: 'Shell', value: 'shell'},
+{label: 'Javascript (fetch)', value: 'javascript(fetch)'},
+{label: 'NodeJs (axios)', value: 'nodejs(axios)'},
+{label: 'PHP', value: 'php'},
+]}>
+<TabItem value="shell">
+
+```shell
+curl --location --request GET 'http://domain.com/wp-json/lokawp/v1/cart/30' \
+--header 'Authorization: Bearer Token Kamu'
+```
+
+</TabItem>
+
+<TabItem value="javascript(fetch)">
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer Token Kamu");
+
+var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+};
+
+fetch("http://lsdd.local/wp-json/lokawp/v1/cart/30", requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+```
+
+</TabItem>
+
+<TabItem value="nodejs(axios)">
+
+```javascript
+var axios = require('axios');
+
+var config = {
+    method: 'get',
+    url: 'http://domain.com/wp-json/lokawp/v1/cart/30',
+    headers: {
+        'Authorization': 'Bearer Token Kamu'
+    }
+};
+
+axios(config)
+    .then(function (response) {
+        console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+
+```
+
+</TabItem>
+
+<TabItem value="php">
+
+```php
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'http://domain.com/wp-json/lokawp/v1/cart/30',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer Token Kamu'
+  ),
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+echo $response;
+```
+
+</TabItem>
+
+</Tabs>
+
+##### Response
+`Status: 200 OK`
+```json
+{
+    "3dd7f90c71d960c10f0e3e0892d6c1e4": {
+        "token": "fb10f28067",
+        "currency": {
+            "code": "IDR",
+            "symbol": "Rp"
+        },
+        "items": {
+            "data": {
+                "id": "30",
+                "title": "tahu goreng ala-ala",
+                "price": "2000",
+                "quantity": "10000",
+                "max_purchase": "100",
+                "min_purchase": "1",
+                "tax": "",
+                "weight": "0.2",
+                "variation": "gurih",
+                "product_type": "makanan",
+                "thumbnail": "https://asset-a.grid.id/crop/0x0:0x0/700x465/photo/2018/07/10/432760395.jpg"
+            },
+            "headers": [],
+            "status": 200
+        },
+        "item_count": 1,
+        "items_weight": 0,
+        "cross_sells": []
+    }
+}
+```
+
+### <code class="method-request-post">POST</code> `/lokawp/v1/cart`
+
+Pakai endpoint ini untuk menambah data cart. [Response](#response-2) bisa di kontrol dan di filter menggunakan [parameter Arguments](#arguments-2) dibawah ini:
+
+##### Arguments
+
+| Name     	| Type    	| In    	| Description                                                                                                  	|
+|----------	|---------	|-------	|--------------------------------------------------------------------------------------------------------------	|
+| `Authorization`   	| bearer  	| header 	| Token menggunakan **JWT**                	<img width="441" height="1"/>|
+| `Content-Type`   	    | string  	| header 	| Menerima `application/json`               <img width="441" height="1"/>|
+
+##### Code samples
+
+<Tabs
+groupId="codeGroup1"
+defaultValue="shell"
+values={[
+{label: 'Shell', value: 'shell'},
+{label: 'Javascript (fetch)', value: 'javascript(fetch)'},
+{label: 'NodeJs (axios)', value: 'nodejs(axios)'},
+{label: 'PHP', value: 'php'},
+]}>
+<TabItem value="shell">
+
+```shell
+curl --location --request POST 'http://domain.com/wp-json/lokawp/v1/cart' \
+--header 'Authorization: Bearer Token Kamu' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "title": "Logo Google",
+    "price": "540000",
+    "quantity": 10000,
+    "max_purchase": 1,
+    "min_purchase": 1,
+    "tax": null,
+    "weight": 0,
+    "variation": "pro",
+    "product_type": "digital",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/368px-Google_2015_logo.svg.png"
+}'
+```
+
+</TabItem>
+
+<TabItem value="javascript(fetch)">
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer Token Kamu");
+myHeaders.append("Content-Type", "application/json");
+
+var raw = JSON.stringify({
+    "title": "Logo Google",
+    "price": "540000",
+    "quantity": 10000,
+    "max_purchase": 1,
+    "min_purchase": 1,
+    "tax": null,
+    "weight": 0,
+    "variation": "pro",
+    "product_type": "digital",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/368px-Google_2015_logo.svg.png"
+});
+
+var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
+};
+
+fetch("http://domain.com/wp-json/lokawp/v1/cart", requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+```
+
+</TabItem>
+
+<TabItem value="nodejs(axios)">
+
+```javascript
+var axios = require('axios');
+var data = JSON.stringify({
+    "title": "Logo Google",
+    "price": "540000",
+    "quantity": 10000,
+    "max_purchase": 1,
+    "min_purchase": 1,
+    "tax": null,
+    "weight": 0,
+    "variation": "pro",
+    "product_type": "digital",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/368px-Google_2015_logo.svg.png"
+});
+
+var config = {
+    method: 'post',
+    url: 'http://domain.com/wp-json/lokawp/v1/cart',
+    headers: {
+        'Authorization': 'Bearer Token Kamu',
+        'Content-Type': 'application/json'
+    },
+    data : data
+};
+
+axios(config)
+    .then(function (response) {
+        console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+```
+
+</TabItem>
+
+<TabItem value="php">
+
+```php
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'http://domain.com/wp-json/lokawp/v1/cart',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS =>'{
+    "title": "Logo Google",
+    "price": "540000",
+    "quantity": 10000,
+    "max_purchase": 1,
+    "min_purchase": 1,
+    "tax": null,
+    "weight": 0,
+    "variation": "pro",
+    "product_type": "digital",
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/368px-Google_2015_logo.svg.png"
+}',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer Token Kamu',
+    'Content-Type: application/json'
+  ),
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+echo $response;
+```
+
+</TabItem>
+
+</Tabs>
+
+##### Response
+`Status: 200 OK`
+
+```json
+{
+    "code": "success",
+    "message": "success inserting cart data"
+}
+```
+
+### <code class="method-request-patch">PATCH</code> `/lokawp/v1/cart/{id}`
+
+Pakai endpoint ini untuk mengedit data cart berdasarkan `{id}`. [Response](#response-3) bisa di kontrol dan di filter menggunakan [parameter Arguments](#arguments-3) dibawah ini:
+
+##### Arguments
+
+| Name     	| Type    	| In    	| Description                                                                                                  	|
+|----------	|---------	|-------	|--------------------------------------------------------------------------------------------------------------	|
+| `Authorization`   	| bearer  	| header 	| Token menggunakan **JWT**                	<img width="441" />|
+| `Content-Type`   	    | string  	| header 	| Menerima `application/json`               <img width="441" />|
+
+##### Code samples
+
+<Tabs
+groupId="codeGroup1"
+defaultValue="shell"
+values={[
+{label: 'Shell', value: 'shell'},
+{label: 'Javascript (fetch)', value: 'javascript(fetch)'},
+{label: 'NodeJs (axios)', value: 'nodejs(axios)'},
+{label: 'PHP', value: 'php'},
+]}>
+<TabItem value="shell">
+
+```shell
+curl --location --request PATCH 'http://domain.com/wp-json/lokawp/v1/cart/30' \
+--header 'Authorization: Bearer Token Kamu' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "title":"Tahu Goreng",
+    "product_type" : "Makanan Tradisional"
+}'
+```
+
+</TabItem>
+
+<TabItem value="javascript(fetch)">
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer Token Kamu");
+myHeaders.append("Content-Type", "application/json");
+
+var raw = JSON.stringify({
+  "title": "Tahu Goreng",
+  "product_type": "Makanan Tradisional"
+});
+
+var requestOptions = {
+  method: 'PATCH',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("http://domain.com/wp-json/lokawp/v1/cart/30", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+```
+
+</TabItem>
+
+<TabItem value="nodejs(axios)">
+
+```javascript
+var axios = require('axios');
+var data = JSON.stringify({
+  "title": "Tahu Goreng",
+  "product_type": "Makanan Tradisional"
+});
+
+var config = {
+  method: 'patch',
+  url: 'http://domain.com/wp-json/lokawp/v1/cart/30',
+  headers: {
+    'Authorization': 'Bearer Token Kamu',
+    'Content-Type': 'application/json'
+  },
+  data : data
+};
+
+axios(config)
+.then(function (response) {
+  console.log(JSON.stringify(response.data));
+})
+.catch(function (error) {
+  console.log(error);
+});
+```
+
+</TabItem>
+
+<TabItem value="php">
+
+```php
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'http://domain.com/wp-json/lokawp/v1/cart/30',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'PATCH',
+  CURLOPT_POSTFIELDS =>'{
+    "title":"Tahu Goreng",
+    "product_type" : "Makanan Tradisional"
+}',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer Token Kamu',
+    'Content-Type: application/json'
+  ),
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+echo $response;
+```
+
+</TabItem>
+
+</Tabs>
+
+##### Response
+`Status: 200 OK`
+
+```json
+{
+    "code": "success",
+    "message": "success updating cart data",
+    "624b60c58c9d8bfb6ff1886c2fd605d2adeb6ea4da576068201b6c6958ce93f4": {
+        "token": "f84b8c1b72",
+        "currency": {
+            "code": "IDR",
+            "symbol": "Rp"
+        },
+        "items": {
+            "data": {
+                "id": "30",
+                "title": "Tahu Goreng",
+                "price": "2000",
+                "quantity": "10000",
+                "max_purchase": "1",
+                "min_purchase": "1",
+                "tax": "",
+                "weight": "0.2",
+                "variation": "gurih",
+                "product_type": "Makanan Tradisional",
+                "thumbnail": "https://asset-a.grid.id/crop/0x0:0x0/700x465/photo/2018/07/10/432760395.jpg"
+            },
+            "headers": [],
+            "status": 200
+        },
+        "item_count": 1,
+        "items_weight": 0,
+        "cross_sells": []
+    }
+}
+```
+
+### <code class="method-request-delete">DELETE</code> `/lokawp/v1/cart/{id}`
+
+Pakai endpoint ini untuk mengedit data cart berdasarkan `{id}`. [Response](#response-4) bisa di kontrol dan di filter menggunakan [parameter Arguments](#arguments-4) dibawah ini:
+
+##### Arguments
+
+| Name     	| Type    	| In    	| Description                                                                                                  	|
+|----------	|---------	|-------	|--------------------------------------------------------------------------------------------------------------	|
+| `Authorization`   	| bearer  	| header 	| Token menggunakan **JWT**                	|
+| `Content-Type`   	    | string  	| header 	| Menerima `application/json`               |
+| `soft`   	    | boolean  	| query 	| Query argument ini digunakan ketika ingin menghapus cart dari user tapi tidak di database.<br/>default: `false`<br/>|
+
+##### Code samples
+
+<Tabs
+groupId="codeGroup1"
+defaultValue="shell"
+values={[
+{label: 'Shell', value: 'shell'},
+{label: 'Javascript (fetch)', value: 'javascript(fetch)'},
+{label: 'NodeJs (axios)', value: 'nodejs(axios)'},
+{label: 'PHP', value: 'php'},
+]}>
+<TabItem value="shell">
+
+```shell
+curl --location --request DELETE 'http://domain.com/wp-json/lokawp/v1/cart/30' \
+--header 'Authorization: Bearer Token Kamu'
+```
+
+</TabItem>
+
+<TabItem value="javascript(fetch)">
+
+```javascript
+var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer Token Kamu");
+
+var requestOptions = {
+  method: 'DELETE',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch("http://domain.com/wp-json/lokawp/v1/cart/30", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+```
+
+</TabItem>
+
+<TabItem value="nodejs(axios)">
+
+```javascript
+var axios = require('axios');
+
+var config = {
+  method: 'delete',
+  url: 'http://domain.com/wp-json/lokawp/v1/cart/30',
+  headers: {
+    'Authorization': 'Bearer Token Kamu'
+  }
+};
+
+axios(config)
+.then(function (response) {
+  console.log(JSON.stringify(response.data));
+})
+.catch(function (error) {
+  console.log(error);
+});
+```
+
+</TabItem>
+
+<TabItem value="php">
+
+```php
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'http://domain.com/wp-json/lokawp/v1/cart/30',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'DELETE',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Bearer Token Kamu'
+  ),
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+echo $response;
+```
+
+</TabItem>
+
+</Tabs>
+
+##### Response
+`Status: 200 OK`
+
+```json
+{
+    "code": "success",
+    "message": "success deleting cart data"
+}
+```

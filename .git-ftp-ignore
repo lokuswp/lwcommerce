@@ -1,0 +1,14 @@
+vendor/*
+node_modules/*
+tmp/*
+tests/*
+docs/*
+cypress/*
+bin/*
+*/.github
+.github
+composer.json
+composer.lock
+cypress.json
+phpcs.ruleset.xml
+phpunit.xml.dist
