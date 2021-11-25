@@ -41,9 +41,9 @@ class Admin {
 		$admin = new self( $plugin['slug'], $plugin['name'], $plugin['version'] );
 
 		add_action( 'admin_menu', [ $admin, 'register_admin_menu' ] );
-		// add_action('admin_enqueue_scripts', [$admin, 'enqueue_styles']);
-		// add_action('admin_enqueue_scripts', [$admin, 'enqueue_scripts']);
-		// add_action('admin_init', [$admin, 'admin_init']);
+		add_action( 'admin_enqueue_scripts', [ $admin, 'enqueue_styles' ] );
+		add_action( 'admin_enqueue_scripts', [ $admin, 'enqueue_scripts' ] );
+		add_action( 'admin_init', [ $admin, 'admin_init' ] );
 	}
 
 	/**
@@ -92,32 +92,33 @@ class Admin {
 		$dev_css = '.css';
 
 		if ( isset( $_GET['page'] ) ) {
-			if ( $_GET['page'] == 'lwpcommerce' || strpos( $_GET['page'], 'lsdc-' ) !== false ) {
+			if ( $_GET['page'] == 'lwpcommerce' || strpos( $_GET['page'], 'lwpc-' ) !== false ) {
 				// wp_enqueue_style('select2', LWPC_URL . 'assets/lib/select2/select2.min.css', array(), '4.1.0', 'all');
 
-				wp_enqueue_style( 'spectre-exp', LWPC_URL . 'backend/assets/lib/spectre/spectre-exp.min.css', array(),
-					'0.5.8', 'all' );
-				wp_enqueue_style( 'spectre-icons', LWPC_URL . 'backend/assets/lib/spectre/spectre-icons.min.css',
-					array(),
-					'0.5.8', 'all' );
-				wp_enqueue_style( 'spectre', LWPC_URL . 'backend/assets/lib/spectre/spectre.min.css', array(), '0.5.8',
-					'all' );
+				wp_enqueue_style( 'spectre-exp', LWPC_URL . 'src/includes/libraries/css/spectre/spectre-exp.min.css', array(), '0.5.9', 'all' );
+				wp_enqueue_style( 'spectre-icons', LWPC_URL . 'src/includes/libraries/css/spectre/spectre-icons.min.css', array(), '0.5.9', 'all' );
+				wp_enqueue_style( 'spectre', LWPC_URL . 'src/includes/libraries/css/spectre/spectre.min.css', array(), '0.5.9', 'all' );
 
-				wp_enqueue_style( $this->slug, LWPC_URL . 'backend/assets/css/admin-settings' . $dev_css, array(),
-					$this->version, 'all' );
+				wp_enqueue_style( $this->slug, LWPC_URL . 'backend/assets/css/admin-settings' . $dev_css, array(), $this->version, 'all' );
 				wp_enqueue_style( 'wp-color-picker' );
+
+				// Load css for report page
+				if ( $_GET['page'] === 'lwpc-reports' ) {
+					wp_enqueue_style( 'datatables-style', LWPC_URL . 'src/includes/libraries/js/datatables/datatables.min.css', array(), $this->version, 'all' );
+					wp_enqueue_style( 'datatables-style-buttons', LWPC_URL . 'src/includes/libraries/js/datatables/buttons.dataTables.min.css', array(), $this->version, 'all' );
+					wp_enqueue_style( 'datatables-style-select', LWPC_URL . 'src/includes/libraries/js/datatables/select.dataTables.min.css', array(), $this->version, 'all' );
+
+					wp_enqueue_style( 'report-css', LWPC_URL . 'src/admin/assets/css/report' . $dev_css, array(), $this->version, 'all' );
+				}
 			}
 		}
-
-		if ( strpos( get_post_type( get_the_ID() ), 'lsdc-' ) !== false ) {
-			wp_enqueue_style( $this->slug . '-product', LWPC_URL . 'backend/assets/css/admin-product' . $dev_css,
-				array(),
-				$this->version, 'all' );
-		}
-
-		// Global Admin Styles
-		wp_enqueue_style( $this->slug . '-global', LWPC_URL . 'backend/assets/css/admin-global' . $dev_css, array(),
-			$this->version, 'all' );
+//
+//		if ( strpos( get_post_type( get_the_ID() ), 'lsdc-' ) !== false ) {
+//			wp_enqueue_style( $this->slug . '-product', LWPC_URL . 'backend/assets/css/admin-product' . $dev_css, array(), $this->version, 'all' );
+//		}
+//
+//		// Global Admin Styles
+//		wp_enqueue_style( $this->slug . '-global', LWPC_URL . 'backend/assets/css/admin-global' . $dev_css, array(), $this->version, 'all' );
 	}
 
 	/**
@@ -129,19 +130,38 @@ class Admin {
 		// $dev_js = WP_DEBUG == true ? '.js' : '-min.js';
 		$dev_js = '.js';
 
+		// Datatable
+		wp_register_script( 'datatables', LWPC_URL . 'src/includes/libraries/js/datatables/datatables.min.js', array( 'jquery' ), $this->version, false );
+		wp_register_script( 'datatables-buttons', LWPC_URL . 'src/includes/libraries/js/datatables/datatables.buttons.min.js', array( 'jquery' ), $this->version, false );
+		wp_register_script( 'datatables-select', LWPC_URL . 'src/includes/libraries/js/datatables/datatables.select.min.js', array( 'jquery' ), $this->version, false );
+		wp_register_script( 'datatables-buttons-excel', LWPC_URL . 'src/includes/libraries/js/datatables/jszip.min.js', array( 'jquery' ), $this->version, false );
+		wp_register_script( 'datatables-buttons-html5', LWPC_URL . 'src/includes/libraries/js/datatables/buttons.html5.min.js', array( 'jquery' ), $this->version, false );
+
 		// Load Lib Admin Restrict only lwpcommerce Page
 		if ( isset( $_GET['page'] ) && $_GET['page'] == 'lwpcommerce' || strpos( get_post_type( get_the_ID() ),
-				'lsdc-' ) !== false || isset( $_GET['page'] ) && strpos( $_GET['page'], 'lsdc-' ) !== false ) {
+				'lwpc-' ) !== false || isset( $_GET['page'] ) && strpos( $_GET['page'], 'lwpc-' ) !== false ) {
 			// Load Admin Js
-			wp_enqueue_script( $this->slug, LWPC_URL . 'backend/assets/js/admin' . $dev_js,
-				array( 'jquery', 'wp-color-picker' ), $this->version, false );
-			wp_localize_script( $this->slug, 'lsdc_admin', array(
-				'ajax_url'    => admin_url( 'admin-ajax.php' ),
-				'ajax_nonce'  => wp_create_nonce( 'lsdc_admin_nonce' ),
-				'plugin_url'  => LWPC_URL,
-				'currency'    => lsdc_get_currency(),
-				'translation' => $this->js_translation(),
-			) );
+//			wp_enqueue_script( $this->slug, LWPC_URL . 'backend/assets/js/admin' . $dev_js, array( 'jquery', 'wp-color-picker' ), $this->version, false );
+//			wp_localize_script( $this->slug, 'lsdc_admin', array(
+//				'ajax_url'    => admin_url( 'admin-ajax.php' ),
+//				'ajax_nonce'  => wp_create_nonce( 'lsdc_admin_nonce' ),
+//				'plugin_url'  => LWPC_URL,
+//				'currency'    => lsdc_get_currency(),
+//				'translation' => $this->js_translation(),
+//			) );
+
+			// Load js for report page
+			if ( $_GET['page'] === 'lwpc-reports' ) {
+				wp_enqueue_script( 'report-js', LWPC_URL . 'src/admin/assets/js/report' . $dev_js,
+					array( 'jquery', 'datatables', 'datatables-buttons', 'datatables-select', 'datatables-buttons-excel', 'datatables-buttons-html5' ), $this->version, false );
+				wp_localize_script( 'report-js', 'lwpc_report', array(
+					'ajax_url'    => admin_url( 'admin-ajax.php' ),
+					'ajax_nonce'  => wp_create_nonce( 'lwpc_admin_nonce' ),
+					'plugin_url'  => LWPC_URL,
+//					'currency'    => lsdc_get_currency(),
+					'translation' => $this->js_translation(),
+				) );
+			}
 
 			// Enquene Media For Administrator Only
 			if ( current_user_can( 'manage_options' ) ) {
@@ -180,7 +200,7 @@ class Admin {
 			'manage_options',
 			$this->slug,
 			[ $this, 'admin_menu_callback' ],
-			LWPC_URL . 'src/assets/images/lwpcommerce.png',
+			'',
 			45
 		);
 
