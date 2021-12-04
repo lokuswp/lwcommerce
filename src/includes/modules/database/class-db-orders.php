@@ -8,8 +8,8 @@ class DB_Reports extends Migration {
 	protected static $table_name;
 
 	public function __construct() {
-		static::$table_name    = 'lwpcommerce_reports';
-		$this->table_meta_name = static::wpdb()->prefix . 'lwpcommerce_reportmeta';
+		static::$table_name    = 'lwpcommerce_orderss';
+		$this->table_meta_name = static::wpdb()->prefix . 'lwpcommerce_ordermeta';
 		$this->version         = '0.1';
 	}
 

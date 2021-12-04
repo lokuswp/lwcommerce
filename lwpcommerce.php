@@ -36,3 +36,6 @@ defined('LWPC_STRING_TEXT') or define('LWPC_STRING_TEXT', '0.0.1'); // String Ve
 
 // Requirement Minimum System
 require_once LWPC_PATH . 'src/autoload.php';
+
+// Load Plugin
+$plugin = new LokusWP\Commerce\Plugin();

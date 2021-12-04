@@ -1,6 +1,6 @@
 <?php
 
-namespace LokaWP\Commerce;
+namespace LokusWP\Commerce;
 
 // defined( 'ABSPATH' ) or die( 'ABSPATH Not Defined' );
 
@@ -57,7 +57,7 @@ class Admin {
 		$this->version = $version;
 
 		// Load Required File
-		// require_once LWPC_PATH . 'src/admin/class-ajax.php';
+		require_once LWPC_PATH . 'src/admin/settings/functions-tabs.php';
 		// require_once LWPC_PATH . 'admin/class-autosetup.php';
 		// require_once LWPC_PATH . 'admin/class-dashboard.php';
 		// require_once LWPC_PATH . 'admin/class-updater.php';
@@ -207,8 +207,8 @@ class Admin {
 		// Menu Reports
 		if ( current_user_can( 'administrator' ) ) {
 			add_menu_page(
-				__( 'Laporan', 'lwpcommerce' ),
-				__( 'Laporan', 'lwpcommerce' ),
+				__( 'Pesanan', 'lwpcommerce' ),
+				__( 'Pesanan', 'lwpcommerce' ),
 				'read',
 				'lwpc-reports',
 				[ $this, 'admin_menu_reports' ],
@@ -259,10 +259,10 @@ class Admin {
 
 		add_submenu_page(
 			$this->slug,
-			__( 'Pro', 'lwpcommerce' ),
-			__( 'Pro', 'lwpcommerce' ),
+			__( 'Premium / Pro', 'lwpcommerce' ),
+			__( 'Premium / Pro', 'lwpcommerce' ),
 			'manage_options',
-			'admin.php?page=lwpcommerce&tab=settings',
+			'admin.php?page=lwpcommerce&tab=extensions',
 			''
 		);
 
@@ -334,7 +334,7 @@ class Admin {
 	 * @return void
 	 */
 	public function admin_menu_callback() {
-		include_once LWPC_PATH . 'src/admin/tabs/common.php';
+		include_once LWPC_PATH . 'src/admin/settings/tab.php';
 	}
 
 	/**

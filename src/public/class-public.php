@@ -1,6 +1,6 @@
 <?php
 
-namespace LokaCommerce;
+namespace LokusWP\Commerce;
 
 // defined( 'ABSPATH' ) or die( 'ABSPATH Not Defined' );
 
@@ -105,7 +105,7 @@ e.
         // wp_register_script('lsdd-payment', plugins_url('/public/assets/js/payment.js', LSDD_BASE), array('jquery'), $this->version, false);
         // wp_register_script('lsdd-navigo', plugins_url('/includes/core/libraries/js/navigo/navigo.min.js', LSDD_BASE), array(), '8.11.0', false);
 
-        // wp_enqueue_script($this->slug, plugins_url('/public/assets/js/public.js', LSDD_BASE), array('jquery'), $this->version, false);
+        wp_enqueue_script($this->slug, plugins_url('/src/public/assets/js/public.js', LWPC_BASE), array('jquery'), $this->version, false);
         // wp_localize_script($this->slug, 'lsdd_public', array(
         //     'ajax_wp' => admin_url('admin-ajax.php'),
         //     'ajax_url' => LSDD_URL . 'core/utils/lsdd-ajax.php',

@@ -1,0 +1,3 @@
+- Sorting
+- Filtering
+- Product List

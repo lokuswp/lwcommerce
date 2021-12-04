@@ -1,12 +1,11 @@
 <?php
-
-namespace LokusWP\Commerce;
+namespace LokusWP\Commerce\Modules\Product;
 
 if (!defined('WPTEST')) {
     defined('ABSPATH') or die("Direct access to files is prohibited");
 }
 
-class Post_Type_Product
+class Posttype
 {
     public function __construct()
     {
@@ -265,15 +264,15 @@ class Post_Type_Product
                 $price_discount = get_post_meta($post->ID, '_price_discount', true) == null ? "" : lwpbb_set_currency_format(false, abs(get_post_meta($post->ID, '_price_discount', true)));
                 ?>
                 <!-- <div class="metabox-field"> -->
-                    <label for="price_normal">
-                        <?php esc_attr_e('Harga Normal', 'lwpcommerce'); ?> ( <?php echo lwpbb_currency_display('symbol'); ?> )
-                    </label>
-                    <p class="mfield"><input type="text" name="price_normal" class="currency" placeholder="<?php echo lwpbb_currency_display('format'); ?>" value="<?php echo $price_normal; ?>"></p>
-                    <small>Jadi</small>
-                    <label for="price_discount">
-                        <?php esc_attr_e('Harga Diskon', 'lwpcommerce'); ?> ( <?php echo lwpbb_currency_display('symbol'); ?> )
-                    </label>
-                    <p class="mfield"><input type="text" name="price_discount" class="currency" placeholder="<?php echo lwpbb_currency_display('format'); ?>" value="<?php echo $price_discount; ?>"></p>
+                <label for="price_normal">
+                    <?php esc_attr_e('Harga Normal', 'lwpcommerce'); ?> ( <?php echo lwpbb_currency_display('symbol'); ?> )
+                </label>
+                <p class="mfield"><input type="text" name="price_normal" class="currency" placeholder="<?php echo lwpbb_currency_display('format'); ?>" value="<?php echo $price_normal; ?>"></p>
+                <small>Jadi</small>
+                <label for="price_discount">
+                    <?php esc_attr_e('Harga Diskon', 'lwpcommerce'); ?> ( <?php echo lwpbb_currency_display('symbol'); ?> )
+                </label>
+                <p class="mfield"><input type="text" name="price_discount" class="currency" placeholder="<?php echo lwpbb_currency_display('format'); ?>" value="<?php echo $price_discount; ?>"></p>
                 <!-- </div> -->
             </div>
 
@@ -421,7 +420,7 @@ class Post_Type_Product
         update_post_meta($post_id, '_physical_weight', lwpbb_set_currency_to_number($_POST['physical_weight']));
         update_post_meta($post_id, '_physical_volume', lwpbb_set_currency_to_number($_POST['physical_volume']));
     }
-
+    
     /**
      * Display Listing Product
      *
@@ -445,8 +444,9 @@ class Post_Type_Product
         global $post;
 
         if ($post->post_type == 'product') {
-            if (file_exists(LWPC_PATH . 'frontend/templates/storefront/product/single.php')) {
-                return LWPC_PATH . 'frontend/templates/storefront/product/single.php';
+
+            if (file_exists(LWPC_PATH . 'src/templates/product/single.php')) {
+                return LWPC_PATH . 'src/templates/product/single.php';
             }
         }
         return $template;
@@ -508,19 +508,17 @@ class Post_Type_Product
         }
 
         if ('price' === $column) {
-            if (lwpc_get_price_normal($post_id) == 0) {
+            if (lwpc_get_price($post_id) == 0) {
                 _e('Gratis', 'lwpcommerce');
                 return;
             }
 
             if (lwpc_get_price_discount($post_id)) {
-                echo '<span style="text-decoration: line-through">' . lwpbb_set_currency_format(true, lwpc_get_price_normal($post_id)) .  '</span><br>';
+                echo '<span style="text-decoration: line-through">' . lwpbb_set_currency_format(true, lwpc_get_price($post_id)) .  '</span><br>';
                 echo lwpbb_set_currency_format(true, lwpc_get_price_discount($post_id));
             } else {
-                echo lwpbb_set_currency_format(true, lwpc_get_price_normal($post_id));
+                echo lwpbb_set_currency_format(true, lwpc_get_price($post_id));
             }
         }
     }
 }
-new Post_Type_Product;
-?>

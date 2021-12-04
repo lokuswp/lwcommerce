@@ -3,7 +3,7 @@
 /**
  * Getting Price Normal of Product based on ID
  */
-function lwpc_get_price_normal( $post_id ){
+function lwpc_get_price( $post_id ){
     $_price_normal = get_post_meta($post_id, '_price_normal', true );
     return isset( $_price_normal ) ? abs( $_price_normal ) : 0;
 }
