@@ -17,14 +17,14 @@ class Plugin
 		register_deactivation_hook(LWPC_BASE, [$this, 'uninstall']);
 
 		// Administration / BackOffice
+		$plugin = array('slug' => 'lwpcommerce', 'name' => 'LWPCommerce', 'version' => LWPC_VERSION);
 		if (is_admin()) {
 			require_once LWPC_PATH . 'src/admin/class-admin.php';
 			require_once LWPC_PATH . 'src/includes/helper/func-helper.php';
-			$plugin = array('slug' => 'lwpcommerce', 'name' => 'LWPCommerce', 'version' => LWPC_VERSION);
+
 			Admin::register($plugin);
 		}else{
 			require_once LWPC_PATH . 'src/public/class-public.php';
-			$plugin = array('slug' => 'lwpcommerce', 'name' => 'LWPCommerce', 'version' => LWPC_VERSION);
 			Frontend::register($plugin);
 		}
 	}

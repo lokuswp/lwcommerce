@@ -3,16 +3,30 @@ namespace LokusWP\Commerce\Shortcodes;
 
 Class Etalase
 {
-	public function __construct()
-	{
-		// var_dump("fsafafa");
-	}
+    /**
+     * Register Transaction Shortcode
+     */
+    public function __construct()
+    {
+        add_shortcode('lwpcommerce_etalase', [$this, 'render']);
+    }
 
-	public function render()
-	{
-		
-	}
+    public function render($atts)
+    {
+        extract(shortcode_atts(array(
+            'product_ids' => false,
+        ), $atts));
+
+        ob_start();
+
+        echo "Shortcode Etalase";
+
+        $render = ob_get_clean();
+
+        return $render;
+    }
 }
+
 // function that runs when shortcode is called
 // function lokuswp_transaction()
 // {
@@ -24,5 +38,5 @@ Class Etalase
 
 // $body = wp_remote_retrieve_body($request);
 // $parse = json_decode($body);
-// ?>
+?>
 

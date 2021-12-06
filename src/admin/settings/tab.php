@@ -46,6 +46,12 @@ if (isset($_GET["tab"])) {
         </ul>
     </div>
 
+    <style>
+        .lwpcommerce-admin li{
+            margin-bottom: 0;
+        }
+    </style>
+
 
     <article class="tab-content">
         <?php

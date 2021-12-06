@@ -99,8 +99,6 @@ e.
         //     $domain =  $url_parts['host'];
         // }
 
-        wp_enqueue_script('lkc-cookie', plugins_url('/public/assets/js/cookie.js', LKC_BASE), array('jquery'), $this->version, false);
-        wp_enqueue_script('lkc-cart', plugins_url('/public/assets/js/cart.js', LKC_BASE), array('jquery'), $this->version, false);
 
         // wp_register_script('lsdd-payment', plugins_url('/public/assets/js/payment.js', LSDD_BASE), array('jquery'), $this->version, false);
         // wp_register_script('lsdd-navigo', plugins_url('/includes/core/libraries/js/navigo/navigo.min.js', LSDD_BASE), array(), '8.11.0', false);
@@ -267,5 +265,3 @@ e.
         // require_once 'class-ajax.php';
     }
 }
-
-Frontend::register(array("lokacommerce", "LokaCommerce", "1.0.0"));
