@@ -1,4 +1,5 @@
 <?php
+
 namespace LokusWP\Commerce;
 
 if (!defined('WPTEST')) {
@@ -16,14 +17,16 @@ class Plugin
 		register_activation_hook(LWPC_BASE, [$this, 'activation']);
 		register_deactivation_hook(LWPC_BASE, [$this, 'uninstall']);
 
-		// Administration / BackOffice
+		require_once LWPC_PATH . 'src/includes/helper/mock/func-mock.php';
+
+		// // Administration / BackOffice
 		$plugin = array('slug' => 'lwpcommerce', 'name' => 'LWPCommerce', 'version' => LWPC_VERSION);
 		if (is_admin()) {
 			require_once LWPC_PATH . 'src/admin/class-admin.php';
 			require_once LWPC_PATH . 'src/includes/helper/func-helper.php';
 
 			Admin::register($plugin);
-		}else{
+		} else {
 			require_once LWPC_PATH . 'src/public/class-public.php';
 			Frontend::register($plugin);
 		}

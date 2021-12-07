@@ -122,8 +122,9 @@ class Admin
 		//			wp_enqueue_style( $this->slug . '-product', LWPC_URL . 'backend/assets/css/admin-product' . $dev_css, array(), $this->version, 'all' );
 		//		}
 		//
-		//		// Global Admin Styles
-		//		wp_enqueue_style( $this->slug . '-global', LWPC_URL . 'backend/assets/css/admin-global' . $dev_css, array(), $this->version, 'all' );
+
+		// Global Admin Styles
+		wp_enqueue_style( $this->slug . '-global', LWPC_URL . 'src/admin/assets/css/admin-global' . $dev_css, array(), $this->version, 'all' );
 	}
 
 	/**

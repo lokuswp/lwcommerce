@@ -1,3 +1,4 @@
-- Inventory #
-- Product #
-- Order #
+- Inventory
+    - Product
+- Order
+- Shipping

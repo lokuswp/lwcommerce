@@ -260,19 +260,19 @@ class Posttype
             <!-- Price -->
             <div class="wp-tab-panel" id="price">
                 <?php
-                $price_normal = get_post_meta($post->ID, '_price_normal', true) == null ? "" : lwpbb_set_currency_format(false, abs(get_post_meta($post->ID, '_price_normal', true)));
-                $price_discount = get_post_meta($post->ID, '_price_discount', true) == null ? "" : lwpbb_set_currency_format(false, abs(get_post_meta($post->ID, '_price_discount', true)));
+                $price_normal = get_post_meta($post->ID, '_price_normal', true) == null ? "" : lwpc_set_currency_format(false, abs(get_post_meta($post->ID, '_price_normal', true)));
+                $price_discount = get_post_meta($post->ID, '_price_discount', true) == null ? "" : lwpc_set_currency_format(false, abs(get_post_meta($post->ID, '_price_discount', true)));
                 ?>
                 <!-- <div class="metabox-field"> -->
                 <label for="price_normal">
-                    <?php esc_attr_e('Harga Normal', 'lwpcommerce'); ?> ( <?php echo lwpbb_currency_display('symbol'); ?> )
+                    <?php esc_attr_e('Harga Normal', 'lwpcommerce'); ?> ( <?php echo lwpc_set_currency_display('symbol'); ?> )
                 </label>
-                <p class="mfield"><input type="text" name="price_normal" class="currency" placeholder="<?php echo lwpbb_currency_display('format'); ?>" value="<?php echo $price_normal; ?>"></p>
+                <p class="mfield"><input type="text" name="price_normal" class="currency" placeholder="<?php echo lwpc_set_currency_display('format'); ?>" value="<?php echo $price_normal; ?>"></p>
                 <small>Jadi</small>
                 <label for="price_discount">
-                    <?php esc_attr_e('Harga Diskon', 'lwpcommerce'); ?> ( <?php echo lwpbb_currency_display('symbol'); ?> )
+                    <?php esc_attr_e('Harga Diskon', 'lwpcommerce'); ?> ( <?php echo lwpc_set_currency_display('symbol'); ?> )
                 </label>
-                <p class="mfield"><input type="text" name="price_discount" class="currency" placeholder="<?php echo lwpbb_currency_display('format'); ?>" value="<?php echo $price_discount; ?>"></p>
+                <p class="mfield"><input type="text" name="price_discount" class="currency" placeholder="<?php echo lwpc_set_currency_display('format'); ?>" value="<?php echo $price_discount; ?>"></p>
                 <!-- </div> -->
             </div>
 
@@ -514,10 +514,10 @@ class Posttype
             }
 
             if (lwpc_get_price_discount($post_id)) {
-                echo '<span style="text-decoration: line-through">' . lwpbb_set_currency_format(true, lwpc_get_price($post_id)) .  '</span><br>';
-                echo lwpbb_set_currency_format(true, lwpc_get_price_discount($post_id));
+                echo '<span style="text-decoration: line-through">' . lwpc_set_currency_format(true, lwpc_get_price($post_id)) .  '</span><br>';
+                echo lwpc_set_currency_format(true, lwpc_get_price_discount($post_id));
             } else {
-                echo lwpbb_set_currency_format(true, lwpc_get_price($post_id));
+                echo lwpc_set_currency_format(true, lwpc_get_price($post_id));
             }
         }
     }
