@@ -124,7 +124,7 @@ class Admin
 		//
 
 		// Global Admin Styles
-		wp_enqueue_style( $this->slug . '-global', LWPC_URL . 'src/admin/assets/css/admin-global' . $dev_css, array(), $this->version, 'all' );
+		wp_enqueue_style($this->slug . '-global', LWPC_URL . 'src/admin/assets/css/admin-global' . $dev_css, array(), $this->version, 'all');
 	}
 
 	/**
@@ -216,71 +216,58 @@ class Admin
 			'manage_options',
 			$this->slug,
 			[$this, 'admin_menu_callback'],
-			'',
-			45
+			LWPC_URL . 'src/admin/assets/lwpcommerce.png',
+			3
 		);
-
-		// Menu Reports
-		if (current_user_can('administrator')) {
-			add_menu_page(
-				__('Pesanan', 'lwpcommerce'),
-				__('Pesanan', 'lwpcommerce'),
-				'read',
-				'lwpc-reports',
-				[$this, 'admin_menu_reports'],
-				'',
-				45
-			);
-		}
 
 		// Remove DUsplicate Menu Page -> Sub Menu
 		add_submenu_page($this->slug, '', '', 'manage_options', $this->slug, '__return_null');
 		remove_submenu_page($this->slug, $this->slug);
 
-		add_submenu_page(
-			$this->slug,
-			__('Pengaturan', 'lwpcommerce'),
-			__('Pengaturan', 'lwpcommerce'),
-			'manage_options',
-			'admin.php?page=lwpcommerce&tab=settings',
-			''
-		);
+			add_submenu_page(
+				$this->slug,
+				__('Pengaturan', 'lwpcommerce'),
+				__('Pengaturan', 'lwpcommerce'),
+				'manage_options',
+				'admin.php?page=lwpcommerce&tab=settings',
+				''
+			);
 
-		add_submenu_page(
-			$this->slug,
-			__('Toko', 'lwpcommerce'),
-			__('Toko', 'lwpcommerce'),
-			'manage_options',
-			'admin.php?page=lwpcommerce&tab=store',
-			''
-		);
+			add_submenu_page(
+				$this->slug,
+				__('Toko', 'lwpcommerce'),
+				__('Toko', 'lwpcommerce'),
+				'manage_options',
+				'admin.php?page=lwpcommerce&tab=store',
+				''
+			);
 
-		add_submenu_page(
-			$this->slug,
-			__('Tampilan', 'lwpcommerce'),
-			__('Tampilan', 'lwpcommerce'),
-			'manage_options',
-			'admin.php?page=lwpcommerce&tab=appearance',
-			''
-		);
+			add_submenu_page(
+				$this->slug,
+				__('Tampilan', 'lwpcommerce'),
+				__('Tampilan', 'lwpcommerce'),
+				'manage_options',
+				'admin.php?page=lwpcommerce&tab=appearance',
+				''
+			);
 
-		add_submenu_page(
-			$this->slug,
-			__('Pengiriman', 'lwpcommerce'),
-			__('Pengiriman', 'lwpcommerce'),
-			'manage_options',
-			'admin.php?page=lwpcommerce&tab=shipping',
-			''
-		);
+			add_submenu_page(
+				$this->slug,
+				__('Pengiriman', 'lwpcommerce'),
+				__('Pengiriman', 'lwpcommerce'),
+				'manage_options',
+				'admin.php?page=lwpcommerce&tab=shipping',
+				''
+			);
 
-		add_submenu_page(
-			$this->slug,
-			__('Premium / Pro', 'lwpcommerce'),
-			__('Premium / Pro', 'lwpcommerce'),
-			'manage_options',
-			'admin.php?page=lwpcommerce&tab=extensions',
-			''
-		);
+			add_submenu_page(
+				$this->slug,
+				__('Premium / Pro', 'lwpcommerce'),
+				__('Premium / Pro', 'lwpcommerce'),
+				'manage_options',
+				'admin.php?page=lwpcommerce&tab=extensions',
+				''
+			);
 
 		// Menu Products
 		add_menu_page(
@@ -290,7 +277,7 @@ class Admin
 			'edit.php?post_type=product',
 			'',
 			LWPC_URL . 'src/admin/assets/svg/product.svg',
-			50
+			3
 		);
 
 		// Submenu Product -> Categories
@@ -303,19 +290,17 @@ class Admin
 			''
 		);
 
-
-		$awaiting_mod = (get_option('lwpcommerce_order_unread') > 0) ? abs(get_option('lwpcommerce_order_unread')) : 0;
-
 		// Menu Orders
-		// add_menu_page(
-		//     __('Pesanan', 'lwpcommerce'),
-		//     $awaiting_mod ? sprintf((__('Pesanan', 'lwpcommerce') . ' <span class="awaiting-mod">%d</span>'), $awaiting_mod) : __('Pesanan', 'lwpcommerce'),
-		//     'manage_options',
-		//     'edit.php?post_type=lwpcommerce_order',
-		//     '',
-		//     LWPC_URL . 'backend/assets/svg/order.svg',
-		//     50
-		// );
+		$awaiting = get_option('lwpcommerce_order_awaiting') > 0 ? abs(get_option('lwpcommerce_order_awaiting')) : 0;
+		add_menu_page(
+		    __('Pesanan', 'lwpcommerce'),
+		    $awaiting ? sprintf((__('Pesanan', 'lwpcommerce') . ' <span class="awaiting-mod">%d</span>'), $awaiting) : __('Pesanan', 'lwpcommerce'),
+		    'manage_options',
+		    'lwpcommerce-order',
+		    [$this, 'admin_menu_order'],
+		    LWPC_URL . 'src/admin/assets/svg/order.svg',
+		    3
+		);
 
 
 		// Add Shortcode List to wp-admin > lwpcommerce > Appearence
@@ -335,11 +320,11 @@ class Admin
 
 	/**
 	 * Including Reports File
-	 * When Clicking Menu Reports.
+	 * When Clicking Menu Order.
 	 *
 	 * @return void
 	 */
-	public function admin_menu_reports()
+	public function admin_menu_order()
 	{
 		include_once LWPC_PATH . 'src/admin/reports/reports.php';
 	}
@@ -356,25 +341,14 @@ class Admin
 	}
 
 	/**
-	 * Including Orders File
-	 * When Clicking Menu Orders
-	 *
-	 * @return void
-	 */
-	public function admin_menu_orders()
-	{
-		include_once LWPC_PATH . 'core/admin/orders/orders.php';
-	}
-
-	/**
 	 * Cloning is forbidden.
 	 *
 	 * @since 1.0.0
 	 */
 	public function __clone()
 	{
-		_doing_it_wrong(__FUNCTION__, esc_html(__('Cloning of is forbidden')), LSDC_VERSION);
-	} // End __clone ()
+		_doing_it_wrong(__FUNCTION__, esc_html(__('Cloning of is forbidden')), LWPC_VERSION);
+	}
 
 	/**
 	 * Unserializing instances of this class is forbidden.
@@ -383,7 +357,6 @@ class Admin
 	 */
 	public function __wakeup()
 	{
-		_doing_it_wrong(__FUNCTION__, esc_html(__('Unserializing instances of is forbidden')), LSDC_VERSION);
-	} // End __wakeup ()
-
+		_doing_it_wrong(__FUNCTION__, esc_html(__('Unserializing instances of is forbidden')), LWPC_VERSION);
+	}
 }
