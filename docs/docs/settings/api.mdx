@@ -1,0 +1,340 @@
+---      
+sidebar_position: 1
+slug: /notification/api
+---
+
+# Notification API
+
+Payment API berguna ketika anda ingin membuat tampilan metode pembayaran mana yang aktif.
+atau juga ingin menampilkan detail pembayaran, untuk perhitungan total di Frontend.
+
+## Endpoints
+
+### <code class="method-request-get">GET</code> `/lokuswp/v1/payment/list`
+
+Endpoint yang berguna untuk menampilkan daftar pembayaran yang aktif
+untuk pengaturan pembayaran aktif akan diatur di halaman admin wordpress.
+
+#### Code samples
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs
+    groupId="codeGroup1"
+    defaultValue="shell"
+    values={[
+    {label: 'Shell', value: 'shell'},
+    {label: 'Javascript (fetch)', value: 'javascript(fetch)'},
+    {label: 'Axios', value: 'axios'},
+    {label: 'PHP', value: 'php'},
+]}>
+
+  <TabItem value="shell">
+
+  ```shell
+  curl --location --request GET 'https://beta.lokuswp.com/lwpcommerce/wp-json/lokuswp/v1/payment/list'
+  ```
+
+  </TabItem>
+
+  <TabItem value="javascript(fetch)">
+
+  ```javascript
+  var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+  };
+
+  fetch("https://beta.lokuswp.com/lwpcommerce/wp-json/lokuswp/v1/payment/list", requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+  ```
+
+  </TabItem>
+
+  <TabItem value="axios">
+
+  ```javascript
+  var axios = require('axios');
+
+  var config = {
+      method: 'get',
+      url: 'https://beta.lokuswp.com/lwpcommerce/wp-json/lokuswp/v1/payment/list'
+  };
+
+  axios(config)
+      .then(function (response) {
+          console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+          console.log(error);
+      });
+
+  ```
+
+  </TabItem>
+
+  <TabItem value="php">
+
+  ```php
+  $curl = curl_init();
+
+  curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://beta.lokuswp.com/lwpcommerce/wp-json/lokuswp/v1/payment/list',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => '',
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => 'GET',
+  ));
+
+  $response = curl_exec($curl);
+
+  curl_close($curl);
+  echo $response;
+  ```
+
+  </TabItem>
+
+</Tabs>
+
+#### Response
+`Status: 200 OK`
+```json
+{
+  "bank_transfer": {
+    "name": "Lokus Bank",
+    "logo": "http://localhost:10024/wp-content/plugins/lokuswp-backbone/src/assets/images/payment/bank-transfer.png",
+    "desc": "Transfer to Lokus Bank",
+    "group": "bank_transfer",
+    "group_name": "Bank Transfer",
+    "auto_confirm": false,
+    "instruction": "Silahkan lakukan transfer bank ke rekening yang tertera sesuai dengan total pembayaran"
+  },
+  "cash": {
+    "name": "Cash",
+    "logo": "http://localhost:10024/wp-content/plugins/lokuswp-backbone/src/assets/images/payment/cash.png",
+    "desc": "Direct Payment with Cash",
+    "group": "e_money",
+    "group_name": "E-Money",
+    "auto_confirm": false,
+    "instruction": "Silahkan lakukan pembayaran secara langsung sesuai dengan total pembayaran"
+  }
+}
+```
+
+### <code class="method-request-get">GET</code> `/lokuswp/v1/payment/{method_id}`
+
+Endpoint yang berguna untuk menampilkan detail metode pembayaran berdasarkan method_id
+
+#### Code samples
+
+<Tabs
+  groupId="codeGroup1"
+  defaultValue="shell"
+  values={[
+  {label: 'Shell', value: 'shell'},
+  {label: 'Javascript (fetch)', value: 'javascript(fetch)'},
+  {label: 'Axios', value: 'axios'},
+  {label: 'PHP', value: 'php'},
+]}>
+
+  <TabItem value="shell">
+
+  ```shell
+  curl --location --request GET 'https://beta.lokuswp.com/lwpcommerce/wp-json/lokuswp/v1/payment/cash'
+  ```
+
+  </TabItem>
+
+  <TabItem value="javascript(fetch)">
+
+  ```javascript
+  var requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+  };
+
+  fetch("domain.com/wp-json/lokuswp/v1/payment/cash", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+  ```
+
+  </TabItem>
+
+  <TabItem value="axios">
+
+  ```javascript
+  var axios = require('axios');
+
+  var config = {
+      method: 'get',
+      url: 'https://beta.lokuswp.com/lwpcommerce/wp-json/lokuswp/v1/payment/cash'
+  };
+
+  axios(config)
+      .then(function (response) {
+          console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+          console.log(error);
+      });
+
+  ```
+
+  </TabItem>
+
+  <TabItem value="php">
+
+  ```php
+  $curl = curl_init();
+
+  curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://beta.lokuswp.com/lwpcommerce/wp-json/lokuswp/v1/payment/cash',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => '',
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => 'GET'
+  ));
+
+  $response = curl_exec($curl);
+
+  curl_close($curl);
+  echo $response;
+  ```
+
+  </TabItem>
+
+</Tabs>
+
+#### Response
+`Status: 200 OK`
+```json
+{
+  "bank_transfer": {
+    "name": "Bank Custom One",
+    "description": "Semua Pembayaran dengan Kode QR",
+    "logo": "http://localhost:10004/wp-content/plugins/lsddonation/admin/assets/images/payment/custom.png",
+    "group": "bank_transfer",
+    "group_name": "Bank Transfer",
+    "confirmation": "manual",
+    "template_class": "Bank_Transfer",
+    "docs": {
+      "ID": "",
+      "WW": ""
+    },
+    "bank_code": "014",
+    "swift_code": "",
+    "account_number": "652424242",
+    "account_owner": "LSD Plugins",
+    "instruction": "Please transfer to this bank account according to the total",
+    "master": "bank_transfer",
+    "pointer": "bank_transfer",
+    "excluded_fields": [],
+    "required_fields": [
+      "lsdd_form_name",
+      "lsdd_form_phone"
+    ]
+  }
+}
+```
+### <code class="method-request-get">GET</code> `/lokuswp/v1/payment/instruction/{method_id}`
+
+Endpoint yang berguna untuk menampilkan detail metode pembayaran berdasarkan method_id
+
+#### Code samples
+
+<Tabs
+  groupId="codeGroup1"
+  defaultValue="shell"
+  values={[
+  {label: 'Shell', value: 'shell'},
+  {label: 'Javascript (fetch)', value: 'javascript(fetch)'},
+  {label: 'Axios', value: 'axios'},
+  {label: 'PHP', value: 'php'},
+]}>
+
+  <TabItem value="shell">
+
+  ```shell
+  curl --location --request GET 'https://beta.lokuswp.com/lwpcommerce/wp-json/lokuswp/v1/cart/30'
+  ```
+
+  </TabItem>
+
+  <TabItem value="javascript(fetch)">
+
+  ```javascript
+  var requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+  };
+
+  fetch("domain.com/wp-json/lokuswp/v1/cart/30", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+  ```
+
+  </TabItem>
+
+  <TabItem value="axios">
+
+  ```javascript
+  var axios = require('axios');
+
+  var config = {
+      method: 'get',
+      url: 'https://beta.lokuswp.com/lwpcommerce/wp-json/lokuswp/v1/payment/bank_transfer'
+  };
+
+  axios(config)
+      .then(function (response) {
+          console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+          console.log(error);
+      });
+
+  ```
+
+  </TabItem>
+
+  <TabItem value="php">
+
+  ```php
+  $curl = curl_init();
+
+  curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://beta.lokuswp.com/lwpcommerce/wp-json/lokuswp/v1/payment/bank_transfer',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => '',
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => 'GET'
+  ));
+
+  $response = curl_exec($curl);
+
+  curl_close($curl);
+  echo $response;
+  ```
+
+  </TabItem>
+
+</Tabs>
+
+#### Response
+`Status: 200 OK`
+```json
+// RESPONSE
+```

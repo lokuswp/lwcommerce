@@ -97,7 +97,7 @@ class Admin
 		$dev_css = '.css';
 
 		if (isset($_GET['page'])) {
-			if ($_GET['page'] == 'lwpcommerce' || strpos($_GET['page'], 'lwpc-') !== false) {
+			if ($_GET['page'] == 'lwpcommerce' || strpos($_GET['page'], 'lwpcommerce-') !== false) {
 				// wp_enqueue_style('select2', LWPC_URL . 'assets/lib/select2/select2.min.css', array(), '4.1.0', 'all');
 
 				wp_enqueue_style('spectre-exp', LWPC_URL . 'src/includes/libraries/css/spectre/spectre-exp.min.css', array(), '0.5.9', 'all');
@@ -108,7 +108,7 @@ class Admin
 				wp_enqueue_style('wp-color-picker');
 
 				// Load css for report page
-				if ($_GET['page'] === 'lwpc-reports') {
+				if ($_GET['page'] === 'lwpcommerce-order') {
 					wp_enqueue_style('datatables-style', LWPC_URL . 'src/includes/libraries/js/datatables/datatables.min.css', array(), $this->version, 'all');
 					wp_enqueue_style('datatables-style-buttons', LWPC_URL . 'src/includes/libraries/js/datatables/buttons.dataTables.min.css', array(), $this->version, 'all');
 					wp_enqueue_style('datatables-style-select', LWPC_URL . 'src/includes/libraries/js/datatables/select.dataTables.min.css', array(), $this->version, 'all');
@@ -148,7 +148,7 @@ class Admin
 		if (isset($_GET['page']) && $_GET['page'] == 'lwpcommerce' || strpos(
 			get_post_type(get_the_ID()),
 			'lwpc-'
-		) !== false || isset($_GET['page']) && strpos($_GET['page'], 'lwpc-') !== false) {
+		) !== false || isset($_GET['page']) && strpos($_GET['page'], 'lwpcommerce-') !== false) {
 			// Load Admin Js
 			//			wp_enqueue_script( $this->slug, LWPC_URL . 'backend/assets/js/admin' . $dev_js, array( 'jquery', 'wp-color-picker' ), $this->version, false );
 			//			wp_localize_script( $this->slug, 'lsdc_admin', array(
@@ -160,7 +160,7 @@ class Admin
 			//			) );
 
 			// Load js for report page
-			if ($_GET['page'] === 'lwpc-reports') {
+			if ($_GET['page'] === 'lwpcommerce-order') {
 				wp_enqueue_script(
 					'report-js',
 					LWPC_URL . 'src/admin/assets/js/report' . $dev_js,
@@ -224,50 +224,50 @@ class Admin
 		add_submenu_page($this->slug, '', '', 'manage_options', $this->slug, '__return_null');
 		remove_submenu_page($this->slug, $this->slug);
 
-			add_submenu_page(
-				$this->slug,
-				__('Pengaturan', 'lwpcommerce'),
-				__('Pengaturan', 'lwpcommerce'),
-				'manage_options',
-				'admin.php?page=lwpcommerce&tab=settings',
-				''
-			);
+		add_submenu_page(
+			$this->slug,
+			__('Pengaturan', 'lwpcommerce'),
+			__('Pengaturan', 'lwpcommerce'),
+			'manage_options',
+			'admin.php?page=lwpcommerce&tab=settings',
+			''
+		);
 
-			add_submenu_page(
-				$this->slug,
-				__('Toko', 'lwpcommerce'),
-				__('Toko', 'lwpcommerce'),
-				'manage_options',
-				'admin.php?page=lwpcommerce&tab=store',
-				''
-			);
+		add_submenu_page(
+			$this->slug,
+			__('Toko', 'lwpcommerce'),
+			__('Toko', 'lwpcommerce'),
+			'manage_options',
+			'admin.php?page=lwpcommerce&tab=store',
+			''
+		);
 
-			add_submenu_page(
-				$this->slug,
-				__('Tampilan', 'lwpcommerce'),
-				__('Tampilan', 'lwpcommerce'),
-				'manage_options',
-				'admin.php?page=lwpcommerce&tab=appearance',
-				''
-			);
+		add_submenu_page(
+			$this->slug,
+			__('Tampilan', 'lwpcommerce'),
+			__('Tampilan', 'lwpcommerce'),
+			'manage_options',
+			'admin.php?page=lwpcommerce&tab=appearance',
+			''
+		);
 
-			add_submenu_page(
-				$this->slug,
-				__('Pengiriman', 'lwpcommerce'),
-				__('Pengiriman', 'lwpcommerce'),
-				'manage_options',
-				'admin.php?page=lwpcommerce&tab=shipping',
-				''
-			);
+		add_submenu_page(
+			$this->slug,
+			__('Pengiriman', 'lwpcommerce'),
+			__('Pengiriman', 'lwpcommerce'),
+			'manage_options',
+			'admin.php?page=lwpcommerce&tab=shipping',
+			''
+		);
 
-			add_submenu_page(
-				$this->slug,
-				__('Premium / Pro', 'lwpcommerce'),
-				__('Premium / Pro', 'lwpcommerce'),
-				'manage_options',
-				'admin.php?page=lwpcommerce&tab=extensions',
-				''
-			);
+		add_submenu_page(
+			$this->slug,
+			__('Premium / Pro', 'lwpcommerce'),
+			__('Premium / Pro', 'lwpcommerce'),
+			'manage_options',
+			'admin.php?page=lwpcommerce&tab=extensions',
+			''
+		);
 
 		// Menu Products
 		add_menu_page(
@@ -293,13 +293,13 @@ class Admin
 		// Menu Orders
 		$awaiting = get_option('lwpcommerce_order_awaiting') > 0 ? abs(get_option('lwpcommerce_order_awaiting')) : 0;
 		add_menu_page(
-		    __('Pesanan', 'lwpcommerce'),
-		    $awaiting ? sprintf((__('Pesanan', 'lwpcommerce') . ' <span class="awaiting-mod">%d</span>'), $awaiting) : __('Pesanan', 'lwpcommerce'),
-		    'manage_options',
-		    'lwpcommerce-order',
-		    [$this, 'admin_menu_order'],
-		    LWPC_URL . 'src/admin/assets/svg/order.svg',
-		    3
+			__('Pesanan', 'lwpcommerce'),
+			$awaiting ? sprintf((__('Pesanan', 'lwpcommerce') . ' <span class="awaiting-mod">%d</span>'), $awaiting) : __('Pesanan', 'lwpcommerce'),
+			'manage_options',
+			'lwpcommerce-order',
+			[$this, 'admin_menu_order'],
+			LWPC_URL . 'src/admin/assets/svg/order.svg',
+			3
 		);
 
 

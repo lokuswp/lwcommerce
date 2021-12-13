@@ -1,4 +1,0 @@
-- Inventory
-    - Product
-- Order
-- Shipping
