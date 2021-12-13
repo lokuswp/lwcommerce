@@ -2,26 +2,28 @@
 
 namespace LokaWP\Commerce;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+if ( ! defined('ABSPATH')) {
+    exit;
 }
 
-class Reports {
+class Reports
+{
 
-	public function render() {
+    public function render()
+    {
 //		update_option( 'lsdd_report_unread', 0 );
 
-		$this->table();
-		$this->panel_editor();
-		$this->modal_import();
-		$this->modal_add_report_manual();
+        $this->table();
+        $this->panel_editor();
+        $this->modal_import();
+        $this->modal_add_report_manual();
 
 //		$payment_method = get_option( 'lsdd_payment_settings' );
-	}
+    }
 
-	private function table() {
-		$this->notification_invoice_downloaded();
-		?>
+    private function table()
+    {
+        ?>
         <style>
             table.dataTable thead .sorting {
                 background-image: url(<?= LWPC_URL . "/src/includes/libraries/js/datatables/sort_both.png" ?>)
@@ -46,77 +48,93 @@ class Reports {
         <!--        <div class="lwpc-screen-loading"></div>-->
         <div class="wrap lwpc-admin">
             <div class="columns">
-
-                <div class="column col-12 bg-white">
-                    <h4 style="padding: 20px 14px;margin: 0;">
-                        <button class="btn btn-primary add-report-button" style="margin: auto 10px">
-                            <i class="icon icon-plus"></i>
-							<?php _e( 'Report', 'lwpcommerce' ) ?>
-                        </button>
-
-
-                        <a class="btn btn-sm float-right" style="color:black;" target="_blank"
-                           href="https://learn.lsdplugins.com/docs/lsddonasi/laporan/mengimport-laporan-donasi/"><?php _e( 'Learn Import', 'lwpcommerce' ); ?></a>
-                        <a class="btn btn-primary btn-sm float-right" target="_blank" href="https://learn.lsdplugins.com/docs/lsddonasi/laporan/mengexport-laporan-donasi/"><?php _e( 'Learn Export',
-								'lwpcommerce' ); ?></a>
-                    </h4>
-                </div>
-
-                <!-- Import Export -->
-                <div id="action" class="column col-12" style="margin-bottom: 10px">
-
-                    <div class="columns">
-                        <div class="column">
-                            <ul class="tab tab-list" style="border-bottom:none;margin-left:14px;">
-                                <li class="tab-item active" tab="All">
-                                    <a href="#all" class="badge" data-badge=""><?php _e( 'All', 'lwpcommerce' ); ?></a>
-                                </li>
-                                <li class="tab-item" tab="Pending">
-                                    <a href="#pending" class="badge" data-badge=""><?php _e( 'Pending', 'lwpcommerce' ); ?></a>
-                                </li>
-                            </ul>
-                        </div>
-
-
-                        <div class="column">
-                            <div class="float-right" style="padding: 0 14px;">
-                                <div class="input-group" style="position:relative;">
-                                    <span class="loading" style="margin-right:25px"></span>
-                                    <select id="filter-table" class="form-select" style="width:50%;margin-right:5px;">
-                                        <option value="All"><?php _e( 'All', 'lwpcommerce' ); ?></option>
-                                    </select>
-
-                                    <button class="btn btn-primary" id="lwpc_export"><?php _e( 'Export', 'lwpcommerce' ); ?></button>
-                                    <button class="btn modal-click"><?php _e( 'Import', 'lwpcommerce' ); ?></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Table -->
                 <div class="column col-12" style="padding: 0 20px;">
                     <div class="table-loading" style="display:none;"></div>
-                    <table id="reportss" class="display order-column" style="position:relative;">
+                    <table id="reports" class="display order-column" style="position:relative;">
                         <thead>
                         <tr>
-                            <th>
-                                <div class="form-group">
-                                    <label class="form-checkbox">
-                                        <input id="selectall" type="checkbox">
-                                        <i class="form-icon"></i>
-                                    </label>
-                                </div>
-                            </th>
-                            <th> <?php _e( 'Donors', 'lwpcommerce' ) ?> </th>
-                            <th> <?php _e( 'Program', 'lwpcommerce' ) ?> </th>
-                            <th> <?php _e( 'Payment', 'lwpcommerce' ) ?> </th>
-                            <th> <?php _e( 'Total', 'lwpcommerce' ) ?> </th>
-                            <th> <?php _e( 'Date', 'lwpcommerce' ) ?> </th>
-                            <th> <?php _e( 'Status', 'lwpcommerce' ) ?> </th>
-                            <th> <?php _e( 'Action', 'lwpcommerce' ) ?> </th>
+                            <th> <?php _e('Donors', 'lwpcommerce') ?> </th>
                         </tr>
                         </thead>
+                        <tbody>
+                        <?php $x = [1, 2, 3];
+                        foreach (
+                            $x
+
+                            as $z
+                        ) : ?>
+                            <tr>
+                                <td>
+                                    <div class="container">
+                                        <div class="lwpc-card-header">
+                                            <button class="lwpc-btn-rounded lwpc-mr-10">
+                                                Pesanan Baru
+                                            </button>
+                                            <span class="lwpc-text-red lwpc-mr-10">INV25189752189598157</span>
+                                            <span lass="lwpc-text-bold lwpc-mr-10">Asmuni</span>
+                                        </div>
+                                        <div class="lwpc-card-body">
+                                            <div class="lwpc-grid lwpc-m-20">
+                                                <div class="lwpc-grid-item">
+                                                    <img src="https://i.pinimg.com/originals/a6/e8/d6/a6e8d6c8122c34de94463e071a4c7e45.png" alt="gedung" width="100px" height="100px">
+                                                    <div class="lwpc-flex-column">
+                                                        <span class="lwpc-text-bold">Gedung M Raharja</span>
+                                                        <span class="lwpc-text-bold">1 x Rp250.000.000</span>
+                                                        <span class="lwpc-text-secondary">"Note dari pembeli"</span>
+                                                        <a style="color: #0EBA29; margin-top: 10px" class="lwpc-hover">Lihat 2 Produk Lainya...</a>
+                                                    </div>
+                                                </div>
+                                                <div class="lwpc-grid-item">
+                                                    <div class="lwpc-flex-column">
+                                                        <span class="lwpc-text-bold">Pembeli</span>
+                                                        <span style="margin-top: 10px">Elon Musk</span>
+                                                        <span>0825 - 1421 - 4124</span>
+                                                        <span>elon@tesla.gg</span>
+                                                    </div>
+                                                </div>
+                                                <div class="lwpc-grid-item">
+                                                    <div class="lwpc-flex-column">
+                                                        <span class="lwpc-text-bold">Alamat</span>
+                                                        <span style="margin-top: 10px">Jl Kenangan Jiwa No 40 RT 003 RW 004</span>
+                                                        <div class="lwpc-flex">
+                                                            <span>Kecamatan</span>
+                                                            <span>Kode Pos</span>
+                                                        </div>
+                                                        <span>Kabupaten/kota</span>
+                                                        <span>Provinsi</span>
+                                                    </div>
+                                                </div>
+                                                <div class="lwpc-grid-item">
+                                                    <div class="lwpc-flex-column">
+                                                        <span class="lwpc-text-bold">Kurir</span>
+                                                        <span>Email | WhatsApp</span>
+                                                        <span style="margin-top: 10px" class="lwpc-text-bold">Nomor Resi</span>
+                                                        <span>-</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="lwpc-card-footer">
+                                            <div class="lwpc-flex ">
+                                                <div>
+                                                    <span class="lwpc-mr-100">Detail Pesanan</span>
+                                                    <span class="lwpc-mr-40">Cetak Label</span>
+                                                    <span class="lwpc-mr-10">Note</span>
+                                                    <input type="text" class="lwpc-report-input">
+                                                    <button class="lwpc-btn-rounded-secondary ">Tambah Note</button>
+                                                </div>
+                                                <div>
+                                                    <span class="lwpc-text-bold lwpc-mr-10">Rp 800.000</span>
+                                                    <button class="lwpc-btn-rounded" style="background-color: #00BD12; color:white">Terima Pesanan</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
                     </table>
                 </div>
                 <!-- Table -->
@@ -125,19 +143,20 @@ class Reports {
         </div>
 
         <input type="hidden" name="link-url-invoice"
-               value="<?= get_site_url( null, '/wp-content/uploads/lsddonation/invoice.pdf' ) ?>">
-		<?php
-	}
+               value="<?= get_site_url(null, '/wp-content/uploads/lsddonation/invoice.pdf') ?>">
+        <?php
+    }
 
-	private function panel_editor() {
-		?>
+    private function panel_editor()
+    {
+        ?>
 
         <div class="column col-6 col-12"
              style="top: 30px;position: fixed;right: 0;z-index:-1;height: 97.5%;width: 400px;display:none;">
             <div id="report_editor" class="panel" style="height: 100%;background: #fff;margin-right: -10px;">
                 <div class="panel-header text-center">
 
-                    <div class="panel-title h5 mt-10 float-left"><?php _e( 'Edit Report', 'lwpcommerce' ); ?></div>
+                    <div class="panel-title h5 mt-10 float-left"><?php _e('Edit Report', 'lwpcommerce'); ?></div>
                     <section class="panel-close float-right">
                         <i class="icon icon-cross"></i>
                     </section>
@@ -145,53 +164,54 @@ class Reports {
 
                 <div class="panel-body">
                     <div class="form-group">
-                        <label class="form-label" for="nama"><?php _e( 'Name', 'lwpcommerce' ); ?></label>
+                        <label class="form-label" for="nama"><?php _e('Name', 'lwpcommerce'); ?></label>
                         <input class="form-input" type="text" id="name" placeholder="John Doe">
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="nohp"><?php _e( 'Phone', 'lwpcommerce' ); ?></label>
+                        <label class="form-label" for="nohp"><?php _e('Phone', 'lwpcommerce'); ?></label>
                         <input class="form-input" type="text" id="phone" placeholder="08561655212">
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="status"><?php _e( 'Status', 'lwpcommerce' ); ?></label>
+                        <label class="form-label" for="status"><?php _e('Status', 'lwpcommerce'); ?></label>
                         <select id="status" class="select2" style="width:100%;">
-                            <option value="completed"><?php _e( 'Complete', 'lwpcommerce' ); ?></option>
-                            <option value="hold"><?php _e( 'Pending', 'lwpcommerce' ); ?></option>
+                            <option value="completed"><?php _e('Complete', 'lwpcommerce'); ?></option>
+                            <option value="hold"><?php _e('Pending', 'lwpcommerce'); ?></option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="date"><?php _e( 'Date', 'lwpcommerce' ); ?></label>
+                        <label class="form-label" for="date"><?php _e('Date', 'lwpcommerce'); ?></label>
                         <input class="form-input" type="date" id="date" placeholder="12/12/2020">
                     </div>
                 </div>
 
                 <div class="panel-footer">
                     <button class="btn btn-primary btn-block" style="margin-bottom:15px"
-                            id="lsdd_report_update"><?php _e( 'Update', 'lwpcommerce' ); ?></button>
+                            id="lsdd_report_update"><?php _e('Update', 'lwpcommerce'); ?></button>
                 </div>
 
             </div>
         </div>
-		<?php
-	}
+        <?php
+    }
 
-	private function modal_import() {
-		?>
+    private function modal_import()
+    {
+        ?>
         <div class="modal modal-md" id="import-db">
             <button class="modal-overlay" aria-label="Close"></button>
             <div class="modal-container" role="document">
                 <div class="modal-header">
                     <button class="btn btn-clear float-right modal-close" aria-label="Close"></button>
                     <div class="modal-title h5">
-						<?php _e( 'Import', 'lwpcommerce' ); ?>
+                        <?php _e('Import', 'lwpcommerce'); ?>
                     </div>
                 </div>
                 <div class="modal-body" style="padding-top:0;padding-bottom:25px;">
                     <small>
-						<?php _e( 'This will replace all existing data in the database', 'lwpcommerce' ); ?>
+                        <?php _e('This will replace all existing data in the database', 'lwpcommerce'); ?>
                     </small>
                     <div class="input-group">
                         <input class="form-input" id="import-data" type="file" title="Choose CSV File">
@@ -209,22 +229,23 @@ class Reports {
                                       style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/>
                             </svg>
                             <span style="margin-left: 10px;float: right;margin-top: -1px;">
-								<?php _e( 'Import', 'lwpcommerce' ); ?>
+								<?php _e('Import', 'lwpcommerce'); ?>
 							</span>
                         </button>
                     </div>
                     <small>
-						<?php _e( 'You have to adjust the import data first, export and adjust your data',
-							'lwpcommerce' ); ?>
+                        <?php _e('You have to adjust the import data first, export and adjust your data',
+                            'lwpcommerce'); ?>
                     </small>
                 </div>
             </div>
         </div>
-		<?php
-	}
+        <?php
+    }
 
-	private function notification_invoice_downloaded() {
-		?>
+    private function notification_invoice_downloaded()
+    {
+        ?>
         <style>
             .notification-warp {
                 position: fixed;
@@ -270,23 +291,24 @@ class Reports {
             }
         </style>
         <div class="notification-warp col-3"></div>
-		<?php
-	}
+        <?php
+    }
 
-	private function modal_add_report_manual() {
-		?>
+    private function modal_add_report_manual()
+    {
+        ?>
         <!-- Add report manual modal -->
         <div class="modal" id="add-report">
             <a href="#close" class="modal-overlay" aria-label="Close"></a>
             <div class="modal-container">
                 <div class="modal-header">
                     <div class="columns">
-                        <div class="column modal-title h5"><?php _e( 'Add Donation', 'lwpcommerce' ) ?></div>
+                        <div class="column modal-title h5"><?php _e('Add Donation', 'lwpcommerce') ?></div>
                         <div class="column" style="text-align:right;">
-                            <label for="reports-bulk-input"><?php _e( 'Input', 'lwpcommerce' ) ?></label>
+                            <label for="reports-bulk-input"><?php _e('Input', 'lwpcommerce') ?></label>
                             <input class="col-2" type="text" id="reports-bulk-input" value="1"
                                    style="text-align:center;" maxlength="3">
-                            <label for="reports-bulk-input"><?php _e( 'data', 'lwpcommerce' ) ?></label>
+                            <label for="reports-bulk-input"><?php _e('data', 'lwpcommerce') ?></label>
                         </div>
                     </div>
                 </div>
@@ -299,8 +321,8 @@ class Reports {
                 </div>
             </div>
         </div>
-		<?php
-	}
+        <?php
+    }
 }
 
 

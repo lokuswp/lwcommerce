@@ -60,3 +60,144 @@
     width: 5rem;
     z-index: 7;
 }
+
+.dataTables_length label select {
+    padding: 0 24px 0 8px !important;
+}
+
+#reports thead {
+    display: none;
+}
+
+/* Make header for card */
+.lwpc-card-header {
+    background: #fff;
+    padding: 10px;
+    border-bottom: 1px solid #e5e5e5;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+/* Make body for card */
+.lwpc-card-body {
+    background: #fff;
+    padding: 10px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+/* Make footer for card */
+.lwpc-card-footer {
+    background: #fff;
+    padding: 10px;
+    border-top: 1px solid #e5e5e5;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+/* Make grid layout */
+.lwpc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+}
+
+/* Make grid item center */
+.lwpc-grid-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Col length 6 */
+.col-6 {
+    grid-column: span 6;
+}
+
+/* Make flex layout */
+.lwpc-flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+/* flex column */
+.lwpc-flex-column {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+/* Make button rounded with #BFFFD1 background */
+.lwpc-btn-rounded {
+    border-radius: 5px;
+    background: #BFFFD1;
+    color: #000;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Make button rounded with secondary background */
+.lwpc-btn-rounded-secondary {
+    border-radius: 5px;
+    background: #A9A9A9;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Make Text bold */
+.lwpc-text-bold {
+    font-weight: bold;
+}
+
+/* Make Text secondary */
+.lwpc-text-secondary {
+    color: #939393;
+}
+
+/* Make Text red */
+.lwpc-text-red {
+    color: #ff0000;
+}
+
+/* Make margin right 10px */
+.lwpc-mr-10 {
+    margin-right: 10px;
+}
+
+/* Make margin right 40px */
+.lwpc-mr-40 {
+    margin-right: 40px;
+}
+
+/* Make margin right 80px */
+.lwpc-mr-100 {
+    margin-right: 100px;
+}
+
+/* Make margin 20px */
+.lwpc-m-20 {
+    margin: 20px;
+}
+
+/* Make margin bottom 0px */
+.lwpc-mb-0 {
+    margin-bottom: 0px;
+}
+
+/* On hover change mouse cursor to pointer */
+.lwpc-hover:hover {
+    cursor: pointer;
+}
+
+.lwpc-report-input {
+    width: 400px;
+    border-color: #D9D9D9;
+}
