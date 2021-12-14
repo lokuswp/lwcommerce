@@ -18,12 +18,13 @@ class Plugin
 		register_deactivation_hook(LWPC_BASE, [$this, 'uninstall']);
 
 		require_once LWPC_PATH . 'src/includes/helper/mock/func-mock.php';
+		require_once LWPC_PATH . 'src/includes/helper/func-helper.php';
 
 		// // Administration / BackOffice
 		$plugin = array('slug' => 'lwpcommerce', 'name' => 'LWPCommerce', 'version' => LWPC_VERSION);
 		if (is_admin()) {
 			require_once LWPC_PATH . 'src/admin/class-admin.php';
-			require_once LWPC_PATH . 'src/includes/helper/func-helper.php';
+			
 
 			Admin::register($plugin);
 		} else {

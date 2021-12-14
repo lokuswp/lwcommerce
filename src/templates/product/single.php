@@ -1,13 +1,17 @@
-<?php 
+<?php
 get_header();
 wp_enqueue_style("lwp-grid");
 ?>
 
 <div class="lwpcommerce lwp-container">
     <div class="lwp-navigate row">
-        <div class="col-xs-2">Back</div>
-        <div class="col-xs-8 middle-sm" style="text-align:center;">Keranjang</div>
-        <div class="col-xs-2">Icon</div>
+        <div class="col-xs-2">
+            <div class="svg-wrapper">
+                <img src="<?php echo plugins_url('/src/assets/svg/arrow-prev.svg', LWPBB_BASE); ?>" alt="prev">
+            </div>
+        </div>
+        <div class="col-xs-8"></div>
+        <div class="col-xs-2 end-sm d-flex troli-icon-wrapper"></div>
     </div>
 
     <div class="lwp-product row">
@@ -17,20 +21,15 @@ wp_enqueue_style("lwp-grid");
         <div class="col-xs-12 col-sm-12 row gutter" style="margin-top:8px;">
             <div class="col-xs-9">
                 <?php the_title(); ?>
-                <br>
-                Harga : Rp 10.000
-                <br>
+                <?php lwpc_get_price_html(); ?>
             </div>
             <div class="col-xs-3 end-sm">
-                <button class="add-troli" product-id="<?php the_ID(); ?>">Tambah</button><br>
-                10 Tersisa
+                <?php lwpc_add_to_cart_html(); ?>
+                <?php lwpc_get_stock_html(); ?>
             </div>
-
-
-
         </div>
         <div class="col-sm-12 gutter">
-            Deskripsi
+            <?php the_content(); ?>
         </div>
     </div>
 </div>
@@ -41,13 +40,8 @@ wp_enqueue_style("lwp-grid");
         max-width: 420px;
         margin: 0 auto;
     }
-    .lwp-navigate
-    {
-        height: 40px;
-    }
-    .lwp-navigate div {
-        background: greenyellow;
-    }
+
+
 </style>
 
 <?php get_footer(); ?>

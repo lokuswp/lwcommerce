@@ -1,7 +1,8 @@
-<?php 
+<?php
+
 namespace LokusWP\Commerce\Shortcodes;
 
-Class Etalase
+class Etalase
 {
     /**
      * Register Transaction Shortcode
@@ -17,9 +18,11 @@ Class Etalase
             'product_ids' => false,
         ), $atts));
 
+        wp_enqueue_style("lwp-grid");
+
         ob_start();
 
-        echo "Shortcode Etalase";
+        require_once LWPC_PATH . 'src/templates/product/etalase.php';
 
         $render = ob_get_clean();
 
