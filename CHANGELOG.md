@@ -2,7 +2,9 @@
 
 # [v0.1.0]() (2021-10-10)
 **Added :**
-- Unit Testing
-- Custom Posttype `product`
-
-**Support :**
+- Product Manage
+    - Price
+    - Stock
+- Template
+    - Add to Cart
+    - Pricing

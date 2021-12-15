@@ -11,7 +11,8 @@ class Plugin
 	public function __construct()
 	{
 		$shortcode = new Shortcodes\Etalase;
-		$posttype = new Modules\Product\Posttype;
+		$posttype = new Modules\Product\Post_Type_Product;
+		$posttype = new Modules\Product\Metabox_Product_Data;
 
 		// Activation and Deactivation
 		register_activation_hook(LWPC_BASE, [$this, 'activation']);

@@ -1,118 +1,41 @@
 <?php
+
 namespace LokusWP\Commerce\Modules\Product;
 
 if (!defined('WPTEST')) {
     defined('ABSPATH') or die("Direct access to files is prohibited");
 }
 
-class Posttype
+/**
+ * Metabox : Product Data
+ * For Manage Product Data
+ * - Price
+ * - Stock
+ * - Type
+ */
+class Metabox_Product_Data
 {
     public function __construct()
     {
         add_filter('add_meta_boxes', [$this, 'metabox_register']);
         add_action('save_post', [$this, 'metabox_save']);
         add_action('new_to_publish', [$this, 'metabox_save']);
-
-        add_filter('manage_product_posts_columns', [$this, 'column_header']);
-        add_action('manage_product_posts_custom_column', [$this, 'columen_content'], 10, 2);
-
-        add_action('archive_template', [$this, 'archive']);
-        add_filter('single_template', [$this, 'single'], 11);
-
-        add_action('init', [$this, 'register']);
-    }
-
-    /**
-     * Registering Posttype Product
-     *
-     * @return void
-     */
-    public function register()
-    {
-        $supports = array(
-            'title',
-            'editor',
-            'thumbnail',
-            'excerpt',
-        );
-
-        $labels = array(
-            'name' => _x('Products', 'plural', 'lwpcommerce'),
-            'singular_name' => _x('Product', 'singular', 'lwpcommerce'),
-            'add_new' => _x('New Product', 'Add Product', 'lwpcommerce'),
-            'add_new_item' => __('Add Product', 'lwpcommerce'),
-            'new_item' => __('New Product', 'lwpcommerce'),
-            'edit_item' => __('Edit Product', 'lwpcommerce'),
-            'view_item' => __('View Product', 'lwpcommerce'),
-            'all_items' => __('All Product', 'lwpcommerce'),
-            'search_items' => __('Find Product', 'lwpcommerce'),
-            'not_found' => __('Product not found.', 'lwpcommerce'),
-        );
-
-        $args = array(
-            'supports' => $supports,
-            'labels' => $labels,
-            'public' => true,
-            'show_ui' => true,
-            'show_in_menu' => false,
-            'show_in_admin_bar' => true,
-            'query_var' => true,
-            'rewrite' => array('slug' => 'product'),
-            'has_archive' => true,
-            'hierarchical' => false,
-            'comments' => true,
-            'taxonomies' => array('product-category'),
-        );
-
-        register_post_type('product', $args);
-
-        // register_taxonomy(
-        //     'product-category',
-        //     'product',
-        //     array(
-        //         'hierarchical' => true,
-        //         'label' => __('Kategori'),
-        //         'query_var' => true,
-        //         'public' => true,
-        //         'rewrite' => array(
-        //             'slug' => __('kategori', 'lwpcommerce'),
-        //             'with_front' => true,
-        //             'hierarchical' => true,
-        //         ),
-        //         'has_archive' => false,
-        //     )
-        // );
-
-        // $this->flush();
-    }
-
-    protected function flush()
-    {
-        // if (get_option('lwpcommerce_permalink_flush')) {
-        //     // Force and Flush
-        //     global $wp_rewrite;
-        //     $wp_rewrite->set_permalink_structure('/%postname%/');
-        //     update_option("rewrite_rules", false);
-        //     $wp_rewrite->flush_rules(true);
-
-        //     delete_option('lwpcommerce_permalink_flush');
-        // }
     }
 
     protected function js_inject()
     {
 ?>
         <script>
-            jQuery(document).ready(function() {
-                jQuery('body.post-type-product #postimagediv .inside').append('<p class="recommended" id="donation-recommended">Recommended image size 392 x 210px</p>');
-            });
+            // jQuery(document).ready(function() {
+            //     jQuery('body.post-type-product #postimagediv .inside').append('<p class="recommended" id="donation-recommended">Recommended image size 392 x 210px</p>');
+            // });
 
-            jQuery(document).on('change', 'input[name="product_type"]', function() {
-                jQuery('body.post-type-product #postimagediv .recommended').hide()
-                if (jQuery('input[name="product_type"]:checked').val()) {
-                    jQuery('body.post-type-product #postimagediv #' + jQuery('input[name="product_type"]:checked').val().trim() + '-recommended').show();
-                }
-            });
+            // jQuery(document).on('change', 'input[name="product_type"]', function() {
+            //     jQuery('body.post-type-product #postimagediv .recommended').hide()
+            //     if (jQuery('input[name="product_type"]:checked').val()) {
+            //         jQuery('body.post-type-product #postimagediv #' + jQuery('input[name="product_type"]:checked').val().trim() + '-recommended').show();
+            //     }
+            // });
         </script>
     <?php
     }
@@ -127,7 +50,7 @@ class Posttype
             'normal',
             'high'
         );
-        // $this->js_inject();
+        $this->js_inject();
     }
 
     public function metabox_product_data()
@@ -229,6 +152,16 @@ class Posttype
                     </a>
                 </li>
                 <li>
+                    <a href="#stock">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-database">
+                            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                        </svg>
+                        <span><?php _e('Stock', 'lwpcommerce'); ?></span>
+                    </a>
+                </li>
+                <!-- <li>
                     <a href="#file">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-package">
                             <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
@@ -238,7 +171,7 @@ class Posttype
                         </svg>
                         <span><?php _e('File', 'lwpcommerce'); ?></span>
                     </a>
-                </li>
+                </li> -->
                 <!-- <li>
                     <a href="#shipping">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-truck">
@@ -260,20 +193,20 @@ class Posttype
             <!-- Price -->
             <div class="wp-tab-panel" id="price">
                 <?php
-                $price_normal = get_post_meta($post->ID, '_price_normal', true) == null ? "" : lwpc_set_currency_format(false, abs(get_post_meta($post->ID, '_price_normal', true)));
-                $price_discount = get_post_meta($post->ID, '_price_discount', true) == null ? "" : lwpc_set_currency_format(false, abs(get_post_meta($post->ID, '_price_discount', true)));
+                $price_normal = get_post_meta($post->ID, '_price_normal', true) == null ? "" : lwp_currency_format(false, abs(get_post_meta($post->ID, '_price_normal', true)));
+                $price_discount = get_post_meta($post->ID, '_price_discount', true) == null ? "" : lwp_currency_format(false, abs(get_post_meta($post->ID, '_price_discount', true)));
                 ?>
-                <!-- <div class="metabox-field"> -->
-                <label for="price_normal">
-                    <?php esc_attr_e('Harga Normal', 'lwpcommerce'); ?> ( <?php echo lwpc_set_currency_display('symbol'); ?> )
-                </label>
-                <p class="mfield"><input type="text" name="price_normal" class="currency" placeholder="<?php echo lwpc_set_currency_display('format'); ?>" value="<?php echo $price_normal; ?>"></p>
-                <small>Jadi</small>
-                <label for="price_discount">
-                    <?php esc_attr_e('Harga Diskon', 'lwpcommerce'); ?> ( <?php echo lwpc_set_currency_display('symbol'); ?> )
-                </label>
-                <p class="mfield"><input type="text" name="price_discount" class="currency" placeholder="<?php echo lwpc_set_currency_display('format'); ?>" value="<?php echo $price_discount; ?>"></p>
-                <!-- </div> -->
+                <div class="metabox-field">
+                    <label for="price_normal">
+                        <?php esc_attr_e('Harga Normal', 'lwpcommerce'); ?> ( <?php echo lwp_currency_display('symbol'); ?> )
+                    </label>
+                    <p class="mfield"><input type="text" name="price_normal" class="currency" placeholder="<?php echo lwp_currency_display('format'); ?>" value="<?php echo $price_normal; ?>"></p>
+                    <small>Jadi</small>
+                    <label for="price_discount">
+                        <?php esc_attr_e('Harga Diskon', 'lwpcommerce'); ?> ( <?php echo lwp_currency_display('symbol'); ?> )
+                    </label>
+                    <p class="mfield"><input type="text" name="price_discount" class="currency" placeholder="<?php echo lwp_currency_display('format'); ?>" value="<?php echo $price_discount; ?>"></p>
+                </div>
             </div>
 
             <!-- Stock  -->
@@ -281,13 +214,21 @@ class Posttype
                 <?php
                 $stock = empty(get_post_meta($post->ID, '_stock', true)) ? 9999 : abs(get_post_meta($post->ID, '_stock', true));
                 $stock_unit = empty(get_post_meta($post->ID, '_stock_unit', true)) ? 'pcs' : esc_attr(get_post_meta($post->ID, '_stock_unit', true));
+                $min_purchase = empty(get_post_meta($post->ID, '_min_purchase', true)) ? 1 : intval(get_post_meta($post->ID, '_min_purchase', true));
+                $max_purchase = empty(get_post_meta($post->ID, '_max_purchase', true)) ? -1 : intval(get_post_meta($post->ID, '_max_purchase', true));
                 ?>
                 <div class="metabox-field">
-                    <label for="stock"><?php esc_attr_e('Stok', 'lwpcommerce'); ?> ( <small> > 100 : <?php _e('Tersedia', 'lwpcommerce'); ?></small> )</label>
+                    <label for="stock"><?php esc_attr_e('Stok', 'lwpcommerce'); ?></label>
                     <p class="mfield"><input type="text" name="stock" placeholder="9999" value="<?php echo $stock; ?>"></p>
 
                     <label for="stock_unit"><?php esc_attr_e('Stok Unit', 'lwpcommerce'); ?> </label>
                     <p class="mfield"><input type="text" name="stock_unit" placeholder="pcs" value="<?php echo $stock_unit; ?>"></p>
+
+                    <label for="min_purchase"><?php esc_attr_e('Min Purchase', 'lwpcommerce'); ?> </label>
+                    <p class="mfield"><input type="text" name="min_purchase" placeholder="-1" value="<?php echo $min_purchase; ?>"></p>
+
+                    <label for="max_purchase"><?php esc_attr_e('Max Purchase', 'lwpcommerce'); ?> </label>
+                    <p class="mfield"><input type="text" name="max_purchase" placeholder="1" value="<?php echo $max_purchase; ?>"></p>
                 </div>
             </div>
 
@@ -375,7 +316,13 @@ class Posttype
                 });
             });
         </script>
-    <?php
+
+        <style>
+            .wp-tab-panel {
+                padding: 8px 14px 14px;
+            }
+        </style>
+<?php
     }
 
     public function metabox_save($post_id)
@@ -403,122 +350,23 @@ class Posttype
             return 'cannot edit post';
         }
 
-        update_post_meta($post_id, '_price_normal', abs($_POST['price_normal']));
-        update_post_meta($post_id, '_price_discount', abs($_POST['price_discount']));
+        update_post_meta($post_id, '_price_normal', lwp_currency_to_number($_POST['price_normal']));
+        update_post_meta($post_id, '_price_discount', lwp_currency_to_number($_POST['price_discount']));
 
-        // update_post_meta($post_id, '_stock', empty($_POST['stock']) ? 1 : abs(sanitize_text_field($_POST['stock'])));
-        // update_post_meta($post_id, '_stock_unit', sanitize_text_field($_POST['stock_unit']));
+        update_post_meta($post_id, '_stock', empty($_POST['stock']) ? 1 : abs(sanitize_text_field($_POST['stock'])));
+        update_post_meta($post_id, '_stock_unit', sanitize_text_field($_POST['stock_unit']));
+        update_post_meta($post_id, '_min_purchase', intval($_POST['min_purchase']));
+        update_post_meta($post_id, '_max_purchase', intval($_POST['max_purchase']));
 
         // update_post_meta($post_id, '_shipping_type', sanitize_text_field($_POST['shipping_tabs']));
         // update_post_meta($post_id, '_product_type', sanitize_text_field($_POST['shipping_tabs']));
 
         // Digital
-        update_post_meta($post_id, '_digital_file_url', sanitize_text_field($_POST['digital_file_url']));
-        update_post_meta($post_id, '_digital_file_version', isset($_POST['digital_file_version']) && $_POST['digital_file_version'] != null ? sanitize_text_field($_POST['digital_file_version']) : '1.0.0');
+        // update_post_meta($post_id, '_digital_file_url', sanitize_text_field($_POST['digital_file_url']));
+        // update_post_meta($post_id, '_digital_file_version', isset($_POST['digital_file_version']) && $_POST['digital_file_version'] != null ? sanitize_text_field($_POST['digital_file_version']) : '1.0.0');
 
-        // Physical
-        update_post_meta($post_id, '_physical_weight', lwpbb_set_currency_to_number($_POST['physical_weight']));
-        update_post_meta($post_id, '_physical_volume', lwpbb_set_currency_to_number($_POST['physical_volume']));
-    }
-    
-    /**
-     * Display Listing Product
-     *
-     * @return void
-     */
-    public function archive()
-    {
-        if (is_post_type_archive('product')) {
-            return LWPC_PATH . 'frontend/templates/storefront/listing.php';
-        }
-    }
-
-    /**
-     * Display Detail Product
-     *
-     * @param string $template
-     * @return void
-     */
-    public function single($template)
-    {
-        global $post;
-
-        if ($post->post_type == 'product') {
-
-            if (file_exists(LWPC_PATH . 'src/templates/product/single.php')) {
-                return LWPC_PATH . 'src/templates/product/single.php';
-            }
-        }
-        return $template;
-    }
-
-    public function column_header($columns)
-    {
-        $columns = array(
-            'cb' => $columns['cb'],
-            'image' => __('Image'),
-            'title' => __('Title'),
-            'price' => __('Harga', 'lwpcommerce'),
-            'stock' => __('Stok', 'lwpcommerce'),
-            'id' => __('ID'),
-            'date' => $columns['date'],
-        );
-
-        return $columns;
-    }
-
-    public function columen_content($column, $post_id)
-    {
-    ?>
-        <style>
-            .column-image,
-            .column-id {
-                width: 7%;
-            }
-
-            .column-price,
-            .column-stock {
-                width: 13%;
-            }
-        </style>
-
-<?php
-        if ('image' === $column) {
-            echo get_the_post_thumbnail($post_id, array(39, 39));
-        }
-
-        // Type ID
-        if ('id' === $column) {
-            echo '<input style="width:50px;text-align:center;" value="' . get_the_ID() . '"/>';
-        }
-
-
-        if ('stock' === $column) {
-            if (get_post_meta($post_id, '_stock', true) > 999) {
-                _e('Tersedia', 'lwpcommerce');
-                return;
-            }
-
-            if (get_post_meta($post_id, '_stock', true) == 0) {
-                _e('Kosong', 'lwpcommerce');
-                return;
-            }
-
-            echo esc_attr(ucfirst(get_post_meta($post_id, '_stock', true)));
-        }
-
-        if ('price' === $column) {
-            if (lwpc_get_price($post_id) == 0) {
-                _e('Gratis', 'lwpcommerce');
-                return;
-            }
-
-            if (lwpc_get_price_discount($post_id)) {
-                echo '<span style="text-decoration: line-through">' . lwpc_set_currency_format(true, lwpc_get_price($post_id)) .  '</span><br>';
-                echo lwpc_set_currency_format(true, lwpc_get_price_discount($post_id));
-            } else {
-                echo lwpc_set_currency_format(true, lwpc_get_price($post_id));
-            }
-        }
+        // // Physical
+        // update_post_meta($post_id, '_physical_weight', lwpbb_set_currency_to_number($_POST['physical_weight']));
+        // update_post_meta($post_id, '_physical_volume', lwpbb_set_currency_to_number($_POST['physical_volume']));
     }
 }
