@@ -197,10 +197,10 @@ class Post_Type_Product
             }
 
             if (lwpc_get_price_discount($post_id)) {
-                echo '<span style="text-decoration: line-through">' . lwpc_set_currency_format(true, lwpc_get_price($post_id)) .  '</span><br>';
-                echo lwpc_set_currency_format(true, lwpc_get_price_discount($post_id));
+                echo '<span style="text-decoration: line-through">' . lwp_currency_format(true, lwpc_get_price($post_id)) .  '</span><br>';
+                echo lwp_currency_format(true, lwpc_get_price_discount($post_id));
             } else {
-                echo lwpc_set_currency_format(true, lwpc_get_price($post_id));
+                echo lwp_currency_format(true, lwpc_get_price($post_id));
             }
         }
 
