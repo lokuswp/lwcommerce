@@ -54,7 +54,7 @@ function lwpc_add_to_cart_html() {
 function lwpc_set_settings( string $option, string $item, $value, string $sanitize = 'sanitize_text_field' ) {
 	$settings = get_option( 'lwpcommerce_' . $option );
 
-	$whitelist = [ 'sanitize_text_field', 'sanitize_option', 'sanitize_key', 'abs', 'esc_url_raw', 'intval', 'absint', 'sanitize_email' ];
+	$whitelist = [ 'sanitize_text_field', 'sanitize_option', 'sanitize_key', 'abs', 'esc_url_raw', 'intval', 'floatval', 'absint', 'sanitize_email' ];
 	if ( ! in_array( $sanitize, $whitelist ) ) {
 		return false;
 	}
@@ -80,7 +80,7 @@ function lwpc_get_settings( string $option = 'general_settings', string $item, s
 	$settings = get_option( 'lwpcommerce_' . $option );
 
 	// Vuln :: Function Injection -> calL_user_funct
-	$whitelist = [ 'esc_attr', 'esc_url', 'esc_html', 'abs', 'intval', 'absint', 'array' ];
+	$whitelist = [ 'esc_attr', 'esc_url', 'esc_html', 'abs', 'intval', 'floatval', 'absint', 'array' ];
 	if ( ! in_array( $validator, $whitelist ) ) {
 		return null;
 	}
