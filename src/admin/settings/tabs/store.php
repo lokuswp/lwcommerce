@@ -5,69 +5,48 @@ $address   = "";
 $countries = "";
 $state     = "";
 $district  = "";
-
-var_dump( get_option( 'lwpcommerce_store' ) );
+$districts = "";
 
 $settings = get_option( 'lwpcommerce_store' );
+var_dump( $settings );
 if ( ! $settings ) {
 	lwpc_set_settings( 'store', 'name', $name );
 	lwpc_set_settings( 'store', 'logo', $logo, 'esc_url_raw' );
+	lwpc_set_settings( 'store', 'description', '' );
+
+	lwpc_set_settings( 'store', 'email', '', 'sanitize_email' );
+	lwpc_set_settings( 'store', 'whatsapp', '' );
+
 	lwpc_set_settings( 'store', 'address', $address );
 	lwpc_set_settings( 'store', 'country', $countries );
 	lwpc_set_settings( 'store', 'state', $state, 'intval' );
 	lwpc_set_settings( 'store', 'district', $district, 'intval' );
+	lwpc_set_settings( 'store', 'districts', $districts, 'intval' );
+	lwpc_set_settings( 'store', 'latitude', '', 'floatval' );
+	lwpc_set_settings( 'store', 'longitude', '', 'floatval' );
 }
+$name        = lwpc_get_settings( 'store', 'name' );
+$logo        = lwpc_get_settings( 'store', 'logo', 'esc_url', 'https://lokuswp.id/wp-content/uploads/2021/12/lokago.png' );
+$description = lwpc_get_settings( 'store', 'description' );
 
-$countries         = [
-	[
-		'iso2'            => "ID",
-		'iso3'            => "IDN",
-		'phone'           => "+62",
-		'name'            => "Indonesia",
-		'currency'        => "IDR",
-		'currency_format' => "IDR - Rupiah ( Rp 100.000 )",
-	],
-	[
-		'iso2'            => "MY",
-		'iso3'            => "MYS",
-		'phone'           => "+60",
-		'name'            => "Malaysia",
-		'currency'        => "MYR",
-		'currency_format' => "MYR - Ringgit ( 100 RM )",
-	],
-	[
-		'iso2'            => "SG",
-		'iso3'            => "SGP",
-		'phone'           => "+65",
-		'name'            => "Singapore",
-		'currency'        => "SGD",
-		'currency_format' => "SGD - Singapore Dollar ( S$ 10 )",
-	],
-	[
-		'iso2'            => "US",
-		'iso3'            => "USA",
-		'phone'           => "+1",
-		'name'            => "United States",
-		'currency'        => "USD",
-		'currency_format' => "USD - Dollar ( $15 )",
-	]
-];
-$name              = lwpc_get_settings( 'store', 'name' );
-$logo              = lwpc_get_settings( 'store', 'logo', 'esc_url', 'https://lokuswp.id/wp-content/uploads/2021/12/lokago.png' );
-$address           = lwpc_get_settings( 'store', 'address' );
-$country_selected  = lwpc_get_settings( 'store', 'country' );
-$state_selected    = lwpc_get_settings( 'store', 'state', 'intval' );
-$district_selected = lwpc_get_settings( 'store', 'district', 'intval' );
+$email    = lwpc_get_settings( 'store', 'email' );
+$whatsapp = lwpc_get_settings( 'store', 'whatsapp' );
 
-$id_states = json_decode( file_get_contents( LWPBB_PATH . 'src/includes/cache/ID-states.json' ) );
-$id_cities = json_decode( file_get_contents( LWPBB_PATH . 'src/includes/cache/ID-cities.json' ) );
+$address            = lwpc_get_settings( 'store', 'address' );
+$country_selected   = lwpc_get_settings( 'store', 'country' );
+$state_selected     = lwpc_get_settings( 'store', 'state', 'intval' );
+$district_selected  = lwpc_get_settings( 'store', 'district', 'intval' );
+$districts_selected = lwpc_get_settings( 'store', 'districts', 'intval' );
+$latitude           = lwpc_get_settings( 'store', 'latitude', 'floatval' );
+$longitude          = lwpc_get_settings( 'store', 'longitude', 'floatval' );
 
 ?>
 
 <section id="settings" class="form-horizontal">
     <form>
 
-
+        <!--Profil Toko-->
+        <div class="divider" data-content="Profil Toko"></div>
         <!-- Name -->
         <div class="form-group">
             <div class="col-3 col-sm-12">
@@ -90,6 +69,42 @@ $id_cities = json_decode( file_get_contents( LWPBB_PATH . 'src/includes/cache/ID
             </div>
         </div>
 
+        <!-- Description -->
+        <div class="form-group">
+            <div class="col-3 col-sm-12">
+                <label class="form-label" for="description"><?php _e( 'Deskripsi', 'lwpcommerce' ); ?></label>
+            </div>
+            <div class="col-5 col-sm-12">
+                <textarea class="form-input" name="description" placeholder="Toko keren" rows="3"><?php echo $description; ?></textarea>
+            </div>
+        </div>
+
+        <!--Kontak Toko-->
+        <div class="divider" data-content="Kontak Toko"></div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <div class="col-3 col-sm-12">
+                <label class="form-label" for="email"><?php _e( 'Email', 'lwpcommerce' ); ?></label>
+            </div>
+            <div class="col-5 col-sm-12">
+                <input type="email" class="form-input" name="email" placeholder="jhonDoe@gmail.com" value="<?php echo $email; ?>"/>
+            </div>
+        </div>
+
+        <!-- Whatsapp -->
+        <div class="form-group">
+            <div class="col-3 col-sm-12">
+                <label class="form-label" for="whatsapp"><?php _e( 'Whatsapp', 'lwpcommerce' ); ?></label>
+            </div>
+            <div class="col-5 col-sm-12">
+                <input type="number" class="form-input" name="whatsapp" placeholder="08126876418" value="<?php echo $whatsapp; ?>"/>
+            </div>
+        </div>
+
+        <!--Lokasi Toko-->
+        <div class="divider" data-content="Lokasi Toko"></div>
+
         <!-- Country -->
         <div class="form-group hidden">
             <div class="col-3 col-sm-12">
@@ -99,10 +114,7 @@ $id_cities = json_decode( file_get_contents( LWPBB_PATH . 'src/includes/cache/ID
             <div class="col-5 col-sm-12">
                 <select class="form-select" name="country" id="form-country">
                     <!-- lwpcommerce-admin.js : onChange trigger result States -->
-                    <option disabled selected><?php _e( 'Pilih Negara', 'lwpcommerce' ) ?></option>
-					<?php foreach ( $countries as $key => $country ): ?>
-                        <option value="<?php echo $country['iso2']; ?>" <?php echo ( $country_selected == $country['iso2'] ) ? 'selected' : ''; ?>><?php echo $country['name']; ?></option>
-					<?php endforeach; ?>
+                    <option name="indonesia">Indonesia</option>
                 </select>
             </div>
         </div>
@@ -115,13 +127,7 @@ $id_cities = json_decode( file_get_contents( LWPBB_PATH . 'src/includes/cache/ID
             </div>
             <div class="col-5 col-sm-12">
                 <select class="form-select" name="state" id="form-state">
-                    <option><?php _e( 'Pilih Provinsi', 'lwpcommerce' ); ?></option>
-					<?php foreach ( $id_states as $key => $state ): ?>
-						<?php if ( ! in_array( $state->province_id, $states ) ): ?>
-                            <option value="<?php echo $state->province_id; ?>" <?php echo ( $state_selected == $state->province_id ) ? 'selected' : ''; ?>><?php echo $state->province; ?></option>
-							<?php $states[] = $state->province_id; ?>
-						<?php endif; ?>
-					<?php endforeach; ?>
+                    <option value="<?= $state_selected ?? '' ?>"><?php _e( 'Pilih Provinsi', 'lwpcommerce' ); ?></option>
                 </select>
             </div>
         </div>
@@ -134,13 +140,20 @@ $id_cities = json_decode( file_get_contents( LWPBB_PATH . 'src/includes/cache/ID
 
             <div class="col-5 col-sm-12">
                 <select class="form-select" name="district" id="form-district">
-                    <option><?php _e( 'Pilih Kota atau Kabupaten', 'lwpcommerce' ); ?></option>
-					<?php foreach ( $id_cities as $key => $city ): ?>
-						<?php if ( $city->city_id == $district_selected ): ?>
-                            <option value="<?php echo esc_attr( $district_selected ); ?>" selected><?php echo esc_attr( $city->type . ' ' . $city->city_name ); ?></option>
-							<?php break; ?>
-						<?php endif; ?>
-					<?php endforeach; ?>
+                    <option value="<?= $district_selected ?? '' ?>"><?php _e( 'Pilih Kota atau Kabupaten', 'lwpcommerce' ); ?></option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Districts -->
+        <div class="form-group hidden">
+            <div class="col-3 col-sm-12">
+                <label class="form-label" for="districts"><?php _e( 'Kecamatan', 'lwpcommerce' ); ?></label>
+            </div>
+
+            <div class="col-5 col-sm-12">
+                <select class="form-select" name="districts" id="form-districts">
+                    <option value="<?= $districts_selected ?? '' ?>"><?php _e( 'Pilih Kecamatan', 'lwpcommerce' ); ?></option>
                 </select>
             </div>
         </div>
@@ -152,6 +165,22 @@ $id_cities = json_decode( file_get_contents( LWPBB_PATH . 'src/includes/cache/ID
             </div>
             <div class="col-5 col-sm-12">
                 <textarea class="form-input" name="address" placeholder="Jl.Jendral Sudirman no 40. 15560" rows="3"><?php echo $address; ?></textarea>
+            </div>
+        </div>
+
+        <!-- Koordinat -->
+        <div class="form-group">
+            <div class="col-3 col-sm-12">
+                <label class="form-label" for="koordinat"><?php _e( 'Koordinat', 'lwpcommerce' ); ?></label>
+            </div>
+            <div class="col-2" style="margin-right: 0.2rem">
+                <input type="number" class="form-input" name="latitude" placeholder="-6.123671823" value="<?php echo $latitude; ?>"/>
+            </div>
+            <div class="col-2" style="margin-left: 0.2rem">
+                <input type="number" class="form-input" name="longitude" placeholder="126.128635" value="<?php echo $longitude; ?>"/>
+            </div>
+            <div class="col-2" style="margin-left: 1rem">
+                <button class="btn get-koordinat">Get Koordinat</button>
             </div>
         </div>
 
@@ -170,35 +199,116 @@ $id_cities = json_decode( file_get_contents( LWPBB_PATH . 'src/includes/cache/ID
 </section>
 
 <script>
-    const id_cities = <?=json_encode( $id_cities )?>;
-    const us_cities = <?=file_get_contents( LSDD_PATH . 'includes/cache/US-cities.json' )?>;
-    const us_states = <?=file_get_contents( LSDD_PATH . 'includes/cache/US-states.json' )?>;
+    const apiWilayahIndonesia = 'http://www.emsifa.com/api-wilayah-indonesia/api';
+    const stateId = document.querySelector('#form-state').value;
+    const districtId = document.querySelector('#form-district').value;
+    const districtsId = document.querySelector('#form-districts').value;
 
-    (function ($) {
-        $('#form-state').on('change', function () {
-            const value = $(this).val();
-            const initial_countries = $('#form-country').find(":selected").val();
-            const district = $('#form-district');
-            switch (initial_countries) {
-                case 'ID':
-                    district.empty();
-                    id_cities.forEach((e) => {
-                        if (e.province_id === value) {
-                            const html = `<option value="${e.city_id}">${e.type} ${e.city_name}</option>`;
-                            district.append(html);
-                        }
-                    })
-                    break;
-                case 'US':
-                    district.empty();
-                    us_cities.forEach((e) => {
-                        if (e.province_id === value) {
-                            const html = `<option value="${e.city_id}">${e.type} ${e.city_name}</option>`;
-                            $('#form-district').append(html);
-                        }
-                    })
-                    break;
+    fetch(`${apiWilayahIndonesia}/provinces.json`)
+        .then(response => response.json())
+        .then(provinces => {
+            provinces.forEach(province => {
+                if (province.id === stateId) {
+                    document.querySelector('#form-state').innerHTML = `<option value="${province.id}">${province.name}</option>`;
+                }
+                let option = document.createElement('option');
+                option.value = province.id;
+                option.innerHTML = province.name;
+                document.getElementById('form-state').appendChild(option);
+            });
+        });
+
+    if (districtId) {
+        fetch(`${apiWilayahIndonesia}/regencies/${stateId}.json`)
+            .then(response => response.json())
+            .then(regencies => {
+                regencies.forEach(regency => {
+                    if (regency.id === districtId) {
+                        document.querySelector('#form-district').innerHTML = `<option value="${regency.id}">${regency.name}</option>`;
+                    }
+                    let option = document.createElement('option');
+                    option.value = regency.id;
+                    option.innerHTML = regency.name;
+                    document.getElementById('form-district').appendChild(option);
+                });
+            });
+    }
+
+    if (districtsId) {
+        fetch(`${apiWilayahIndonesia}/districts/${districtId}.json`)
+            .then(response => response.json())
+            .then(districts => {
+                districts.forEach(district => {
+                    if (district.id === districtsId) {
+                        document.querySelector('#form-districts').innerHTML = `<option value="${district.id}">${district.name}</option>`;
+                    }
+                    let option = document.createElement('option');
+                    option.value = district.id;
+                    option.innerHTML = district.name;
+                    document.getElementById('form-districts').appendChild(option);
+                });
+            });
+    }
+
+    document.querySelector('#form-state').addEventListener('change', function () {
+        const id_province = this.value;
+        const cities = document.querySelector('#form-district');
+        cities.innerHTML = '';
+        fetch(`${apiWilayahIndonesia}/regencies/${id_province}.json`)
+            .then(response => response.json())
+            .then(district => {
+                district.forEach(district => {
+                    let option = document.createElement('option');
+                    option.value = district.id;
+                    option.innerHTML = district.name;
+                    document.getElementById('form-district').appendChild(option);
+                });
+            });
+    });
+
+    document.querySelector('#form-district').addEventListener('change', function () {
+        const id_district = this.value;
+        const districts = document.querySelector('#form-districts');
+        districts.innerHTML = '';
+        fetch(`${apiWilayahIndonesia}/districts/${id_district}.json`)
+            .then(response => response.json())
+            .then(district => {
+                district.forEach(district => {
+                    let option = document.createElement('option');
+                    option.value = district.id;
+                    option.innerHTML = district.name;
+                    document.getElementById('form-districts').appendChild(option);
+                });
+            });
+    });
+
+    const lat = document.querySelector('input[name="latitude"]').value;
+    const lon = document.querySelector('input[name="longitude"]').value;
+
+    const showPosition = (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        document.querySelector('input[name="latitude"]').value = lat;
+        document.querySelector('input[name="longitude"]').value = lon;
+    }
+
+    window.addEventListener('load', function () {
+        if (!lat && !lon) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                alert("Geolocation is not supported by this browser.");
             }
-        })
-    })(jQuery)
+        }
+    })
+
+    document.querySelector('.get-koordinat').addEventListener('click', function (e) {
+        e.preventDefault();
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    });
+
 </script>
