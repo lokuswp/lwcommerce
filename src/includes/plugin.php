@@ -2,35 +2,38 @@
 
 namespace LokusWP\Commerce;
 
-if (!defined('WPTEST')) {
-	defined('ABSPATH') or die("Direct access to files is prohibited");
+if ( ! defined( 'WPTEST' ) ) {
+	defined( 'ABSPATH' ) or die( "Direct access to files is prohibited" );
 }
 
-class Plugin
-{
-	public function __construct()
-	{
+class Plugin {
+	public function __construct() {
 		$shortcode = new Shortcodes\Etalase;
-		$posttype = new Modules\Product\Post_Type_Product;
-		$posttype = new Modules\Product\Metabox_Product_Data;
+		$posttype  = new Modules\Product\Post_Type_Product;
+		$posttype  = new Modules\Product\Metabox_Product_Data;
 
 		// Activation and Deactivation
-		register_activation_hook(LWPC_BASE, [$this, 'activation']);
-		register_deactivation_hook(LWPC_BASE, [$this, 'uninstall']);
+		register_activation_hook( LWPC_BASE, [ $this, 'activation' ] );
+		register_deactivation_hook( LWPC_BASE, [ $this, 'uninstall' ] );
 
 		require_once LWPC_PATH . 'src/includes/helper/mock/func-mock.php';
 		require_once LWPC_PATH . 'src/includes/helper/func-helper.php';
+		require_once LWPC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
+		require_once LWPC_PATH . 'src/includes/modules/shipping/class-manager.php';
+		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-email.php';
+		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-dine-in.php';
+		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-jne.php';
 
 		// // Administration / BackOffice
-		$plugin = array('slug' => 'lwpcommerce', 'name' => 'LWPCommerce', 'version' => LWPC_VERSION);
-		if (is_admin()) {
+		$plugin = array( 'slug' => 'lwpcommerce', 'name' => 'LWPCommerce', 'version' => LWPC_VERSION );
+		if ( is_admin() ) {
 			require_once LWPC_PATH . 'src/admin/class-admin.php';
-			
 
-			Admin::register($plugin);
+
+			Admin::register( $plugin );
 		} else {
 			require_once LWPC_PATH . 'src/public/class-public.php';
-			Frontend::register($plugin);
+			Frontend::register( $plugin );
 		}
 	}
 
@@ -40,8 +43,7 @@ class Plugin
 	 * @return void
 	 * @since 1.0.0
 	 */
-	public function activation()
-	{
+	public function activation() {
 		require_once LWPC_PATH . 'src/includes/common/class-activator.php';
 		Activator::activate();
 	}
@@ -52,8 +54,7 @@ class Plugin
 	 * @return void
 	 * @since 1.0.0
 	 */
-	public function uninstall()
-	{
+	public function uninstall() {
 		require_once LWPC_PATH . 'src/includes/common/class-deactivator.php';
 		Deactivator::deactivate();
 	}
@@ -69,10 +70,9 @@ class Plugin
 	 * @access public
 	 * @since 1.0.0
 	 */
-	public function __clone()
-	{
+	public function __clone() {
 		// Cloning instances of the class is forbidden.
-		_doing_it_wrong(__FUNCTION__, esc_html__('Something went wrong.', 'lwpbackbone'), LKBB_VERSION);
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'lwpbackbone' ), LKBB_VERSION );
 	}
 
 	/**
@@ -83,9 +83,8 @@ class Plugin
 	 * @access public
 	 * @since 1.0.0
 	 */
-	public function __wakeup()
-	{
+	public function __wakeup() {
 		// Unserializing instances of the class is forbidden.
-		_doing_it_wrong(__FUNCTION__, esc_html__('Something went wrong.', 'lwpbackbone'), LKBB_VERSION);
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'lwpbackbone' ), LKBB_VERSION );
 	}
 }
