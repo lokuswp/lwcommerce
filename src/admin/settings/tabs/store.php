@@ -8,7 +8,6 @@ $district  = "";
 $districts = "";
 
 $settings = get_option( 'lwpcommerce_store' );
-var_dump( $settings );
 if ( ! $settings ) {
 	lwpc_set_settings( 'store', 'name', $name );
 	lwpc_set_settings( 'store', 'logo', $logo, 'esc_url_raw' );
@@ -292,23 +291,23 @@ $longitude          = lwpc_get_settings( 'store', 'longitude', 'floatval' );
         document.querySelector('input[name="longitude"]').value = lon;
     }
 
+    const getLocation = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            alert('Geolocation is not supported by this browser.');
+        }
+    }
+
     window.addEventListener('load', function () {
         if (!lat && !lon) {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition);
-            } else {
-                alert("Geolocation is not supported by this browser.");
-            }
+            getLocation();
         }
     })
 
     document.querySelector('.get-koordinat').addEventListener('click', function (e) {
         e.preventDefault();
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-        } else {
-            alert("Geolocation is not supported by this browser.");
-        }
+        getLocation();
     });
 
 </script>
