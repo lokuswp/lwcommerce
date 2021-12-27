@@ -108,6 +108,36 @@ abstract class Gateway {
 	 */
 	protected $fee = 0;
 
+	/**
+	 * Api Key  Raja Ongkir
+	 */
+	protected $api_key = '80aa49704fc30a939124a831882dea72'; // ASdgaisgd
+
+	/**
+	 * Estimation date
+	 */
+	protected $estimation_date = null;
+
+	/**
+	 * Service
+	 */
+	protected $service = '';
+
+	/**
+	 * Store location base on Raja Ongkir ID
+	 */
+	public $origin = "455";
+
+	/**
+	 * Destination shipping location base on Raja Ongkir ID
+	 */
+	public $destination = "501";
+
+	/**
+	 * Weight in gram
+	 */
+	public $weight = 500;
+
 	public function save_as_data(): bool {
 		$data                  = array();
 		$data['id']            = $this->id;
@@ -197,6 +227,37 @@ abstract class Gateway {
 	 * @return array
 	 */
 	public function get_fee(): array {
+
+		$this->fee = get_transient( $this->id . '_cost' );
+
+		if ( ! $this->fee ) {
+			$header = [
+				'content-type' => 'application/json',
+				'key'          => $this->api_key,
+			];
+
+			$body = [
+				'origin'      => $this->origin,
+				'destination' => $this->destination,
+				'weight'      => $this->weight,
+				'courier'     => $this->id,
+			];
+
+			$options = [
+				'body'    => wp_json_encode( $body ),
+				'headers' => $header,
+			];
+
+			$request  = wp_remote_post( 'https://api.rajaongkir.com/starter/cost', $options );
+			$response = json_decode( wp_remote_retrieve_body( $request ) );
+			$costs    = $response->rajaongkir->results[0]->costs;
+			$index    = array_search( $this->service, array_column( $costs, 'service' ) );
+
+			$cost = $costs[ $index ]->cost[0]->value;
+
+			set_transient( $this->id . '_cost', $cost, DAY_IN_SECONDS );
+		}
+
 		return array(
 			"fee"      => $this->fee,
 			"currency" => $this->currency
