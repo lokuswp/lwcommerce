@@ -4,7 +4,7 @@
  * Getting Price Normal of Product based on ID
  */
 function lwpc_get_price( $post_id ) {
-	$_price_normal = get_post_meta( $post_id, '_price', true );
+	$_price_normal = get_post_meta( $post_id, '_price_normal', true );
 
 	return isset( $_price_normal ) ? abs( $_price_normal ) : 0;
 }
@@ -16,13 +16,13 @@ function lwpc_get_price_discount( $post_id ) {
 }
 
 function lwpc_get_price_html() {
-	$price = lwpc_get_price( get_the_ID() );
+	$normal_price = lwpc_get_price( get_the_ID() );
 
-	if ( $price == 0 ) {
+	if ( $normal_price == 0 ) {
 		$html = '<span style="display:block">' . __( "Free", "lwpcommerce" ) . '</span>';
 	} else {
-		$html = '<small>' . lwpc_get_price( get_the_ID() ) . '</small>';
-		$html .= '<span style="display:block">' . lwpc_get_price_discount( get_the_ID() ) . '</span>';
+		$html = '<small style="display:block"><strike>' . lwp_currency_format( true, $normal_price  ) . '</strike></small>';
+		$html .= '<span style="display:block">' . lwp_currency_format( true, lwpc_get_price_discount( get_the_ID() )) . '</span>';
 	}
 	echo( $html );
 }

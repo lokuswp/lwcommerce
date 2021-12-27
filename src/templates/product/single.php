@@ -4,15 +4,7 @@ wp_enqueue_style("lwp-grid");
 ?>
 
 <div class="lwpcommerce lwp-container">
-    <div class="lwp-navigate row">
-        <div class="col-xs-2">
-            <div class="svg-wrapper">
-                <img src="<?php echo plugins_url('/src/assets/svg/arrow-prev.svg', LWPBB_BASE); ?>" alt="prev">
-            </div>
-        </div>
-        <div class="col-xs-8"></div>
-        <div class="col-xs-2 end-sm d-flex troli-icon-wrapper"></div>
-    </div>
+    <?php require_once LWPC_PATH . 'src/templates/atomic/molecule/navigation.php'; ?>
 
     <div class="lwp-product row">
         <div class="col-xs-12 col-sm-12">
@@ -40,8 +32,6 @@ wp_enqueue_style("lwp-grid");
         max-width: 420px;
         margin: 0 auto;
     }
-
-
 </style>
 
 <?php get_footer(); ?>
