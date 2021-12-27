@@ -19,13 +19,13 @@ if ( ! defined( 'WPTEST' ) ) {
  *
  * @since 1.0.0
  */
-class JNE extends Shipping\Gateway {
-	public $id = 'jne';
+class POST_Indonesia extends Shipping\Gateway {
+	public $id = 'post_indonesia';
 
-	protected $name = "Kurir JNE";
+	protected $name = "POS Indonesia (POS)";
 	protected $description = "Mengantar barang sampai tujuan";
-	protected $logo = LWPC_URL . 'src/admin/assets/images/jne.png';
-	protected $fee = 0;
+	protected $logo = LWPC_URL . 'src/admin/assets/images/post-indonesia.png';
+	protected $service = 'Paket Kilat Khusus';
 
 	public $zone = [ 'national', 'lokal' ];
 	public $package = [ 'express', 'regular' ];
@@ -36,7 +36,6 @@ class JNE extends Shipping\Gateway {
 
 	public function __construct() {
 		$this->save_as_data();
-
 	}
 
 	// payment management for admin
@@ -62,4 +61,4 @@ class JNE extends Shipping\Gateway {
 	}
 }
 
-Shipping\Manager::register( new JNE() );
+Shipping\Manager::register( new POST_Indonesia() );
