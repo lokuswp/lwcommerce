@@ -19,40 +19,40 @@ if ( ! defined( 'WPTEST' ) ) {
  *
  * @since 1.0.0
  */
-class JNE_REG extends Shipping\Gateway {
+class POST_Indonesia_Kilat_Khusus extends Shipping\Gateway {
 
 	/**
 	 * Shipping ID
 	 *
 	 * @var string
 	 */
-	public $id = 'jne_reg';
+	public $id = 'post_indonesia_kilat_khusus';
 
 	/**
 	 * Shipping Name
 	 *
 	 * @var string
 	 */
-	protected $name = "Jalur Nugraha Ekakurir (JNE) REG";
+	protected $name = "POS Indonesia (POS)";
 
 	/**
 	 * Shipping Description
 	 *
 	 * @var string
 	 */
-	protected $description = "Mengantar barang sampai tujuan";
+	protected $description = "Paket Kilat Khusus";
 
 	/**
 	 * Shipping Logo
 	 *
 	 * @var url
 	 */
-	protected $logo = LWPC_URL . 'src/admin/assets/images/jne.png';
+	protected $logo = LWPC_URL . 'src/admin/assets/images/post-indonesia.png';
 
 	/**
 	 * Set Payment Service
 	 */
-	protected $service = 'REG';
+	protected $service = 'Paket Kilat Khusus';
 
 	/**
 	 * Store location base on Raja Ongkir City ID
@@ -119,4 +119,4 @@ class JNE_REG extends Shipping\Gateway {
 	}
 }
 
-Shipping\Manager::register( new JNE_REG() );
+Shipping\Manager::register( new POST_Indonesia_Kilat_Khusus() );

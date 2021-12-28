@@ -23,7 +23,10 @@ class Plugin {
 		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-email.php';
 		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-dine-in.php';
 		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-jne-reg.php';
-		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-post-indonesia.php';
+		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-jne-oke.php';
+		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-jne-yes.php';
+		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-post-indonesia-kilat-khusus.php';
+		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-post-indonesia-next-day.php';
 
 		// // Administration / BackOffice
 		$plugin = array( 'slug' => 'lwpcommerce', 'name' => 'LWPCommerce', 'version' => LWPC_VERSION );
