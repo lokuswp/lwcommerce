@@ -227,6 +227,8 @@ abstract class Gateway {
 	 * @return array
 	 */
 	public function get_cost(): array {
+		$this->set_cost();
+
 		return array(
 			"cost"     => $this->cost,
 			"currency" => $this->currency

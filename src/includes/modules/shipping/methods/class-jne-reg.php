@@ -78,7 +78,6 @@ class JNE_REG extends Shipping\Gateway {
 
 	public function __construct() {
 		$this->save_as_data();
-		$this->set_cost();
 
 		add_filter( 'lwpbackbone/transaction/extras', [ $this, 'lwp_shipping_cost' ] );
 	}
