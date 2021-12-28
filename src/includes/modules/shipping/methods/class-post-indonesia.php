@@ -8,6 +8,7 @@ if ( ! defined('WPTEST')) {
     defined('ABSPATH') or die("Direct access to files is prohibited");
 }
 
+
 /**
  * Payment Gateway Class extending from Payment\Gateway Abstraction
  *
@@ -18,17 +19,64 @@ if ( ! defined('WPTEST')) {
  *
  * @since 1.0.0
  */
-class Dine_In extends Shipping\Gateway
+class POST_Indonesia extends Shipping\Gateway
 {
-    public $id = 'dine_in';
 
-    protected $name = "Dine In";
-    protected $description = "Pembeli mengambil produk di tempat";
-    protected $logo = LWPC_URL.'src/admin/assets/images/location.png';
-    protected $fee = 0;
+    /**
+     * Shipping ID
+     *
+     * @var string
+     */
+    public $id = 'post_indonesia_kilat_khusus';
 
-    public $zone = ['lokal'];
-    public $package = ['regular' => 'on'];
+    /**
+     * Shipping Name
+     *
+     * @var string
+     */
+    protected $name = "POS Indonesia (POS)";
+
+    /**
+     * Shipping Description
+     *
+     * @var string
+     */
+    protected $description = "Paket Kilat Khusus";
+
+    /**
+     * Shipping Logo
+     *
+     * @var url
+     */
+    protected $logo = LWPC_URL.'src/admin/assets/images/post-indonesia.png';
+
+    /**
+     * Set Payment Service
+     */
+    protected $service = 'p';
+
+    /**
+     * Store location base on Raja Ongkir City ID
+     */
+    protected $origin = "455";
+
+    /**
+     * Destination shipping destination base on Raja Ongkir City ID
+     */
+    protected $destination = "501";
+
+    /**
+     * Weight in gram
+     */
+    protected $weight = 500;
+
+    public $zone = ['national', 'lokal'];
+
+    public $package = [
+        'Paket Kilat Khusus'      => 'on',
+        'Express Next Day Barang' => 'on',
+    ];
+
     public $type = "Kirim Ke Lokasi";
     public $group = "physical_shipping";
     public $docs_url = ['ID' => '', 'EN' => ''];
@@ -37,6 +85,23 @@ class Dine_In extends Shipping\Gateway
     public function __construct()
     {
         $this->save_as_data();
+
+        add_filter('lwpbackbone/transaction/extras', [$this, 'lwp_shipping_cost']);
+    }
+
+    /**
+     * Inject Shipping Cost to Transaction
+     *
+     * @param $transaction
+     *
+     * @return array
+     */
+    public function lwp_shipping_cost($transaction): array
+    {
+        $total                = $transaction['total'] + $this->cost;
+        $transaction['total'] = $total;
+
+        return $transaction;
     }
 
     // payment management for admin
@@ -67,4 +132,4 @@ class Dine_In extends Shipping\Gateway
     }
 }
 
-Shipping\Manager::register(new Dine_In());
+Shipping\Manager::register(new POST_Indonesia());
