@@ -98,7 +98,7 @@
                     <div class="item-radio">
                         <input type="radio" name="physical_courier">
                         <label for="jne">
-                            <img src="<?php echo plugins_url('/src/assets/courier/jne.png', LWPBB_BASE); ?>" alt="JNE">
+                            <img src="<?php echo plugins_url('/src/assets/courier/jne.png', LWP_BASE); ?>" alt="JNE">
                             <h6>JNE OKE ( 1 - 2 Hari )</h6>
                             <p>Rp15.000</p>
                         </label>
@@ -113,7 +113,7 @@
                     <div class="item-radio">
                         <input type="radio" name="physical_courier" checked>
                         <label for="jne">
-                            <img src="<?php echo plugins_url('/src/assets/courier/jne.png', LWPBB_BASE); ?>" alt="JNE">
+                            <img src="<?php echo plugins_url('/src/assets/courier/jne.png', LWP_BASE); ?>" alt="JNE">
                             <h6>JNE REG ( 3 - 4 Hari )</h6>
                             <p>Rp10.000</p>
                         </label>
