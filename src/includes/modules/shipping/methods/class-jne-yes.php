@@ -19,28 +19,28 @@ if ( ! defined( 'WPTEST' ) ) {
  *
  * @since 1.0.0
  */
-class JNE_REG extends Shipping\Gateway {
+class JNE_YES extends Shipping\Gateway {
 
 	/**
 	 * Shipping ID
 	 *
 	 * @var string
 	 */
-	public $id = 'jne_reg';
+	public $id = 'jne_yes';
 
 	/**
 	 * Shipping Name
 	 *
 	 * @var string
 	 */
-	protected $name = "Jalur Nugraha Ekakurir (JNE) REG";
+	protected $name = "Jalur Nugraha Ekakurir (JNE) YES";
 
 	/**
 	 * Shipping Description
 	 *
 	 * @var string
 	 */
-	protected $description = "Mengantar barang sampai tujuan";
+	protected $description = "Yakin Esok Sampai";
 
 	/**
 	 * Shipping Logo
@@ -52,7 +52,7 @@ class JNE_REG extends Shipping\Gateway {
 	/**
 	 * Set Payment Service
 	 */
-	protected $service = 'REG';
+	protected $service = 'YES';
 
 	/**
 	 * Store location base on Raja Ongkir City ID
@@ -78,7 +78,6 @@ class JNE_REG extends Shipping\Gateway {
 
 	public function __construct() {
 		$this->save_as_data();
-		$this->set_cost();
 
 		add_filter( 'lwpbackbone/transaction/extras', [ $this, 'lwp_shipping_cost' ] );
 	}
@@ -120,4 +119,4 @@ class JNE_REG extends Shipping\Gateway {
 	}
 }
 
-Shipping\Manager::register( new JNE_REG() );
+Shipping\Manager::register( new JNE_YES() );

@@ -19,13 +19,55 @@ if ( ! defined( 'WPTEST' ) ) {
  *
  * @since 1.0.0
  */
-class POST_Indonesia extends Shipping\Gateway {
-	public $id = 'post_indonesia';
+class POST_Indonesia_Next_Day extends Shipping\Gateway {
 
+	/**
+	 * Shipping ID
+	 *
+	 * @var string
+	 */
+	public $id = 'post_indonesia_next_day';
+
+	/**
+	 * Shipping Name
+	 *
+	 * @var string
+	 */
 	protected $name = "POS Indonesia (POS)";
-	protected $description = "Mengantar barang sampai tujuan";
+
+	/**
+	 * Shipping Description
+	 *
+	 * @var string
+	 */
+	protected $description = "Express Next Day Barang";
+
+	/**
+	 * Shipping Logo
+	 *
+	 * @var url
+	 */
 	protected $logo = LWPC_URL . 'src/admin/assets/images/post-indonesia.png';
-	protected $service = 'Paket Kilat Khusus';
+
+	/**
+	 * Set Payment Service
+	 */
+	protected $service = 'Express Next Day Barang';
+
+	/**
+	 * Store location base on Raja Ongkir City ID
+	 */
+	protected $origin = "455";
+
+	/**
+	 * Destination shipping destination base on Raja Ongkir City ID
+	 */
+	protected $destination = "501";
+
+	/**
+	 * Weight in gram
+	 */
+	protected $weight = 500;
 
 	public $zone = [ 'national', 'lokal' ];
 	public $package = [ 'express', 'regular' ];
@@ -36,6 +78,22 @@ class POST_Indonesia extends Shipping\Gateway {
 
 	public function __construct() {
 		$this->save_as_data();
+
+		add_filter( 'lwpbackbone/transaction/extras', [ $this, 'lwp_shipping_cost' ] );
+	}
+
+	/**
+	 * Inject Shipping Cost to Transaction
+	 *
+	 * @param $transaction
+	 *
+	 * @return array
+	 */
+	public function lwp_shipping_cost( $transaction ): array {
+		$total                = $transaction['total'] + $this->cost;
+		$transaction['total'] = $total;
+
+		return $transaction;
 	}
 
 	// payment management for admin
@@ -61,4 +119,4 @@ class POST_Indonesia extends Shipping\Gateway {
 	}
 }
 
-Shipping\Manager::register( new POST_Indonesia() );
+Shipping\Manager::register( new POST_Indonesia_Next_Day() );

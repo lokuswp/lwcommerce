@@ -32,7 +32,7 @@ abstract class Gateway {
 	protected $description = null;
 
 	/**
-	 * Shipping Log
+	 * Shipping Logo
 	 *
 	 * @var url
 	 */
@@ -102,11 +102,11 @@ abstract class Gateway {
 	protected $type = "";
 
 	/**
-	 * Shipping Fee
+	 * Shipping cost
 	 *
 	 * @var int
 	 */
-	protected $fee = 0;
+	protected $cost = 0;
 
 	/**
 	 * Api Key  Raja Ongkir
@@ -119,24 +119,24 @@ abstract class Gateway {
 	protected $estimation_date = null;
 
 	/**
-	 * Service
+	 * Payment Service
 	 */
 	protected $service = '';
 
 	/**
 	 * Store location base on Raja Ongkir ID
 	 */
-	public $origin = "455";
+	protected $origin = '';
 
 	/**
 	 * Destination shipping location base on Raja Ongkir ID
 	 */
-	public $destination = "501";
+	protected $destination = '';
 
 	/**
 	 * Weight in gram
 	 */
-	public $weight = 500;
+	protected $weight = 0;
 
 	public function save_as_data(): bool {
 		$data                  = array();
@@ -149,7 +149,7 @@ abstract class Gateway {
 		$data['package']       = $this->package;
 		$data['type']          = $this->type;
 		$data['data']          = [];
-		$data['fee']           = $this->fee;
+		$data['cost']          = $this->cost;
 		$data['instruction']   = $this->instruction;
 		$data['payment_class'] = get_class( $this );
 
@@ -222,15 +222,28 @@ abstract class Gateway {
 	}
 
 	/**
-	 * Get Shipping Fee
+	 * Get Shipping Cost
 	 *
 	 * @return array
 	 */
-	public function get_fee(): array {
+	public function get_cost(): array {
+		return array(
+			"cost"     => $this->cost,
+			"currency" => $this->currency
+		);
+	}
 
-		$this->fee = get_transient( $this->id . '_cost' );
+	/**
+	 * Set Shipping Cost
+	 *
+	 * @return void
+	 */
+	public function set_cost() {
+		// get destination from cache
+		$destination_cost = get_transient( $this->id . '_cost' );
+		$this->cost       = $destination_cost["{$this->origin}_to_{$this->destination}"] ?? false;
 
-		if ( ! $this->fee ) {
+		if ( ! $this->cost ) {
 			$header = [
 				'content-type' => 'application/json',
 				'key'          => $this->api_key,
@@ -255,13 +268,13 @@ abstract class Gateway {
 
 			$cost = $costs[ $index ]->cost[0]->value;
 
-			set_transient( $this->id . '_cost', $cost, DAY_IN_SECONDS );
-		}
+			// Push new destination to cache
+			$destination_cost["{$this->origin}_to_{$this->destination}"] = $cost;
 
-		return array(
-			"fee"      => $this->fee,
-			"currency" => $this->currency
-		);
+			set_transient( $this->id . '_cost', $destination_cost, DAY_IN_SECONDS );
+
+			$this->cost = $cost;
+		}
 	}
 
 	/**
