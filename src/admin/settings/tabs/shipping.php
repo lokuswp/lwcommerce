@@ -39,7 +39,7 @@ class Shipping_Admin
             <div class="container columns col-gapless header">
                 <div class="column col-2"><?php _e('Channel', 'lwpbackbone'); ?></div>
                 <div class="column col-2 text-center"><?php _e('Zone', 'lwpbackbone'); ?></div>
-                <div class="column col-2 text-center"><?php _e('Paket', 'lwpbackbone'); ?></div>
+                <div class="column col-2 text-center"><?php _e('Services', 'lwpbackbone'); ?></div>
                 <div class="column col-2 text-center"><?php _e('Status', 'lwpbackbone'); ?></div>
                 <div class="column col-2 text-center"><?php _e('Jenis', 'lwpbackbone'); ?></div>
                 <div class="column col text-right"><?php _e('Manage', 'lwpbackbone'); ?></div>
@@ -80,8 +80,8 @@ class Shipping_Admin
                                         <h6><?php esc_attr_e(ucfirst(implode(', ', $shipping_data->zone))) ?></h6>
                                     </div>
 
-                                    <!-- Paket -->
-                                    <div class="column col-2" style="display: grid;align-content: center;align-items: center;font-weight: bold">
+                                    <!-- Services -->
+                                    <div class="column col-2" style="display: grid;align-content: center;align-items: center;font-weight: bold;">
                                         <?php foreach ($shipping_data->package as $key => $package) : ?>
                                             <div>
                                                 <input type="checkbox" id="<?php esc_attr_e($key) ?>" class="lwpc_shipping_package_status"

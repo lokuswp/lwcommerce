@@ -121,22 +121,22 @@ abstract class Gateway {
 	/**
 	 * Payment Service
 	 */
-	protected $service = '';
+	public $service = '';
 
 	/**
 	 * Store location base on Raja Ongkir ID
 	 */
-	protected $origin = '';
+	public $origin = '';
 
 	/**
 	 * Destination shipping location base on Raja Ongkir ID
 	 */
-	protected $destination = '';
+	public $destination = '';
 
 	/**
 	 * Weight in gram
 	 */
-	protected $weight = 0;
+	public $weight = 0;
 
 	public function save_as_data(): bool {
 		$data                  = array();
@@ -231,7 +231,7 @@ abstract class Gateway {
 
 		return array(
 			"cost"     => $this->cost,
-			"currency" => $this->currency
+			"currency" => 'IDR'
 		);
 	}
 
@@ -252,7 +252,7 @@ abstract class Gateway {
 			];
 
 			$body = [
-				'origin'      => $this->origin,
+				'origin'      => lwpc_get_settings( 'store', 'district', 'intval' ),
 				'destination' => $this->destination,
 				'weight'      => $this->weight,
 				'courier'     => $this->id,
@@ -278,51 +278,6 @@ abstract class Gateway {
 			$this->cost = $cost;
 		}
 	}
-
-	/**
-	 * Template Structure Shipping Instruction with Output HTML
-	 * will be sent in notification email
-	 *
-	 * @param  object  $transaction_obj
-	 * @param  string  $event
-	 * @param  string  $shipping_id
-	 *
-	 * @return html
-	 */
-	abstract public function notification_html( object $transaction_obj, string $event, string $shipping_id );
-
-	/**
-	 * Template Structure Shipping Instruction with Output Text
-	 * will be sent in notification whatsapp | sms
-	 *
-	 * @param  object  $transaction_obj
-	 * @param  string  $event
-	 * @param  string  $shipping_id
-	 *
-	 * @return text
-	 */
-	abstract public function notification_text( object $transaction_obj, string $event, string $shipping_id );
-
-	/**
-	 * Template Structure Shipping Instruction with Output JSON
-	 * will be sent in notification for integration like integromat | zapier
-	 *
-	 * @param  integer  $transaction_obj
-	 * @param  string  $event
-	 *
-	 * @return json
-	 */
-	abstract public function notification_json( object $transaction_obj, string $event );
-
-	/**
-	 * Template Structure Shipping Instruction
-	 * will be output in recipe page
-	 *
-	 * @param  object  $transaction_obj
-	 *
-	 * @return html
-	 */
-	abstract public function instruction_html( object $transaction_obj );
 
 	/**
 	 * Manage Shipping Settings
