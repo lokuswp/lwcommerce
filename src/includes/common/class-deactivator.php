@@ -11,7 +11,7 @@ class Deactivator
 {
     public static function deactivate()
     {
-        // require LWPBB_PATH . 'src/includes/core/modules/database/class-db-carts.php';
+        // require LOKUSWP_PATH . 'src/includes/core/modules/database/class-db-carts.php';
         // $db_carts = new DB_Carts;
         // $db_carts->drop_table();
     }

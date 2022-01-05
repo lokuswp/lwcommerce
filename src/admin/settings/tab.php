@@ -65,7 +65,7 @@ if (isset($_GET["tab"])) {
 
                 // Request not Available on List -> Call License Section
                 if(!array_key_exists( $tabs_query, (array) $tab_lists ) && $tabs_query != 'app' ){
-                    require_once 'tabs/system.php';
+                    require_once 'tabs/extensions.php';
                 }
 
                 foreach ((array) $tab_lists as $key => $item) {
@@ -78,16 +78,12 @@ if (isset($_GET["tab"])) {
 
                     } else if ($tabs_query == 'app') {
                         require_once 'tabs/app.php';
-                    } else if ($tabs_query == 'system') {
-                        require_once 'tabs/system.php';
-                    }
+                    } 
                 }
                 
             } else if ($tabs_query == 'app') {
                 require_once 'tabs/app.php';
-            } else if ($tabs_query == 'system') {
-                require_once 'tabs/system.php';
-            }
+            } 
         } else { //Fallback
             // if ( License::correct()  ) {
             //     require_once 'tabs/settings.php';

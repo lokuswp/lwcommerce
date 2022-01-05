@@ -219,53 +219,74 @@ class Admin {
 
 		add_submenu_page(
 			$this->slug,
-			__( 'Pengaturan', 'lwpcommerce' ),
-			__( 'Pengaturan', 'lwpcommerce' ),
+			__( 'Settings', 'lwpcommerce' ),
+			__( 'Settings', 'lwpcommerce' ),
 			'manage_options',
 			'admin.php?page=lwpcommerce&tab=settings',
-			''
+			'',
+			0
 		);
 
 		add_submenu_page(
 			$this->slug,
-			__( 'Toko', 'lwpcommerce' ),
-			__( 'Toko', 'lwpcommerce' ),
+			__( 'Store', 'lwpcommerce' ),
+			__( 'Store', 'lwpcommerce' ),
 			'manage_options',
 			'admin.php?page=lwpcommerce&tab=store',
-			''
+			'',
+			1
 		);
 
 		add_submenu_page(
 			$this->slug,
-			__( 'Tampilan', 'lwpcommerce' ),
-			__( 'Tampilan', 'lwpcommerce' ),
+			__( 'Appearance', 'lwpcommerce' ),
+			__( 'Appearance', 'lwpcommerce' ),
 			'manage_options',
 			'admin.php?page=lwpcommerce&tab=appearance',
-			''
+			'',
+			2
 		);
 
 		add_submenu_page(
 			$this->slug,
-			__( 'Pengiriman', 'lwpcommerce' ),
-			__( 'Pengiriman', 'lwpcommerce' ),
+			__( 'Shippings', 'lwpcommerce' ),
+			__( 'Shippings', 'lwpcommerce' ),
 			'manage_options',
 			'admin.php?page=lwpcommerce&tab=shipping',
-			''
+			'',
+			3
 		);
 
-		add_submenu_page(
-			$this->slug,
-			__( 'Premium / Pro', 'lwpcommerce' ),
-			__( 'Premium / Pro', 'lwpcommerce' ),
-			'manage_options',
-			'admin.php?page=lwpcommerce&tab=extensions',
-			''
-		);
+		$backbone = (array) apply_filters('active_plugins', get_option('active_plugins'));
+		if ( !in_array('lwpcommerce/lwpcommerce.php', $backbone)) {
+
+			add_submenu_page(
+				$this->slug,
+				__( 'Be a Pro', 'lwpcommerce' ),
+				__( 'Be a Pro', 'lwpcommerce' ),
+				'manage_options',
+				'admin.php?page=lwpcommerce&tab=extensions',
+				'',
+				9999
+			);
+
+		}else{
+			add_submenu_page(
+				$this->slug,
+				__( 'Get More Extensions', 'lwpcommerce' ),
+				__( 'Get More Extensions', 'lwpcommerce' ),
+				'manage_options',
+				'admin.php?page=lwpcommerce&tab=extensions',
+				'',
+				9999
+			);
+		}
+	
 
 		// Menu Products
 		add_menu_page(
-			__( 'Produk', 'lwpcommerce' ),
-			__( 'Produk', 'lwpcommerce' ),
+			__( 'Products', 'lwpcommerce' ),
+			__( 'Products', 'lwpcommerce' ),
 			'manage_options',
 			'edit.php?post_type=product',
 			'',
@@ -276,8 +297,8 @@ class Admin {
 		// Submenu Product -> Categories
 		add_submenu_page(
 			'edit.php?post_type=product',
-			__( 'Kategori', 'lwpcommerce' ),
-			__( 'Kategori', 'lwpcommerce' ),
+			__( 'Category', 'lwpcommerce' ),
+			__( 'Category', 'lwpcommerce' ),
 			'manage_options',
 			'edit-tags.php?taxonomy=product-category&post_type=product',
 			''
@@ -286,8 +307,8 @@ class Admin {
 		// Menu Orders
 		$awaiting = get_option( 'lwpcommerce_order_awaiting' ) > 0 ? abs( get_option( 'lwpcommerce_order_awaiting' ) ) : 0;
 		add_menu_page(
-			__( 'Pesanan', 'lwpcommerce' ),
-			$awaiting ? sprintf( ( __( 'Pesanan', 'lwpcommerce' ) . ' <span class="awaiting-mod">%d</span>' ), $awaiting ) : __( 'Pesanan', 'lwpcommerce' ),
+			__( 'Orders', 'lwpcommerce' ),
+			$awaiting ? sprintf( ( __( 'Orders', 'lwpcommerce' ) . ' <span class="awaiting-mod">%d</span>' ), $awaiting ) : __( 'Orders', 'lwpcommerce' ),
 			'manage_options',
 			'lwpcommerce-order',
 			[ $this, 'admin_menu_order' ],

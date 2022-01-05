@@ -2,7 +2,8 @@
 <div id="shipping" class="swiper-slide">
 
     <form id="lwpbackbone-shipping" class="full-height">
-        <h6 style="margin-bottom:12px;" class="text-primary">Pengiriman Digital</h6>
+        <!-- <h6 style="margin-bottom:12px;" class="text-primary">Pengiriman Digital</h6>
+        <label for="">Kirim juga notifikasi melalui channel berikut</label>
 
         <div class="row">
             <div class="col-sm-6 col-xs-12 gutter swiper-no-swiping">
@@ -34,13 +35,13 @@
                 </div>
 
             </div>
-        </div>
+        </div> -->
 
         <h6 style="margin-bottom:12px;" class="text-primary">Pengiriman Fisik</h6>
 
         <?php
-        $states = json_decode(file_get_contents(LWPBB_PATH . 'src/assets/cache/ID-states.json'));
-        $cities = json_decode(file_get_contents(LWPBB_PATH . 'src//assets/cache/ID-cities.json'));
+        $states = json_decode(file_get_contents(LOKUSWP_PATH . 'src/assets/cache/ID-states.json'));
+        $cities = json_decode(file_get_contents(LOKUSWP_PATH . 'src/assets/cache/ID-cities.json'));
         $state_selected = 1;
         ?>
         <input type="text" id="country" value="ID" class="hidden">
@@ -87,7 +88,7 @@
                 </div>
 
             </div>
-        </div> -->
+        </div> 
 
 
         <!-- Shipping Options -->
@@ -98,7 +99,7 @@
                     <div class="item-radio">
                         <input type="radio" name="physical_courier">
                         <label for="jne">
-                            <img src="<?php echo plugins_url('/src/assets/courier/jne.png', LWP_BASE); ?>" alt="JNE">
+                            <img src="<?php echo plugins_url('/src/assets/courier/jne.png', LOKUSWP_BASE); ?>" alt="JNE">
                             <h6>JNE OKE ( 1 - 2 Hari )</h6>
                             <p>Rp15.000</p>
                         </label>
@@ -113,7 +114,7 @@
                     <div class="item-radio">
                         <input type="radio" name="physical_courier" checked>
                         <label for="jne">
-                            <img src="<?php echo plugins_url('/src/assets/courier/jne.png', LWP_BASE); ?>" alt="JNE">
+                            <img src="<?php echo plugins_url('/src/assets/courier/jne.png', LOKUSWP_BASE); ?>" alt="JNE">
                             <h6>JNE REG ( 3 - 4 Hari )</h6>
                             <p>Rp10.000</p>
                         </label>
