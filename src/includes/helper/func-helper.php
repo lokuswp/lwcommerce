@@ -21,8 +21,8 @@ function lwpc_get_price_html() {
 	if ( $normal_price == 0 ) {
 		$html = '<span style="display:block">' . __( "Free", "lwpcommerce" ) . '</span>';
 	} else {
-		$html = '<small style="display:block"><strike>' . lwp_currency_format( true, $normal_price  ) . '</strike></small>';
-		$html .= '<span style="display:block">' . lwp_currency_format( true, lwpc_get_price_discount( get_the_ID() )) . '</span>';
+		$html = '<small style="display:block"><strike>' . lwp_currency_format( true, $normal_price ) . '</strike></small>';
+		$html .= '<span style="display:block">' . lwp_currency_format( true, lwpc_get_price_discount( get_the_ID() ) ) . '</span>';
 	}
 	echo( $html );
 }
@@ -98,4 +98,24 @@ function lwpc_get_settings( string $option = 'general_settings', string $item, s
 	}
 
 	return empty( $settings[ $item ] ) ? $fallback : call_user_func( $validator, $settings[ $item ] );
+}
+
+/**
+ * @param  string  $shipping_id
+ * @param  string  $service
+ * @param  string  $destination
+ *
+ * @return false|mixed
+ */
+function lwpc_get_cost_rajaongkir( string $shipping_id, string $service, string $destination ) {
+	$origin           = lwpc_get_settings( 'store', 'district', 'intval' );
+	$destination_cost = get_transient( $shipping_id . '_cost' );
+
+	$cost = $destination_cost["{$origin}_to_{$destination}_with_{$service}"] ?? false;
+
+	if ( $cost ) {
+		return $cost;
+	}
+
+	return false;
 }

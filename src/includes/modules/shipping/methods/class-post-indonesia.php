@@ -78,22 +78,6 @@ class POST_Indonesia extends Shipping\Gateway {
 
 	public function __construct() {
 		$this->save_as_data();
-
-		add_filter( 'lwpbackbone/transaction/extras', [ $this, 'lwp_shipping_cost' ] );
-	}
-
-	/**
-	 * Inject Shipping Cost to Transaction
-	 *
-	 * @param $transaction
-	 *
-	 * @return array
-	 */
-	public function lwp_shipping_cost( $transaction ): array {
-		$total                = $transaction['total'] + $this->cost;
-		$transaction['total'] = $total;
-
-		return $transaction;
 	}
 
 	// payment management for admin

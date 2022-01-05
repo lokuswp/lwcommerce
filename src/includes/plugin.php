@@ -24,6 +24,7 @@ class Plugin {
 		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-dine-in.php';
 		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-jne.php';
 		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-post-indonesia.php';
+		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-shipping-processing.php';
 		require_once LWPC_PATH . 'src/includes/modules/shipping/api/class-rajaongkir-api.php';
 		require_once LWPC_PATH . 'src/includes/modules/shipping/api/class-get-shipping-list.php';
 

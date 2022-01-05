@@ -238,6 +238,7 @@ abstract class Gateway {
 	public function set_cost() {
 		// get destination from cache
 		$destination_cost = get_transient( $this->id . '_cost' );
+		$this->origin     = lwpc_get_settings( 'store', 'district', 'intval' );
 		$this->cost       = $destination_cost["{$this->origin}_to_{$this->destination}_with_{$this->service}"] ?? false;
 
 		if ( ! $this->cost ) {
@@ -247,7 +248,7 @@ abstract class Gateway {
 			];
 
 			$body = [
-				'origin'      => lwpc_get_settings( 'store', 'district', 'intval' ),
+				'origin'      => $this->origin,
 				'destination' => $this->destination,
 				'weight'      => $this->weight,
 				'courier'     => $this->id,
@@ -263,14 +264,21 @@ abstract class Gateway {
 			$costs    = $response->rajaongkir->results[0]->costs;
 			$index    = array_search( $this->service, array_column( $costs, 'service' ) );
 
-			$cost = $costs[ $index ]->cost[0]->value;
+			$cost            = $costs[ $index ]->cost[0]->value;
+			$estimation_date = $costs[ $index ]->cost[0]->etd;
 
 			// Push new destination to cache
-			$destination_cost["{$this->origin}_to_{$this->destination}_with_{$this->service}"] = $cost;
+			$destination_cost["{$this->origin}_to_{$this->destination}_with_{$this->service}"] = [
+				'cost' => $cost,
+				'etd'  => $estimation_date,
+			];
 
-			set_transient( $this->id . '_cost', $destination_cost, DAY_IN_SECONDS );
+			set_transient( $this->id . '_cost', $destination_cost, WEEK_IN_SECONDS );
 
-			$this->cost = $cost;
+			$this->cost = [
+				'cost' => $cost,
+				'etd'  => $estimation_date,
+			];
 		}
 	}
 
