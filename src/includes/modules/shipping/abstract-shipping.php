@@ -223,10 +223,8 @@ abstract class Gateway {
 
 	/**
 	 * Get Shipping Cost
-	 *
-	 * @return int
 	 */
-	public function get_cost(): int {
+	public function get_cost() {
 		$this->set_cost();
 
 		return $this->cost;

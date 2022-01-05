@@ -9,7 +9,7 @@ class Shipping_List {
 	}
 
 	public function register() {
-		register_rest_route( 'lokuswp/v1', '/shipping/active', [
+		register_rest_route( 'lwpcommerce/v1', '/shipping/active', [
 			'methods'             => 'GET',
 			'callback'            => [ $this, 'lists' ],
 			'permission_callback' => '__return_true',
@@ -18,7 +18,7 @@ class Shipping_List {
 
 	public function lists( $request ) {
 		$destination = sanitize_text_field( $request->get_params()['destination'] );
-		$weight      = sanitize_text_field( $request->get_params()['weight'] ) ?? 0;
+		$weight      = isset( $request->get_params()['weight'] ) ? $request->get_params()['weight'] : 1;
 
 		if ( ! $destination ) {
 			return new \WP_Error( 'no_destination', 'Destination is required', [ 'status' => 400 ] );
