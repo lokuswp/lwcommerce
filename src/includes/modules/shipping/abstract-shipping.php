@@ -15,14 +15,14 @@ abstract class Gateway {
 	 *
 	 * @var string
 	 */
-	protected $id = null;
+	public $id = null;
 
 	/**
 	 * Shipping Name
 	 *
 	 * @var string
 	 */
-	protected $name = null;
+	public $name = null;
 
 	/**
 	 * Shipping Description
@@ -36,7 +36,7 @@ abstract class Gateway {
 	 *
 	 * @var url
 	 */
-	protected $logo = null;
+	public $logo = null;
 
 	/**
 	 * Shipping Group
@@ -224,15 +224,12 @@ abstract class Gateway {
 	/**
 	 * Get Shipping Cost
 	 *
-	 * @return array
+	 * @return int
 	 */
-	public function get_cost(): array {
+	public function get_cost(): int {
 		$this->set_cost();
 
-		return array(
-			"cost"     => $this->cost,
-			"currency" => 'IDR'
-		);
+		return $this->cost;
 	}
 
 	/**
@@ -243,7 +240,7 @@ abstract class Gateway {
 	public function set_cost() {
 		// get destination from cache
 		$destination_cost = get_transient( $this->id . '_cost' );
-		$this->cost       = $destination_cost["{$this->origin}_to_{$this->destination}"] ?? false;
+		$this->cost       = $destination_cost["{$this->origin}_to_{$this->destination}_with_{$this->service}"] ?? false;
 
 		if ( ! $this->cost ) {
 			$header = [
@@ -271,7 +268,7 @@ abstract class Gateway {
 			$cost = $costs[ $index ]->cost[0]->value;
 
 			// Push new destination to cache
-			$destination_cost["{$this->origin}_to_{$this->destination}"] = $cost;
+			$destination_cost["{$this->origin}_to_{$this->destination}_with_{$this->service}"] = $cost;
 
 			set_transient( $this->id . '_cost', $destination_cost, DAY_IN_SECONDS );
 

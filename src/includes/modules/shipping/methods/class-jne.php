@@ -33,7 +33,8 @@ class JNE extends Shipping\Gateway {
 	 *
 	 * @var string
 	 */
-	protected $name = "Jalur Nugraha Ekakurir (JNE)";
+	public $name = "Jalur Nugraha Ekakurir (JNE)";
+
 
 	/**
 	 * Shipping Description
@@ -47,7 +48,7 @@ class JNE extends Shipping\Gateway {
 	 *
 	 * @var url
 	 */
-	protected $logo = LWPC_URL . 'src/admin/assets/images/jne.png';
+	public $logo = LWPC_URL . 'src/admin/assets/images/jne.png';
 
 	/**
 	 * Set Payment Service

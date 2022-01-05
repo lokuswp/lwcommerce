@@ -26,14 +26,14 @@ class POST_Indonesia extends Shipping\Gateway {
 	 *
 	 * @var string
 	 */
-	public $id = 'post_indonesia_kilat_khusus';
+	public $id = 'pos';
 
 	/**
 	 * Shipping Name
 	 *
 	 * @var string
 	 */
-	protected $name = "POS Indonesia (POS)";
+	public $name = "POS Indonesia (POS)";
 
 	/**
 	 * Shipping Description
@@ -47,7 +47,7 @@ class POST_Indonesia extends Shipping\Gateway {
 	 *
 	 * @var url
 	 */
-	protected $logo = LWPC_URL . 'src/admin/assets/images/post-indonesia.png';
+	public $logo = LWPC_URL . 'src/admin/assets/images/post-indonesia.png';
 
 	/**
 	 * Set Payment Service
