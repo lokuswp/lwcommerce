@@ -1,3 +1,8 @@
 .wp-submenu.wp-submenu-wrap {
   margin: 0;
 }
+
+.wp-has-submenu.toplevel_page_lwpcommerce ul li:last-child a{
+  font-weight: 600;
+  color: rgb(224, 22, 22) !important;
+}

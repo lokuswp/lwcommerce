@@ -57,19 +57,19 @@ function lwpc_tab_lists(){
 /**
  * Default Admin Tabs
  */
-lwpc_add_tab_settings( 'settings', __('Pengaturan', 'lwpcommerce'), function () {
+lwpc_add_tab_settings( 'settings', __('Settings', 'lwpcommerce'), function () {
     require_once 'tabs/settings.php';
 });
 
-lwpc_add_tab_settings( 'store', __('Toko', 'lwpcommerce'), function () {
+lwpc_add_tab_settings( 'store', __('Store', 'lwpcommerce'), function () {
     require_once 'tabs/store.php';
 });
 
-lwpc_add_tab_settings( 'appearance', __('Tampilan', 'lwpcommerce'), function () {
+lwpc_add_tab_settings( 'appearance', __('Appearance', 'lwpcommerce'), function () {
     require_once 'tabs/appearance.php';
 });
 
-lwpc_add_tab_settings( 'shipping', __('Pengiriman', 'lwpcommerce'), function () {
+lwpc_add_tab_settings( 'shipping', __('Shipping', 'lwpcommerce'), function () {
     require_once 'tabs/shipping.php';
 });
 

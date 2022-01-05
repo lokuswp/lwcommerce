@@ -5,7 +5,7 @@
  * 
  * Plugin Name:       LWPCommerce
  * Plugin URI:        https://lokuswp.id/plugin/lwpcommerce
- * Description:       Plugin Untuk Berniaga Digital secara Online
+ * Description:       Mulai Berjualan Secara Online dengan Data Sendiri
  * Version:           0.1.0
  * Author:            LokusWP
  * Author URI:        https://lokuswp.id/

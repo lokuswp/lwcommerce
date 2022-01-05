@@ -27,8 +27,8 @@
             <div class="column col-4 filter-item" data-tag="tag-1">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title text-bold">Affiliate</div>
-                        <div class="card-subtitle text-gray">Create you Join Venture</div>
+                        <div class="card-title text-bold">Dine In</div>
+                        <div class="card-subtitle text-gray">Self Service FnB Order</div>
                     </div>
                 </div>
             </div>

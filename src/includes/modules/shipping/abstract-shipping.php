@@ -7,7 +7,7 @@ if ( ! defined( 'WPTEST' ) ) {
 	defined( 'ABSPATH' ) or die( "Direct access to files is prohibited" );
 }
 
-use LokusWP\BackBone\Utils\Log;
+use LokusWP\Utils\Log;
 
 abstract class Gateway {
 	/**
