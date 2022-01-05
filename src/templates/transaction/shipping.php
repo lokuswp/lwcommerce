@@ -94,19 +94,19 @@
 
 <script id="struct-shipping-channel" type="x-template">
     <div class="row">
-        {{#shipping_channel}}
+        {{#shippingChannel}}
             <div class="col-xs-12 col-sm-6 swiper-no-swiping gutter">
                 <div class="lsdp-form-group">
-                    <div class="item-radio" service-name={{service_name}} service="{{service}}" cost="{{cost}}" >
-                        <input type="radio" name="shippings">
+                    <div class="item-radio" >
+                        <input type="radio" name="shipping_channel" id="{{service}}" title="{{short_name}}" service="{{service}}" cost="{{cost}}" >
                         <label for="{{service}}}">
-                            <img src="{{service_logo}}" alt="{{vendor}}">
-                            <h6>{{name}}</h6>
-                            <p>{{#currencyformat}}{{cost}}{{/currencyformat}}</p>
+                            <img src="{{logo}}" alt="{{short_name}}">
+                            <h6>{{short_name}} - {{service}}</h6>
+                            <p>{{#currencyFormat}}{{cost}}{{/currencyFormat}}</p>
                         </label>
                     </div>
                 </div>
             </div>
-        {{/shipping_channel}}
+        {{/shippingChannel}}
     </div>
 </script>

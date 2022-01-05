@@ -247,7 +247,7 @@ abstract class Gateway {
 			];
 
 			$body = [
-				'origin'      => lwpc_get_settings( 'store', 'district', 'intval' ),
+				'origin'      => 501,
 				'destination' => $this->destination,
 				'weight'      => $this->weight,
 				'courier'     => $this->id,
