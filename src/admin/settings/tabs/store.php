@@ -145,17 +145,17 @@ $longitude          = lwpc_get_settings( 'store', 'longitude', 'floatval' );
         </div>
 
         <!-- Districts -->
-        <div class="form-group hidden">
-            <div class="col-3 col-sm-12">
-                <label class="form-label" for="districts"><?php _e( 'Kecamatan', 'lwpcommerce' ); ?></label>
-            </div>
-
-            <div class="col-5 col-sm-12">
-                <select class="form-select" name="districts" id="form-districts">
-                    <option value="<?= $districts_selected ?? '' ?>"><?php _e( 'Pilih Kecamatan', 'lwpcommerce' ); ?></option>
-                </select>
-            </div>
-        </div>
+        <!--        <div class="form-group hidden">-->
+        <!--            <div class="col-3 col-sm-12">-->
+        <!--                <label class="form-label" for="districts">--><?php //_e( 'Kecamatan', 'lwpcommerce' ); ?><!--</label>-->
+        <!--            </div>-->
+        <!---->
+        <!--            <div class="col-5 col-sm-12">-->
+        <!--                <select class="form-select" name="districts" id="form-districts">-->
+        <!--                    <option value="--><? //= $districts_selected ?? '' ?><!--">--><?php //_e( 'Pilih Kecamatan', 'lwpcommerce' ); ?><!--</option>-->
+        <!--                </select>-->
+        <!--            </div>-->
+        <!--        </div>-->
 
         <!-- Address -->
         <div class="form-group">
@@ -198,88 +198,150 @@ $longitude          = lwpc_get_settings( 'store', 'longitude', 'floatval' );
 </section>
 
 <script>
-    const apiWilayahIndonesia = 'http://www.emsifa.com/api-wilayah-indonesia/api';
+    // const apiWilayahIndonesia = 'http://www.emsifa.com/api-wilayah-indonesia/api';
+    const apiRajaOngkir = 'http://lwp.local/wp-json/lokuswp/v1/rajaongkir';
     const stateId = document.querySelector('#form-state').value;
     const districtId = document.querySelector('#form-district').value;
-    const districtsId = document.querySelector('#form-districts').value;
+    // const districtsId = document.querySelector('#form-districts').value;
 
-    fetch(`${apiWilayahIndonesia}/provinces.json`)
-        .then(response => response.json())
-        .then(provinces => {
-            provinces.forEach(province => {
-                if (province.id === stateId) {
-                    document.querySelector('#form-state').innerHTML = `<option value="${province.id}">${province.name}</option>`;
-                }
-                let option = document.createElement('option');
-                option.value = province.id;
-                option.innerHTML = province.name;
-                document.getElementById('form-state').appendChild(option);
-            });
+    // get province
+    fetch(`${apiRajaOngkir}/province`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'success') {
+                data.data.forEach(province => {
+                    if (province.province_id === stateId) {
+                        document.querySelector('#form-state').innerHTML = `<option value="${province.province_id}">${province.province}</option>`;
+                    }
+                    let option = document.createElement('option');
+                    option.value = province.province_id;
+                    option.innerHTML = province.province;
+                    document.querySelector('#form-state').appendChild(option);
+                });
+            } else {
+                console.log(data.message);
+            }
         });
 
     if (districtId) {
-        fetch(`${apiWilayahIndonesia}/regencies/${stateId}.json`)
-            .then(response => response.json())
-            .then(regencies => {
-                regencies.forEach(regency => {
-                    if (regency.id === districtId) {
-                        document.querySelector('#form-district').innerHTML = `<option value="${regency.id}">${regency.name}</option>`;
-                    }
-                    let option = document.createElement('option');
-                    option.value = regency.id;
-                    option.innerHTML = regency.name;
-                    document.getElementById('form-district').appendChild(option);
-                });
+        fetch(`${apiRajaOngkir}/city?province=${stateId}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    data.data.forEach(city => {
+                        if (city.city_id === districtId) {
+                            document.querySelector('#form-district').innerHTML = `<option value="${city.city_id}">${city.city_name} (${city.type})</option>`;
+                        }
+                        let option = document.createElement('option');
+                        option.value = city.city_id;
+                        option.innerHTML = city.city_name + ' (' + city.type + ')';
+                        document.querySelector('#form-district').appendChild(option);
+                    });
+                } else {
+                    console.log(data.message);
+                }
             });
     }
 
-    if (districtsId) {
-        fetch(`${apiWilayahIndonesia}/districts/${districtId}.json`)
-            .then(response => response.json())
-            .then(districts => {
-                districts.forEach(district => {
-                    if (district.id === districtsId) {
-                        document.querySelector('#form-districts').innerHTML = `<option value="${district.id}">${district.name}</option>`;
-                    }
-                    let option = document.createElement('option');
-                    option.value = district.id;
-                    option.innerHTML = district.name;
-                    document.getElementById('form-districts').appendChild(option);
-                });
-            });
-    }
-
+    // get city
     document.querySelector('#form-state').addEventListener('change', function () {
-        const id_province = this.value;
-        const cities = document.querySelector('#form-district');
-        cities.innerHTML = '';
-        fetch(`${apiWilayahIndonesia}/regencies/${id_province}.json`)
-            .then(response => response.json())
-            .then(district => {
-                district.forEach(district => {
-                    let option = document.createElement('option');
-                    option.value = district.id;
-                    option.innerHTML = district.name;
-                    document.getElementById('form-district').appendChild(option);
-                });
+        let stateId = this.value;
+        let district = document.querySelector('#form-district');
+        district.innerHTML = '';
+        fetch(`${apiRajaOngkir}/city?province=${stateId}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    data.data.forEach(city => {
+                        let option = document.createElement('option');
+                        option.value = city.city_id;
+                        option.innerHTML = city.city_name + ' (' + city.type + ')';
+                        district.appendChild(option);
+                    });
+                } else {
+                    console.log(data.message);
+                }
             });
     });
 
-    document.querySelector('#form-district').addEventListener('change', function () {
-        const id_district = this.value;
-        const districts = document.querySelector('#form-districts');
-        districts.innerHTML = '';
-        fetch(`${apiWilayahIndonesia}/districts/${id_district}.json`)
-            .then(response => response.json())
-            .then(district => {
-                district.forEach(district => {
-                    let option = document.createElement('option');
-                    option.value = district.id;
-                    option.innerHTML = district.name;
-                    document.getElementById('form-districts').appendChild(option);
-                });
-            });
-    });
+
+    // fetch(`${apiWilayahIndonesia}/provinces.json`)
+    //     .then(response => response.json())
+    //     .then(provinces => {
+    //         provinces.forEach(province => {
+    //             if (province.id === stateId) {
+    //                 document.querySelector('#form-state').innerHTML = `<option value="${province.id}">${province.name}</option>`;
+    //             }
+    //             let option = document.createElement('option');
+    //             option.value = province.id;
+    //             option.innerHTML = province.name;
+    //             document.getElementById('form-state').appendChild(option);
+    //         });
+    //     });
+    //
+    // if (districtId) {
+    //     fetch(`${apiWilayahIndonesia}/regencies/${stateId}.json`)
+    //         .then(response => response.json())
+    //         .then(regencies => {
+    //             regencies.forEach(regency => {
+    //                 if (regency.id === districtId) {
+    //                     document.querySelector('#form-district').innerHTML = `<option value="${regency.id}">${regency.name}</option>`;
+    //                 }
+    //                 let option = document.createElement('option');
+    //                 option.value = regency.id;
+    //                 option.innerHTML = regency.name;
+    //                 document.getElementById('form-district').appendChild(option);
+    //             });
+    //         });
+    // }
+    //
+    // if (districtsId) {
+    //     fetch(`${apiWilayahIndonesia}/districts/${districtId}.json`)
+    //         .then(response => response.json())
+    //         .then(districts => {
+    //             districts.forEach(district => {
+    //                 if (district.id === districtsId) {
+    //                     document.querySelector('#form-districts').innerHTML = `<option value="${district.id}">${district.name}</option>`;
+    //                 }
+    //                 let option = document.createElement('option');
+    //                 option.value = district.id;
+    //                 option.innerHTML = district.name;
+    //                 document.getElementById('form-districts').appendChild(option);
+    //             });
+    //         });
+    // }
+    //
+    // document.querySelector('#form-state').addEventListener('change', function () {
+    //     const id_province = this.value;
+    //     const cities = document.querySelector('#form-district');
+    //     cities.innerHTML = '';
+    //     fetch(`${apiWilayahIndonesia}/regencies/${id_province}.json`)
+    //         .then(response => response.json())
+    //         .then(district => {
+    //             district.forEach(district => {
+    //                 let option = document.createElement('option');
+    //                 option.value = district.id;
+    //                 option.innerHTML = district.name;
+    //                 document.getElementById('form-district').appendChild(option);
+    //             });
+    //         });
+    // });
+    //
+    // document.querySelector('#form-district').addEventListener('change', function () {
+    //     const id_district = this.value;
+    //     const districts = document.querySelector('#form-districts');
+    //     districts.innerHTML = '';
+    //     fetch(`${apiWilayahIndonesia}/districts/${id_district}.json`)
+    //         .then(response => response.json())
+    //         .then(district => {
+    //             district.forEach(district => {
+    //                 let option = document.createElement('option');
+    //                 option.value = district.id;
+    //                 option.innerHTML = district.name;
+    //                 document.getElementById('form-districts').appendChild(option);
+    //             });
+    //         });
+    // });
 
     const lat = document.querySelector('input[name="latitude"]').value;
     const lon = document.querySelector('input[name="longitude"]').value;
