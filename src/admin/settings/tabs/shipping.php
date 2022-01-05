@@ -7,7 +7,7 @@ use LokusWP\Commerce\Shipping;
 /* wp-admin -> LSDDonation -> Payments
 /********************************************/
 
-if (!defined('WPTEST')) {
+if ( ! defined('WPTEST')) {
     defined('ABSPATH') or die("Direct access to files is prohibited");
 }
 
@@ -21,27 +21,13 @@ class Shipping_Admin
          * @undocs
          */
         do_action("lwpcommerce/admin/shipping/before");
-?>
+        ?>
 
         <section id="lwp-backbone-shipping">
 
-            <div class="tab-nested">
-                <input type="radio" name="tab" id="tab1" checked="checked" />
-                <label class="tab-item" for="tab1">Settings</label>
+            Tab : Settings | Zone | RajaOngkir | RajaOngkirPro
 
-                <input type="radio" name="tab" id="tab2" />
-                <label class="tab-item" for="tab2">Zone</label>
-
-                <input type="radio" name="tab" id="tab2" />
-                <label class="tab-item" for="tab2">RajaOngkir</label>
-
-
-                <input type="radio" name="tab" id="tab2" />
-                <label class="tab-item" for="tab2">RajaOngkir Pro</label>
-
-                <div class="tab-body-component">
-                    <div id="tab-body-1" class="tab-body">
-                        <!-- <div class="container-shimmer">
+            <!-- <div class="container-shimmer">
 			  <div class="content-shimmer">
 				<div class="form-shimmer shimmer"></div>
 				<div class="form-shimmer shimmer"></div>
@@ -73,22 +59,26 @@ class Shipping_Admin
                         $shipping_id = esc_attr($shipping_data->id);
                         $shipping_class = esc_attr($shipping_data->payment_class);
 
-                                            </div>
-                                        </li>
+                        if (class_exists($shipping_class)) : $shipping_obj = new $shipping_class; ?>
 
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            </ul>
+                            <li class="draggable" draggable="true">
+                                <div class="columns col-gapless">
 
-                        <?php endif; ?>
+                                    <!-- Method -->
+                                    <div class="column col-2 method" style="margin-bottom: -8px; display: flex; align-items: center">
 
-                    </div>
+                                        <img src="<?php echo esc_url($shipping_data->logo); ?>" alt="<?= $shipping_data->name ?>" height="40" width="100">
 
-                    <div id="tab-body-2" class="tab-body">
-                        Tab 2 Content
-                    </div>
-                </div>
-            </div>
+
+                                        <h6 style="padding: 0px 10px 0;">
+                                            <?php esc_attr_e($shipping_data->name); ?>
+                                        </h6>
+                                    </div>
+
+                                    <!-- Zone -->
+                                    <div class="column col-2 method text-center">
+                                        <h6><?php esc_attr_e(ucfirst(implode(', ', $shipping_data->zone))) ?></h6>
+                                    </div>
 
                                     <!-- Services -->
                                     <div class="column col-2" style="display: grid;align-content: center;align-items: center;font-weight: bold;">
@@ -129,10 +119,14 @@ class Shipping_Admin
                                 </div>
                             </li>
 
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </ul>
 
+            <?php endif; ?>
         </section>
 
-<?php
+        <?php
         /**
          * Hook after payment method
          * @undocs
@@ -279,7 +273,7 @@ new Shipping_Admin();
         for (var i = 0; i < shipping.length; i++)
             formData.append('shipping[' + i + ']', shipping[i]);
         var xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function() {
+        xmlHttp.onreadystatechange = function () {
             if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
                 //console.log(xmlHttp.responseText);
             }
