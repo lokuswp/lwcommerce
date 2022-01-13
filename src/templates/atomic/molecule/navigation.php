@@ -7,7 +7,7 @@
     <div class="col-xs-8 center-sm middle-sm d-flex"><?php the_title(); ?></div>
     <div class="col-xs-2 end-sm d-flex">
         <a href="<?php echo get_permalink(lwp_get_settings('settings', 'cart_page' )); ?>">
-            <div class="troli-icon-wrapper"></div>
+            <div class="cart-icon-wrapper"></div>
         </a>
     </div>
 </div>

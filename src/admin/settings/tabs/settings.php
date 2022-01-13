@@ -43,7 +43,7 @@
         <!-- Base Currency -->
         <div class="form-group">
             <div class="col-3 col-sm-12">
-                <label class="form-label" for="currency"><?php _e('Base Currency', 'lwpbackbone'); ?></label>
+                <label class="form-label" for="currency"><?php _e('Base Currency', 'lokuswp'); ?></label>
             </div>
             <div class="col-5 col-sm-12">
                 <select class="form-select" name="currency">
@@ -56,6 +56,6 @@
             </div>
         </div>
 
-        <button class="btn btn-primary" id="lwpbb_admin_save_settings" style="width:120px"><?php _e('Save', 'lwpbackbone'); ?></button>
+        <button class="btn btn-primary" id="lwpbb_admin_save_settings" style="width:120px"><?php _e('Save', 'lokuswp'); ?></button>
     </form>
 </section>

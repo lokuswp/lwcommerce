@@ -339,7 +339,7 @@ class Admin {
 	 * @return void
 	 */
 	public function admin_menu_order() {
-		include_once LWPC_PATH . 'src/admin/reports/reports.php';
+		include_once LWPC_PATH . 'src/admin/orders/order.php';
 	}
 
 	/**

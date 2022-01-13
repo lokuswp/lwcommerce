@@ -21,7 +21,7 @@
         display: none;
     }
 
-    .add-troli{
+    .add-cart{
         display: block;
         margin: 0 auto;
     }

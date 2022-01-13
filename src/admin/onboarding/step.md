@@ -1,0 +1,8 @@
+- Setting Toko
+- Setting Jenis Usaha
+- Setting Input Produk
+  - Foto, Data Produk
+- Setting Pembayarna
+- Setting Notifikasi
+- Pilih Integrasi / Ekstensi
+- Pelajari Design Ecommerce dengan Elementor

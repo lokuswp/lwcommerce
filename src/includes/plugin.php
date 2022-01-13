@@ -76,7 +76,7 @@ class Plugin {
 	 */
 	public function __clone() {
 		// Cloning instances of the class is forbidden.
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'lwpbackbone' ), LKBB_VERSION );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'lokuswp' ), LKBB_VERSION );
 	}
 
 	/**
@@ -89,6 +89,6 @@ class Plugin {
 	 */
 	public function __wakeup() {
 		// Unserializing instances of the class is forbidden.
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'lwpbackbone' ), LKBB_VERSION );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'lokuswp' ), LKBB_VERSION );
 	}
 }

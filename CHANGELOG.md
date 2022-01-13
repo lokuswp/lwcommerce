@@ -5,6 +5,10 @@
 - Product Manage
     - Price
     - Stock
+    - Type
 - Template
     - Add to Cart
     - Pricing
+- Orders
+- Shipping
+- Auto Generate

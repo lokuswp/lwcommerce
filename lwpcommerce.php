@@ -5,7 +5,7 @@
  * 
  * Plugin Name:       LWPCommerce
  * Plugin URI:        https://lokuswp.id/plugin/lwpcommerce
- * Description:       Mulai Berjualan Secara Online dengan Data Sendiri
+ * Description:       Jual Beli secara Online di Blogmu
  * Version:           0.1.0
  * Author:            LokusWP
  * Author URI:        https://lokuswp.id/
@@ -45,18 +45,18 @@ function lwpcommerce_dependency()
   $backbone_version = true;
 
   // Checking Backbone Active
-  if (is_admin() && current_user_can('activate_plugins') && !is_plugin_active('lokuswp-backbone/lokuswp-backbone.php')) {
+  if (is_admin() && current_user_can('activate_plugins') && !is_plugin_active('lokuswp/lokuswp.php')) {
     add_action('admin_notices', function () {
-      echo '<div class="error"><p>' . __('LokusWP BackBone required. please activate the backbone plugin first.', 'lwpcommerce') . '</p></div>';
+      echo '<div class="error"><p>' . __('LokusWP required. please activate the backbone plugin first.', 'lwpcommerce') . '</p></div>';
     });
     $backbone_active = false;
   }
 
 
-  $backbone = get_plugin_data(dirname(dirname(__FILE__)) . '/lokuswp-backbone/lokuswp-backbone.php');
+  $backbone = get_plugin_data(dirname(dirname(__FILE__)) . '/lokuswp/lokuswp.php');
   if (!version_compare($backbone['Version'], LWPC_BACKBONE_REQUIRE, '>=')) {
-      // add_action('admin_notices', 'lsdd_midtrans_fail_version');
-      $backbone_version = false;
+    // add_action('admin_notices', 'lsdd_midtrans_fail_version');
+    $backbone_version = false;
   }
 
 
@@ -73,9 +73,27 @@ add_action('admin_init', 'lwpcommerce_dependency');
 
 // Backbone Active -> Run LWPCommerce
 $backbone = (array) apply_filters('active_plugins', get_option('active_plugins'));
-if (in_array('lokuswp-backbone/lokuswp-backbone.php', $backbone)) {
+if (in_array('lokuswp/lokuswp.php', $backbone)) {
 
   // Load Plugin
   require_once LWPC_PATH . 'src/autoload.php';
   $plugin = new LokusWP\Commerce\Plugin();
 }
+
+
+/**
+ * Processing Cart Data from Cart Cookie
+ * Rendered based on Ecommerce Plugin for Respect Another Plugin
+ */
+function lwpc_cart_processing($cart_item, $post_id)
+{
+
+  if (get_post_type($post_id) == 'product') {
+    $cart_item['price']     = abs(lwpc_get_price($post_id));
+    $cart_item['min']       = 1;
+    $cart_item['max']       = -1;
+  }
+
+  return $cart_item;
+}
+add_filter("lokuswp/cart/cookie/item", "lwpc_cart_processing", 10, 2);

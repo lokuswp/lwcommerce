@@ -67,8 +67,8 @@ class Shipping_List {
 						'short_name' => $short_name[1],
 						'service'    => $shipping_obj->service,
 						'logo'       => $shipping_obj->logo,
-						'cost'       => $shipping_obj->get_cost()['cost'],
-						'etd'        => $shipping_obj->get_cost()['etd'],
+						'cost'       => $shipping_obj->get_cost()['cost'] == null ? 0 : $shipping_obj->get_cost()['cost'],
+						'etd'        => $shipping_obj->get_cost()['etd'] == null ? '0 Hari' : $shipping_obj->get_cost()['etd'],
 						'currency'   => 'IDR',
 					];
 				}
