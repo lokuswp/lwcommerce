@@ -27,48 +27,48 @@
         $('.cart-icon-wrapper').html('<div class="cart-icon svg-wrapper"><img src="' + lokuswp.plugin_url + 'src/assets/svg/cart.svg' + '" alt="cart-icon"><small class="cart-qty">' + lokusCart.countQty() + '</small></div>');
     });
 
-    /**
-     * Add Quantity Product
-     */
-    $(document).on('click', '.lwp-stepper .plus', function (e) {
+    // /**
+    //  * Add Quantity Product
+    //  */
+    // $(document).on('click', '.lwp-stepper .plus', function (e) {
 
-        let productID = parseInt($(this).closest(".lwp-stepper").attr('product-id'));
-        let elInputQty = $(this).closest(".lwp-stepper").find("input");
+    //     let productID = parseInt($(this).closest(".lwp-stepper").attr('product-id'));
+    //     let elInputQty = $(this).closest(".lwp-stepper").find("input");
 
-        lokusCart.addQuantity(productID, 1);
-        elInputQty.val(lokusCart.readQuantity(productID));
+    //     lokusCart.addQuantity(productID, 1);
+    //     elInputQty.val(lokusCart.readQuantity(productID));
 
-        lwp_render_cart(productID);
+    //     lwp_render_cart(productID);
 
-        // Max
-        // Min
-        // Changable
+    //     // Max
+    //     // Min
+    //     // Changable
 
-    });
+    // });
 
-    /**
-     * Decrease Quantity Product
-     */
-    $(document).on('click', '.lwp-stepper .minus', function (e) {
+    // /**
+    //  * Decrease Quantity Product
+    //  */
+    // $(document).on('click', '.lwp-stepper .minus', function (e) {
 
-        let productID = parseInt($(this).closest(".lwp-stepper").attr('product-id'));
-        lokusCart.reduceQuantity(productID, 1);
+    //     let productID = parseInt($(this).closest(".lwp-stepper").attr('product-id'));
+    //     lokusCart.reduceQuantity(productID, 1);
 
-        lwp_render_cart(productID);
+    //     lwp_render_cart(productID);
 
-    });
+    // });
 
-    /**
-     * Change Product 
-     */
-    $(document).on('change', '.lwp-stepper input', function (e) {
+    // /**
+    //  * Change Product 
+    //  */
+    // $(document).on('change', '.lwp-stepper input', function (e) {
 
-        let productID = parseInt($(this).closest(".lwp-stepper").attr('product-id'));
-        let productQty = parseInt($(this).val());
-        lokusCart.changeQuantity(productID, productQty);
+    //     let productID = parseInt($(this).closest(".lwp-stepper").attr('product-id'));
+    //     let productQty = parseInt($(this).val());
+    //     lokusCart.changeQuantity(productID, productQty);
 
-        lwp_render_cart(productID);
-    });
+    //     lwp_render_cart(productID);
+    // });
 
 
     /**
@@ -128,17 +128,6 @@
         lokusTransaction.renderExtras();
     });
 
-    /**
-     * Rendering Cart
-     * @param {int} productID 
-     */
-    function lwp_render_cart(productID) {
-
-        $('.txt-qty-' + productID).text(lokusCart.readQuantity(productID));
-        $('.val-qty-' + productID).val(lokusCart.readQuantity(productID));
-
-        $('.lwp-cart-total').text(lokusCart.calculateTotal(true));
-        $('.cart-icon-wrapper').html('<div class="cart-icon svg-wrapper"><img src="' + lokuswp.plugin_url + 'src/assets/svg/cart.svg' + '" alt="cart-icon"><small class="cart-qty">' + lokusCart.countQty() + '</small></div>');
-    }
+  
 
 })(jQuery);
