@@ -13,11 +13,13 @@ class Shipping_Processing {
 		add_filter( 'lwpcommerce/shipping/gateway/pos', [ $this, 'shipping_processing' ], 10, 2 );
 	}
 
-	public function shipping_processing( $shipping_id, $transaction ) {
-		$service     = $transaction['shipment']['service'];
-		$destination = $transaction['shipment']['destination'];
+	public function shipping_processing( $shipping, $transaction ) {
+		$shipping_id = $shipping['courier'];
+		$service     = $shipping['service'];
+		$destination = $shipping['destination'];
+		$weight      = $shipping['weight'] ?? '1';
 
-		$cost = lwpc_get_cost_rajaongkir( $shipping_id, $service, $destination );
+		$cost = lwpc_get_cost_rajaongkir( $shipping_id, $service, $destination, $weight );
 
 		if ( ! $cost ) {
 			return 'shipping not found';
@@ -29,3 +31,5 @@ class Shipping_Processing {
 		return $transaction;
 	}
 }
+
+new Shipping_Processing;

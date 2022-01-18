@@ -24,9 +24,11 @@ class Plugin {
 		// require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-dine-in.php';
 		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-jne.php';
 		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-post-indonesia.php';
-		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-shipping-processing.php';
+//		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-shipping-processing.php';
 		require_once LWPC_PATH . 'src/includes/modules/shipping/api/class-rajaongkir-api.php';
 		require_once LWPC_PATH . 'src/includes/modules/shipping/api/class-get-shipping-list.php';
+
+		add_action( 'plugins_loaded', [ $this, 'load_modules' ] );
 
 		// // Administration / BackOffice
 		$plugin = array( 'slug' => 'lwpcommerce', 'name' => 'LWPCommerce', 'version' => LWPC_VERSION );
@@ -39,6 +41,9 @@ class Plugin {
 			require_once LWPC_PATH . 'src/public/class-public.php';
 			Frontend::register( $plugin );
 		}
+
+		// Register custom meta table
+		$this->register_custom_meta_table();
 	}
 
 	/**
@@ -90,5 +95,16 @@ class Plugin {
 	public function __wakeup() {
 		// Unserializing instances of the class is forbidden.
 		_doing_it_wrong( __FUNCTION__, esc_html__( 'Something went wrong.', 'lokuswp' ), LKBB_VERSION );
+	}
+
+	public function load_modules() {
+		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-shipping-processing.php';
+		require_once LWPC_PATH . 'src/includes/modules/orders/methods/class-order-processing.php';
+	}
+
+	private function register_custom_meta_table() {
+		// Registering meta table
+		global $wpdb;
+		$wpdb->lwpcommerce_ordermeta = $wpdb->prefix . 'lwpcommerce_ordermeta';
 	}
 }
