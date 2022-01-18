@@ -6,13 +6,15 @@ if (!defined('WPTEST')) {
 }
 
 use LSD\Migration\DB_Carts;
+use LSD\Migration\DB_LWPCommerce_Order_Meta;
 
 class Deactivator
 {
     public static function deactivate()
     {
-        // require LOKUSWP_PATH . 'src/includes/core/modules/database/class-db-carts.php';
-        // $db_carts = new DB_Carts;
-        // $db_carts->drop_table();
+        require LWPC_PATH . 'src/includes/modules/database/class-db-orders.php';
+
+        $db_reports_meta = new DB_LWPCommerce_Order_Meta();
+        $db_reports_meta->drop_table();
     }
 }

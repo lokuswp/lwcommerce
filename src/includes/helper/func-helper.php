@@ -164,3 +164,46 @@ function lwpc_get_cost_rajaongkir( string $shipping_id, string $service, string 
 
 	return false;
 }
+
+/**
+ * @param $id
+ * @param $meta_key
+ * @param $single
+ *
+ * @return array|false|mixed
+ */
+function lwpc_get_order_meta( $id, $meta_key, $single = true ) {
+	return get_metadata( 'lwpcommerce_order', $id, $meta_key, $single );
+}
+
+/**
+ * @param $id
+ * @param $meta_key
+ * @param $value
+ *
+ * @return bool|int
+ */
+function lwpc_update_order_meta( $id, $meta_key, $value = '' ) {
+	return update_metadata( 'lwpcommerce_order', $id, $meta_key, $value );
+}
+
+/**
+ * @param $id
+ * @param $meta_key
+ * @param $value
+ *
+ * @return false|int
+ */
+function lwpc_add_order_meta( $id, $meta_key, $value = '' ) {
+	return add_metadata( 'lwpcommerce_order', $id, $meta_key, $value );
+}
+
+/**
+ * @param $id
+ * @param $meta_key
+ *
+ * @return bool
+ */
+function lwpc_delete_order_meta( $id, $meta_key = '' ) {
+	return delete_metadata( 'lwpcommerce_order', $id, $meta_key );
+}

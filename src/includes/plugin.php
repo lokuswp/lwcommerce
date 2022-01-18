@@ -41,6 +41,9 @@ class Plugin {
 			require_once LWPC_PATH . 'src/public/class-public.php';
 			Frontend::register( $plugin );
 		}
+
+		// Register custom meta table
+		$this->register_custom_meta_table();
 	}
 
 	/**
@@ -96,5 +99,12 @@ class Plugin {
 
 	public function load_modules() {
 		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-shipping-processing.php';
+		require_once LWPC_PATH . 'src/includes/modules/orders/methods/class-order-processing.php';
+	}
+
+	private function register_custom_meta_table() {
+		// Registering meta table
+		global $wpdb;
+		$wpdb->lwpcommerce_ordermeta = $wpdb->prefix . 'lwpcommerce_ordermeta';
 	}
 }

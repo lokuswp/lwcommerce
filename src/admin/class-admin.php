@@ -109,7 +109,7 @@ class Admin {
 					wp_enqueue_style( 'datatables-style-buttons', LWPC_URL . 'src/includes/libraries/js/datatables/buttons.dataTables.min.css', array(), $this->version, 'all' );
 					wp_enqueue_style( 'datatables-style-select', LWPC_URL . 'src/includes/libraries/js/datatables/select.dataTables.min.css', array(), $this->version, 'all' );
 
-					wp_enqueue_style( 'report-css', LWPC_URL . 'src/admin/assets/css/report' . $dev_css, array(), $this->version, 'all' );
+					wp_enqueue_style( 'orders-css', LWPC_URL . 'src/admin/assets/css/orders' . $dev_css, array(), $this->version, 'all' );
 				}
 			}
 		}
@@ -157,17 +157,16 @@ class Admin {
 			// Load js for report page
 			if ( $_GET['page'] === 'lwpcommerce-order' ) {
 				wp_enqueue_script(
-					'report-js',
-					LWPC_URL . 'src/admin/assets/js/report' . $dev_js,
+					'orders-js',
+					LWPC_URL . 'src/admin/assets/js/orders' . $dev_js,
 					array( 'jquery', 'datatables', 'datatables-buttons', 'datatables-select', 'datatables-buttons-excel', 'datatables-buttons-html5' ),
 					$this->version,
 					false
 				);
-				wp_localize_script( 'report-js', 'lwpc_report', array(
+				wp_localize_script( 'orders-js', 'lwpc_orders', array(
 					'ajax_url'    => admin_url( 'admin-ajax.php' ),
 					'ajax_nonce'  => wp_create_nonce( 'lwpc_admin_nonce' ),
 					'plugin_url'  => LWPC_URL,
-					//					'currency'    => lsdc_get_currency(),
 					'translation' => $this->js_translation(),
 				) );
 			}
@@ -257,8 +256,8 @@ class Admin {
 			3
 		);
 
-		$backbone = (array) apply_filters('active_plugins', get_option('active_plugins'));
-		if ( !in_array('lwpcommerce/lwpcommerce.php', $backbone)) {
+		$backbone = (array) apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
+		if ( ! in_array( 'lwpcommerce/lwpcommerce.php', $backbone ) ) {
 
 			add_submenu_page(
 				$this->slug,
@@ -270,7 +269,7 @@ class Admin {
 				9999
 			);
 
-		}else{
+		} else {
 			add_submenu_page(
 				$this->slug,
 				__( 'Get More Extensions', 'lwpcommerce' ),
@@ -281,7 +280,7 @@ class Admin {
 				9999
 			);
 		}
-	
+
 
 		// Menu Products
 		add_menu_page(

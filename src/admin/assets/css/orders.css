@@ -65,8 +65,12 @@
     padding: 0 24px 0 8px !important;
 }
 
-#reports thead {
+#orders thead {
     display: none;
+}
+
+table.dataTable.display tbody tr.odd > .sorting_1 {
+    background-color: transparent !important;
 }
 
 /* Make header for card */
@@ -200,4 +204,14 @@
 .lwpc-report-input {
     width: 400px;
     border-color: #D9D9D9;
+}
+
+.del {
+    text-decoration: line-through;
+    color: #ff0000;
+}
+
+/* make item hidden */
+.lwpc-hidden {
+    display: none;
 }
