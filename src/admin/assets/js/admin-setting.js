@@ -1,7 +1,7 @@
 (function ($) {
 
     // =================== Institution Settings =================== //
-    $(document).on("click", "#lwpc_store_settings_save", function (e) {
+    $(document).on("click", "#lwpc-setting-store-save", function (e) {
         e.preventDefault();
         $(this).addClass('loading');
         const that = this;

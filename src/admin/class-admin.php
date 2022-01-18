@@ -281,7 +281,6 @@ class Admin {
 				9999
 			);
 		}
-	
 
 		// Menu Products
 		add_menu_page(

@@ -1,27 +1,6 @@
 {
     "env": {
-        "wp_user": "admin",
-        "wp_pass": "secret",
-        "site1" : {
-            "url" : "http://cypresstests.devtest",
-            "path" : "~/Sites/cypresstests.devtest",
-            "remote_connection" : "https://anothercypresstest.devtest\n7bpxn3S6qihNEjgA4o6qlzj1MvcMUOkt9zHoEzqC"
-        },
-        "site2" : {
-            "url" : "http://testingsite.local",
-            "path" : "~/Local\\ Sites/testingsite/app",
-            "remote_connection" : "https://othertestingsite.local\n68hQT30jPr9d9x/IH+XATrW8q2e7ZkKZ+d19BqlO"
-        },
-        "baseUrl": "http://lokuswp.local",
-        "dashboardUrl": "http://lokuswp.local/wp-admin",
-        "domain": "lokuswp.local",
-        "users": {
-            "admin": {
-                "username": "lokuswp",
-                "email": "test@example.org",
-                "pw": "password"
-            }
-        }
+        "baseUrl": "http://lokuswp.local"
     },
     "viewportWidth": 1280,
     "viewportHeight": 660
