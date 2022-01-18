@@ -27,8 +27,8 @@ class Shipping_Admin
                 <input type="radio" name="tab" id="tab2" />
                 <label class="tab-item" for="tab2">Zone</label>
 
-                <input type="radio" name="tab" id="tab2" />
-                <label class="tab-item" for="tab2">RajaOngkir</label>
+                <input type="radio" name="tab" id="tab3" />
+                <label class="tab-item" for="tab3">RajaOngkir</label>
 
                 <div class="tab-body-component">
                     <div id="tab-body-1" class="tab-body">
@@ -38,6 +38,10 @@ class Shipping_Admin
                     <div id="tab-body-2" class="tab-body">
                         <?php require_once LWPC_PATH . 'src/admin/settings/tabs/shipping/zone.php'; ?>
                     </div>
+
+                    <div id="tab-body-3" class="tab-body">
+                       Pengaturan Raja Ongkir
+                    </div>
                 </div>
             </div>
 
@@ -45,7 +49,8 @@ class Shipping_Admin
 
         <style>
             #tab1:checked~.tab-body-component #tab-body-1,
-            #tab2:checked~.tab-body-component #tab-body-2 {
+            #tab2:checked~.tab-body-component #tab-body-2,
+            #tab3:checked~.tab-body-component #tab-body-3 {
                 position: relative;
                 top: 0;
                 opacity: 1
