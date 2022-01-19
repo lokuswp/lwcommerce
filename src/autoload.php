@@ -33,9 +33,9 @@ spl_autoload_register(function ($classname) {
 
 add_action("lokuswp/transaction/tab/header", function () {
 ?>
-	<div class="swiper-slide">
+	<!-- <div class="swiper-slide">
 		<?php _e('Shipping', 'lokuswp'); ?>
-	</div>
+	</div> -->
 <?php
 });
 add_action("lokuswp/transaction/tab/content", function () {
