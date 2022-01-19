@@ -165,6 +165,9 @@ class AJAX {
 				//==================== Total ====================//
 				$data[ $key ]->total = lwpbb_set_currency_format( true, abs( $row->total ) );
 
+				//==================== Status ====================//
+				$data[ $key ]->status_processing = lwpc_get_order_meta( $row->transaction_id, 'status_processing', true );
+
 				//==================== Date & Time ====================//
 				$data[ $key ]->created_at = date( "j-m-Y H:i", strtotime( $row->created_at ) );
 
@@ -179,11 +182,12 @@ class AJAX {
 							on tr.cart_hash=jj.cart_hash where transaction_id='$row->transaction_id'"
 				);
 
-				//==================== add image and price to product ====================//
+				//==================== add image & price to product ====================//
 				foreach ( $data[ $key ]->product as $index => $value ) {
-					$data[ $key ]->product[ $index ]->image = wp_get_attachment_image_src( get_post_thumbnail_id( $value->ID ) );
-					$data[ $key ]->product[ $index ]->price = lwpbb_set_currency_format(true, get_post_meta( $value->ID, '_price_normal', true ));
-					$data[ $key ]->product[ $index ]->price_discount = get_post_meta( $value->ID, '_price_discount', true ) ? lwpbb_set_currency_format(true, get_post_meta( $value->ID, '_price_discount', true )) : null;
+					$data[ $key ]->product[ $index ]->image          = wp_get_attachment_image_src( get_post_thumbnail_id( $value->ID ) );
+					$data[ $key ]->product[ $index ]->price          = lwpbb_set_currency_format( true, get_post_meta( $value->ID, '_price_normal', true ) );
+					$data[ $key ]->product[ $index ]->price_discount = get_post_meta( $value->ID, '_price_discount', true ) ? lwpbb_set_currency_format( true,
+						get_post_meta( $value->ID, '_price_discount', true ) ) : null;
 				}
 			}
 

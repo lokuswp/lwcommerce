@@ -13,10 +13,11 @@ class Orders_Processing {
 	}
 
 	public function orders_processing( $request, $transaction_id ): bool {
-		$note     = lwp_recursive_sanitize_text_field( $request['product_note'] );
-		$shipping = lwp_recursive_sanitize_text_field( $request['shipping'] );
+		$note     = lwp_recursive_sanitize_text_field( $request['product_note'] ) ?? '';
+		$shipping = lwp_recursive_sanitize_text_field( $request['shipping'] ) ?? '';
 
 		$update_shipping = lwpc_update_order_meta( $transaction_id, 'shipping', $shipping );
+		lwpc_update_order_meta( $transaction_id, 'status_processing', 'unprocessed' );
 		foreach ( $note as $kye => $value ) {
 			$update_note = lwpc_update_order_meta( $transaction_id, $kye, $value );
 		}

@@ -1,8 +1,10 @@
 (function ($) {
     'use strict';
 
-    String.prototype.escapeHtml = function (unsafe)  {
-        if ( ! unsafe ) { unsafe = this; }
+    String.prototype.escapeHtml = function (unsafe) {
+        if (!unsafe) {
+            unsafe = this;
+        }
         const entityMap = {
             '&': '&amp;',
             '<': '&lt;',
@@ -48,13 +50,14 @@
                             </button>
                             <span class="lwpc-text-red lwpc-mr-10">Ini Invoice</span>
                             <span class="lwpc-text-bold lwpc-mr-10">${data.name.escapeHtml()}</span>
+                             ${data.status_processing === 'unprocessed' ? `<span style="color: #38c; font-weight: bold; float: right; padding: 0 .4rem 0 .4rem">Awaiting Processing</span>` : ``}
                              ${data.status === 'unpaid' ? `<span style="color: #fd6; font-weight: bold; float: right;">Awaiting Payment</span>` : ``}
                         </div>
                         <div class="lwpc-card-body">
                             <div class="lwpc-grid lwpc-m-20">
                                 <div class="lwpc-flex-column">
                                     ${data.product.map((item, index) => {
-                                        return `
+                        return `
                                             <div class="lwpc-grid-item ${index >= 1 ? 'lwpc-hidden' : ``}">
                                                 <img src="${item.image || 'https://i.pinimg.com/originals/a6/e8/d6/a6e8d6c8122c34de94463e071a4c7e45.png'}" alt="gedung" width="100px" height="100px">
                                                 <div class="lwpc-flex-column">
@@ -65,7 +68,7 @@
                                                 </div>
                                             </div>
                                         `;
-                                    }).join(' ')}
+                    }).join(' ')}
                                     <a style="color: #0EBA29; margin-top: 10px" class="lwpc-hover lwpc-grid-item lwpc-hidden show-less">Show Less...</a>
                                 </div>
                                 <div class="lwpc-grid-item">
@@ -109,12 +112,13 @@
                                 </div>
                                 <div>
                                     <span class="lwpc-text-bold lwpc-mr-10">${data.total}</span>
-                                    <button class="${data.status === 'unpaid' ? 'lwpc-btn-rounded-secondary' : 'lwpc-btn-rounded'}" style="color:white" ${data.status === 'unpaid' ? 'disabled' : ''}>Terima Pesanan</button>
+                                    <button class="${data.status === 'unpaid' ? 'lwpc-btn-rounded-secondary' : 'lwpc-btn-rounded'}" style="color:white" ${data.status === 'unpaid' ? 'disabled' : ''}>Proses Pesanan</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     `;
+                    console.log(data);
                 }
             }],
         })
