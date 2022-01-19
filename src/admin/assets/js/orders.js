@@ -3,12 +3,19 @@
 
     String.prototype.escapeHtml = function (unsafe)  {
         if ( ! unsafe ) { unsafe = this; }
-        return unsafe
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
+        const entityMap = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;',
+            '/': '&#x2F;',
+            '`': '&#x60;',
+            '=': '&#x3D;'
+        };
+        return String(unsafe).replace(/[&<>"'`=\/]/g, function (s) {
+            return entityMap[s];
+        });
     }
     $(document).ready(function () {
         //=============== Datatables ===============//
@@ -41,6 +48,7 @@
                             </button>
                             <span class="lwpc-text-red lwpc-mr-10">Ini Invoice</span>
                             <span class="lwpc-text-bold lwpc-mr-10">${data.name.escapeHtml()}</span>
+                             ${data.status === 'unpaid' ? `<span style="color: #fd6; font-weight: bold; float: right;">Awaiting Payment</span>` : ``}
                         </div>
                         <div class="lwpc-card-body">
                             <div class="lwpc-grid lwpc-m-20">
@@ -101,7 +109,7 @@
                                 </div>
                                 <div>
                                     <span class="lwpc-text-bold lwpc-mr-10">${data.total}</span>
-                                    <button class="lwpc-btn-rounded" style="background-color: #00BD12; color:white">Terima Pesanan</button>
+                                    <button class="${data.status === 'unpaid' ? 'lwpc-btn-rounded-secondary' : 'lwpc-btn-rounded'}" style="color:white" ${data.status === 'unpaid' ? 'disabled' : ''}>Terima Pesanan</button>
                                 </div>
                             </div>
                         </div>

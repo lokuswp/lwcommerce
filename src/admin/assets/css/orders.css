@@ -69,8 +69,12 @@
     display: none;
 }
 
-table.dataTable.display tbody tr.odd > .sorting_1 {
-    background-color: transparent !important;
+table.dataTable.display tbody tr:hover>.sorting_1,table.dataTable.order-column.hover tbody tr:hover>.sorting_1{background-color:white !important;}
+table.dataTable.display tbody tr.odd>.sorting_1, table.dataTable.order-column.stripe tbody tr.odd>.sorting_1 {
+    background-color: #fafafa;
+}
+table.dataTable.display tbody tr.even>.sorting_1, table.dataTable.order-column.stripe tbody tr.even>.sorting_1 {
+     background-color: #fafafa;
 }
 
 /* Make header for card */
@@ -139,11 +143,17 @@ table.dataTable.display tbody tr.odd > .sorting_1 {
 /* Make button rounded with #BFFFD1 background */
 .lwpc-btn-rounded {
     border-radius: 5px;
-    background: #BFFFD1;
-    color: #000;
+    background-color: #00bd12;
+    color: white;
     padding: 5px 10px;
     border: none;
     cursor: pointer;
+}
+
+/* Make button rounded with hover */
+.lwpc-btn-rounded:hover {
+    background-color: #00990f;
+    color: white;
 }
 
 /* Make button rounded with secondary background */
