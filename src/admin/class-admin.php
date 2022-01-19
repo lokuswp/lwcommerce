@@ -221,7 +221,7 @@ class Admin
 			$this->slug,
 			[$this, 'admin_menu_callback'],
 			LWPC_URL . 'src/admin/assets/lwpcommerce.png',
-			3
+			2
 		);
 
 		// Remove DUsplicate Menu Page -> Sub Menu
