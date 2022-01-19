@@ -47,7 +47,6 @@ class Reports {
             <div class="columns">
                 <!-- Table -->
                 <div class="column col-12" style="padding: 0 20px;">
-                    <div class="table-loading" style="display:none;"></div>
                     <table id="orders" class="display order-column" style="position:relative;">
                         <thead>
                         <tr>

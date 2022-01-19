@@ -69,12 +69,16 @@
     display: none;
 }
 
-table.dataTable.display tbody tr:hover>.sorting_1,table.dataTable.order-column.hover tbody tr:hover>.sorting_1{background-color:white !important;}
-table.dataTable.display tbody tr.odd>.sorting_1, table.dataTable.order-column.stripe tbody tr.odd>.sorting_1 {
+table.dataTable.display tbody tr:hover > .sorting_1, table.dataTable.order-column.hover tbody tr:hover > .sorting_1 {
+    background-color: white !important;
+}
+
+table.dataTable.display tbody tr.odd > .sorting_1, table.dataTable.order-column.stripe tbody tr.odd > .sorting_1 {
     background-color: #fafafa;
 }
-table.dataTable.display tbody tr.even>.sorting_1, table.dataTable.order-column.stripe tbody tr.even>.sorting_1 {
-     background-color: #fafafa;
+
+table.dataTable.display tbody tr.even > .sorting_1, table.dataTable.order-column.stripe tbody tr.even > .sorting_1 {
+    background-color: #fafafa;
 }
 
 /* Make header for card */
@@ -140,6 +144,22 @@ table.dataTable.display tbody tr.even>.sorting_1, table.dataTable.order-column.s
     flex-direction: column;
 }
 
+/* Make button rounded with primary background */
+.lwpc-btn-rounded-primary {
+    border-radius: 5px;
+    background: #5755d9;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+/*Make button hover rounded with primary background*/
+.lwpc-btn-rounded-primary:hover {
+    background: #3d3ddb;
+    color: #fff;
+}
+
 /* Make button rounded with #BFFFD1 background */
 .lwpc-btn-rounded {
     border-radius: 5px;
@@ -160,6 +180,26 @@ table.dataTable.display tbody tr.even>.sorting_1, table.dataTable.order-column.s
 .lwpc-btn-rounded-secondary {
     border-radius: 5px;
     background: #A9A9A9;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Make button rounded with danger background */
+.lwpc-btn-rounded-danger {
+    border-radius: 5px;
+    background: #ff0000;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Make button rounded with warning background */
+.lwpc-btn-rounded-warning {
+    border-radius: 5px;
+    background: #ffc107;
     color: #fff;
     padding: 5px 10px;
     border: none;
@@ -209,6 +249,14 @@ table.dataTable.display tbody tr.even>.sorting_1, table.dataTable.order-column.s
 /* On hover change mouse cursor to pointer */
 .lwpc-hover:hover {
     cursor: pointer;
+}
+
+.lwpc-text-underline {
+    text-decoration: underline;
+}
+
+.lwpc-text-underline__on-hover:hover {
+    text-decoration: underline;
 }
 
 .lwpc-report-input {
@@ -262,6 +310,24 @@ table.dataTable.display tbody tr.even>.sorting_1, table.dataTable.order-column.s
     transform: translate(-50%, -50%);
 }
 
+/*make loading on button*/
+.lwpc-loading-btn {
+    animation: loading .5s infinite linear;
+    border: .3rem solid #000;
+    border-radius: 50%;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    content: "";
+    display: block;
+    height: 5rem;
+    left: 50%;
+    margin-left: -.4rem;
+    margin-top: -.4rem;
+    top: 50%;
+    width: 5rem;
+    z-index: 7;
+}
+
 /*make background white who overlay all element*/
 .lwpc-overlay {
     background: #fff;
@@ -270,4 +336,31 @@ table.dataTable.display tbody tr.even>.sorting_1, table.dataTable.order-column.s
     left: 0;
     width: 100%;
     height: 100%;
+}
+
+.lwpc-badge {
+    background: #00bd12;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.lwpc-badge-danger {
+    background: #ff0000;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.lwpc-badge-seccondary {
+    background: #A9A9A9;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
 }
