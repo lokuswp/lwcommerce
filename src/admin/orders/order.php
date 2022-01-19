@@ -68,7 +68,9 @@ class Reports {
 
 	private function panel_editor() {
 		?>
-
+        <div class="lwpc-overlay">
+            <div class="lwpc-loading loading-position"></div>
+        </div>
         <div class="column col-6 col-12"
              style="top: 30px;position: fixed;right: 0;z-index:-1;height: 97.5%;width: 400px;display:none;">
             <div id="report_editor" class="panel" style="height: 100%;background: #fff;margin-right: -10px;">

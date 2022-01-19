@@ -1,7 +1,18 @@
 (function ($) {
+    'use strict';
+
+    String.prototype.escapeHtml = function (unsafe)  {
+        if ( ! unsafe ) { unsafe = this; }
+        return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
     $(document).ready(function () {
         //=============== Datatables ===============//
-        const tableReport = $('#orders').DataTable({
+        const tableOrders = $('#orders').DataTable({
             processing: true,
             serverSide: true,
             lengthMenu: [
@@ -22,7 +33,6 @@
             columns: [{
                 data: 'transaction_id',
                 render: function (nTd, sData, data, row, col) {
-                    console.log(data);
                     return `
                     <div class="container">
                         <div class="lwpc-card-header">
@@ -30,20 +40,20 @@
                                 Pesanan Baru
                             </button>
                             <span class="lwpc-text-red lwpc-mr-10">Ini Invoice</span>
-                            <span class="lwpc-text-bold lwpc-mr-10">${data.name}</span>
+                            <span class="lwpc-text-bold lwpc-mr-10">${data.name.escapeHtml()}</span>
                         </div>
                         <div class="lwpc-card-body">
                             <div class="lwpc-grid lwpc-m-20">
                                 <div class="lwpc-flex-column">
-                                    ${data.product.map( (item, index) => {
+                                    ${data.product.map((item, index) => {
                                         return `
                                             <div class="lwpc-grid-item ${index >= 1 ? 'lwpc-hidden' : ``}">
                                                 <img src="${item.image || 'https://i.pinimg.com/originals/a6/e8/d6/a6e8d6c8122c34de94463e071a4c7e45.png'}" alt="gedung" width="100px" height="100px">
                                                 <div class="lwpc-flex-column">
-                                                    <span class="lwpc-text-bold">${item.post_title}</span>
-                                                    <span class="lwpc-text-bold">${item.quantity} x ${item.price_discount !== null ? `<del class="del">${item.price}</del> ${item.price_discount}` : item.price}</span>
+                                                    <span class="lwpc-text-bold">${item.post_title.escapeHtml()}</span>
+                                                    <span class="lwpc-text-bold">${item.quantity.escapeHtml()} x ${item.price_discount !== null ? `<del class="del">${item.price.escapeHtml()}</del> ${item.price_discount.escapeHtml()}` : item.price.escapeHtml()}</span>
                                                     <span class="lwpc-text-secondary">"Note dari pembeli"</span>
-                                                    <a style="color: #0EBA29; margin-top: 10px" class="lwpc-hover more-product">Lihat ${data.product.length - 1} Produk Lainya...</a>
+                                                    ${data.product.length > 1 ? `<a style="color: #0EBA29; margin-top: 10px" class="lwpc-hover more-product">Lihat ${data.product.length - 1} Produk Lainya...</a>` : ``}
                                                 </div>
                                             </div>
                                         `;
@@ -53,27 +63,27 @@
                                 <div class="lwpc-grid-item">
                                     <div class="lwpc-flex-column">
                                         <span class="lwpc-text-bold">Pembeli</span>
-                                        <span style="margin-top: 10px">${data.name}</span>
-                                        <span>${data.phone}</span>
-                                        <span>${data.email}</span>
+                                        <span style="margin-top: 10px">${data.name.escapeHtml()}</span>
+                                        <span>${data.phone.escapeHtml()}</span>
+                                        <span>${data.email.escapeHtml()}</span>
                                     </div>
                                 </div>
                                 <div class="lwpc-grid-item">
                                     <div class="lwpc-flex-column">
                                         <span class="lwpc-text-bold">Alamat</span>
-                                        <span style="margin-top: 10px">${data.address.address ?? ''}</span>
+                                        <span style="margin-top: 10px">${data.address.address.escapeHtml() ?? ''}</span>
                                         <div class="lwpc-flex">
-                                            <span>${data.address.district ?? ''}</span>
+                                            <span>${data.address.district.escapeHtml() ?? ''}</span>
                                             <span>&nbsp;&nbsp;&nbsp;${data.address.postal_code ?? ''}</span>
                                         </div>
-                                        <span>${data.address.city ?? ''}</span>
-                                        <span>${data.address.state ?? ''}</span>
+                                        <span>${data.address.city.escapeHtml() ?? ''}</span>
+                                        <span>${data.address.state.escapeHtml() ?? ''}</span>
                                     </div>
                                 </div>
                                 <div class="lwpc-grid-item">
                                     <div class="lwpc-flex-column">
                                         <span class="lwpc-text-bold">Kurir</span>
-                                        <span>${data.shipping.courier.toUpperCase()} ${data.shipping.service.toUpperCase()}</span>
+                                        <span>${data.shipping.courier.toUpperCase().escapeHtml()} ${data.shipping.service.toUpperCase().escapeHtml()}</span>
                                         <span style="margin-top: 10px" class="lwpc-text-bold">Input resi?</span>
                                         <span>-</span>
                                     </div>
@@ -101,8 +111,8 @@
             }],
         })
 
-        tableReport.on('draw', function () {
-            document.querySelector('.lsdd-screen-loading').style.display = 'none';
+        tableOrders.on('draw', function () {
+            document.querySelector('.lwpc-overlay').style.display = 'none';
         });
 
         $(document).on('click', '.more-product', function (e) {
@@ -114,8 +124,8 @@
         $(document).on('click', '.show-less', function (e) {
             $('.show-less').addClass('lwpc-hidden');
             const products = $(this).siblings();
-            for(let i = 0; i < products.length; i++) {
-                if(i >= 1) {
+            for (let i = 0; i < products.length; i++) {
+                if (i >= 1) {
                     $(products[i]).addClass('lwpc-hidden');
                 }
             }
