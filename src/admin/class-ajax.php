@@ -8,6 +8,8 @@ class AJAX {
 		add_action( 'wp_ajax_lwpc_shipping_package_status', [ $this, 'shipping_package_status' ] );
 
 		add_action( 'wp_ajax_lwpc_get_orders', [ $this, 'get_orders' ] );
+		add_action( 'wp_ajax_lwpc_process_order', [ $this, 'process_order' ] );
+		add_action( 'wp_ajax_lwpc_update_resi', [ $this, 'update_resi' ] );
 	}
 
 	public function store_settings_save() {
@@ -162,6 +164,9 @@ class AJAX {
 				//==================== shipping ====================//
 				$data[ $key ]->shipping = lwpc_get_order_meta( $row->transaction_id, 'shipping' );
 
+				//==================== no-resi ====================//
+				$data[ $key ]->no_resi = lwpc_get_order_meta( $row->transaction_id, 'no_resi' );
+
 				//==================== Total ====================//
 				$data[ $key ]->total = lwpbb_set_currency_format( true, abs( $row->total ) );
 
@@ -169,14 +174,14 @@ class AJAX {
 				$data[ $key ]->status_processing = lwpc_get_order_meta( $row->transaction_id, 'status_processing', true );
 
 				//==================== Date & Time ====================//
-				$data[ $key ]->created_at = date( "j-m-Y H:i", strtotime( $row->created_at ) );
+				$data[ $key ]->created_at = $row->created_at;
 
 				//==================== product ====================//
 				$data[ $key ]->product = $wpdb->get_results(
-					"select jj.ID, jj.post_title, jj.quantity 
+					"select jj.ID, jj.post_title, jj.quantity , jj.note
 							from $table_transaction as tr
     						join (
-								select tp.ID, tp.post_title, tc.cart_hash, tc.quantity from $table_cart as tc
+								select tp.ID, tp.post_title, tc.cart_hash, tc.quantity, tc.note from $table_cart as tc
 								join $table_post as tp on tc.post_id=tp.ID
 							) as jj
 							on tr.cart_hash=jj.cart_hash where transaction_id='$row->transaction_id'"
@@ -184,7 +189,7 @@ class AJAX {
 
 				//==================== add image & price to product ====================//
 				foreach ( $data[ $key ]->product as $index => $value ) {
-					$data[ $key ]->product[ $index ]->image          = wp_get_attachment_image_src( get_post_thumbnail_id( $value->ID ) );
+					$data[ $key ]->product[ $index ]->image          = get_the_post_thumbnail_url( $value->ID, 'thumbnail' );
 					$data[ $key ]->product[ $index ]->price          = lwpbb_set_currency_format( true, get_post_meta( $value->ID, '_price_normal', true ) );
 					$data[ $key ]->product[ $index ]->price_discount = get_post_meta( $value->ID, '_price_discount', true ) ? lwpbb_set_currency_format( true,
 						get_post_meta( $value->ID, '_price_discount', true ) ) : null;
@@ -205,6 +210,55 @@ class AJAX {
 		echo json_encode( $json_data );
 
 		wp_die();
+	}
+
+	public function process_order() {
+		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+			wp_send_json_error( 'Invalid security token sent.' );
+		}
+
+		$transaction_id = $_POST['transaction_id'];
+		$status         = $_POST['status'];
+
+		if ( ! empty( $transaction_id ) ) {
+			$transaction_id = sanitize_text_field( $transaction_id );
+			$status         = sanitize_text_field( $status );
+
+			$transaction_id = lwpc_update_order_meta( $transaction_id, 'status_processing', $status );
+
+			if ( $transaction_id ) {
+				wp_send_json_success( 'Successfully updated.' );
+			} else {
+				wp_send_json_error( 'Failed to update.' );
+			}
+		} else {
+			wp_send_json_error( 'Invalid transaction id.' );
+		}
+	}
+
+	public function update_resi() {
+		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+			wp_send_json_error( 'Invalid security token sent.' );
+		}
+
+		$transaction_id = $_POST['transaction_id'];
+		$no_resi        = $_POST['resi'];
+
+		if ( ! empty( $transaction_id ) ) {
+			$transaction_id = sanitize_text_field( $transaction_id );
+			$no_resi        = sanitize_text_field( $no_resi );
+
+			lwpc_update_order_meta( $transaction_id, 'no_resi', $no_resi );
+			$status = lwpc_update_order_meta( $transaction_id, 'status_processing', 'shipping' );
+
+			if ( $status ) {
+				wp_send_json_success( 'Successfully updated.' );
+			} else {
+				wp_send_json_error( 'Failed to update.' );
+			}
+		} else {
+			wp_send_json_error( 'Invalid transaction id.' );
+		}
 	}
 }
 
