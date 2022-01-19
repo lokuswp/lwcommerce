@@ -9,14 +9,14 @@ class Etalase
      */
     public function __construct()
     {
-        add_shortcode('lwpcommerce_etalase', [$this, 'render']);
+        add_shortcode('lwpcommerce_customer_area', [$this, 'render']);
     }
 
     public function render($atts)
     {
-        extract(shortcode_atts(array(
-            'product_ids' => false,
-        ), $atts));
+        // extract(shortcode_atts(array(
+        //     'product_ids' => false,
+        // ), $atts));
 
         wp_enqueue_style("lokuswp-grid");
 
