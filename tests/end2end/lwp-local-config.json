@@ -1,0 +1,13 @@
+{
+  "extends": "./cypress.json",
+  "baseUrl": "https://lokuswp.local",
+  "dashboardUrl": "http://lokuswp.local/wp-admin",
+  "domain": "lokuswp.local",
+  "users": {
+      "admin": {
+          "username": "lokuswp",
+          "email": "test@example.org",
+          "pw": "password"
+      }
+  }
+}

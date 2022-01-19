@@ -21,7 +21,7 @@ class Plugin {
 		require_once LWPC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
 		require_once LWPC_PATH . 'src/includes/modules/shipping/class-manager.php';
 		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-email.php';
-		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-dine-in.php';
+		// require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-dine-in.php';
 		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-jne.php';
 		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-post-indonesia.php';
 //		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-shipping-processing.php';

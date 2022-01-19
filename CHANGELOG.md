@@ -1,14 +1,5 @@
-## v0.1 - LokaCommerce
+# Changelog
 
-# [v0.1.0]() (2021-10-10)
+# [v1.0.0]() (2022-02-02)
 **Added :**
-- Product Manage
-    - Price
-    - Stock
-    - Type
-- Template
-    - Add to Cart
-    - Pricing
-- Orders
-- Shipping
-- Auto Generate
+✅ Initial Release
