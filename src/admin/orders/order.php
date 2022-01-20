@@ -1,6 +1,6 @@
 <?php
 
-namespace LokaWP\Commerce;
+namespace LokusWP\Commerce;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

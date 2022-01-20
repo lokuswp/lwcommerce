@@ -74,11 +74,11 @@ table.dataTable.display tbody tr:hover > .sorting_1, table.dataTable.order-colum
 }
 
 table.dataTable.display tbody tr.odd > .sorting_1, table.dataTable.order-column.stripe tbody tr.odd > .sorting_1 {
-    background-color: #fafafa;
+    background-color: white;
 }
 
 table.dataTable.display tbody tr.even > .sorting_1, table.dataTable.order-column.stripe tbody tr.even > .sorting_1 {
-    background-color: #fafafa;
+    background-color: white;
 }
 
 /* Make header for card */
@@ -105,6 +105,11 @@ table.dataTable.display tbody tr.even > .sorting_1, table.dataTable.order-column
     border-top: 1px solid #e5e5e5;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+}
+
+/*make shadow*/
+.lwpc-card-shadow {
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
 }
 
 /* Make grid layout */

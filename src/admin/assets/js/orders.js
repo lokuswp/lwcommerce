@@ -72,7 +72,7 @@
                     console.log(data)
                     return `
                     <div class="container">
-                        <div class="lwpc-card-header">
+                        <div class="lwpc-card-header lwpc-card-shadow">
                         ${checkDate(data.created_at) ? `<span class="lwpc-badge lwpc-badge-seccondary">${convertDate(data.created_at)}</span>` : '<button class="lwpc-btn-rounded lwpc-mr-10">Pesanan Baru</button>'}
                             <span class="lwpc-text-red lwpc-mr-10">Ini Invoice</span>
                             <span class="lwpc-text-bold lwpc-mr-10">${data.name.escapeHtml()}</span>
@@ -89,7 +89,7 @@
                             </span>
                              ${data.status === 'unpaid' ? `<span style="color: #fd6; font-weight: bold; float: right;">Awaiting Payment</span>` : `<span style="color: #085; font-weight: bold; float: right; padding: 0 .4rem 0 .4rem">Paid</span>`}
                         </div>
-                        <div class="lwpc-card-body">
+                        <div class="lwpc-card-body lwpc-card-shadow">
                             <div class="lwpc-grid lwpc-m-20">
                                 <div class="lwpc-flex-column">
                                     ${data.product.map((item, index) => {
@@ -141,7 +141,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="lwpc-card-footer">
+                        <div class="lwpc-card-footer lwpc-card-shadow">
                             <div class="lwpc-flex ">
                                 <div>
                                     <span class="lwpc-mr-100">Detail Pesanan</span>

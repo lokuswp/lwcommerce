@@ -7,9 +7,13 @@ class AJAX {
 		add_action( 'wp_ajax_lwpc_store_settings_save', [ $this, 'store_settings_save' ] );
 		add_action( 'wp_ajax_lwpc_shipping_package_status', [ $this, 'shipping_package_status' ] );
 
+		// Orders
 		add_action( 'wp_ajax_lwpc_get_orders', [ $this, 'get_orders' ] );
 		add_action( 'wp_ajax_lwpc_process_order', [ $this, 'process_order' ] );
 		add_action( 'wp_ajax_lwpc_update_resi', [ $this, 'update_resi' ] );
+
+		// Statistic
+		add_action( 'wp_ajax_lwpc_orders_chart', [ $this, 'orders_chart' ] );
 	}
 
 	public function store_settings_save() {
@@ -92,7 +96,6 @@ class AJAX {
 		// Table name
 		$table_cart        = $wpdb->prefix . "lokuswp_carts";
 		$table_transaction = $wpdb->prefix . "lokuswp_transactions";
-		$table_user        = $wpdb->prefix . "users";
 		$table_post        = $wpdb->prefix . "posts";
 		$table_post_meta   = $wpdb->prefix . "postmeta";
 
@@ -259,6 +262,135 @@ class AJAX {
 		} else {
 			wp_send_json_error( 'Invalid transaction id.' );
 		}
+	}
+
+	public function orders_chart() {
+		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+			wp_send_json_error( 'Invalid security token sent.' );
+		}
+
+		$orders = $_POST['orders'];
+
+		$data_date            = [];
+		$data_total           = [];
+		$data_phone           = [];
+		$data_total_yesterday = [];
+		$data_phone_yesterday = [];
+		$year                 = date( 'Y' );
+		$month                = date( 'm' );
+		$day                  = date( 'd' );
+		switch ( $orders ) {
+			case 'alltime':
+				$data = $this->get_all_orders();
+				foreach ( $data as $item ) {
+					$data_date[ lwp_date_format( $item->created_at, 'd M Y' ) ][] = $item;
+					$data_total[]                                                 = $item->total;
+					$data_phone[]                                                 = lwp_get_transaction_meta( $item->transaction_id, 'billing_phone' );
+				}
+				foreach ( $data_date as $k => $v ) {
+					$data_date[ $k ] = count( $v ); // count data per date
+				}
+				break;
+			case 'day':
+				$day_yesterday  = date( 'd', strtotime( '-1 day' ) );
+				$data           = $this->select_date( 'transaction_id, created_at, total', $year, $month, $day );
+				$data_yesterday = $this->select_date( 'transaction_id, created_at, total', $year, $month, $day_yesterday );
+				foreach ( $data as $item ) {
+					$data_date[ lwp_date_format( $item->created_at, 'H:i' ) ][] = $item;
+					$data_total[]                                               = $item->total;
+					$data_phone[]                                               = lwp_get_transaction_meta( $item->transaction_id, 'billing_phone' );
+				}
+				foreach ( $data_date as $k => $v ) {
+					$data_date[ $k ] = count( $v ); // count data per date
+				}
+				break;
+			case 'week':
+				$data           = $this->select_week( 'transaction_id, created_at, total', 'now' );
+				$data_yesterday = $this->select_week( 'transaction_id, created_at, total', 'yesterday' );
+				foreach ( $data as $item ) {
+					$data_date[ lwp_date_format( $item->created_at, 'l' ) ][] = $item;
+					$data_total[]                                             = $item->total;
+					$data_phone[]                                             = lwp_get_transaction_meta( $item->transaction_id, 'billing_phone' );
+				}
+				foreach ( $data_date as $k => $v ) {
+					$data_date[ $k ] = count( $v ); // count data per date
+				}
+				break;
+			case 'month':
+				$month_yesterday = date( 'm', strtotime( '-1 month' ) );
+				$data            = $this->select_date( 'transaction_id, created_at, total', $year, $month );
+				$data_yesterday  = $this->select_date( 'transaction_id, created_at, total', $year, $month_yesterday );
+				foreach ( $data as $item ) {
+					$data_date[ lwp_date_format( $item->created_at, 'd M' ) ][] = $item;
+					$data_total[]                                               = $item->total;
+					$data_phone[]                                               = lwp_get_transaction_meta( $item->transaction_id, 'billing_phone' );
+				}
+				foreach ( $data_date as $k => $v ) {
+					$data_date[ $k ] = count( $v ); // count data per date
+				}
+				break;
+			case 'year':
+				$year_yesterday = date( 'Y', strtotime( '-1 year' ) );
+				$data           = $this->select_date( 'transaction_id, created_at, total', $year );
+				$data_yesterday = $this->select_date( 'transaction_id, created_at, total', $year_yesterday );
+				foreach ( $data as $item ) {
+					$data_date[ lwp_date_format( $item->created_at, 'd M Y' ) ][] = $item;
+					$data_total[]                                                 = $item->total;
+					$data_phone[]                                                 = lwp_get_transaction_meta( $item->transaction_id, 'billing_phone' );
+				}
+				foreach ( $data_date as $k => $v ) {
+					$data_date[ $k ] = count( $v ); // count data per date
+				}
+				uksort( $data_date, function ( $a1, $a2 ) {
+					$time1 = strtotime( $a1 );
+					$time2 = strtotime( $a2 );
+
+					return $time1 - $time2;
+				} );
+				break;
+		}
+		foreach ( $data_yesterday as $item ) {
+			$data_total_yesterday[] = $item->total;
+			$data_phone_yesterday[] = $item->phone;
+		}
+
+		return wp_send_json( [ [ $data_date, $data_total, $data_phone ], [ $data_total_yesterday, $data_phone_yesterday ] ] );
+	}
+
+	public function get_all_orders() {
+		global $wpdb;
+		$sql = "SELECT transaction_id, created_at, total FROM {$wpdb->prefix}lokuswp_transactions";
+
+		return $wpdb->get_results( $sql );
+	}
+
+	public function select_date( $column, $year = null, $month = null, $day = null ) {
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'lokuswp_transactions';
+		if ( $year && $month && $day ) {
+			$query = $wpdb->get_results( "SELECT $column FROM $table_name WHERE Year(created_at) = $year AND Month(created_at) = $month AND Day(created_at) = $day" );
+		} elseif ( $year && $month ) {
+			$query = $wpdb->get_results( "SELECT $column FROM $table_name WHERE Year(created_at) = $year AND Month(created_at) = $month" );
+		} elseif ( $year ) {
+			$query = $wpdb->get_results( "SELECT $column FROM $table_name WHERE Year(created_at) = $year" );
+		}
+
+		return $query;
+	}
+
+	public function select_week( $column, $case = 'now' ) {
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'lokuswp_transactions';
+		switch ( $case ) {
+			case 'now':
+				$query = $wpdb->get_results( "SELECT $column FROM $table_name WHERE yearweek(DATE(created_at), 1) = yearweek(curdate(),1)" );
+				break;
+			case 'yesterday':
+				$query = $wpdb->get_results( "SELECT $column FROM $table_name WHERE yearweek(DATE(created_at), 1) = yearweek(curdate() - INTERVAL 1 WEEK)" );
+				break;
+		}
+
+		return $query;
 	}
 }
 
