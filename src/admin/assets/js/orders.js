@@ -25,7 +25,6 @@
         const now = new Date();
         let t = date.split(/[- :]/);
         const dateTime = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4], t[5]));
-        console.log(date);
         const diff = now.getTime() - dateTime.getTime();
         const diffHours = Math.floor(diff / (1000 * 60 * 60));
         return diffHours > 1;
@@ -49,7 +48,7 @@
     $(document).ready(function () {
         //=============== Datatables ===============//
         const tableOrders = $('#orders').DataTable({
-            processing: true,
+            // processing: true,
             serverSide: true,
             lengthMenu: [
                 [10, 50, 100, 250, -1],
@@ -69,7 +68,6 @@
             columns: [{
                 data: 'transaction_id',
                 render: function (nTd, sData, data, row, col) {
-                    console.log(data)
                     return `
                     <div class="container">
                         <div class="lwpc-card-header lwpc-card-shadow">
@@ -130,7 +128,7 @@
                                 <div class="lwpc-grid-item">
                                     <div class="lwpc-flex-column">
                                         <span class="lwpc-text-bold">Kurir</span>
-                                        <span>${data.shipping.courier.toUpperCase().escapeHtml()} ${data.shipping.service.toUpperCase().escapeHtml()}</span>
+                                        <span>${data.courier.toUpperCase().escapeHtml()} ${data.service.toUpperCase().escapeHtml()}</span>
                                         <span style="margin-top: 10px" class="lwpc-text-bold">Nomor Resi</span>
                                         ${data.status_processing === 'processed' ? `
                                                 <input type="text" class="lwpc-input-text" placeholder="Masukkan nomor resi" id="resi">
@@ -169,9 +167,9 @@
         });
 
         $(document).on('click', '.more-product', function (e) {
-            $('.show-less').removeClass('lwpc-hidden');
+            $(this).parent().parent().find('show-less').removeClass('lwpc-hidden');
             $(this).parent().parent().siblings().removeClass('lwpc-hidden');
-            $('.more-product').hide();
+            $(this).parent().parent().parent().find('.more-product').hide();
         });
 
         $(document).on('click', '.show-less', function (e) {

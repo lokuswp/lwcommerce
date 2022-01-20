@@ -94,17 +94,30 @@ class AJAX {
 		global $wpdb;
 
 		// Table name
-		$table_cart        = $wpdb->prefix . "lokuswp_carts";
-		$table_transaction = $wpdb->prefix . "lokuswp_transactions";
-		$table_post        = $wpdb->prefix . "posts";
-		$table_post_meta   = $wpdb->prefix . "postmeta";
+		$table_cart                   = $wpdb->prefix . "lokuswp_carts";
+		$table_transaction            = $wpdb->prefix . "lokuswp_transactions";
+		$table_transaction_meta       = $wpdb->prefix . "lokuswp_transactionmeta";
+		$table_lwpcommerce_order_meta = $wpdb->prefix . "lwpcommerce_ordermeta";
+		$table_post                   = $wpdb->prefix . "posts";
 
 		// Request
 		$request = $_GET;
 
 		// Columns
 		$columns = array(
-			0 => 'transaction_id',
+			0  => 'transaction_id',
+			1  => 'total',
+			2  => 'status',
+			3  => 'note',
+			4  => 'created_at',
+			5  => 'updated_at',
+			6  => 'name',
+			7  => 'phone',
+			8  => 'email',
+			9  => 'status_processing',
+			10 => 'courier',
+			11 => 'service',
+			12 => 'no_resi',
 		);
 
 		// Datatable Filters
@@ -120,11 +133,11 @@ class AJAX {
 		// Search all columns
 		if ( ! empty( $request['search']['value'] ) ) {
 
-			$sql_where .= "WHERE ";
+			$sql_where .= "HAVING ";
 
 			foreach ( $columns as $column ) {
 
-				$sql_where .= $column . " LIKE '%" . sanitize_text_field( $request['search']['value'] ) . "%' OR ";
+				$sql_where .= $column . " = '" . sanitize_text_field( $request['search']['value'] ) . "' OR ";
 			}
 
 			$sql_where = substr( $sql_where, 0, - 3 );
@@ -143,7 +156,23 @@ class AJAX {
 
 		// Query
 		$total_results = $wpdb->get_results(
-			"SELECT * FROM $table_transaction $sql_where ORDER BY $column $order LIMIT $offset, $length"
+			"SELECT tt.transaction_id, tt.total, tt.status, tt.note, tt.created_at, tt.updated_at,
+						MAX(CASE WHEN ttm.meta_key = 'billing_name' THEN ttm.meta_value ELSE 0 END) name,
+						MAX(CASE WHEN ttm.meta_key = 'billing_phone' THEN ttm.meta_value ELSE 0 END) phone,
+						MAX(CASE WHEN ttm.meta_key = 'billing_email' THEN ttm.meta_value ELSE 0 END) email,
+						MAX(CASE WHEN tlcom.meta_key = 'status_processing' THEN tlcom.meta_value ELSE 0 END) status_processing,
+						MAX(CASE WHEN tlcom.meta_key = 'no_resi' THEN tlcom.meta_value ELSE 0 END) no_resi,
+						TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when tlcom.meta_key = 'shipping' then tlcom.meta_value else 0 end),';',2),':',-1)) AS courier,
+						TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when tlcom.meta_key = 'shipping' then tlcom.meta_value else 0 end),';',4),':',-1)) AS service,
+						TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when tlcom.meta_key = 'shipping' then tlcom.meta_value else 0 end),';',6),':',-1)) AS destination
+					FROM $table_transaction AS tt
+					JOIN $table_transaction_meta AS ttm 
+					ON tt.transaction_id=ttm.transaction_id
+					JOIN $table_lwpcommerce_order_meta AS tlcom
+					ON tt.transaction_id=tlcom.lwpcommerce_order_id 
+					GROUP BY tt.transaction_id $sql_where
+					ORDER BY $column $order 
+					LIMIT $offset, $length"
 		);
 
 		if ( ! empty( $total_results ) ) {
@@ -152,32 +181,11 @@ class AJAX {
 
 			foreach ( $total_results as $key => $row ) {
 
-				//==================== name ====================//
-				$data[ $key ]->name = lwp_get_transaction_meta( $row->transaction_id, 'billing_name', true );
-
-				//==================== phone ====================//
-				$data[ $key ]->phone = lwp_get_transaction_meta( $row->transaction_id, 'billing_phone', true );
-
-				//==================== email ====================//
-				$data[ $key ]->email = lwp_get_transaction_meta( $row->transaction_id, 'billing_email', true );
-
 				//==================== address ====================//
 				$data[ $key ]->address = lwp_get_transaction_meta( $row->transaction_id, 'billing_address' );
 
-				//==================== shipping ====================//
-				$data[ $key ]->shipping = lwpc_get_order_meta( $row->transaction_id, 'shipping' );
-
-				//==================== no-resi ====================//
-				$data[ $key ]->no_resi = lwpc_get_order_meta( $row->transaction_id, 'no_resi' );
-
 				//==================== Total ====================//
 				$data[ $key ]->total = lwpbb_set_currency_format( true, abs( $row->total ) );
-
-				//==================== Status ====================//
-				$data[ $key ]->status_processing = lwpc_get_order_meta( $row->transaction_id, 'status_processing', true );
-
-				//==================== Date & Time ====================//
-				$data[ $key ]->created_at = $row->created_at;
 
 				//==================== product ====================//
 				$data[ $key ]->product = $wpdb->get_results(
