@@ -66,40 +66,36 @@ class Metabox_Product_Data
     public function metabox_product_format()
     {
         global $post;
-     ?>
+    ?>
 
-                    <!-- Digital -->
-                    <input name="shipping_tabs" value="digital" id="digital" type="radio" />
-                    <label class="label" for="digital">
-                        <?php esc_attr_e('Product Digital', 'lwpcommerce'); ?>
-                    </label>
+        <div class="tabs-component">
+            <input type="radio" name="tab" id="tab1" checked="checked" />
+            <label class="tab" for="tab1"><?php esc_attr_e('Digital', 'lwpcommerce'); ?></label>
 
-                    <div class="pane-metabox">
+            <input type="radio" name="tab" id="tab2" />
+            <label class="tab" for="tab2"><?php esc_attr_e('Physical', 'lwpcommerce'); ?></label>
 
-                        <!-- Hookable :: Extending for Upload via DropBox -->
-                        <?php if (has_action("lwpcommerce/product/digital/upload")) : ?>
-                            <?php do_action('lwpcommerce/product/digital/upload'); ?>
-                        <?php else : ?>
-                            <br>
-                            <label for="digital_file" style="margin-left:10px;"><?php esc_attr_e('File', 'lwpcommerce'); ?> : </label>
-                            <input type="text" class="form-input" style="width:50%" name="digital_file_url" placeholder="http://dropbox.com/file.zip" value="<?php echo get_post_meta($post->ID, '_digital_file_url', true); ?>">
+            <div class="tab-body-component">
+                <div id="tab-body-1" class="tab-body">
+                    <!-- Hookable :: Extending for Upload via DropBox -->
+                    <?php if (has_action("lwpcommerce/product/digital/upload")) : ?>
+                        <?php do_action('lwpcommerce/product/digital/upload'); ?>
+                    <?php else : ?>
+                        <br>
+                        <label for="digital_file" style="margin-left:10px;"><?php esc_attr_e('File', 'lwpcommerce'); ?> : </label>
+                        <input type="text" class="form-input" style="width:50%" name="digital_file_url" placeholder="http://dropbox.com/file.zip" value="<?php echo get_post_meta($post->ID, '_digital_file_url', true); ?>">
 
-                            <label for="digital_file_version"><?php esc_attr_e('Versi', 'lwpcommerce'); ?> :</label>
-                            <input type="text" class="form-input" name="digital_file_version" placeholder="1.0.0" value="<?php echo get_post_meta($post->ID, '_digital_file_version', true); ?>">
+                        <label for="digital_file_version"><?php esc_attr_e('Versi', 'lwpcommerce'); ?> :</label>
+                        <input type="text" class="form-input" name="digital_file_version" placeholder="1.0.0" value="<?php echo get_post_meta($post->ID, '_digital_file_version', true); ?>">
 
 
-                        <?php endif; ?>
+                    <?php endif; ?>
 
-                        <!-- Hookable :: Extending for More Information Digital -->
-                        <?php do_action('lwpcommerce/product/digital'); ?>
-                    </div>
+                    <!-- Hookable :: Extending for More Information Digital -->
+                    <?php do_action('lwpcommerce/product/digital'); ?>
+                </div>
 
-                                      <!-- Physical -->
-                    <input name="shipping_tabs" value="physical" id="physical" type="radio" />
-                    <label class="label" for="physical">
-                    <?php esc_attr_e('Product Fisik', 'lwpcommerce'); ?>
-                    </label>
-
+                <div id="tab-body-2" class="tab-body">
                     <div class="pane-metabox">
                         <label for="physical_weight">
                             <?php esc_attr_e('Berat', 'lwpcommerce'); ?> /g :
@@ -112,8 +108,70 @@ class Metabox_Product_Data
                     <script>
                         jQuery('input[value="<?php echo esc_attr($shipping_type); ?>"]').prop("checked", true);
                     </script>
+                </div>
+            </div>
+        </div>
 
-     <?php 
+        <style>
+            .tabs-component input[type=radio] {
+                display: none !important;
+            }
+
+            .tabs-component [type=radio]:checked+label.tab,
+            .tabs-component [type=radio]:not(:checked)+label.tab {
+                padding-left: 0;
+            }
+
+            .tabs-component label.tab {
+                display: inline-block;
+                cursor: pointer;
+                padding: 10px 20px !important;
+                text-align: center;
+            }
+
+            .tabs-component label.tab:after,
+            .tabs-component label.tab:before {
+                display: none;
+            }
+
+            .tabs-component label.tab:last-of-type {
+                border-bottom: none
+            }
+
+            .tabs-component label.tab:hover {
+                background: #eee
+            }
+
+            .tabs-component input[type=radio]:checked+label.tab {
+                border-bottom: 3px solid #000;
+                margin: 0;
+                margin-bottom: 2px;
+            }
+
+            .tabs-component .tab-body {
+                position: absolute;
+                opacity: 0;
+                padding: 20px 0;
+            }
+
+            .tab-body-component {
+                border-top: #ddd 3px solid;
+                margin-top: -5px;
+                position: initial
+            }
+
+            #tab1:checked~.tab-body-component #tab-body-1,
+            #tab2:checked~.tab-body-component #tab-body-2 {
+                position: relative;
+                top: 0;
+                opacity: 1
+            }
+
+            y: 1
+            }
+        </style>
+
+    <?php
     }
 
     public function metabox_product_data()
@@ -134,7 +192,7 @@ class Metabox_Product_Data
             }
 
             #product-data .wp-tab-panel {
-                min-height: 250px;
+                min-height: 120px;
                 height: auto;
                 max-height: 100%;
             }
@@ -224,8 +282,8 @@ class Metabox_Product_Data
                         <span><?php _e('Stock', 'lwpcommerce'); ?></span>
                     </a>
                 </li>
-      
-          
+
+
             </ul>
 
             <!-- Price -->
@@ -239,7 +297,7 @@ class Metabox_Product_Data
                         <?php esc_attr_e('Normal', 'lwpcommerce'); ?> ( <?php echo lwp_currency_display('symbol'); ?> )
                     </label>
                     <p class="mfield"><input type="text" name="price_normal" class="currency" placeholder="<?php echo lwp_currency_display('format'); ?>" value="<?php echo $price_normal; ?>"></p>
-                   
+
                     <label for="price_discount">
                         <?php esc_attr_e('Discount', 'lwpcommerce'); ?> ( <?php echo lwp_currency_display('symbol'); ?> )
                     </label>
@@ -256,7 +314,7 @@ class Metabox_Product_Data
                 $max_purchase = empty(get_post_meta($post->ID, '_max_purchase', true)) ? -1 : intval(get_post_meta($post->ID, '_max_purchase', true));
                 ?>
                 <div class="metabox-field">
-                <label for="stock"><?php esc_attr_e('SKU (Stock Keeping Unit)', 'lwpcommerce'); ?></label>
+                    <label for="stock"><?php esc_attr_e('SKU (Stock Keeping Unit)', 'lwpcommerce'); ?></label>
                     <p class="mfield"><input type="text" name="stock" placeholder="9999" value="<?php echo $stock; ?>"></p>
 
                     <label for="stock"><?php esc_attr_e('Stock', 'lwpcommerce'); ?></label>
