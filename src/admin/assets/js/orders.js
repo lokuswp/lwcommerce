@@ -79,11 +79,13 @@
                                          ${data.status_processing === 'processed' ? `color: #38c;` : ''}
                                          ${data.status_processing === 'canceled' ? `color: #ff0000;` : ''}
                                          ${data.status_processing === 'shipping' ? `color: #f5a53d;` : ''}
+                                         ${data.status_processing === 'oos' ? 'color: #910000;' : ''}
                                           font-weight: bold; float: right; padding: 0 .4rem 0 .4rem">
                                 ${data.status_processing === 'unprocessed' ? 'Awaiting Processing' : ''}
                                 ${data.status_processing === 'processed' ? 'Processing' : ''}
                                 ${data.status_processing === 'canceled' ? 'Canceled' : ''}
                                 ${data.status_processing === 'shipping' ? 'Shipping' : ''}
+                                ${data.status_processing === 'oos' ? 'Out of Stock' : ''}
                             </span>
                              ${data.status === 'unpaid' ? `<span style="color: #fd6; font-weight: bold; float: right;">Awaiting Payment</span>` : `<span style="color: #085; font-weight: bold; float: right; padding: 0 .4rem 0 .4rem">Paid</span>`}
                         </div>
@@ -150,7 +152,31 @@
                                 </div>
                                 <div>
                                     <span class="lwpc-text-bold lwpc-mr-10">${data.total}</span>
-                                    ${data.status_processing === 'unprocessed' ? `<button class="${data.status === 'unpaid' ? 'lwpc-btn-rounded-secondary' : 'lwpc-btn-rounded'} process-order" style="color:white" ${data.status === 'unpaid' ? 'disabled' : ''} data-id="${data.transaction_id}" data-status="processed">Proses Order</button>` : ''}                                    
+                                    ${data.status_processing === 'unprocessed' || data.status_processing === 'oos' ? `
+                                        <div class="lwpc-dropdown">
+                                            <div>
+                                                <button type="button"
+                                                        class="${data.status === 'unpaid' ? 'lwpc-btn-rounded-secondary' : 'lwpc-btn-dropdown'}" aria-expanded="true" aria-haspopup="true" ${data.status === 'unpaid' ? 'disabled' : ''}>
+                                                    Process Order 
+                                                    
+                                                    <svg class="${data.status === 'unpaid' ? 'lwpc-hidden' : 'lwpc-dropdown-icon-down'}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                                    </svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="lwpc-dropdown-icon-up" viewBox="0 0 20 20" fill="currentColor">
+                                                        <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                
+                                            <div class="lwpc-dropdown-content" role="menu" aria-orientation="vertical"
+                                                 aria-labelledby="menu-button" tabindex="-1">
+                                                <div class="py-1" role="none">
+                                                    <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                                                    <a href="#" class="lwpc-dropdown-item process-order" role="menuitem" tabindex="-1" data-id="${data.transaction_id}" data-status="processed">Process Order</a>
+                                                    <a href="#" class="lwpc-dropdown-item process-order" role="menuitem" tabindex="-1" data-id="${data.transaction_id}" data-status="oos">Out of Stock</a>
+                                                </div>
+                                            </div>
+                                        </div>` : ''}                                    
                                     ${data.status_processing === 'processed' ? `<button class="lwpc-btn-rounded-danger process-order" style="color:white" data-id="${data.transaction_id}" data-status="canceled">Cancel Order</button>` : ''}                                    
                                     ${data.status_processing === 'canceled' ? `<button class="lwpc-btn-rounded-warning process-order" style="color:white" data-id="${data.transaction_id}" data-status="processed">Cancel Cancellation</button>` : ''}                                    
                                 </div>
@@ -226,6 +252,11 @@
                     }
                 }
             })
+        })
+
+        $(document).on('click', '.lwpc-btn-dropdown', function () {
+            $(this).parent().siblings().slideToggle('fast');
+            $(this).children().toggle();
         })
     });
 })(jQuery)
