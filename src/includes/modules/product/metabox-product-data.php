@@ -17,7 +17,7 @@ class Metabox_Product_Data
 {
     public function __construct()
     {
-        add_filter('add_meta_boxes', [$this, 'metabox_register']);
+        add_filter('add_meta_boxes', [$this, 'metabox_register'], 0);
         add_action('save_post', [$this, 'metabox_save']);
         add_action('new_to_publish', [$this, 'metabox_save']);
     }
@@ -50,7 +50,70 @@ class Metabox_Product_Data
             'normal',
             'high'
         );
+
+        add_meta_box(
+            'product-format',
+            __('Product Format', 'lwpcommerce'),
+            [$this, 'metabox_product_format'],
+            'product',
+            'normal',
+            'high'
+        );
+
         $this->js_inject();
+    }
+
+    public function metabox_product_format()
+    {
+        global $post;
+     ?>
+
+                    <!-- Digital -->
+                    <input name="shipping_tabs" value="digital" id="digital" type="radio" />
+                    <label class="label" for="digital">
+                        <?php esc_attr_e('Product Digital', 'lwpcommerce'); ?>
+                    </label>
+
+                    <div class="pane-metabox">
+
+                        <!-- Hookable :: Extending for Upload via DropBox -->
+                        <?php if (has_action("lwpcommerce/product/digital/upload")) : ?>
+                            <?php do_action('lwpcommerce/product/digital/upload'); ?>
+                        <?php else : ?>
+                            <br>
+                            <label for="digital_file" style="margin-left:10px;"><?php esc_attr_e('File', 'lwpcommerce'); ?> : </label>
+                            <input type="text" class="form-input" style="width:50%" name="digital_file_url" placeholder="http://dropbox.com/file.zip" value="<?php echo get_post_meta($post->ID, '_digital_file_url', true); ?>">
+
+                            <label for="digital_file_version"><?php esc_attr_e('Versi', 'lwpcommerce'); ?> :</label>
+                            <input type="text" class="form-input" name="digital_file_version" placeholder="1.0.0" value="<?php echo get_post_meta($post->ID, '_digital_file_version', true); ?>">
+
+
+                        <?php endif; ?>
+
+                        <!-- Hookable :: Extending for More Information Digital -->
+                        <?php do_action('lwpcommerce/product/digital'); ?>
+                    </div>
+
+                                      <!-- Physical -->
+                    <input name="shipping_tabs" value="physical" id="physical" type="radio" />
+                    <label class="label" for="physical">
+                    <?php esc_attr_e('Product Fisik', 'lwpcommerce'); ?>
+                    </label>
+
+                    <div class="pane-metabox">
+                        <label for="physical_weight">
+                            <?php esc_attr_e('Berat', 'lwpcommerce'); ?> /g :
+                        </label>
+                        <input type="text" class="form-input currency" name="physical_weight" placeholder="50" value="<?php echo get_post_meta($post->ID, '_physical_weight', true); ?>">
+                        <label for="physical_volume" style="margin-left:10px"><?php esc_attr_e('Volume', 'lwpcommerce'); ?> /cm : </label>
+                        <input type="text" class="form-input currency" name="physical_volume" placeholder="300" value="<?php echo get_post_meta($post->ID, '_physical_volume', true); ?>">
+                    </div>
+                    <?php $shipping_type = empty(get_post_meta($post->ID, '_shipping_type', true)) ? 'digital' : get_post_meta($post->ID, '_shipping_type', true); ?>
+                    <script>
+                        jQuery('input[value="<?php echo esc_attr($shipping_type); ?>"]').prop("checked", true);
+                    </script>
+
+     <?php 
     }
 
     public function metabox_product_data()
@@ -148,7 +211,7 @@ class Metabox_Product_Data
                             <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
                             <line x1="7" y1="7" x2="7.01" y2="7"></line>
                         </svg>
-                        <span><?php _e('Harga', 'lwpcommerce'); ?></span>
+                        <span><?php _e('Pricing', 'lwpcommerce'); ?></span>
                     </a>
                 </li>
                 <li>
@@ -161,33 +224,8 @@ class Metabox_Product_Data
                         <span><?php _e('Stock', 'lwpcommerce'); ?></span>
                     </a>
                 </li>
-                <!-- <li>
-                    <a href="#file">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-package">
-                            <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
-                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                        </svg>
-                        <span><?php _e('File', 'lwpcommerce'); ?></span>
-                    </a>
-                </li> -->
-                <!-- <li>
-                    <a href="#shipping">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-truck">
-                            <rect x="1" y="3" width="15" height="13"></rect>
-                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
-                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
-                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
-                        </svg>
-                        <span><?php //_e('Pengiriman', 'lwpcommerce'); 
-                                ?></span>
-                    </a>
-                </li> -->
-
-                <!-- Hookable :: Extendable Tab -->
-                <?php //do_action('lwpcommerce/product/data/header'); 
-                ?>
+      
+          
             </ul>
 
             <!-- Price -->
@@ -198,12 +236,12 @@ class Metabox_Product_Data
                 ?>
                 <div class="metabox-field">
                     <label for="price_normal">
-                        <?php esc_attr_e('Harga Normal', 'lwpcommerce'); ?> ( <?php echo lwp_currency_display('symbol'); ?> )
+                        <?php esc_attr_e('Normal', 'lwpcommerce'); ?> ( <?php echo lwp_currency_display('symbol'); ?> )
                     </label>
                     <p class="mfield"><input type="text" name="price_normal" class="currency" placeholder="<?php echo lwp_currency_display('format'); ?>" value="<?php echo $price_normal; ?>"></p>
-                    <small>Jadi</small>
+                   
                     <label for="price_discount">
-                        <?php esc_attr_e('Harga Diskon', 'lwpcommerce'); ?> ( <?php echo lwp_currency_display('symbol'); ?> )
+                        <?php esc_attr_e('Discount', 'lwpcommerce'); ?> ( <?php echo lwp_currency_display('symbol'); ?> )
                     </label>
                     <p class="mfield"><input type="text" name="price_discount" class="currency" placeholder="<?php echo lwp_currency_display('format'); ?>" value="<?php echo $price_discount; ?>"></p>
                 </div>
@@ -218,10 +256,13 @@ class Metabox_Product_Data
                 $max_purchase = empty(get_post_meta($post->ID, '_max_purchase', true)) ? -1 : intval(get_post_meta($post->ID, '_max_purchase', true));
                 ?>
                 <div class="metabox-field">
-                    <label for="stock"><?php esc_attr_e('Stok', 'lwpcommerce'); ?></label>
+                <label for="stock"><?php esc_attr_e('SKU (Stock Keeping Unit)', 'lwpcommerce'); ?></label>
                     <p class="mfield"><input type="text" name="stock" placeholder="9999" value="<?php echo $stock; ?>"></p>
 
-                    <label for="stock_unit"><?php esc_attr_e('Stok Unit', 'lwpcommerce'); ?> </label>
+                    <label for="stock"><?php esc_attr_e('Stock', 'lwpcommerce'); ?></label>
+                    <p class="mfield"><input type="text" name="stock" placeholder="9999" value="<?php echo $stock; ?>"></p>
+
+                    <label for="stock_unit"><?php esc_attr_e('Stock Unit', 'lwpcommerce'); ?> </label>
                     <p class="mfield"><input type="text" name="stock_unit" placeholder="pcs" value="<?php echo $stock_unit; ?>"></p>
 
                     <label for="min_purchase"><?php esc_attr_e('Min Purchase', 'lwpcommerce'); ?> </label>
@@ -232,60 +273,6 @@ class Metabox_Product_Data
                 </div>
             </div>
 
-            <!-- Shipping Tab -->
-            <div class="wp-tab-panel lsdp-hide" id="file">
-                <div class="tabs tabs-inside">
-
-                    <!-- Digital -->
-                    <!-- <input name="shipping_tabs" value="digital" id="digital" type="radio" />
-                    <label class="label" for="digital">
-                        <?php esc_attr_e('Product Digital', 'lwpcommerce'); ?>
-                    </label> -->
-
-                    <div class="pane-metabox">
-
-                        <!-- Hookable :: Extending for Upload via DropBox -->
-                        <?php if (has_action("lwpcommerce/product/digital/upload")) : ?>
-                            <?php do_action('lwpcommerce/product/digital/upload'); ?>
-                        <?php else : ?>
-                            <br>
-                            <label for="digital_file" style="margin-left:10px;"><?php esc_attr_e('File', 'lwpcommerce'); ?> : </label>
-                            <input type="text" class="form-input" style="width:50%" name="digital_file_url" placeholder="http://dropbox.com/file.zip" value="<?php echo get_post_meta($post->ID, '_digital_file_url', true); ?>">
-
-                            <label for="digital_file_version"><?php esc_attr_e('Versi', 'lwpcommerce'); ?> :</label>
-                            <input type="text" class="form-input" name="digital_file_version" placeholder="1.0.0" value="<?php echo get_post_meta($post->ID, '_digital_file_version', true); ?>">
-
-
-                        <?php endif; ?>
-
-                        <!-- Hookable :: Extending for More Information Digital -->
-                        <?php do_action('lwpcommerce/product/digital'); ?>
-                    </div>
-
-                    <!-- Physical -->
-                    <!-- <input name="shipping_tabs" value="physical" id="physical" type="radio" />
-                    <label class="label" for="physical">
-                        <?php esc_attr_e('Product Fisik', 'lwpcommerce'); ?>
-                    </label>
-
-                    <div class="pane-metabox">
-                        <label for="physical_weight">
-                            <?php esc_attr_e('Berat', 'lwpcommerce'); ?> /g :
-                        </label>
-                        <input type="text" class="form-input currency" name="physical_weight" placeholder="50" value="<?php echo get_post_meta($post->ID, '_physical_weight', true); ?>">
-                        <label for="physical_volume" style="margin-left:10px"><?php esc_attr_e('Volume', 'lwpcommerce'); ?> /cm : </label>
-                        <input type="text" class="form-input currency" name="physical_volume" placeholder="300" value="<?php echo get_post_meta($post->ID, '_physical_volume', true); ?>">
-                    </div>
-                    <?php $shipping_type = empty(get_post_meta($post->ID, '_shipping_type', true)) ? 'digital' : get_post_meta($post->ID, '_shipping_type', true); ?>
-                    <script>
-                        jQuery('input[value="<?php echo esc_attr($shipping_type); ?>"]').prop("checked", true);
-                    </script> -->
-
-                </div>
-            </div>
-
-            <!-- Hookable :: Extending Tab Content -->
-            <?php do_action('lwpcommerce/product/data/content'); ?>
 
             <div class="spacer" style="clear: both;"></div>
         </div>

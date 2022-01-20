@@ -208,7 +208,7 @@ class Post_Type_Product
         <style>
             .column-image,
             .column-id {
-                width: 7%;
+                width: 3.8%;
             }
 
             .column-price,
