@@ -111,7 +111,7 @@ abstract class Gateway {
 	/**
 	 * Api Key  Raja Ongkir
 	 */
-	protected $api_key = '80aa49704fc30a939124a831882dea72'; // ASdgaisgd
+	protected $api_key = ''; // ASdgaisgd
 
 	/**
 	 * Estimation date

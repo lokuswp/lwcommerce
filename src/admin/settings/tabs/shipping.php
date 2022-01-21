@@ -7,40 +7,38 @@ use LokusWP\Commerce\Shipping;
 /* wp-admin -> LSDDonation -> Payments
 /********************************************/
 
-if (!defined('WPTEST')) {
-    defined('ABSPATH') or die("Direct access to files is prohibited");
+if ( ! defined( 'WPTEST' ) ) {
+	defined( 'ABSPATH' ) or die( "Direct access to files is prohibited" );
 }
 
-class Shipping_Admin
-{
+class Shipping_Admin {
 
-    public function __construct()
-    {
-        ?>
+	public function __construct() {
+		?>
 
         <section id="shipping" class="form-horizontal">
 
             <div class="tab-nested">
-                <input type="radio" name="tab" id="tab1" checked="checked" />
+                <input type="radio" name="tab" id="tab1" checked="checked"/>
                 <label class="tab-item" for="tab1">Channel</label>
 
-                <input type="radio" name="tab" id="tab2" />
+                <input type="radio" name="tab" id="tab2"/>
                 <label class="tab-item" for="tab2">Zone</label>
 
-                <input type="radio" name="tab" id="tab3" />
+                <input type="radio" name="tab" id="tab3"/>
                 <label class="tab-item" for="tab3">RajaOngkir</label>
 
                 <div class="tab-body-component">
                     <div id="tab-body-1" class="tab-body">
-                        <?php require_once LWPC_PATH . 'src/admin/settings/tabs/shipping/channel.php'; ?>
+						<?php require_once 'shipping/channel.php'; ?>
                     </div>
 
                     <div id="tab-body-2" class="tab-body">
-                        <?php require_once LWPC_PATH . 'src/admin/settings/tabs/shipping/zone.php'; ?>
+						<?php require_once 'shipping/zone.php'; ?>
                     </div>
 
                     <div id="tab-body-3" class="tab-body">
-                       Pengaturan Raja Ongkir
+						<?php require_once 'shipping/rajaongkir.php'; ?>
                     </div>
                 </div>
             </div>
@@ -48,18 +46,18 @@ class Shipping_Admin
         </section>
 
         <style>
-            #tab1:checked~.tab-body-component #tab-body-1,
-            #tab2:checked~.tab-body-component #tab-body-2,
-            #tab3:checked~.tab-body-component #tab-body-3 {
+            #tab1:checked ~ .tab-body-component #tab-body-1,
+            #tab2:checked ~ .tab-body-component #tab-body-2,
+            #tab3:checked ~ .tab-body-component #tab-body-3 {
                 position: relative;
                 top: 0;
                 opacity: 1
             }
         </style>
 
-    <?php
+		<?php
 
-    }
+	}
 }
 
 new Shipping_Admin();
@@ -200,7 +198,7 @@ new Shipping_Admin();
         for (var i = 0; i < shipping.length; i++)
             formData.append('shipping[' + i + ']', shipping[i]);
         var xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function() {
+        xmlHttp.onreadystatechange = function () {
             if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
                 //console.log(xmlHttp.responseText);
             }

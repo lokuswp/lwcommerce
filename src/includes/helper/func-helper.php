@@ -122,9 +122,11 @@ function lwpc_get_cost_rajaongkir( string $shipping_id, string $service, string 
 		return $cost;
 	}
 
+	$apikey = lwpc_get_settings( 'shipping', 'apikey' ) ?? '';
+
 	$header = [
 		'content-type' => 'application/json',
-		'key'          => '80aa49704fc30a939124a831882dea72',
+		'key'          => $apikey,
 	];
 
 	$body = [

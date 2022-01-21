@@ -7,6 +7,8 @@ class AJAX {
 		add_action( 'wp_ajax_lwpc_store_settings_save', [ $this, 'store_settings_save' ] );
 		add_action( 'wp_ajax_lwpc_shipping_package_status', [ $this, 'shipping_package_status' ] );
 
+		add_action( 'wp_ajax_lwpc_shipping_settings_save', [ $this, 'shipping_settings_save' ] );
+
 		// Orders
 		add_action( 'wp_ajax_lwpc_get_orders', [ $this, 'get_orders' ] );
 		add_action( 'wp_ajax_lwpc_process_order', [ $this, 'process_order' ] );
@@ -84,6 +86,44 @@ class AJAX {
 		} else {
 			wp_send_json_error( 'action_failed' );
 		}
+	}
+
+	public function shipping_settings_save() {
+		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+			wp_send_json_error( 'Invalid security token sent.' );
+		}
+
+		// stripslash data
+		$_REQUEST = array_map( 'stripslashes_deep', $_REQUEST );
+		$data     = $_REQUEST['settings'];
+
+
+		// Parser to Array
+		$stack = array();
+		parse_str( html_entity_decode( $data ), $stack );
+
+		// Sanitizing
+		$sanitize = array();
+		foreach ( $stack as $key => $item ) {
+
+			// Sanitize Textfield
+			$item             = sanitize_text_field( $item );
+			$sanitize[ $key ] = $item; //restructure
+		}
+
+		// Merge Exist Settings
+		$settings = get_option( 'lwpcommerce_shipping' );
+		if ( empty( $settings ) ) {
+			$merge = $sanitize;
+		} else {
+			$merge = array_merge( $settings, $sanitize );
+		}
+
+		// Update New Settings
+		update_option( 'lwpcommerce_shipping', $merge );
+		echo 'action_success';
+
+		wp_die();
 	}
 
 	public function get_orders() {

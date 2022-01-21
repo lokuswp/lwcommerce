@@ -77,29 +77,13 @@ class POST_Indonesia extends Shipping\Gateway {
 	public $country = "ID";
 
 	public function __construct() {
+		$this->api_key = lwpc_get_settings( 'shipping', 'apikey' ) ?? '';
 		$this->save_as_data();
 	}
 
 	// payment management for admin
 	public function admin_manage( $shipping_id ) {
 		//
-	}
-
-	// instruction with output html at receipt page
-	public function instruction_html( object $transaction_obj ) {
-	}
-
-	// template text for notification channel sms or whatsapp
-	public function notification_text( object $transaction_obj, string $event, string $shipping_id ) {
-	}
-
-	// template html for notification using smtp email
-	public function notification_html( object $transaction_obj, string $event, string $shipping_id ) {
-	}
-
-	// template json for notification using webhook services, integromat, zapier or apps. etc
-	public function notification_json( object $transaction_obj, string $event ) {
-		return json_encode( [ "array" => "value" ] );
 	}
 }
 

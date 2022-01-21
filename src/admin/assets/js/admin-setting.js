@@ -1,6 +1,6 @@
 (function ($) {
 
-    // =================== Institution Settings =================== //
+    // =================== Store Settings =================== //
     $(document).on("click", "#lwpc-setting-store-save", function (e) {
         e.preventDefault();
         $(this).addClass('loading');
@@ -36,6 +36,27 @@
             console.log(response)
             // if (!response) alert('action failed');
             that.removeClass('loading')
+        }).fail(function () {
+            alert('Please check your internet connection');
+        });
+    });
+
+    // =================== Shipping Settings =================== //
+    $(document).on("click", "#lwpc-setting-shipping-save", function (e) {
+        e.preventDefault();
+        $(this).addClass('loading');
+        const that = this;
+
+        $.post(lwpc_admin.ajax_url, {
+            action: 'lwpc_shipping_settings_save',
+            settings: $("#settings form").serialize(),
+            security: lwpc_admin.ajax_nonce,
+        }, function (response) {
+            if (response.trim() === 'action_success') {
+                $(that).removeClass('loading');
+            } else {
+                location.reload();
+            }
         }).fail(function () {
             alert('Please check your internet connection');
         });

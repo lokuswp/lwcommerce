@@ -77,6 +77,7 @@ class JNE extends Shipping\Gateway {
 	public $country = "ID";
 
 	public function __construct() {
+		$this->api_key = lwpc_get_settings( 'shipping', 'apikey' ) ?? '';
 		$this->save_as_data();
 	}
 
