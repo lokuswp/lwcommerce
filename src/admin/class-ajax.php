@@ -186,22 +186,22 @@ class AJAX {
 			$sql_where = substr( $sql_where, 0, - 3 );
 		}
 
-		if ( $order_filter ) {
+
+		if ( $order_filter !== 'all' ) {
 			$sql_where .= ( ! empty( $sql_where ) ) ? " AND " : "HAVING ";
 
-			foreach ( $columns as $column ) {
+			$arrStatusPayment = [ 'unpaid', 'paid', 'cancelled' ];
+			$arrStatusOrder   = [ 'unprocessed', 'processing', 'shipping' ];
 
-				$sql_where .= $column . " LIKE '%" . sanitize_text_field( $order_filter ) . "%' OR ";
-			}
-
-			$sql_where = substr( $sql_where, 0, - 3 );
-			if ( $order_filter === 'all' ) {
-				$sql_where = '';
+			if ( in_array( $order_filter, $arrStatusPayment ) && ! in_array( $order_filter, $arrStatusOrder ) ) {
+				$sql_where .= "status = '" . sanitize_text_field( $order_filter ) . "'";
+			} elseif ( in_array( $order_filter, $arrStatusOrder ) && ! in_array( $order_filter, $arrStatusPayment ) ) {
+				$sql_where .= "status_processing = '" . sanitize_text_field( $order_filter ) . "'";
 			}
 		}
 
 		// Date filter
-		if ( $date_filter ) {
+		if ( $date_filter !== 'all' ) {
 			$sql_where .= ( ! empty( $sql_where ) ) ? " AND " : "HAVING ";
 
 			$range = explode( '/', $date_filter );
@@ -211,9 +211,6 @@ class AJAX {
 			}
 
 			switch ( $date_filter ) {
-				case 'all':
-					$sql_where = "";
-					break;
 				case 'today':
 					$sql_where .= "DATE(created_at) = CURDATE() ";
 					break;
@@ -297,6 +294,9 @@ class AJAX {
 				"recordsTotal"    => intval( $total_records ),
 				"recordsFiltered" => intval( $total_records_search ),
 				"data"            => $data,
+				"searchQuery"     => $request['search']['value'] ?? null,
+				"ordersFilter"    => $order_filter,
+				"dateFilter"      => $date_filter,
 			);
 		} else {
 			$json_data = array(

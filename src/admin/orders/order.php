@@ -86,17 +86,18 @@ class Reports {
             </div>
         </div>
 
-        <!--        <div class="lwpc-flex lwpc-gap-1" style="margin-left: 1.4rem">-->
-        <!--            <span>--><?php //_e( 'CURRENTLY FILTERING', 'lokuswp-commerce' ) ?><!--</span>-->
-        <!--            <span class="lwpc-filter-text">samlekom</span>-->
-        <!--            <span class="lwpc-filter-text">samlekom</span>-->
-        <!--            <span class="lwpc-filter-text">samlekom</span>-->
-        <!--        </div>-->
+        <div class="lwpc-flex lwpc-gap-1 currently-filtering" style="margin-left: 1.4rem; display: none">
+            <span><?php _e( 'CURRENTLY FILTERING', 'lokuswp-commerce' ) ?></span>
+            <span class="lwpc-filter-text viewing-search" style="font-weight: bold"></span> |
+            <span class="lwpc-filter-text viewing-order-filter" style="font-weight: bold"></span> |
+            <span class="lwpc-filter-text viewing-date-filter" style="font-weight: bold"></span>
+        </div>
 
         <div class="wrap lwpc-admin">
             <div class="columns">
                 <!-- Table -->
-                <div class="column col-12" style="padding: 0 20px;">
+                <div class="column col-12" style="padding: 0 20px; position: relative">
+                    <div class="lwpc-overlay-table"><h3>Loading .. Please wait</h3></div>
                     <table id="orders" class="display order-column" style="position:relative;">
                         <thead>
                         <tr>
@@ -458,9 +459,6 @@ class Reports {
 
 	private function panel_editor() {
 		?>
-        <!--        <div class="lwpc-overlay">-->
-        <!--            <div class="lwpc-loading loading-position"></div>-->
-        <!--        </div>-->
         <div class="column col-6 col-12"
              style="top: 30px;position: fixed;right: 0;z-index:-1;height: 97.5%;width: 400px;display:none;">
             <div id="report_editor" class="panel" style="height: 100%;background: #fff;margin-right: -10px;">

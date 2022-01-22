@@ -23,8 +23,7 @@
     // Check date if it over 1 hour
     function checkDate(date) {
         const now = new Date();
-        let t = date.split(/[- :]/);
-        const dateTime = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4], t[5]));
+        const dateTime = new Date(date);
         const diff = now.getTime() - dateTime.getTime();
         const diffHours = Math.floor(diff / (1000 * 60 * 60));
         return diffHours > 1;
@@ -32,8 +31,7 @@
 
     // Convert date to Date Month Year indonesia
     function convertDate(date) {
-        let t = date.split(/[- :]/);
-        const dateTime = new Date(Date.UTC(t[0], t[1] - 1, t[2], t[3], t[4], t[5]));
+        const dateTime = new Date(date);
         const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
         const month = monthNames[dateTime.getMonth()];
         const year = dateTime.getFullYear();
@@ -46,10 +44,11 @@
 
 
     $(document).ready(function () {
+
         //=============== Datatables ===============//
         const tableOrders = $('#orders').DataTable(
             {
-                processing: true,
+                processing: false,
                 serverSide: true,
                 lengthChange: false,
                 lengthMenu: [
@@ -64,6 +63,21 @@
                         d.dateFilter = $('#date-filter-value').val();
                         d.orderFilter = $('#orders-filter-value').val();
                     },
+                    complete: function (jqXHR) {
+                        $('.lwpc-overlay-table').hide();
+                        if (jqXHR.responseJSON.searchQuery.length > 0) {
+                            $('.viewing-search').text(jqXHR.responseJSON.searchQuery);
+                            $('.viewing-date-filter').text(ucfirst(jqXHR.responseJSON.dateFilter));
+                            $('.viewing-order-filter').text(ucfirst(jqXHR.responseJSON.ordersFilter));
+                            $('.currently-filtering').show();
+                        } else {
+                            if (jqXHR.responseJSON.dateFilter !== 'all' || jqXHR.responseJSON.ordersFilter !== 'all') {
+                                $('.viewing-date-filter').text(ucfirst(jqXHR.responseJSON.dateFilter));
+                                $('.viewing-order-filter').text(ucfirst(jqXHR.responseJSON.ordersFilter));
+                                $('.currently-filtering').show();
+                            }
+                        }
+                    }
                 },
                 columns: [{
                     data: 'transaction_id',
@@ -189,10 +203,14 @@
             }
         )
 
-        // tableOrders.on('draw', function () {
-        //     $('.lwpc-loading-filter').hide();
-        //     document.querySelector('.lwpc-overlay').style.display = 'none';
-        // });
+        tableOrders.on('processing.dt', function (e, settings, processing) {
+            $('.lwpc-overlay-table').show();
+        });
+
+        tableOrders.on('draw', function () {
+            $('.lwpc-loading-filter').hide();
+            $('.lwpc-overlay-table').hide();
+        });
 
         $(document).on('click', '.more-product', function (e) {
             $(this).parent().parent().find('show-less').removeClass('lwpc-hidden');
@@ -276,19 +294,23 @@
             $('#datetimerange-input1').siblings('.lwp-commerce-order-filter-text').removeClass('filter-selected');
         })
 
-        tableOrders.on('processing', function () {
-
-        });
-
         $(document).on('click', '.lwpc-btn-dropdown', function () {
             $(this).parent().siblings().slideToggle('fast');
             $(this).children().toggle();
         })
 
-        $(document).on('keyup', '#search-order', function () {
+        function delay(fn, ms) {
+            let timer = 0
+            return function (...args) {
+                clearTimeout(timer)
+                timer = setTimeout(fn.bind(this, ...args), ms || 0)
+            }
+        }
+
+        $(document).on('keyup', '#search-order', delay(function () {
             console.log(this.value);
-            tableOrders.search($(this).val()).draw();
-        })
+            tableOrders.search(this.value).draw();
+        }, 500))
 
         $(document).on('click', '.lwpc-btn-filter', function () {
             $('.filter-up').toggle();

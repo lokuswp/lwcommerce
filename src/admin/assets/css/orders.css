@@ -707,3 +707,21 @@ table.dataTable tbody th, table.dataTable tbody td .container {
         background-color: hsl(200,20%,95%);
     }
 }
+
+.lwpc-overlay-table {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+    background-color: #ffffff;
+    filter: alpha(opacity=50);
+    -moz-opacity: 0.75;
+    opacity: 0.75;
+    display: none;
+}
+.lwpc-overlay-table h3 {
+    position: absolute;
+    top: 50%;left: 50%;transform: translate(-50%, -50%);
+}
