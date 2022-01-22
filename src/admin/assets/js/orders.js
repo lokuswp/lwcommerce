@@ -47,28 +47,28 @@
 
     $(document).ready(function () {
         //=============== Datatables ===============//
-        const tableOrders = $('#orders').DataTable({
-            // processing: true,
-            serverSide: true,
-            lengthMenu: [
-                [10, 50, 100, 250, -1],
-                [10, 50, 100, 250, "All"]
-            ],
-            language: {
-                search: '',
-                searchPlaceholder: 'Search....'
-            },
-            ajax: {
-                url: lwpc_orders.ajax_url,
-                data: d => {
-                    d.action = 'lwpc_get_orders';
-                    d.security = lwpc_orders.ajax_nonce;
+        const tableOrders = $('#orders').DataTable(
+            {
+                processing: true,
+                serverSide: true,
+                lengthChange: false,
+                lengthMenu: [
+                    [10, 50, 100, 250, -1],
+                    [10, 50, 100, 250, "All"]
+                ],
+                ajax: {
+                    url: lwpc_orders.ajax_url,
+                    data: d => {
+                        d.action = 'lwpc_get_orders';
+                        d.security = lwpc_orders.ajax_nonce;
+                        d.dateFilter = $('#date-filter-value').val();
+                        d.orderFilter = $('#orders-filter-value').val();
+                    },
                 },
-            },
-            columns: [{
-                data: 'transaction_id',
-                render: function (nTd, sData, data, row, col) {
-                    return `
+                columns: [{
+                    data: 'transaction_id',
+                    render: function (nTd, sData, data, row, col) {
+                        return `
                     <div class="container">
                         <div class="lwpc-card-header lwpc-card-shadow">
                         ${checkDate(data.created_at) ? `<span class="lwpc-badge lwpc-badge-seccondary">${convertDate(data.created_at)}</span>` : '<button class="lwpc-btn-rounded lwpc-mr-10">Pesanan Baru</button>'}
@@ -93,9 +93,9 @@
                             <div class="lwpc-grid lwpc-m-20">
                                 <div class="lwpc-flex-column">
                                     ${data.product.map((item, index) => {
-                        return `
+                            return `
                                             <div class="lwpc-grid-item ${index >= 1 ? 'lwpc-hidden' : ``}">
-                                                <img src="${item.image || 'https://i.pinimg.com/originals/a6/e8/d6/a6e8d6c8122c34de94463e071a4c7e45.png'}" alt="gedung" width="100px" height="100px">
+                                                <img src="${item.image || 'https://i.pinimg.com/originals/a6/e8/d6/a6e8d6c8122c34de94463e071a4c7e45.png'}" alt="gedung" width="100px" height="100px" style="margin-right: 0.5rem">
                                                 <div class="lwpc-flex-column">
                                                     <span class="lwpc-text-bold">${item.post_title.escapeHtml()}</span>
                                                     <span class="lwpc-text-bold">${item.quantity.escapeHtml()} x ${item.price_discount !== null ? `<del class="del">${item.price.escapeHtml()}</del> ${item.price_discount.escapeHtml()}` : item.price.escapeHtml()}</span>
@@ -104,7 +104,7 @@
                                                 </div>
                                             </div>
                                         `;
-                    }).join(' ')}
+                        }).join(' ')}
                                     <a style="color: #0EBA29; margin-top: 10px" class="lwpc-hover lwpc-grid-item lwpc-hidden show-less">Show Less...</a>
                                 </div>
                                 <div class="lwpc-grid-item">
@@ -142,7 +142,7 @@
                             </div>
                         </div>
                         <div class="lwpc-card-footer lwpc-card-shadow">
-                            <div class="lwpc-flex ">
+                            <div class="lwpc-flex lwpc-justify-content-space-between">
                                 <div>
                                     <span class="lwpc-mr-100">Detail Pesanan</span>
                                     <span class="lwpc-mr-40">Cetak Label</span>
@@ -184,13 +184,15 @@
                         </div>
                     </div>
                     `;
-                }
-            }],
-        })
+                    }
+                }],
+            }
+        )
 
-        tableOrders.on('draw', function () {
-            document.querySelector('.lwpc-overlay').style.display = 'none';
-        });
+        // tableOrders.on('draw', function () {
+        //     $('.lwpc-loading-filter').hide();
+        //     document.querySelector('.lwpc-overlay').style.display = 'none';
+        // });
 
         $(document).on('click', '.more-product', function (e) {
             $(this).parent().parent().find('show-less').removeClass('lwpc-hidden');
@@ -199,14 +201,14 @@
         });
 
         $(document).on('click', '.show-less', function (e) {
-            $('.show-less').addClass('lwpc-hidden');
+            $(this).addClass('lwpc-hidden');
             const products = $(this).siblings();
             for (let i = 0; i < products.length; i++) {
                 if (i >= 1) {
                     $(products[i]).addClass('lwpc-hidden');
                 }
             }
-            $('.more-product').show();
+            products.children().find('.more-product').show();
         });
 
         $(document).on('click', '.process-order', function (e) {
@@ -254,9 +256,54 @@
             })
         })
 
+        // Filter
+        $(document).on('click', '.filter-orders', function () {
+            const filter = $(this).attr('data-filter');
+            $('#orders-filter-value').val(filter);
+            tableOrders.draw();
+            $(this).addClass('filter-selected');
+            $(this).siblings().removeClass('filter-selected');
+            $('.lwpc-loading-filter').show();
+        })
+
+        $(document).on('click', '.filter-date', function () {
+            const filter = $(this).attr('data-filter');
+            $('#date-filter-value').val(filter);
+            tableOrders.draw();
+            $(this).addClass('filter-selected');
+            $(this).siblings().removeClass('filter-selected');
+            $('.lwpc-loading-filter').show();
+            $('#datetimerange-input1').siblings('.lwp-commerce-order-filter-text').removeClass('filter-selected');
+        })
+
+        tableOrders.on('processing', function () {
+
+        });
+
         $(document).on('click', '.lwpc-btn-dropdown', function () {
             $(this).parent().siblings().slideToggle('fast');
             $(this).children().toggle();
         })
+
+        $(document).on('keyup', '#search-order', function () {
+            console.log(this.value);
+            tableOrders.search($(this).val()).draw();
+        })
+
+        $(document).on('click', '.lwpc-btn-filter', function () {
+            $('.filter-up').toggle();
+            $('.filter-down').toggle();
+            $('.lwpc-dropdown-filter').slideToggle('fast');
+        })
+
+        window.addEventListener('apply.daterangepicker', function (ev) {
+            $('#date-filter-value').val(`${ev.detail.startDate.format('YYYY-MM-DD')} / ${ev.detail.endDate.format('YYYY-MM-DD')}`);
+            const dateTimeElement = $('#datetimerange-input1');
+            dateTimeElement.siblings('.lwp-commerce-order-filter-text').addClass('filter-selected')
+            dateTimeElement.parent().siblings().removeClass('filter-selected');
+            tableOrders.draw();
+            $('.lwpc-loading-filter').show();
+        });
+
     });
 })(jQuery)

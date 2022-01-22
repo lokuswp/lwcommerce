@@ -21,28 +21,78 @@ class Reports {
 
 	private function table() {
 		?>
-        <style>
-            table.dataTable thead .sorting {
-                background-image: url(<?= LWPC_URL . "/src/includes/libraries/js/datatables/sort_both.png" ?>)
-            }
+        <div class="lwpc-container-filter">
+            <button class="lwpc-btn-filter" type="button">
+                Filter
+                <svg xmlns="http://www.w3.org/2000/svg" class="lwpc-search-icon filter-up" style="color: #5c5c5c" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="lwpc-search-icon filter-down" style="display: none" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"
+                          clip-rule="evenodd"/>
+                </svg>
+            </button>
+            <div class="lwpc-search-box">
+                <input type="text" class="lwpc-input-search" id="search-order" required>
+                <span class="lwpc-floating-label">Invoice, Customer Name, No Resi and other</span>
+                <button class="lwpc-btn-search">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="lwpc-search-icon" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
 
-            table.dataTable thead .sorting_asc {
-                background-image: url(<?= LWPC_URL . "/src/includes/libraries/js/datatables/sort_asc.png" ?>) !important
-            }
+        <div class="lwpc-card-body lwpc-card-shadow lwpc-dropdown-filter lwpc-card-shadow-blue lwpc-relative">
+            <div class="lwpc-grid">
 
-            table.dataTable thead .sorting_desc {
-                background-image: url(<?= LWPC_URL . "/src/includes/libraries/js/datatables/sort_desc.png" ?>) !important
-            }
+                <div>
+                    <div class="lwpc-flex-column lwpc-gap-1">
+                        <span class="lwp-commerce-order-filter-text noselect filter-orders filter-selected" data-filter="all"><?php _e( 'All Orders', 'lokuswp-commerce' ) ?> (233)</span>
+                        <span class="lwp-commerce-order-filter-text noselect filter-orders" data-filter="unpaid"><?php _e( 'Unpaid', 'lokuswp-commerce' ) ?> (50)</span>
+                        <span class="lwp-commerce-order-filter-text noselect filter-orders" data-filter="paid"><?php _e( 'Paid', 'lokuswp-commerce' ) ?> (12)</span>
+                        <span class="lwp-commerce-order-filter-text noselect filter-orders" data-filter="unprocessed"><?php _e( 'Unprocessed', 'lokuswp-commerce' ) ?> (5)</span>
+                        <span class="lwp-commerce-order-filter-text noselect filter-orders" data-filter="processing"><?php _e( 'In Process', 'lokuswp-commerce' ) ?> (100)</span>
+                        <span class="lwp-commerce-order-filter-text noselect filter-orders" data-filter="shipping"><?php _e( 'Shipping', 'lokuswp-commerce' ) ?>(20)</span>
+                        <input type="hidden" id="orders-filter-value" value="all">
+                    </div>
+                </div>
 
-            table.dataTable thead .sorting_asc_disabled {
-                background-image: url(<?= LWPC_URL . "/src/includes/libraries/js/datatables/sort_asc_disabled.png" ?>)
-            }
+                <div class="lwpc-flex-column lwpc-gap-1">
+                    <span class="lwp-commerce-order-filter-text noselect filter-date filter-selected" data-filter="all">All</span>
+                    <span class="lwp-commerce-order-filter-text noselect filter-date" data-filter="today">Today</span>
+                    <span class="lwp-commerce-order-filter-text noselect filter-date" data-filter="yesterday">Yesterday</span>
+                    <span class="lwp-commerce-order-filter-text noselect filter-date" data-filter="last 7 day">Last 7 Day</span>
+                    <span class="lwp-commerce-order-filter-text noselect filter-date" data-filter="this month">This Month</span>
+                    <div>
+                        <span class="lwp-commerce-order-filter-text noselect">Custom Range</span>
+                        <input type="text" id="datetimerange-input1" size="24" style="text-align:center">
+                        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/alumuko/vanilla-datetimerange-picker@latest/dist/vanilla-datetimerange-picker.css">
+                        <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js" type="text/javascript"></script>
+                        <script src="https://cdn.jsdelivr.net/gh/alumuko/vanilla-datetimerange-picker@latest/dist/vanilla-datetimerange-picker.js"></script>
+                        <script>
+                            window.addEventListener("load", function (event) {
+                                new DateRangePicker('datetimerange-input1');
+                            });
+                        </script>
+                    </div>
+                    <input type="hidden" id="date-filter-value" value="all">
+                </div>
 
-            table.dataTable thead .sorting_desc_disabled {
-                background-image: url(<?= LWPC_URL . "/src/includes/libraries/js/datatables/sort_desc_disabled.png" ?>)
-            }
-        </style>
-        <!--        <div class="lwpc-screen-loading"></div>-->
+            </div>
+            <div class="lwpc-loading-filter lwpc-absolute" style="display: none">
+                <span class="loading" style="top: 50%;left: 50%;transform: translate(-50%, -50%);"></span>
+            </div>
+        </div>
+
+        <!--        <div class="lwpc-flex lwpc-gap-1" style="margin-left: 1.4rem">-->
+        <!--            <span>--><?php //_e( 'CURRENTLY FILTERING', 'lokuswp-commerce' ) ?><!--</span>-->
+        <!--            <span class="lwpc-filter-text">samlekom</span>-->
+        <!--            <span class="lwpc-filter-text">samlekom</span>-->
+        <!--            <span class="lwpc-filter-text">samlekom</span>-->
+        <!--        </div>-->
+
         <div class="wrap lwpc-admin">
             <div class="columns">
                 <!-- Table -->
@@ -50,9 +100,350 @@ class Reports {
                     <table id="orders" class="display order-column" style="position:relative;">
                         <thead>
                         <tr>
-                            <th> <?php _e( 'Donors', 'lwpcommerce' ) ?> </th>
+                            <th> <?php _e( 'Donors', 'lokuswp-commerce' ) ?> </th>
                         </tr>
                         </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <div class="container">
+                                    <div class="lwpc-card-header lwpc-flex">
+                                        <button class="lwpc-skeleton lwpc-skeleton-button" style="margin-right: 10px"></button>
+                                        <span class="lwpc-text-red lwpc-mr-10">
+                                            <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                        </span>
+                                        <span lass="lwpc-text-bold lwpc-mr-10">
+                                            <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                        </span>
+                                    </div>
+                                    <div class="lwpc-card-body">
+                                        <div class="lwpc-grid lwpc-m-20">
+                                            <div class="lwpc-grid-item">
+                                                <div class="lwpc-product-image lwpc-skeleton" style="margin-right: 0.5rem"></div>
+                                                <div class="lwpc-flex-column">
+                                                    <span class="lwpc-text-bold">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span class="lwpc-text-bold">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span class="lwpc-text-secondary">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <a style="color: #0EBA29; margin-top: 10px" class="lwpc-hover">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="lwpc-grid-item">
+                                                <div class="lwpc-flex-column">
+                                                    <span class="lwpc-text-bold">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span style="margin-top: 10px">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span>
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span>
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="lwpc-grid-item">
+                                                <div class="lwpc-flex-column">
+                                                    <span class="lwpc-text-bold">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span style="margin-top: 10px">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <div class="lwpc-flex">
+                                                        <span>
+                                                            <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                        </span>
+                                                        <span>
+                                                            <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                        </span>
+                                                    </div>
+                                                    <span>
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span>
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="lwpc-grid-item">
+                                                <div class="lwpc-flex-column">
+                                                    <span class="lwpc-text-bold">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span>
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span style="margin-top: 10px" class="lwpc-text-bold">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span>-</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="lwpc-card-footer">
+                                        <div class="lwpc-flex lwpc-justify-content-space-between">
+                                            <div class="lwpc-flex">
+                                                <span class="lwpc-mr-100">
+                                                    <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                </span>
+                                                <span class="lwpc-mr-40">
+                                                    <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                </span>
+                                                <span class="lwpc-mr-10">
+                                                    <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                </span>
+                                                <div type="text" class="lwpc-skeleton lwpc-skeleton-input"></div>
+                                                <button class="lwpc-skeleton lwpc-skeleton-button"></button>
+                                            </div>
+                                            <div class="lwpc-flex">
+                                                <span class="lwpc-text-bold lwpc-mr-10">
+                                                    <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                </span>
+                                                <button class="lwpc-skeleton lwpc-skeleton-button"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="container">
+                                    <div class="lwpc-card-header lwpc-flex">
+                                        <button class="lwpc-skeleton lwpc-skeleton-button" style="margin-right: 10px"></button>
+                                        <span class="lwpc-text-red lwpc-mr-10">
+                                            <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                        </span>
+                                        <span lass="lwpc-text-bold lwpc-mr-10">
+                                            <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                        </span>
+                                    </div>
+                                    <div class="lwpc-card-body">
+                                        <div class="lwpc-grid lwpc-m-20">
+                                            <div class="lwpc-grid-item">
+                                                <div class="lwpc-product-image lwpc-skeleton" style="margin-right: 0.5rem"></div>
+                                                <div class="lwpc-flex-column">
+                                                    <span class="lwpc-text-bold">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span class="lwpc-text-bold">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span class="lwpc-text-secondary">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <a style="color: #0EBA29; margin-top: 10px" class="lwpc-hover">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="lwpc-grid-item">
+                                                <div class="lwpc-flex-column">
+                                                    <span class="lwpc-text-bold">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span style="margin-top: 10px">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span>
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span>
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="lwpc-grid-item">
+                                                <div class="lwpc-flex-column">
+                                                    <span class="lwpc-text-bold">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span style="margin-top: 10px">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <div class="lwpc-flex">
+                                                        <span>
+                                                            <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                        </span>
+                                                        <span>
+                                                            <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                        </span>
+                                                    </div>
+                                                    <span>
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span>
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="lwpc-grid-item">
+                                                <div class="lwpc-flex-column">
+                                                    <span class="lwpc-text-bold">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span>
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span style="margin-top: 10px" class="lwpc-text-bold">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span>-</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="lwpc-card-footer">
+                                        <div class="lwpc-flex lwpc-justify-content-space-between">
+                                            <div class="lwpc-flex">
+                                                <span class="lwpc-mr-100">
+                                                    <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                </span>
+                                                <span class="lwpc-mr-40">
+                                                    <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                </span>
+                                                <span class="lwpc-mr-10">
+                                                    <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                </span>
+                                                <div type="text" class="lwpc-skeleton lwpc-skeleton-input"></div>
+                                                <button class="lwpc-skeleton lwpc-skeleton-button"></button>
+                                            </div>
+                                            <div class="lwpc-flex">
+                                                <span class="lwpc-text-bold lwpc-mr-10">
+                                                    <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                </span>
+                                                <button class="lwpc-skeleton lwpc-skeleton-button"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="container">
+                                    <div class="lwpc-card-header lwpc-flex">
+                                        <button class="lwpc-skeleton lwpc-skeleton-button" style="margin-right: 10px"></button>
+                                        <span class="lwpc-text-red lwpc-mr-10">
+                                            <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                        </span>
+                                        <span lass="lwpc-text-bold lwpc-mr-10">
+                                            <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                        </span>
+                                    </div>
+                                    <div class="lwpc-card-body">
+                                        <div class="lwpc-grid lwpc-m-20">
+                                            <div class="lwpc-grid-item">
+                                                <div class="lwpc-product-image lwpc-skeleton" style="margin-right: 0.5rem"></div>
+                                                <div class="lwpc-flex-column">
+                                                    <span class="lwpc-text-bold">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span class="lwpc-text-bold">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span class="lwpc-text-secondary">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <a style="color: #0EBA29; margin-top: 10px" class="lwpc-hover">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="lwpc-grid-item">
+                                                <div class="lwpc-flex-column">
+                                                    <span class="lwpc-text-bold">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span style="margin-top: 10px">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span>
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span>
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="lwpc-grid-item">
+                                                <div class="lwpc-flex-column">
+                                                    <span class="lwpc-text-bold">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span style="margin-top: 10px">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <div class="lwpc-flex">
+                                                        <span>
+                                                            <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                        </span>
+                                                        <span>
+                                                            <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                        </span>
+                                                    </div>
+                                                    <span>
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span>
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="lwpc-grid-item">
+                                                <div class="lwpc-flex-column">
+                                                    <span class="lwpc-text-bold">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span>
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span style="margin-top: 10px" class="lwpc-text-bold">
+                                                        <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                    </span>
+                                                    <span>-</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="lwpc-card-footer">
+                                        <div class="lwpc-flex lwpc-justify-content-space-between">
+                                            <div class="lwpc-flex">
+                                                <span class="lwpc-mr-100">
+                                                    <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                </span>
+                                                <span class="lwpc-mr-40">
+                                                    <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                </span>
+                                                <span class="lwpc-mr-10">
+                                                    <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                </span>
+                                                <div type="text" class="lwpc-skeleton lwpc-skeleton-input"></div>
+                                                <button class="lwpc-skeleton lwpc-skeleton-button"></button>
+                                            </div>
+                                            <div class="lwpc-flex">
+                                                <span class="lwpc-text-bold lwpc-mr-10">
+                                                    <div class="lwpc-skeleton lwpc-skeleton-text"></div>
+                                                </span>
+                                                <button class="lwpc-skeleton lwpc-skeleton-button"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
                     </table>
                 </div>
                 <!-- Table -->
@@ -67,9 +458,9 @@ class Reports {
 
 	private function panel_editor() {
 		?>
-        <div class="lwpc-overlay">
-            <div class="lwpc-loading loading-position"></div>
-        </div>
+        <!--        <div class="lwpc-overlay">-->
+        <!--            <div class="lwpc-loading loading-position"></div>-->
+        <!--        </div>-->
         <div class="column col-6 col-12"
              style="top: 30px;position: fixed;right: 0;z-index:-1;height: 97.5%;width: 400px;display:none;">
             <div id="report_editor" class="panel" style="height: 100%;background: #fff;margin-right: -10px;">

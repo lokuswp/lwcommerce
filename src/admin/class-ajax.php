@@ -143,6 +143,9 @@ class AJAX {
 		// Request
 		$request = $_GET;
 
+		$date_filter  = $request['dateFilter'];
+		$order_filter = $request['orderFilter'];
+
 		// Columns
 		$columns = array(
 			0  => 'transaction_id',
@@ -177,17 +180,59 @@ class AJAX {
 
 			foreach ( $columns as $column ) {
 
-				$sql_where .= $column . " = '" . sanitize_text_field( $request['search']['value'] ) . "' OR ";
+				$sql_where .= $column . " LIKE '%" . sanitize_text_field( $request['search']['value'] ) . "%' OR ";
 			}
 
 			$sql_where = substr( $sql_where, 0, - 3 );
+		}
+
+		if ( $order_filter ) {
+			$sql_where .= ( ! empty( $sql_where ) ) ? " AND " : "HAVING ";
+
+			foreach ( $columns as $column ) {
+
+				$sql_where .= $column . " LIKE '%" . sanitize_text_field( $order_filter ) . "%' OR ";
+			}
+
+			$sql_where = substr( $sql_where, 0, - 3 );
+			if ( $order_filter === 'all' ) {
+				$sql_where = '';
+			}
+		}
+
+		// Date filter
+		if ( $date_filter ) {
+			$sql_where .= ( ! empty( $sql_where ) ) ? " AND " : "HAVING ";
+
+			$range = explode( '/', $date_filter );
+
+			if ( count( $range ) === 2 ) {
+				$sql_where .= "DATE(created_at) BETWEEN '" . sanitize_text_field( $range[0] ) . "' AND '" . sanitize_text_field( $range[1] ) . "' ";
+			}
+
+			switch ( $date_filter ) {
+				case 'all':
+					$sql_where = "";
+					break;
+				case 'today':
+					$sql_where .= "DATE(created_at) = CURDATE() ";
+					break;
+				case 'yesterday':
+					$sql_where .= "DATE(created_at) = SUBDATE(CURDATE(), 1) ";
+					break;
+				case 'last 7 day':
+					$sql_where .= "DATE(created_at) >= NOW() + INTERVAL -7 DAY AND DATE(created_at) <  NOW() + INTERVAL  0 DAY ";
+					break;
+				case 'this month':
+					$sql_where .= "MONTH(created_at) = MONTH(NOW()) ";
+					break;
+			}
 		}
 
 		// Total Records in the datatable
 		$total_table_records   = "SELECT count(*) as count FROM {$table_transaction}";
 		$total_fetched_records = $wpdb->get_results( $total_table_records, OBJECT );
 		$total_records         = $total_fetched_records[0]->count;
-
 
 		// Total Records Search
 		$total_table_records_search   = "SELECT count(*) as count FROM $table_transaction $sql_where";
@@ -251,7 +296,7 @@ class AJAX {
 				"draw"            => intval( $request['draw'] ),
 				"recordsTotal"    => intval( $total_records ),
 				"recordsFiltered" => intval( $total_records_search ),
-				"data"            => $data
+				"data"            => $data,
 			);
 		} else {
 			$json_data = array(
