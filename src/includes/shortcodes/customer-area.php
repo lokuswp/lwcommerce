@@ -22,7 +22,7 @@ class Etalase
 
         ob_start();
 
-        require_once LWPC_PATH . 'src/templates/product/etalase.php';
+        require_once LWPC_PATH . 'src/templates/customer/area.php';
 
         $render = ob_get_clean();
 

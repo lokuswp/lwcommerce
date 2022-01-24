@@ -4,10 +4,11 @@
   "dashboardUrl": "http://lokuswp.local/wp-admin",
   "domain": "lokuswp.local",
   "users": {
-      "admin": {
-          "username": "lokuswp",
-          "email": "test@example.org",
-          "pw": "password"
-      }
-  }
+    "admin": {
+      "username": "lokuswp",
+      "email": "test@example.org",
+      "pw": "password"
+    }
+  },
+  "video": true
 }
