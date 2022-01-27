@@ -27,7 +27,7 @@ if (!defined('WPTEST')) {
  * Rename this for your plugin and update it as you release new versions.
  * Define Constant
  */
-defined('LWPC_BACKBONE_REQUIRE') or define('LWPC_BACKBONE_REQUIRE', '0.1.0');
+defined('LOKUSWP_VERSION') or define('LOKUSWP_VERSION', '0.1.0');
 defined('LWPC_VERSION') or define('LWPC_VERSION', '0.1.0');
 defined('LWPC_BASE') or define('LWPC_BASE', plugin_basename(__FILE__));
 defined('LWPC_PATH') or define('LWPC_PATH', plugin_dir_path(__FILE__));
@@ -54,7 +54,7 @@ function lwpcommerce_dependency()
 
 
   $backbone = get_plugin_data(dirname(dirname(__FILE__)) . '/lokuswp/lokuswp.php');
-  if (!version_compare($backbone['Version'], LWPC_BACKBONE_REQUIRE, '>=')) {
+  if (!version_compare($backbone['Version'], LOKUSWP_VERSION, '>=')) {
     // add_action('admin_notices', 'lsdd_midtrans_fail_version');
     $backbone_version = false;
   }

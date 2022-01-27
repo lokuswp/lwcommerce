@@ -2,6 +2,9 @@
 
 namespace LokusWP\Commerce;
 
+use LokusWP\Admin\Tabs;
+
+
 if ( ! defined( 'WPTEST' ) ) {
 	defined( 'ABSPATH' ) or die( "Direct access to files is prohibited" );
 }
@@ -42,7 +45,7 @@ class Admin {
 	public static function register( array $plugin ) {
 		$admin = new self( $plugin['slug'], $plugin['name'], $plugin['version'] );
 
-		add_action( 'admin_init', [ $admin, 'admin_init' ] );
+		add_action( 'admin_init', [ $admin, 'admin_init' ], 1);
 		add_action( 'admin_menu', [ $admin, 'register_admin_menu' ] );
 		add_action( 'admin_enqueue_scripts', [ $admin, 'enqueue_styles' ] );
 		add_action( 'admin_enqueue_scripts', [ $admin, 'enqueue_scripts' ] );
@@ -59,7 +62,7 @@ class Admin {
 		$this->version = $version;
 
 		// Load Required File
-		require_once LWPC_PATH . 'src/admin/settings/functions-tabs.php';
+
 		require_once LWPC_PATH . 'src/admin/class-ajax.php';
 		// require_once LWPC_PATH . 'admin/class-autosetup.php';
 		// require_once LWPC_PATH . 'admin/class-dashboard.php';
@@ -83,6 +86,17 @@ class Admin {
 			update_option( 'lwpcommerce_mail_error', false );
 			header( "Refresh:0; url=" . get_admin_url() );
 		}
+
+		Tabs::add('lwpcommerce', 'settings', __('Settings', 'lwpcommerce'), function () {
+			require_once 'settings/tabs/settings.php';
+		});
+		
+		Tabs::add('lwpcommerce', 'shipping', __('Shipping', 'lwpcommerce'), function () {
+			require_once 'settings/tabs/shipping.php';
+		});
+		
+	
+
 	}
 
 	/**
@@ -233,8 +247,8 @@ class Admin {
 
 		add_submenu_page(
 			$this->slug,
-			__( 'Shippings', 'lwpcommerce' ),
-			__( 'Shippings', 'lwpcommerce' ),
+			__( 'Shipping', 'lwpcommerce' ),
+			__( 'Shipping', 'lwpcommerce' ),
 			'manage_options',
 			'admin.php?page=lwpcommerce&tab=shipping',
 			'',
