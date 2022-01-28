@@ -10,8 +10,6 @@ if (!defined('WPTEST')) {
  */
 spl_autoload_register(function ($classname) {
 
-	//	var_dump( $classname );
-
 	$class     = str_replace('\\', DIRECTORY_SEPARATOR, strtolower($classname));
 	$classpath = LWPC_PATH . 'src/includes' . DIRECTORY_SEPARATOR . $class . '.php';
 	$classpath = str_replace("lokuswp/commerce/", "", $classpath);
@@ -19,7 +17,6 @@ spl_autoload_register(function ($classname) {
 	$classpath = str_replace("_", "-", $classpath); // fix path for windows
 
 	// WordPress
-
 	if (file_exists($classpath)) {
 		include_once $classpath;
 	}
