@@ -43,7 +43,7 @@ function lwpc_get_stock_html() {
 
 function lwpc_add_to_cart_html() {
 	$product_id = get_the_ID();
-	require LWPC_PATH . 'src/templates/atomic/molecule/add-to-cart.php';
+	require LWPC_PATH . 'src/templates/component/add-to-cart.php';
 }
 
 /**

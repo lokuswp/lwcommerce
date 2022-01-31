@@ -4,6 +4,53 @@ if (!defined('WPTEST')) {
 }
 
 /**
+ * Onboarding
+ * 
+ * Checking LokusWP Backbone
+ */
+/**
+ * Dependency Backbone Checking
+ * @return void
+ */
+// function lwpcommerce_dependency()
+// {
+//   $backbone_active = true;
+//   $backbone_version = true;
+
+//   // Checking Backbone Active
+//   if (is_admin() && current_user_can('activate_plugins') && !is_plugin_active('lokuswp/lokuswp.php')) {
+//     add_action('admin_notices', function () {
+//       echo '<div class="error"><p>' . __('LokusWP required. please activate the backbone plugin first.', 'lwpcommerce') . '</p></div>';
+//     });
+//     $backbone_active = false;
+//   }
+
+
+//   $backbone = get_plugin_data(dirname(dirname(__FILE__)) . '/lokuswp/lokuswp.php');
+//   if (!version_compare($backbone['Version'], LOKUSWP_VERSION, '>=')) {
+//     // add_action('admin_notices', 'lsdd_midtrans_fail_version');
+//     $backbone_version = false;
+//   }
+
+
+//   // Deactive Extension
+//   if (!$backbone_version || !$backbone_active) {
+//     deactivate_plugins(plugin_basename(__FILE__));
+
+//     if (isset($_GET['activate'])) {
+//       unset($_GET['activate']);
+//     }
+//   }
+// }
+// add_action('admin_init', 'lwpcommerce_dependency');
+
+// Backbone Active -> Run LWPCommerce
+// $backbone = (array) apply_filters('active_plugins', get_option('active_plugins'));
+// if (in_array('lokuswp/lokuswp.php', $backbone)) {
+// }
+
+
+/**
  * Registers the autoloader for classes
  *
  * @author Michiel Tramper - https://www.makeitworkpress.com
@@ -38,3 +85,22 @@ add_action("lokuswp/transaction/tab/header", function () {
 add_action("lokuswp/transaction/tab/content", function () {
 	// require_once LWPC_PATH . 'src/templates/transaction/shipping.php';
 });
+
+
+
+/**
+ * Processing Cart Data from Cart Cookie
+ * Rendered based on Ecommerce Plugin for Respect Another Plugin
+ */
+function lwpc_cart_processing($cart_item, $post_id)
+{
+
+  if (get_post_type($post_id) == 'product') {
+    $cart_item['price']     = abs(lwpc_get_price($post_id));
+    $cart_item['min']       = 1;
+    $cart_item['max']       = -1;
+  }
+
+  return $cart_item;
+}
+add_filter("lokuswp/cart/cookie/item", "lwpc_cart_processing", 10, 2);

@@ -2,14 +2,14 @@
 
 namespace LokusWP\Commerce\Shortcodes;
 
-class Etalase
+class Storefront
 {
     /**
      * Register Transaction Shortcode
      */
     public function __construct()
     {
-        add_shortcode('lwpcommerce_etalase', [$this, 'render']);
+        add_shortcode('lwpcommerce_storefront', [$this, 'render']);
     }
 
     public function render($atts)
@@ -22,7 +22,7 @@ class Etalase
 
         ob_start();
 
-        require_once LWPC_PATH . 'src/templates/product/etalase.php';
+        require_once LWPC_PATH . 'src/templates/presentation/product/storefront.php';
 
         $render = ob_get_clean();
 

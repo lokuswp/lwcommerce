@@ -10,7 +10,7 @@ class Plugin
 {
 	public function __construct()
 	{
-		$shortcode = new Shortcodes\Etalase;
+		$shortcode = new Shortcodes\Storefront;
 		$posttype  = new Modules\Product\Post_Type_Product;
 		$posttype  = new Modules\Product\Metabox_Product_Data;
 

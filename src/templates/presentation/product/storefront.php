@@ -8,7 +8,7 @@
 ?>
 
 <section id="lwpc-etalase" class="lwp-mobile-width">
-    <?php require_once LWPC_PATH . 'src/templates/atomic/molecule/navigation.php'; ?>
+    <?php require_once LWPC_PATH . 'src/templates/component/navigation.php'; ?>
 
     <div class="lwpc-listing row">
 
