@@ -86,7 +86,7 @@
                     <div class="container">
                         <div class="lwpc-card-header lwpc-card-shadow">
                         ${checkDate(data.created_at) ? `<span class="lwpc-badge lwpc-badge-seccondary">${convertDate(data.created_at)}</span>` : '<button class="lwpc-btn-rounded lwpc-mr-10">Pesanan Baru</button>'}
-                            <span class="lwpc-text-red lwpc-mr-10">Ini Invoice</span>
+                            <span class="lwpc-text-red lwpc-mr-10">${data.invoice}</span>
                             <span class="lwpc-text-bold lwpc-mr-10">${data.name.escapeHtml()}</span>
                             <span style="
                                          ${data.status_processing === 'unprocessed' ? `color: #38c;` : ''}
@@ -159,7 +159,14 @@
                             <div class="lwpc-flex lwpc-justify-content-space-between">
                                 <div>
                                     <span class="lwpc-mr-100">Detail Pesanan</span>
-                                    <span class="lwpc-mr-40">Cetak Label</span>
+                                    <button class="btn lwpc-mr-40 lwpc-btn-print-invoice" data-id="${data.transaction_id}">
+                                        <div class="lwpc-flex">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="lwpc-search-icon lwpc-mr-10" viewBox="0 0 20 20" fill="currentColor">
+                                              <path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clip-rule="evenodd" />
+                                            </svg>
+                                            <span>Print Invoice</span>
+                                        </div>
+                                    </button>
                                     <span class="lwpc-mr-10">Note</span>
                                     <input type="text" class="lwpc-report-input">
                                     <button class="lwpc-btn-rounded-secondary" style="">Tambah Note</button>
@@ -327,5 +334,21 @@
             $('.lwpc-loading-filter').show();
         });
 
+        // print invoice
+        $(document).on('click', '.lwpc-btn-print-invoice', function () {
+            const transaction_id = $(this).attr('data-id');
+            $.ajax({
+                url: lwpc_orders.ajax_url,
+                method: 'POST',
+                data: {
+                    action: 'lwpc_print_invoice',
+                    security: lwpc_orders.ajax_nonce,
+                    transaction_id: transaction_id,
+                },
+                success: data => {
+                    console.log(data);
+                }
+            })
+        })
     });
 })(jQuery)
