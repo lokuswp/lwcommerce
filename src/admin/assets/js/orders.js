@@ -334,9 +334,16 @@
             $('.lwpc-loading-filter').show();
         });
 
+        const date = new Date(),
+            dateNow = date.toISOString().split('T')[0].replaceAll('-', '');
+
         // print invoice
         $(document).on('click', '.lwpc-btn-print-invoice', function () {
             const transaction_id = $(this).attr('data-id');
+            const that = $(this);
+
+            // Add loading to button
+            that.addClass('loading');
             $.ajax({
                 url: lwpc_orders.ajax_url,
                 method: 'POST',
@@ -346,8 +353,16 @@
                     transaction_id: transaction_id,
                 },
                 success: data => {
-                    console.log(data);
+                    that.removeClass('loading');
+
+                    // Make <a> element for download invoice.pdf using tag download
+                    let urllink = document.createElement("a");
+                    urllink.download = `invoice-${dateNow}-${data.id}.pdf`;
+                    urllink.href = data.uri;
+                    urllink.click();
                 }
+            }).fail(function () {
+                alert('Please check your internet connection');
             })
         })
     });
