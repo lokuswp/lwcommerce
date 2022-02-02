@@ -101,7 +101,32 @@
                                 ${data.status_processing === 'shipping' ? 'Shipping' : ''}
                                 ${data.status_processing === 'oos' ? 'Out of Stock' : ''}
                             </span>
-                             ${data.status === 'unpaid' ? `<span style="color: #fd6; font-weight: bold; float: right;">Awaiting Payment</span>` : `<span style="color: #085; font-weight: bold; float: right; padding: 0 .4rem 0 .4rem">Paid</span>`}
+                             ${data.status === 'unpaid' ? `
+                                <span style="color: #fd6; font-weight: bold; float: right;" class="lwpc-flex lwpc-hover noselect payment-status">
+                                    Awaiting Payment
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="lwpc-search-icon" viewBox="0 0 20 20" fill="currentColor">
+                                      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="lwpc-search-icon lwpc-hidden" viewBox="0 0 20 20" fill="currentColor">
+                                      <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                ` : `
+                                <span style="color: #085; font-weight: bold; float: right; padding: 0 .4rem 0 .4rem" class="lwpc-flex lwpc-hover noselect payment-status">
+                                    Paid
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="lwpc-search-icon" viewBox="0 0 20 20" fill="currentColor">
+                                      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="lwpc-search-icon lwpc-hidden" viewBox="0 0 20 20" fill="currentColor">
+                                      <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </span>`}
+                             <div class="lwpc-dropdown-content dropdown-payment-status" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                                <div class="py-1" role="none">
+                                    <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                                    <a href="javascript:void(0)" class="lwpc-dropdown-item change-payment-status" role="menuitem" tabindex="-1" data-id="${data.transaction_id}" data-status="${data.status === 'unpaid' ? 'Paid' : 'unpaid'}">${data.status === 'unpaid' ? 'Paid' : 'unpaid'}</a>
+                                </div>
+                            </div>
                         </div>
                         <div class="lwpc-card-body lwpc-card-shadow">
                             <div class="lwpc-grid lwpc-m-20">
@@ -218,6 +243,31 @@
             $('.lwpc-loading-filter').hide();
             $('.lwpc-overlay-table').hide();
         });
+
+        // Make payment complete
+        $(document).on('click', '.payment-status', function () {
+            $(this).siblings('.dropdown-payment-status').slideToggle('fast');
+            $(this).children().toggle();
+        });
+
+        $(document).on('click', '.change-payment-status', function () {
+            $(this).addClass('loading');
+            $.ajax({
+                url: lwpc_orders.ajax_url,
+                method: 'POST',
+                data: {
+                    action: 'lwpc_change_payment_status',
+                    security: lwpc_orders.ajax_nonce,
+                    transaction_id: $(this).attr('data-id'),
+                    status: $(this).attr('data-status'),
+                },
+                success: data => {
+                    if (data.success) {
+                        tableOrders.ajax.reload(null, false);
+                    }
+                }
+            })
+        })
 
         $(document).on('click', '.more-product', function (e) {
             $(this).parent().parent().find('show-less').removeClass('lwpc-hidden');
@@ -344,6 +394,7 @@
 
             // Add loading to button
             that.addClass('loading');
+            that.attr('disabled', true);
             $.ajax({
                 url: lwpc_orders.ajax_url,
                 method: 'POST',
@@ -354,6 +405,7 @@
                 },
                 success: data => {
                     that.removeClass('loading');
+                    that.attr('disabled', false);
 
                     // Make <a> element for download invoice.pdf using tag download
                     let urllink = document.createElement("a");

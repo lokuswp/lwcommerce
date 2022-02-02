@@ -10,6 +10,7 @@ class AJAX {
 	public function __construct() {
 		add_action( 'wp_ajax_lwpc_store_settings_save', [ $this, 'store_settings_save' ] );
 		add_action( 'wp_ajax_lwpc_shipping_package_status', [ $this, 'shipping_package_status' ] );
+		add_action( 'wp_ajax_lwpc_change_payment_status', [ $this, 'change_payment_status' ] );
 
 		add_action( 'wp_ajax_lwpc_shipping_settings_save', [ $this, 'shipping_settings_save' ] );
 
@@ -566,6 +567,23 @@ class AJAX {
 		}
 
 		return $results;
+	}
+
+	public function change_payment_status() {
+		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+			wp_send_json_error( 'Invalid security token sent.' );
+		}
+
+		$transaction_id = sanitize_text_field( $_POST['transaction_id'] );
+		$status         = sanitize_text_field( $_POST['status'] );
+
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'lokuswp_transactions';
+		$sql        = "UPDATE $table_name SET status = '$status' WHERE transaction_id = $transaction_id";
+
+		$wpdb->query( $sql );
+
+		return wp_send_json_success( 'success' );
 	}
 }
 
