@@ -2,10 +2,15 @@
 
 namespace LokusWP\Commerce\Admin;
 
+require_once LWPC_PRO_PATH . 'src/includes/libraries/php/html2pdf/html2pdf.class.php';
+
+use HTML2PDF;
+
 class AJAX {
 	public function __construct() {
 		add_action( 'wp_ajax_lwpc_store_settings_save', [ $this, 'store_settings_save' ] );
 		add_action( 'wp_ajax_lwpc_shipping_package_status', [ $this, 'shipping_package_status' ] );
+		add_action( 'wp_ajax_lwpc_change_payment_status', [ $this, 'change_payment_status' ] );
 
 		add_action( 'wp_ajax_lwpc_shipping_settings_save', [ $this, 'shipping_settings_save' ] );
 
@@ -13,6 +18,7 @@ class AJAX {
 		add_action( 'wp_ajax_lwpc_get_orders', [ $this, 'get_orders' ] );
 		add_action( 'wp_ajax_lwpc_process_order', [ $this, 'process_order' ] );
 		add_action( 'wp_ajax_lwpc_update_resi', [ $this, 'update_resi' ] );
+		add_action( 'wp_ajax_lwpc_print_invoice', [ $this, 'print_invoice' ] );
 
 		// Statistic
 		add_action( 'wp_ajax_lwpc_orders_chart', [ $this, 'orders_chart' ] );
@@ -242,6 +248,7 @@ class AJAX {
 						MAX(CASE WHEN ttm.meta_key = 'billing_name' THEN ttm.meta_value ELSE 0 END) name,
 						MAX(CASE WHEN ttm.meta_key = 'billing_phone' THEN ttm.meta_value ELSE 0 END) phone,
 						MAX(CASE WHEN ttm.meta_key = 'billing_email' THEN ttm.meta_value ELSE 0 END) email,
+						MAX(CASE WHEN ttm.meta_key = 'billing_invoice' THEN ttm.meta_value ELSE 0 END) invoice,
 						MAX(CASE WHEN tlcom.meta_key = 'status_processing' THEN tlcom.meta_value ELSE 0 END) status_processing,
 						MAX(CASE WHEN tlcom.meta_key = 'no_resi' THEN tlcom.meta_value ELSE 0 END) no_resi,
 						TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when tlcom.meta_key = 'shipping' then tlcom.meta_value else 0 end),';',2),':',-1)) AS courier,
@@ -484,6 +491,99 @@ class AJAX {
 		}
 
 		return $query;
+	}
+
+	public function print_invoice() {
+		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+			wp_send_json_error( 'Invalid security token sent.' );
+		}
+
+		$transaction_id = sanitize_text_field( $_POST['transaction_id'] );
+
+		// Store settings
+		$name    = lwpc_get_settings( 'store', 'name' );
+		$logo    = lwpc_get_settings( 'store', 'logo', 'esc_url', 'https://lokuswp.id/wp-content/uploads/2021/12/lokago.png' );
+		$address = lwpc_get_settings( 'store', 'address' );
+
+		// Customer billing
+		$billing_name    = lwp_get_transaction_meta( $transaction_id, 'billing_name', true );
+		$billing_phone   = lwp_get_transaction_meta( $transaction_id, 'billing_phone', true );
+		$billing_email   = lwp_get_transaction_meta( $transaction_id, 'billing_email', true );
+		$billing_invoice = lwp_get_transaction_meta( $transaction_id, 'billing_invoice', true );
+		$shipping_cost   = lwp_get_transaction_meta( $transaction_id, 'shipping_cost', true );
+
+		// Customer shipping
+		$shipping_name = lwpc_get_order_meta( $transaction_id, 'shipping' );
+
+		// Get product data
+		$products = $this->get_products( $transaction_id );
+
+		// Get transaction data
+		$transaction_data = $this->get_transaction_data( $transaction_id );
+
+		// Template Invoice
+		ob_start();
+		require_once LWPC_PRO_PATH . 'src/public/templates/invoice/invoice.php';
+		$html = ob_get_contents();
+		ob_end_clean();
+		$content = $html;
+
+		// Make template to PDF
+		try {
+			$pdf = new HTML2PDF( 'p', 'A4', 'en' );
+			$pdf->setDefaultFont( 'Helvetica' );
+			$pdf->writeHTML( $content );
+			$pdf->Output( LWPC_STORAGE . '/invoice.pdf', 'F' );
+
+			$data = [ 'uri' => content_url( '/uploads/lwpcommerce/invoice.pdf' ), 'id' => $transaction_id ];
+
+			return wp_send_json( $data );
+		} catch ( \HTML2PDF_exception $exception ) {
+			return wp_send_json( $exception );
+		}
+	}
+
+	private function get_transaction_data( $transaction_id ) {
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'lokuswp_transactions';
+		$sql        = "SELECT payment_id, total, status, currency, created_at FROM $table_name WHERE transaction_id = $transaction_id";
+
+		return $wpdb->get_row( $sql );
+	}
+
+	private function get_products( $transaction_id ) {
+		global $wpdb;
+		$transaction_table = $wpdb->prefix . 'lokuswp_transactions';
+		$cart_table        = $wpdb->prefix . 'lokuswp_carts';
+		$post_table        = $wpdb->prefix . 'posts';
+
+		$sql = "SELECT c.post_id, p.post_title FROM $transaction_table AS t INNER JOIN $cart_table AS c ON t.cart_hash = c.cart_hash INNER JOIN $post_table AS p ON c.post_id = p.ID WHERE t.transaction_id = $transaction_id AND p.post_type = 'product'";
+
+		$results = $wpdb->get_results( $sql );
+
+		foreach ( $results as $key => $value ) {
+			$results[ $key ]->price_normal   = get_post_meta( $value->post_id, '_price_normal', true );
+			$results[ $key ]->price_discount = get_post_meta( $value->post_id, '_price_discount', true );
+		}
+
+		return $results;
+	}
+
+	public function change_payment_status() {
+		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+			wp_send_json_error( 'Invalid security token sent.' );
+		}
+
+		$transaction_id = sanitize_text_field( $_POST['transaction_id'] );
+		$status         = sanitize_text_field( $_POST['status'] );
+
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'lokuswp_transactions';
+		$sql        = "UPDATE $table_name SET status = '$status' WHERE transaction_id = $transaction_id";
+
+		$wpdb->query( $sql );
+
+		return wp_send_json_success( 'success' );
 	}
 }
 

@@ -25,8 +25,9 @@ class Shipping_Processing {
 			return 'shipping not found';
 		}
 
-		$total                = $transaction['total'] + $cost['cost'];
-		$transaction['total'] = $total;
+		$total                        = $transaction['total'] + $cost['cost'];
+		$transaction['total']         = $total;
+		$transaction['shipping_cost'] = $cost['cost'];
 
 		return $transaction;
 	}
