@@ -3,8 +3,10 @@
 namespace LokusWP\Commerce\Admin;
 
 require_once LWPC_PRO_PATH . 'src/includes/libraries/php/html2pdf/html2pdf.class.php';
+require_once LOKUSWP_PATH . 'src/includes/modules/notification/methods/class-notification-whatsapp.php';
 
 use HTML2PDF;
+use Whatsapp_SenderPad;
 
 class AJAX {
 	public function __construct() {
@@ -19,6 +21,7 @@ class AJAX {
 		add_action( 'wp_ajax_lwpc_process_order', [ $this, 'process_order' ] );
 		add_action( 'wp_ajax_lwpc_update_resi', [ $this, 'update_resi' ] );
 		add_action( 'wp_ajax_lwpc_print_invoice', [ $this, 'print_invoice' ] );
+		add_action( 'wp_ajax_lwpc_follow_up', [ $this, 'follow_up' ] );
 
 		// Statistic
 		add_action( 'wp_ajax_lwpc_orders_chart', [ $this, 'orders_chart' ] );
@@ -584,6 +587,45 @@ class AJAX {
 		$wpdb->query( $sql );
 
 		return wp_send_json_success( 'success' );
+	}
+
+	public function follow_up() {
+		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+			wp_send_json_error( 'Invalid security token sent.' );
+		}
+
+		$settings          = lwp_get_option( 'lwp_whatsapp_senderpad' );
+		$whatsapp_settings = $settings['settings'] ?? [];
+		$apikey            = $whatsapp_settings['apikey'] ?? '';
+
+		if ( empty( $apikey ) ) {
+			wp_send_json_error( 'Please set API Key in settings' );
+		}
+
+		$transaction_id     = sanitize_text_field( $_POST['transaction_id'] );
+		$whatsapp_senderpad = new Whatsapp_SenderPad();
+
+		// Store settings
+		$name     = lwpc_get_settings( 'store', 'name' );
+		$whatsapp = lwpc_get_settings( 'store', 'whatsapp' );
+
+		// Customer billing
+		$billing_name  = lwp_get_transaction_meta( $transaction_id, 'billing_name', true );
+		$billing_phone = lwp_get_transaction_meta( $transaction_id, 'billing_phone', true );
+
+		// Get transaction data
+		$transaction_data = $this->get_transaction_data( $transaction_id );
+
+		$followup_message = "Kepada YTH Bpk/Ibu $billing_name,\n\nTerima kasih telah melakukan pembelian di Toko Kami.\n\nSilahkan melakukan pembayaran sebesar Rp. $transaction_data->total dengan mengirimkan bukti pembayaran ke nomor $whatsapp.\n\nTerima kasih.\n\nSalam,\n\n$name";
+
+		$obj = [
+			'receiver' => $billing_phone,
+			'message'  => $followup_message
+		];
+
+		$status = $whatsapp_senderpad->send( $obj );
+
+		$status ? wp_send_json_success( 'Berhasil mengirim followup' ) : wp_send_json_error( 'Gagal mengirim followup. Silahkan cek log' );
 	}
 }
 

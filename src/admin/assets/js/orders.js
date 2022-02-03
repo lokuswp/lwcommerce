@@ -427,5 +427,30 @@
                 alert('Please check your internet connection');
             })
         })
+
+        // followup wwhatsaap
+        $(document).on('click', '.lwpc-btn-follow-up', function () {
+            const that = $(this);
+            const transaction_id = $(this).attr('data-id');
+            that.addClass('loading');
+            that.attr('disabled', true);
+
+            $.ajax({
+                url: lwpc_orders.ajax_url,
+                method: 'POST',
+                data: {
+                    action: 'lwpc_follow_up',
+                    security: lwpc_orders.ajax_nonce,
+                    transaction_id: transaction_id,
+                },
+                success: data => {
+                    that.removeClass('loading');
+                    that.attr('disabled', false);
+                    alert(data.data);
+                }
+            }).fail(function () {
+                alert('Please check your internet connection');
+            })
+        });
     });
 })(jQuery)
