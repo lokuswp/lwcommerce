@@ -581,10 +581,31 @@ class AJAX {
 		$status         = sanitize_text_field( $_POST['status'] );
 
 		global $wpdb;
-		$table_name = $wpdb->prefix . 'lokuswp_transactions';
-		$sql        = "UPDATE $table_name SET status = '$status' WHERE transaction_id = $transaction_id";
+		$table_transaction = $wpdb->prefix . 'lokuswp_transactions';
+		$sql               = "UPDATE $table_transaction SET status = '$status' WHERE transaction_id = $transaction_id";
 
-		$wpdb->query( $sql );
+		$result = $wpdb->query( $sql );
+
+		if ( $status === 'Paid' && $result ) {
+			$table_carts = $wpdb->prefix . 'lokuswp_carts';
+
+			$data = $wpdb->get_results( "SELECT c.post_id FROM $table_transaction as t INNER JOIN $table_carts as c ON t.cart_hash = c.cart_hash WHERE t.transaction_id = $transaction_id" );
+
+			foreach ( $data as $value ) {
+				$is_growth_price = get_post_meta( $value->post_id, '_is_growth_price', true );
+
+				if ( $is_growth_price ) {
+					$price        = get_post_meta( $value->post_id, '_price_normal', true );
+					$update_price = $price + 100;
+					update_post_meta( $value->post_id, '_price_normal', $update_price );
+
+					// initialize pusher
+					$pusher = new \Pusher\Pusher( "cabbb3646a66ad82ee3d", "d26c814a3cb6ea34a67c", "1269487", array( 'cluster' => 'ap1' ) );
+
+					$pusher->trigger( "growth-pirce_{$value->post_id}", 'add-price', array( 'price' => $update_price ) );
+				}
+			}
+		}
 
 		return wp_send_json_success( 'success' );
 	}

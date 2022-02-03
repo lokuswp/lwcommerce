@@ -273,6 +273,7 @@
                 },
                 success: data => {
                     if (data.success) {
+                        console.log(data)
                         tableOrders.ajax.reload(null, false);
                     }
                 }
