@@ -86,7 +86,7 @@
                     <div class="container">
                         <div class="lwpc-card-header lwpc-card-shadow">
                         ${checkDate(data.created_at) ? `<span class="lwpc-badge lwpc-badge-seccondary">${convertDate(data.created_at)}</span>` : '<button class="lwpc-btn-rounded lwpc-mr-10">Pesanan Baru</button>'}
-                            <span class="lwpc-text-red lwpc-mr-10">Ini Invoice</span>
+                            <span class="lwpc-text-red lwpc-mr-10">${data.invoice}</span>
                             <span class="lwpc-text-bold lwpc-mr-10">${data.name.escapeHtml()}</span>
                             <span style="
                                          ${data.status_processing === 'unprocessed' ? `color: #38c;` : ''}
@@ -101,7 +101,32 @@
                                 ${data.status_processing === 'shipping' ? 'Shipping' : ''}
                                 ${data.status_processing === 'oos' ? 'Out of Stock' : ''}
                             </span>
-                             ${data.status === 'unpaid' ? `<span style="color: #fd6; font-weight: bold; float: right;">Awaiting Payment</span>` : `<span style="color: #085; font-weight: bold; float: right; padding: 0 .4rem 0 .4rem">Paid</span>`}
+                             ${data.status === 'unpaid' ? `
+                                <span style="color: #fd6; font-weight: bold; float: right;" class="lwpc-flex lwpc-hover noselect payment-status">
+                                    Awaiting Payment
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="lwpc-search-icon" viewBox="0 0 20 20" fill="currentColor">
+                                      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="lwpc-search-icon lwpc-hidden" viewBox="0 0 20 20" fill="currentColor">
+                                      <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                                ` : `
+                                <span style="color: #085; font-weight: bold; float: right; padding: 0 .4rem 0 .4rem" class="lwpc-flex lwpc-hover noselect payment-status">
+                                    Paid
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="lwpc-search-icon" viewBox="0 0 20 20" fill="currentColor">
+                                      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="lwpc-search-icon lwpc-hidden" viewBox="0 0 20 20" fill="currentColor">
+                                      <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </span>`}
+                             <div class="lwpc-dropdown-content dropdown-payment-status" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                                <div class="py-1" role="none">
+                                    <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                                    <a href="javascript:void(0)" class="lwpc-dropdown-item change-payment-status" role="menuitem" tabindex="-1" data-id="${data.transaction_id}" data-status="${data.status === 'unpaid' ? 'Paid' : 'unpaid'}">${data.status === 'unpaid' ? 'Paid' : 'unpaid'}</a>
+                                </div>
+                            </div>
                         </div>
                         <div class="lwpc-card-body lwpc-card-shadow">
                             <div class="lwpc-grid lwpc-m-20">
@@ -159,7 +184,14 @@
                             <div class="lwpc-flex lwpc-justify-content-space-between">
                                 <div>
                                     <span class="lwpc-mr-100">Detail Pesanan</span>
-                                    <span class="lwpc-mr-40">Cetak Label</span>
+                                    <button class="btn lwpc-mr-40 lwpc-btn-print-invoice" data-id="${data.transaction_id}">
+                                        <div class="lwpc-flex">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="lwpc-search-icon lwpc-mr-10" viewBox="0 0 20 20" fill="currentColor">
+                                              <path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clip-rule="evenodd" />
+                                            </svg>
+                                            <span>Print Invoice</span>
+                                        </div>
+                                    </button>
                                     <span class="lwpc-mr-10">Note</span>
                                     <input type="text" class="lwpc-report-input">
                                     <button class="lwpc-btn-rounded-secondary" style="">Tambah Note</button>
@@ -211,6 +243,31 @@
             $('.lwpc-loading-filter').hide();
             $('.lwpc-overlay-table').hide();
         });
+
+        // Make payment complete
+        $(document).on('click', '.payment-status', function () {
+            $(this).siblings('.dropdown-payment-status').slideToggle('fast');
+            $(this).children().toggle();
+        });
+
+        $(document).on('click', '.change-payment-status', function () {
+            $(this).addClass('loading');
+            $.ajax({
+                url: lwpc_orders.ajax_url,
+                method: 'POST',
+                data: {
+                    action: 'lwpc_change_payment_status',
+                    security: lwpc_orders.ajax_nonce,
+                    transaction_id: $(this).attr('data-id'),
+                    status: $(this).attr('data-status'),
+                },
+                success: data => {
+                    if (data.success) {
+                        tableOrders.ajax.reload(null, false);
+                    }
+                }
+            })
+        })
 
         $(document).on('click', '.more-product', function (e) {
             $(this).parent().parent().find('show-less').removeClass('lwpc-hidden');
@@ -327,5 +384,38 @@
             $('.lwpc-loading-filter').show();
         });
 
+        const date = new Date(),
+            dateNow = date.toISOString().split('T')[0].replaceAll('-', '');
+
+        // print invoice
+        $(document).on('click', '.lwpc-btn-print-invoice', function () {
+            const transaction_id = $(this).attr('data-id');
+            const that = $(this);
+
+            // Add loading to button
+            that.addClass('loading');
+            that.attr('disabled', true);
+            $.ajax({
+                url: lwpc_orders.ajax_url,
+                method: 'POST',
+                data: {
+                    action: 'lwpc_print_invoice',
+                    security: lwpc_orders.ajax_nonce,
+                    transaction_id: transaction_id,
+                },
+                success: data => {
+                    that.removeClass('loading');
+                    that.attr('disabled', false);
+
+                    // Make <a> element for download invoice.pdf using tag download
+                    let urllink = document.createElement("a");
+                    urllink.download = `invoice-${dateNow}-${data.id}.pdf`;
+                    urllink.href = data.uri;
+                    urllink.click();
+                }
+            }).fail(function () {
+                alert('Please check your internet connection');
+            })
+        })
     });
 })(jQuery)
