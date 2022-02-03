@@ -589,20 +589,30 @@ class AJAX {
 		if ( $status === 'Paid' && $result ) {
 			$table_carts = $wpdb->prefix . 'lokuswp_carts';
 
-			$data = $wpdb->get_results( "SELECT c.post_id FROM $table_transaction as t INNER JOIN $table_carts as c ON t.cart_hash = c.cart_hash WHERE t.transaction_id = $transaction_id" );
+			$data = $wpdb->get_results( "SELECT c.post_id, t.updated_at FROM $table_transaction as t INNER JOIN $table_carts as c ON t.cart_hash = c.cart_hash WHERE t.transaction_id = $transaction_id" );
 
 			foreach ( $data as $value ) {
-				$is_growth_price = get_post_meta( $value->post_id, '_is_growth_price', true );
+				$is_growth_price = get_post_meta( $value->post_id, '_is_growth_price', true ) ?? false;
+				$sales           = get_post_meta( $value->post_id, '_sales', true ) ?? 0;
+				$sales           += 1;
+				update_post_meta( $value->post_id, '_sales', $sales );
 
 				if ( $is_growth_price ) {
 					$price        = get_post_meta( $value->post_id, '_price_normal', true );
 					$update_price = $price + 100;
 					update_post_meta( $value->post_id, '_price_normal', $update_price );
 
+					$push_data = [
+						'price' => $update_price,
+						'sales' => $sales,
+						'time'  => strtotime( $value->updated_at ),
+					];
+
 					// initialize pusher
 					$pusher = new \Pusher\Pusher( "cabbb3646a66ad82ee3d", "d26c814a3cb6ea34a67c", "1269487", array( 'cluster' => 'ap1' ) );
 
-					$pusher->trigger( "growth-pirce_{$value->post_id}", 'add-price', array( 'price' => $update_price ) );
+					// trigger an event
+					$pusher->trigger( "growth-pirce_{$value->post_id}", 'add-price', $push_data );
 				}
 			}
 		}
