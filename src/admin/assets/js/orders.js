@@ -184,6 +184,7 @@
                             <div class="lwpc-flex lwpc-justify-content-space-between">
                                 <div>
                                     <span class="lwpc-mr-100">Detail Pesanan</span>
+                                    ${lwpc_orders.is_pro ? `
                                     <button class="btn lwpc-mr-10 lwpc-btn-print-invoice" data-id="${data.transaction_id}">
                                         <div class="lwpc-flex">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="lwpc-search-icon lwpc-mr-10" viewBox="0 0 20 20" fill="currentColor">
@@ -192,6 +193,8 @@
                                             <span>Print Invoice</span>
                                         </div>
                                     </button>
+                                    ` : ``}
+                                    ${lwpc_orders.is_pro ? `
                                     <button class="btn btn-success lwpc-mr-40 lwpc-btn-follow-up" data-id="${data.transaction_id}">
                                         <div class="lwpc-flex">
                                             <svg class="lwpc-search-icon lwpc-mr-10" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
@@ -202,6 +205,7 @@
                                             <span>Follow Up</span>
                                         </div>
                                     </button>
+                                    ` : ``}
                                     <span class="lwpc-mr-10">Note</span>
                                     <input type="text" class="lwpc-report-input">
                                     <button class="lwpc-btn-rounded-secondary" style="">Tambah Note</button>
@@ -273,6 +277,32 @@
                 },
                 success: data => {
                     if (data.success) {
+                        console.log(data)
+                        tableOrders.ajax.reload(null, false);
+                    }
+                }
+            })
+        })
+
+        // Update resi
+        $(document).on('click', '#btn-resi', function (e) {
+            e.preventDefault();
+            $(this).text('Processing...');
+            $(this).attr('disabled');
+            $(this).css('background-color', '#ccc');
+            const transaction_id = $(this).attr('data-id');
+            const resi = $('#resi').val();
+            $.ajax({
+                url: lwpc_orders.ajax_url,
+                method: 'POST',
+                data: {
+                    action: 'lwpc_update_resi',
+                    security: lwpc_orders.ajax_nonce,
+                    transaction_id: transaction_id,
+                    resi: resi,
+                },
+                success: data => {
+                    if (data.success) {
                         tableOrders.ajax.reload(null, false);
                     }
                 }
@@ -308,30 +338,6 @@
                     security: lwpc_orders.ajax_nonce,
                     transaction_id: $(this).attr('data-id'),
                     status: $(this).attr('data-status'),
-                },
-                success: data => {
-                    if (data.success) {
-                        tableOrders.ajax.reload(null, false);
-                    }
-                }
-            })
-        })
-
-        $(document).on('click', '#btn-resi', function (e) {
-            e.preventDefault();
-            $(this).text('Processing...');
-            $(this).attr('disabled');
-            $(this).css('background-color', '#ccc');
-            const transaction_id = $(this).attr('data-id');
-            const resi = $('#resi').val();
-            $.ajax({
-                url: lwpc_orders.ajax_url,
-                method: 'POST',
-                data: {
-                    action: 'lwpc_update_resi',
-                    security: lwpc_orders.ajax_nonce,
-                    transaction_id: transaction_id,
-                    resi: resi,
                 },
                 success: data => {
                     if (data.success) {
@@ -392,65 +398,6 @@
             dateTimeElement.parent().siblings().removeClass('filter-selected');
             tableOrders.draw();
             $('.lwpc-loading-filter').show();
-        });
-
-        const date = new Date(),
-            dateNow = date.toISOString().split('T')[0].replaceAll('-', '');
-
-        // print invoice
-        $(document).on('click', '.lwpc-btn-print-invoice', function () {
-            const transaction_id = $(this).attr('data-id');
-            const that = $(this);
-
-            // Add loading to button
-            that.addClass('loading');
-            that.attr('disabled', true);
-            $.ajax({
-                url: lwpc_orders.ajax_url,
-                method: 'POST',
-                data: {
-                    action: 'lwpc_print_invoice',
-                    security: lwpc_orders.ajax_nonce,
-                    transaction_id: transaction_id,
-                },
-                success: data => {
-                    that.removeClass('loading');
-                    that.attr('disabled', false);
-
-                    // Make <a> element for download invoice.pdf using tag download
-                    let urllink = document.createElement("a");
-                    urllink.download = `invoice-${dateNow}-${data.id}.pdf`;
-                    urllink.href = data.uri;
-                    urllink.click();
-                }
-            }).fail(function () {
-                alert('Please check your internet connection');
-            })
-        })
-
-        // followup wwhatsaap
-        $(document).on('click', '.lwpc-btn-follow-up', function () {
-            const that = $(this);
-            const transaction_id = $(this).attr('data-id');
-            that.addClass('loading');
-            that.attr('disabled', true);
-
-            $.ajax({
-                url: lwpc_orders.ajax_url,
-                method: 'POST',
-                data: {
-                    action: 'lwpc_follow_up',
-                    security: lwpc_orders.ajax_nonce,
-                    transaction_id: transaction_id,
-                },
-                success: data => {
-                    that.removeClass('loading');
-                    that.attr('disabled', false);
-                    alert(data.data);
-                }
-            }).fail(function () {
-                alert('Please check your internet connection');
-            })
         });
     });
 })(jQuery)
