@@ -2,12 +2,6 @@
 
 namespace LokusWP\Commerce\Admin;
 
-require_once LWPC_PRO_PATH . 'src/includes/libraries/php/html2pdf/html2pdf.class.php';
-require_once LOKUSWP_PATH . 'src/includes/modules/notification/methods/class-notification-whatsapp.php';
-
-use HTML2PDF;
-use Whatsapp_SenderPad;
-
 class AJAX {
 	public function __construct() {
 		add_action( 'wp_ajax_lwpc_store_settings_save', [ $this, 'store_settings_save' ] );
@@ -20,8 +14,6 @@ class AJAX {
 		add_action( 'wp_ajax_lwpc_get_orders', [ $this, 'get_orders' ] );
 		add_action( 'wp_ajax_lwpc_process_order', [ $this, 'process_order' ] );
 		add_action( 'wp_ajax_lwpc_update_resi', [ $this, 'update_resi' ] );
-		add_action( 'wp_ajax_lwpc_print_invoice', [ $this, 'print_invoice' ] );
-		add_action( 'wp_ajax_lwpc_follow_up', [ $this, 'follow_up' ] );
 
 		// Statistic
 		add_action( 'wp_ajax_lwpc_orders_chart', [ $this, 'orders_chart' ] );
@@ -133,6 +125,31 @@ class AJAX {
 		echo 'action_success';
 
 		wp_die();
+	}
+
+	public function update_resi() {
+		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+			wp_send_json_error( 'Invalid security token sent.' );
+		}
+
+		$transaction_id = $_POST['transaction_id'];
+		$no_resi        = $_POST['resi'];
+
+		if ( ! empty( $transaction_id ) ) {
+			$transaction_id = sanitize_text_field( $transaction_id );
+			$no_resi        = sanitize_text_field( $no_resi );
+
+			lwpc_update_order_meta( $transaction_id, 'no_resi', $no_resi );
+			$status = lwpc_update_order_meta( $transaction_id, 'status_processing', 'shipping' );
+
+			if ( $status ) {
+				wp_send_json_success( 'Successfully updated.' );
+			} else {
+				wp_send_json_error( 'Failed to update.' );
+			}
+		} else {
+			wp_send_json_error( 'Invalid transaction id.' );
+		}
 	}
 
 	public function get_orders() {
@@ -342,31 +359,6 @@ class AJAX {
 		}
 	}
 
-	public function update_resi() {
-		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
-			wp_send_json_error( 'Invalid security token sent.' );
-		}
-
-		$transaction_id = $_POST['transaction_id'];
-		$no_resi        = $_POST['resi'];
-
-		if ( ! empty( $transaction_id ) ) {
-			$transaction_id = sanitize_text_field( $transaction_id );
-			$no_resi        = sanitize_text_field( $no_resi );
-
-			lwpc_update_order_meta( $transaction_id, 'no_resi', $no_resi );
-			$status = lwpc_update_order_meta( $transaction_id, 'status_processing', 'shipping' );
-
-			if ( $status ) {
-				wp_send_json_success( 'Successfully updated.' );
-			} else {
-				wp_send_json_error( 'Failed to update.' );
-			}
-		} else {
-			wp_send_json_error( 'Invalid transaction id.' );
-		}
-	}
-
 	public function orders_chart() {
 		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
 			wp_send_json_error( 'Invalid security token sent.' );
@@ -496,82 +488,6 @@ class AJAX {
 		return $query;
 	}
 
-	public function print_invoice() {
-		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
-			wp_send_json_error( 'Invalid security token sent.' );
-		}
-
-		$transaction_id = sanitize_text_field( $_POST['transaction_id'] );
-
-		// Store settings
-		$name    = lwpc_get_settings( 'store', 'name' );
-		$logo    = lwpc_get_settings( 'store', 'logo', 'esc_url', 'https://lokuswp.id/wp-content/uploads/2021/12/lokago.png' );
-		$address = lwpc_get_settings( 'store', 'address' );
-
-		// Customer billing
-		$billing_name    = lwp_get_transaction_meta( $transaction_id, 'billing_name', true );
-		$billing_phone   = lwp_get_transaction_meta( $transaction_id, 'billing_phone', true );
-		$billing_email   = lwp_get_transaction_meta( $transaction_id, 'billing_email', true );
-		$billing_invoice = lwp_get_transaction_meta( $transaction_id, 'billing_invoice', true );
-		$shipping_cost   = lwp_get_transaction_meta( $transaction_id, 'shipping_cost', true );
-
-		// Customer shipping
-		$shipping_name = lwpc_get_order_meta( $transaction_id, 'shipping' );
-
-		// Get product data
-		$products = $this->get_products( $transaction_id );
-
-		// Get transaction data
-		$transaction_data = $this->get_transaction_data( $transaction_id );
-
-		// Template Invoice
-		ob_start();
-		require_once LWPC_PRO_PATH . 'src/public/templates/invoice/invoice.php';
-		$html = ob_get_contents();
-		ob_end_clean();
-		$content = $html;
-
-		// Make template to PDF
-		try {
-			$pdf = new HTML2PDF( 'p', 'A4', 'en' );
-			$pdf->setDefaultFont( 'Helvetica' );
-			$pdf->writeHTML( $content );
-			$pdf->Output( LWPC_STORAGE . '/invoice.pdf', 'F' );
-
-			$data = [ 'uri' => content_url( '/uploads/lwpcommerce/invoice.pdf' ), 'id' => $transaction_id ];
-
-			return wp_send_json( $data );
-		} catch ( \HTML2PDF_exception $exception ) {
-			return wp_send_json( $exception );
-		}
-	}
-
-	private function get_transaction_data( $transaction_id ) {
-		global $wpdb;
-		$table_name = $wpdb->prefix . 'lokuswp_transactions';
-		$sql        = "SELECT payment_id, total, status, currency, created_at FROM $table_name WHERE transaction_id = $transaction_id";
-
-		return $wpdb->get_row( $sql );
-	}
-
-	private function get_products( $transaction_id ) {
-		global $wpdb;
-		$transaction_table = $wpdb->prefix . 'lokuswp_transactions';
-		$cart_table        = $wpdb->prefix . 'lokuswp_carts';
-		$post_table        = $wpdb->prefix . 'posts';
-
-		$sql = "SELECT c.post_id, p.post_title FROM $transaction_table AS t INNER JOIN $cart_table AS c ON t.cart_hash = c.cart_hash INNER JOIN $post_table AS p ON c.post_id = p.ID WHERE t.transaction_id = $transaction_id AND p.post_type = 'product'";
-
-		$results = $wpdb->get_results( $sql );
-
-		foreach ( $results as $key => $value ) {
-			$results[ $key ]->price_normal   = get_post_meta( $value->post_id, '_price_normal', true );
-			$results[ $key ]->price_discount = get_post_meta( $value->post_id, '_price_discount', true );
-		}
-
-		return $results;
-	}
-
 	public function change_payment_status() {
 		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
 			wp_send_json_error( 'Invalid security token sent.' );
@@ -587,76 +503,12 @@ class AJAX {
 		$result = $wpdb->query( $sql );
 
 		if ( $status === 'Paid' && $result ) {
-			$table_carts = $wpdb->prefix . 'lokuswp_carts';
-
-			$data = $wpdb->get_results( "SELECT c.post_id, t.updated_at FROM $table_transaction as t INNER JOIN $table_carts as c ON t.cart_hash = c.cart_hash WHERE t.transaction_id = $transaction_id" );
-
-			foreach ( $data as $value ) {
-				$is_growth_price = get_post_meta( $value->post_id, '_is_growth_price', true ) ?? false;
-				$sales           = get_post_meta( $value->post_id, '_sales', true ) ?? 0;
-				$sales           += 1;
-				update_post_meta( $value->post_id, '_sales', $sales );
-
-				if ( $is_growth_price ) {
-					$price        = get_post_meta( $value->post_id, '_price_normal', true );
-					$update_price = $price + 100;
-					update_post_meta( $value->post_id, '_price_normal', $update_price );
-
-					$push_data = [
-						'price' => $update_price,
-						'sales' => $sales,
-						'time'  => strtotime( $value->updated_at ),
-					];
-
-					// initialize pusher
-					$pusher = new \Pusher\Pusher( "cabbb3646a66ad82ee3d", "d26c814a3cb6ea34a67c", "1269487", array( 'cluster' => 'ap1' ) );
-
-					// trigger an event
-					$pusher->trigger( "growth-pirce_{$value->post_id}", 'add-price', $push_data );
-				}
+			if ( has_filter( 'lwpcommerce/pro/pusher/manual' ) ) {
+				apply_filters( 'lwpcommerce/pro/pusher/manual', $transaction_id );
 			}
 		}
 
 		return wp_send_json_success( 'success' );
-	}
-
-	public function follow_up() {
-		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
-			wp_send_json_error( 'Invalid security token sent.' );
-		}
-
-		$settings          = lwp_get_option( 'lwp_whatsapp_senderpad' );
-		$whatsapp_settings = $settings['settings'] ?? [];
-		$apikey            = $whatsapp_settings['apikey'] ?? '';
-
-		if ( empty( $apikey ) ) {
-			wp_send_json_error( 'Please set API Key in settings' );
-		}
-
-		$transaction_id     = sanitize_text_field( $_POST['transaction_id'] );
-		$whatsapp_senderpad = new Whatsapp_SenderPad();
-
-		// Store settings
-		$name     = lwpc_get_settings( 'store', 'name' );
-		$whatsapp = lwpc_get_settings( 'store', 'whatsapp' );
-
-		// Customer billing
-		$billing_name  = lwp_get_transaction_meta( $transaction_id, 'billing_name', true );
-		$billing_phone = lwp_get_transaction_meta( $transaction_id, 'billing_phone', true );
-
-		// Get transaction data
-		$transaction_data = $this->get_transaction_data( $transaction_id );
-
-		$followup_message = "Kepada YTH Bpk/Ibu $billing_name,\n\nTerima kasih telah melakukan pembelian di Toko Kami.\n\nSilahkan melakukan pembayaran sebesar Rp. $transaction_data->total dengan mengirimkan bukti pembayaran ke nomor $whatsapp.\n\nTerima kasih.\n\nSalam,\n\n$name";
-
-		$obj = [
-			'receiver' => $billing_phone,
-			'message'  => $followup_message
-		];
-
-		$status = $whatsapp_senderpad->send( $obj );
-
-		$status ? wp_send_json_success( 'Berhasil mengirim followup' ) : wp_send_json_error( 'Gagal mengirim followup. Silahkan cek log' );
 	}
 }
 

@@ -45,7 +45,7 @@ class Admin {
 	public static function register( array $plugin ) {
 		$admin = new self( $plugin['slug'], $plugin['name'], $plugin['version'] );
 
-		add_action( 'admin_init', [ $admin, 'admin_init' ], 1);
+		add_action( 'admin_init', [ $admin, 'admin_init' ], 1 );
 		add_action( 'admin_menu', [ $admin, 'register_admin_menu' ] );
 		add_action( 'admin_enqueue_scripts', [ $admin, 'enqueue_styles' ] );
 		add_action( 'admin_enqueue_scripts', [ $admin, 'enqueue_scripts' ] );
@@ -87,15 +87,14 @@ class Admin {
 			header( "Refresh:0; url=" . get_admin_url() );
 		}
 
-		Tabs::add('lwpcommerce', 'settings', __('Settings', 'lwpcommerce'), function () {
+		Tabs::add( 'lwpcommerce', 'settings', __( 'Settings', 'lwpcommerce' ), function () {
 			require_once 'settings/tabs/settings.php';
-		});
-		
-		Tabs::add('lwpcommerce', 'shipping', __('Shipping', 'lwpcommerce'), function () {
+		} );
+
+		Tabs::add( 'lwpcommerce', 'shipping', __( 'Shipping', 'lwpcommerce' ), function () {
 			require_once 'settings/tabs/shipping.php';
-		});
-		
-	
+		} );
+
 
 	}
 
@@ -185,6 +184,7 @@ class Admin {
 					'ajax_url'    => admin_url( 'admin-ajax.php' ),
 					'ajax_nonce'  => wp_create_nonce( 'lwpc_admin_nonce' ),
 					'plugin_url'  => LWPC_URL,
+					'is_pro'      => in_array( 'lwpcommerce-pro/lwpcommerce-pro.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ),
 					'translation' => $this->js_translation(),
 				) );
 			}
