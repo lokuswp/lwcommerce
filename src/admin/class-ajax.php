@@ -503,8 +503,8 @@ class AJAX {
 		$result = $wpdb->query( $sql );
 
 		if ( $status === 'Paid' && $result ) {
-			if ( has_filter( 'lwpcommerce/pro/pusher/manual' ) ) {
-				apply_filters( 'lwpcommerce/pro/pusher/manual', $transaction_id );
+			if ( has_filter( 'lwpcommerce/growthprice/pusher/manual' ) ) {
+				apply_filters( 'lwpcommerce/growthprice/pusher/manual', $transaction_id );
 			}
 		}
 
