@@ -2,18 +2,18 @@
 
 /**
  * @wordpress-plugin
+ * @lokuswp-app
  * 
  * Plugin Name:       LWPCommerce
  * Plugin URI:        https://lokuswp.id/plugin/lwpcommerce
- * Description:       Jual Beli secara Online di Blogmu
- * Version:           0.1.0
+ * Description:       Jual Beli Online jadi Menyenangkan
+ * Version:           0.5.0
  * Author:            LokusWP
  * Author URI:        https://lokuswp.id/
  * License:           GPL-3.0+
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       lwpcommerce
  * Domain Path:       /languages
- * 
  */
 
 // Checking Test Env and Direct Access File

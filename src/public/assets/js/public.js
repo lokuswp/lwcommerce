@@ -5,7 +5,7 @@
     'use strict'
 
     $(document).ready(function () {
-        $('.cart-icon-wrapper').html('<div class="cart-icon svg-wrapper"><img src="' + lokuswp.plugin_url + 'src/assets/svg/cart.svg' + '" alt="cart-icon"><small class="cart-qty">' + lokusCart.countQty() + '</small></div>');
+        // $('.cart-icon-wrapper').html('<div class="cart-icon svg-wrapper"><img src="' + lokuswp.plugin_url + 'src/assets/svg/cart.svg' + '" alt="cart-icon"><small class="cart-qty">' + lokusCart.countQty() + '</small></div>');
     });
 
     /**
@@ -21,19 +21,19 @@
         elInputQty.val(lokusCart.readQuantity(productID));
 
         $(this).hide();
-        $(this).closest('.product-action').find('.lwp-stepper').removeClass('lwp-hidden');
+        $(this).closest('.product-action').find('.lokuswp-stepper').removeClass('lwp-hidden');
 
         // Update Troli
-        $('.cart-icon-wrapper').html('<div class="cart-icon svg-wrapper"><img src="' + lokuswp.plugin_url + 'src/assets/svg/cart.svg' + '" alt="cart-icon"><small class="cart-qty">' + lokusCart.countQty() + '</small></div>');
+        // $('.cart-icon-wrapper').html('<div class="cart-icon svg-wrapper"><img src="' + lokuswp.plugin_url + 'src/assets/svg/cart.svg' + '" alt="cart-icon"><small class="cart-qty">' + lokusCart.countQty() + '</small></div>');
     });
 
     // /**
     //  * Add Quantity Product
     //  */
-    // $(document).on('click', '.lwp-stepper .plus', function (e) {
+    // $(document).on('click', '.lokuswp-stepper .plus', function (e) {
 
-    //     let productID = parseInt($(this).closest(".lwp-stepper").attr('product-id'));
-    //     let elInputQty = $(this).closest(".lwp-stepper").find("input");
+    //     let productID = parseInt($(this).closest(".lokuswp-stepper").attr('product-id'));
+    //     let elInputQty = $(this).closest(".lokuswp-stepper").find("input");
 
     //     lokusCart.addQuantity(productID, 1);
     //     elInputQty.val(lokusCart.readQuantity(productID));
@@ -49,9 +49,9 @@
     // /**
     //  * Decrease Quantity Product
     //  */
-    // $(document).on('click', '.lwp-stepper .minus', function (e) {
+    // $(document).on('click', '.lokuswp-stepper .minus', function (e) {
 
-    //     let productID = parseInt($(this).closest(".lwp-stepper").attr('product-id'));
+    //     let productID = parseInt($(this).closest(".lokuswp-stepper").attr('product-id'));
     //     lokusCart.reduceQuantity(productID, 1);
 
     //     lwp_render_cart(productID);
@@ -61,9 +61,9 @@
     // /**
     //  * Change Product 
     //  */
-    // $(document).on('change', '.lwp-stepper input', function (e) {
+    // $(document).on('change', '.lokuswp-stepper input', function (e) {
 
-    //     let productID = parseInt($(this).closest(".lwp-stepper").attr('product-id'));
+    //     let productID = parseInt($(this).closest(".lokuswp-stepper").attr('product-id'));
     //     let productQty = parseInt($(this).val());
     //     lokusCart.changeQuantity(productID, productQty);
 

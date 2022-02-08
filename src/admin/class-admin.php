@@ -116,6 +116,7 @@ class Admin {
 				wp_enqueue_style( 'spectre-icons', LWPC_URL . 'src/includes/libraries/css/spectre/spectre-icons.min.css', array(), '0.5.9', 'all' );
 				wp_enqueue_style( 'spectre', LWPC_URL . 'src/includes/libraries/css/spectre/spectre.min.css', array(), '0.5.9', 'all' );
 
+		
 				//				wp_enqueue_style( $this->slug, LWPC_URL . 'backend/assets/css/admin-settings' . $dev_css, array(), $this->version, 'all' );
 				wp_enqueue_style( 'wp-color-picker' );
 

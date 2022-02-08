@@ -11,8 +11,10 @@ class Plugin
 	public function __construct()
 	{
 		$shortcode = new Shortcodes\Storefront;
+		$shortcode = new Shortcodes\Customer_Area;
+		
 		$posttype  = new Modules\Product\Post_Type_Product;
-		$posttype  = new Modules\Product\Metabox_Product_Data;
+		$posttype  = new Modules\Product\Metabox_Product;
 
 		// Activation and Deactivation
 		register_activation_hook(LWPC_BASE, [$this, 'activation']);
@@ -26,7 +28,7 @@ class Plugin
 		// require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-dine-in.php';
 		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-jne.php';
 		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-post-indonesia.php';
-		//		require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-shipping-processing.php';
+		//	require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-shipping-processing.php';
 		require_once LWPC_PATH . 'src/includes/modules/shipping/api/class-rajaongkir-api.php';
 		require_once LWPC_PATH . 'src/includes/modules/shipping/api/class-get-shipping-list.php';
 
@@ -46,6 +48,8 @@ class Plugin
 
 		// Register custom meta table
 		$this->register_custom_meta_table();
+
+		// var_dump(lwpc_get_price(5));
 	}
 
 	/**
