@@ -120,8 +120,8 @@ class Post_Type_Product
         global $post;
 
         if ($post->post_type == 'product') {
-            if (file_exists(LWPC_PATH . 'src/templates/product/single.php')) {
-                return LWPC_PATH . 'src/templates/product/single.php';
+            if (file_exists(LWPC_PATH . 'src/templates/presentation/product/single.php')) {
+                return LWPC_PATH . 'src/templates/presentation/product/single.php';
             }
         }
 
@@ -196,9 +196,9 @@ class Post_Type_Product
                 return;
             }
 
-            if (lwpc_get_price_discount($post_id)) {
+            if (lwpc_get_discount_price($post_id)) {
                 echo '<span style="text-decoration: line-through">' . lwp_currency_format(true, lwpc_get_price($post_id)) .  '</span><br>';
-                echo lwp_currency_format(true, lwpc_get_price_discount($post_id));
+                echo lwp_currency_format(true, lwpc_get_discount_price($post_id));
             } else {
                 echo lwp_currency_format(true, lwpc_get_price($post_id));
             }

@@ -2,7 +2,7 @@
 
 namespace LokusWP\Commerce\Shortcodes;
 
-class Etalase
+class Customer_Area
 {
     /**
      * Register Transaction Shortcode
@@ -22,7 +22,7 @@ class Etalase
 
         ob_start();
 
-        require_once LWPC_PATH . 'src/templates/customer/area.php';
+        require_once LWPC_PATH . 'src/templates/presentation/customer/area.php';
 
         $render = ob_get_clean();
 

@@ -20,7 +20,7 @@ describe('Buy Digital Product', () => {
         cy.visit(baseUrl + '/cart');
 
         // Add New Item in Cart
-        cy.get('tr[product-id="5"] > .text-right > .lwp-stepper > .plus').click()
+        cy.get('tr[product-id="5"] > .text-right > .lokuswp-stepper > .plus').click()
 
         // Go To Tranasction
         cy.get('#go-to-transaction').click()

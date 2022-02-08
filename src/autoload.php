@@ -3,6 +3,68 @@ if (!defined('WPTEST')) {
 	defined('ABSPATH') or die("Direct access to files is prohibited");
 }
 
+class BIOS
+{
+	public function boot()
+	{
+		if ($this->is_fresh_install()) {
+			$this->onboarding();
+		} else {
+			$this->run();
+		}
+	}
+
+	public function is_fresh_install()
+	{
+	}
+
+	public function it_has_backbone()
+	{
+		$backbone_active = true;
+		$backbone_version = true;
+
+		// Checking Backbone Active
+		if (is_admin() && current_user_can('activate_plugins') && !is_plugin_active('lokuswp/lokuswp.php')) {
+			add_action('admin_notices', function () {
+				echo '<div class="error"><p>' . __('LokusWP required. please activate the backbone plugin first.', 'lwpcommerce') . '</p></div>';
+			});
+			$backbone_active = false;
+		}
+
+
+		$backbone = get_plugin_data(dirname(dirname(__FILE__)) . '/lokuswp/lokuswp.php');
+		if (!version_compare($backbone['Version'], LOKUSWP_VERSION, '>=')) {
+			// add_action('admin_notices', 'lsdd_midtrans_fail_version');
+			$backbone_version = false;
+		}
+
+
+		// Deactive Extension
+		if (!$backbone_version || !$backbone_active) {
+			deactivate_plugins(plugin_basename(__FILE__));
+
+			if (isset($_GET['activate'])) {
+				unset($_GET['activate']);
+			}
+		}
+	}
+
+	public function onboarding()
+	{
+		
+	}
+
+	public function run()
+	{
+		$this->it_has_backbone();
+		$backbone = (array) apply_filters('active_plugins', get_option('active_plugins'));
+		if (in_array('lokuswp/lokuswp.php', $backbone)) {
+		}
+	}
+}
+// add_action('admin_init', 'lwpcommerce_dependency');
+
+
 /**
  * Registers the autoloader for classes
  *
@@ -20,21 +82,6 @@ spl_autoload_register(function ($classname) {
 	if (file_exists($classpath)) {
 		include_once $classpath;
 	}
-});
 
-// $classmap = array(
-//     'LokaWP\Commerce\Plugin' => 'includes/plugin.php',
-//     'LokaWP\Commerce\Post_Types' => 'includes/wordpress/posttypes.php',
-//     'LokaWP\Commerce\Metabox' => 'includes/wordpress/metabox.php'
-// );
-
-add_action("lokuswp/transaction/tab/header", function () {
-?>
-	<!-- <div class="swiper-slide">
-		<?php _e('Shipping', 'lokuswp'); ?>
-	</div> -->
-<?php
-});
-add_action("lokuswp/transaction/tab/content", function () {
-	// require_once LWPC_PATH . 'src/templates/transaction/shipping.php';
+	include_once LWPC_PATH . 'src/includes/hook.php';
 });
