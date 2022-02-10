@@ -31,6 +31,8 @@ add_action("lokuswp/transaction/tab/header", function () {
             $cart_item['price']     = abs(lwpc_get_price($post_id));
             $cart_item['min']       = 1;
             $cart_item['max']       = -1;
+
+            lokuswp_set_meta_counter("_product_on_cart",$post_id );
         }
     
         return $cart_item;

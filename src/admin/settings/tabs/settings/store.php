@@ -1,30 +1,4 @@
 <?php
-// $name      = "";
-// $logo      = "https://lokuswp.id/wp-content/uploads/2021/12/lokago.png";
-// $address   = "";
-// $countries = "";
-// $state     = "";
-// $district  = "";
-// $districts = "";
-
-// $settings = get_option('lwpcommerce_store');
-// if (!$settings) {
-//     lwpc_set_settings('store', 'name', $name);
-//     lwpc_set_settings('store', 'logo', $logo, 'esc_url_raw');
-//     lwpc_set_settings('store', 'description', '');
-
-//     lwpc_set_settings('store', 'email', '', 'sanitize_email');
-//     lwpc_set_settings('store', 'whatsapp', '');
-
-//     lwpc_set_settings('store', 'address', $address);
-//     lwpc_set_settings('store', 'country', $countries);
-//     lwpc_set_settings('store', 'state', $state, 'intval');
-//     lwpc_set_settings('store', 'district', $district, 'intval');
-//     lwpc_set_settings('store', 'districts', $districts, 'intval');
-//     lwpc_set_settings('store', 'latitude', '', 'floatval');
-//     lwpc_set_settings('store', 'longitude', '', 'floatval');
-// }
-
 $name = lwpc_get_settings('store', 'name');
 $logo = lwpc_get_settings('store', 'logo', 'esc_url', 'https://lokuswp.id/wp-content/uploads/2021/12/lokago.png');
 $desc = lwpc_get_settings('store', 'description');
@@ -38,6 +12,13 @@ $state_selected     = lwpc_get_settings('store', 'state', 'intval');
 $district_selected  = lwpc_get_settings('store', 'district', 'intval');
 $latitude           = lwpc_get_settings('store', 'latitude', 'floatval');
 $longitude          = lwpc_get_settings('store', 'longitude', 'floatval');
+
+$categories = [
+    'digital' => __('Digital Goods', "lwpcommerce"),
+    'fashion' => __('Fashion, Apparel', "lwpcommerce"),
+    'electronics' => __('Electronics, Computer', "lwpcommerce"),
+    'fnb' => __('Food and Drink', "lwpcommerce"),
+];
 ?>
 
 <section id="settings" class="form-horizontal">
@@ -72,6 +53,21 @@ $longitude          = lwpc_get_settings('store', 'longitude', 'floatval');
             </div>
             <div class="col-5 col-sm-12">
                 <textarea class="form-input" name="description" placeholder="<?php _e("The best online shop ever", "lwpcommerce"); ?>" rows="3"><?php echo $desc; ?></textarea>
+            </div>
+        </div>
+
+        <!-- Category -->
+        <div class="form-group hidden">
+            <div class="col-3 col-sm-12">
+                <label class="form-label" for="category"><?php _e('Category', 'lwpcommerce'); ?></label>
+            </div>
+
+            <div class="col-5 col-sm-12">
+                <select class="form-select" name="category" id="form-category">
+                    <?php foreach ($categories as $key => $value) : ?>
+                        <option value="<?= $key ?? '' ?>"><?php echo $value ?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
         </div>
 

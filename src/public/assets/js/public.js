@@ -128,6 +128,7 @@
         lokusTransaction.renderExtras();
     });
 
-  
+
+
 
 })(jQuery);

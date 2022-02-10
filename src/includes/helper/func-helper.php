@@ -24,7 +24,8 @@ function lwpc_get_price($post_id)
 }
 
 function lwpc_get_price_html()
-{
+{	
+	$post_id = get_the_ID();
 	$_price_discount = lwpc_get_discount_price($post_id);
 	$_price_normal = lwpc_get_normal_price($post_id);
 

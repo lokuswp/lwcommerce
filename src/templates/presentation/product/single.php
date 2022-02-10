@@ -1,6 +1,8 @@
 <?php
 get_header();
 wp_enqueue_style("lwp-grid");
+
+lokuswp_set_meta_counter("_product_view", get_the_ID() );
 ?>
 
 <!-- Google Rich Snippet -->
@@ -9,17 +11,13 @@ wp_enqueue_style("lwp-grid");
         "@context": "https://schema.org/",
         "@type": "Product",
         "name": "<?php the_title(); ?>",
-        "image": [
-            "https://example.com/photos/1x1/photo.jpg",
-            "https://example.com/photos/4x3/photo.jpg",
-            "https://example.com/photos/16x9/photo.jpg"
-        ],
-        "description": "Example product is the best example product out there. Make sure to get the one and only -- the original.",
+        "image": [ '<?= get_the_post_thumbnail_url(); ?>'],
+        "description": <?php the_content(); ?>,
         "sku": "0374984678",
         "mpn": "738930",
         "brand": {
-            "@type": "Brand",
-            "name": "Example"
+            "@type": "lokuswp",
+            "name": "LokusWP"
         },
         "review": {
             "@type": "Review",
@@ -30,7 +28,7 @@ wp_enqueue_style("lwp-grid");
             },
             "author": {
                 "@type": "Person",
-                "name": "Hank Williams"
+                "name": "Lasida Azis"
             }
         },
         "aggregateRating": {
@@ -40,9 +38,9 @@ wp_enqueue_style("lwp-grid");
         },
         "offers": {
             "@type": "Offer",
-            "url": "https://example.com/product",
-            "priceCurrency": "USD",
-            "price": "49.99",
+            "url": "<?= get_permalink(); ?>",
+            "priceCurrency": "IDR",
+            "price": "500,000",
             "priceValidUntil": "2021-11-20",
             "itemCondition": "https://schema.org/NewCondition",
             "availability": "https://schema.org/InStock"
