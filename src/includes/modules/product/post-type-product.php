@@ -147,8 +147,8 @@ class Post_Type_Product
             'cb' => $columns['cb'],
             'image' => __('Image'),
             'title' => __('Title'),
-            'price' => __('Harga', 'lwpcommerce'),
-            'stock' => __('Stok', 'lwpcommerce'),
+            'price' => __('Pirce', 'lwpcommerce'),
+            'stock' => __('Stock', 'lwpcommerce'),
             'id' => __('ID'),
             'date' => $columns['date'],
         );
@@ -178,12 +178,12 @@ class Post_Type_Product
 
         if ('stock' === $column) {
             if (get_post_meta($post_id, '_stock', true) > 999) {
-                _e('Tersedia', 'lwpcommerce');
+                _e('Available', 'lwpcommerce');
                 return;
             }
 
             if (get_post_meta($post_id, '_stock', true) == 0) {
-                _e('Kosong', 'lwpcommerce');
+                _e('Out of Stock', 'lwpcommerce');
                 return;
             }
 

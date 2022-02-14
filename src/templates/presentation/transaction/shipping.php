@@ -3,7 +3,7 @@
 
     <form class="full-height">
 
-        <h6 style="margin-bottom:12px;" class="text-primary"><?php _e('Digital Shipping Channel', 'lokuswp'); ?></h6>
+        <h6 style="margin-bottom:12px;" class="text-primary"><?php _e('Digital Shipping Channel', 'lwpcommerce'); ?></h6>
 
         <div class="row">
             <div class="col-sm-6 col-xs-12 gutter swiper-no-swiping">
@@ -37,28 +37,30 @@
             </div> -->
         </div>
 
-        <h6 style="margin-bottom:12px;" class="text-primary"><?php _e('Physical Shipping Channel', 'lokuswp'); ?></h6>
+        <h6 style="margin-bottom:12px;" class="text-primary"><?php _e('Physical Shipping Channel', 'lwpcommerce'); ?></h6>
 
         <?php
-        $state_selected = 3;
-        $request = wp_remote_get('http://lokuswp.local/wp-json/lokuswp/v1/rajaongkir/province');
+        // $state_selected = 3;
+        // $request = wp_remote_get('http://lwpcommerce.local/wp-json/lwpcommerce/v1/rajaongkir/province');
 
-        if (is_wp_error($request)) {
-            return false; // Bail early
-        }
+        // if (is_wp_error($request)) {
+        //     return false; // Bail early
+        // }
 
-        $body = wp_remote_retrieve_body($request);
-        $states = json_decode($body)->data;
+        // $body = wp_remote_retrieve_body($request);
+        // $states = json_decode($body)->data;
 
-        $request2 = wp_remote_get('http://lokuswp.local/wp-json/lokuswp/v1/rajaongkir/city?province=3');
+        // $request2 = wp_remote_get('http://lwpcommerce.local/wp-json/lwpcommerce/v1/rajaongkir/city?province=3');
 
-        if (is_wp_error($request2)) {
-            return false; // Bail early
-        }
+        // if (is_wp_error($request2)) {
+        //     return false; // Bail early
+        // }
 
-        $body = wp_remote_retrieve_body($request2);
-        $cities = json_decode($body)->data;
+        // $body = wp_remote_retrieve_body($request2);
+        // $cities = json_decode($body)->data;
 
+        $states  = [];
+        $cities  = [];
 
         ?>
         <input type="text" id="country" value="ID" class="hidden">
@@ -80,7 +82,7 @@
                 <div class="form-group">
 
                     <select class="form-control custom-select swiper-no-swiping shipping-reset" id="cities">
-                        <option value=""><?php _e("Pilih Kota", 'lokuswp'); ?></option>
+                        <option value=""><?php _e("Pilih Kota", 'lwpcommerce'); ?></option>
                         <?php foreach ($cities as $key => $city) : ?>
                             <option value="<?php echo $city->city_id; ?>"><?php echo $city->type . ' ' . $city->city_name; ?></option>
                         <?php endforeach; ?>
@@ -111,7 +113,7 @@
     </form>
 
     <div class="bottom">
-        <button class="lwp-btn lsdc-btn btn-primary btn-block swiper-no-swiping">
+        <button id="verify-shipping" class="lwp-btn lokus-btn btn-primary btn-block swiper-no-swiping">
             <div class="icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin-top:-4px;" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>

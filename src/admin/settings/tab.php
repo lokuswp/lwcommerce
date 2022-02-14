@@ -54,22 +54,26 @@ if (isset($_GET["tab"])) {
         <?php $tab_lists = Tabs::list("lwpcommerce"); ?>
 
         <div class="column col-12 col-sm-12 px-0">
+            <div class="user-avatar">
+                <figure class="avatar mr-2"><img src="http://2.gravatar.com/avatar/e43a042ed65693a74a1de21be9eed014?s=64&d=mm&r=g" alt="Avatar LG"></figure>
+            </div>
             <ul class="tab tab-primary">
 
-                <?php //if ( $tab_lists && License::correct() ): // Display all tabs only license valid 
-                ?>
                 <?php foreach ((array) $tab_lists as $key => $title) : ?>
                     <li class="tab-item <?php echo $active_tab == $key ? 'active' : ''; ?>">
                         <a href="?page=lwpcommerce&tab=<?php esc_attr_e($key); ?>"><?php echo esc_attr($title); ?></a>
                     </li>
                 <?php endforeach; ?>
-                <?php //endif;
-                ?>
-
+    
             </ul>
         </div>
 
         <style>
+
+            .user-avatar{
+                float:right;
+                margin: 4px;
+            }
             .lwpcommerce-admin li {
                 margin-bottom: 0;
             }
@@ -77,6 +81,7 @@ if (isset($_GET["tab"])) {
 
 
         <article class="tab-content">
+   
             <?php
             // VULN :: Local/Remote File Inclusion
             // @link https://ismailtasdelen.medium.com/remote-local-file-inclusion-94f4403f24a7

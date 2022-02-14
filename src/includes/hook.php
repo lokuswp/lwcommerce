@@ -9,13 +9,13 @@
 
 add_action("lokuswp/transaction/tab/header", function () {
     ?>
-        <!-- <div class="swiper-slide">
-            <?php _e('Shipping', 'lokuswp'); ?>
-        </div> -->
+        <div class="swiper-slide">
+            <?php _e('Shipping', 'lwpcommerce'); ?>
+        </div>
     <?php
     });
     add_action("lokuswp/transaction/tab/content", function () {
-        // require_once LWPC_PATH . 'src/templates/transaction/shipping.php';
+        require_once LWPC_PATH . 'src/templates/presentation/transaction/shipping.php';
     });
     
     

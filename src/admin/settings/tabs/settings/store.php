@@ -173,7 +173,7 @@ $categories = [
         </div> -->
 
         <br>
-        <button class="btn btn-primary" id="lwpc-setting-store-save"><?php _e('Save', 'lwpcommerce'); ?></button>
+        <button class="btn btn-primary w-120" id="lwpc-setting-store-save"><?php _e('Save', 'lwpcommerce'); ?></button>
     </form>
 </section>
 
