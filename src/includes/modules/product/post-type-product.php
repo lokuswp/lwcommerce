@@ -191,17 +191,8 @@ class Post_Type_Product
         }
 
         if ('price' === $column) {
-            if (lwpc_get_price($post_id) == 0) {
-                _e('Gratis', 'lwpcommerce');
-                return;
-            }
 
-            if (lwpc_get_discount_price($post_id)) {
-                echo '<span style="text-decoration: line-through">' . lwp_currency_format(true, lwpc_get_price($post_id)) .  '</span><br>';
-                echo lwp_currency_format(true, lwpc_get_discount_price($post_id));
-            } else {
-                echo lwp_currency_format(true, lwpc_get_price($post_id));
-            }
+            lwpc_get_price_html();
         }
 
     ?>

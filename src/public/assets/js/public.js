@@ -5,7 +5,7 @@
     'use strict'
 
     $(document).ready(function () {
-        // $('.cart-icon-wrapper').html('<div class="cart-icon svg-wrapper"><img src="' + lokuswp.plugin_url + 'src/assets/svg/cart.svg' + '" alt="cart-icon"><small class="cart-qty">' + lokusCart.countQty() + '</small></div>');
+        $('.cart-icon-wrapper').html('<div class="cart-icon svg-wrapper"><small class="cart-qty">' + lokusCart.countQty() + '</small><img src="' + lokuswp.plugin_url + 'src/assets/svg/cart.svg' + '" alt="cart-icon"></div>');
     });
 
     /**

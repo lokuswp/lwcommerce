@@ -1,8 +1,8 @@
 <?php
 get_header();
-wp_enqueue_style("lwp-grid");
+wp_enqueue_style("lokuswp-grid");
 
-lokuswp_set_meta_counter("_product_view", get_the_ID() );
+lokuswp_set_meta_counter("_product_view", get_the_ID());
 ?>
 
 <!-- Google Rich Snippet -->
@@ -11,7 +11,7 @@ lokuswp_set_meta_counter("_product_view", get_the_ID() );
         "@context": "https://schema.org/",
         "@type": "Product",
         "name": "<?php the_title(); ?>",
-        "image": [ '<?= get_the_post_thumbnail_url(); ?>'],
+        "image": ['<?= get_the_post_thumbnail_url(); ?>'],
         "description": <?php the_content(); ?>,
         "sku": "0374984678",
         "mpn": "738930",
@@ -53,11 +53,13 @@ lokuswp_set_meta_counter("_product_view", get_the_ID() );
 
     <div class="lwp-product row">
         <div class="col-xs-12 col-sm-12">
-            <?php the_post_thumbnail(); ?>
+            <a href="<?php echo get_permalink(); ?>">
+                <?php the_post_thumbnail(); ?>
+            </a>
         </div>
         <div class="col-xs-12 col-sm-12 row gutter" style="margin-top:8px;">
             <div class="col-xs-9">
-                <?php the_title(); ?>
+                <h2><?php the_title(); ?></h2>
                 <?php lwpc_get_price_html(); ?>
             </div>
             <div class="col-xs-3 end-sm">
@@ -66,7 +68,7 @@ lokuswp_set_meta_counter("_product_view", get_the_ID() );
             </div>
         </div>
         <div class="col-sm-12 gutter">
-            <?php the_content(); ?>
+            <p><?php the_content(); ?></p>
         </div>
     </div>
 </div>
@@ -76,6 +78,10 @@ lokuswp_set_meta_counter("_product_view", get_the_ID() );
         /* max-width: 960px; */
         max-width: 420px;
         margin: 0 auto;
+    }
+
+    h2{
+        font-size: 18px;
     }
 </style>
 

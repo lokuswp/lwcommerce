@@ -8,6 +8,7 @@
 ?>
 
 <section id="lwpc-etalase" class="lwp-mobile-width">
+
     <?php require_once LWPC_PATH . 'src/templates/component/navigation.php'; ?>
 
     <div class="lwpc-listing row">
@@ -32,7 +33,9 @@
                         <img src="<?php echo get_the_post_thumbnail_url(get_the_ID()); ?>" alt="<?php the_title(); ?>">
                     </a>
                 </div>
-                <h3 class="product-name"><?php the_title(); ?></h3>
+                <a href="<?php echo get_permalink(); ?>">
+                    <h3 class="product-name"><?php the_title(); ?></h3>
+                </a>
                 <div class="product-price">
                     <?php lwpc_get_price_html(); ?>
                 </div>
@@ -43,6 +46,10 @@
 
         wp_reset_postdata();
         ?>
+
+    </div>
+
+    <?php require_once LWPC_PATH . 'src/templates/component/powered.php'; ?>
 
 </section>
 

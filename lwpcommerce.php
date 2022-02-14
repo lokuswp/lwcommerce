@@ -15,6 +15,8 @@
  * Domain Path:       /languages
  */
 
+
+
 // Checking Test Env and Direct Access File
 if (!defined('WPTEST')) {
   defined('ABSPATH') or die("Direct access to files is prohibited");
