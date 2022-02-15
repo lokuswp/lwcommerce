@@ -37,5 +37,3 @@ defined('LWPC_STRING_TEXT') or define('LWPC_STRING_TEXT', '0.0.1'); // String Ve
 
 // Autoload
 require_once LWPC_PATH . 'src/autoload.php';
-
-

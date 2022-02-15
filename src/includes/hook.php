@@ -12,13 +12,6 @@ add_action("lokuswp/transaction/tab/content", function () {
 	require_once LWPC_PATH . 'src/templates/presentation/transaction/shipping.php';
 });
 
-
-
-
-// Make lokuswp/cart/data hook become global hook
-// function load_hook()
-// {
-
 function lwpc_cart_data_processing($data)
 {
 
@@ -35,11 +28,7 @@ function lwpc_cart_data_processing($data)
 
 	return $data;
 }
-
-add_filter('lokuswp/cart/data', 'lwpc_cart_data_processing');
-// }
-
-// add_action('plugins_loaded', 'load_hook');
+add_filter('lokuswp/cart/data', 'lwpc_cart_data_processing', 10, 1);
 
 
 function lwpc_cart_scan_product($data)

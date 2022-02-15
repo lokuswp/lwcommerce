@@ -85,4 +85,10 @@ class Boot
 		}
 	}
 }
-new BOOT;
+
+
+if (defined('WPTEST')) {
+	new LokusWP\Commerce\Plugin();
+} else {
+	new BOOT;
+}
