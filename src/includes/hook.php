@@ -1,5 +1,7 @@
 <?php
-// Transaction UI Inject
+/**
+ * Adding Tab Shipping 
+ */
 add_action("lokuswp/transaction/tab/header", function () {
 ?>
     <div class="swiper-slide">
@@ -12,11 +14,9 @@ add_action("lokuswp/transaction/tab/content", function () {
     require_once LWPC_PATH . 'src/templates/presentation/transaction/shipping.php';
 });
 
-
-
 /**
  * Processing Cart Data from Cart Cookie
- * Rendered based on Ecommerce Plugin for Respect Another Plugin
+ * Scan Product Price
  */
 function lwpc_cart_processing($cart_item, $post_id)
 {
@@ -32,14 +32,17 @@ function lwpc_cart_processing($cart_item, $post_id)
 }
 add_filter("lokuswp/cart/cookie/item", "lwpc_cart_processing", 10, 2);
 
+
+/**
+ * Adding Tab to Customer Area
+ */
 add_action("lwpcommerce/customer/tab/header", function () {
-    ?>
-        <div class="swiper-slide">
-            <?php _e('Dashboard', 'lwpcommerce'); ?>
-        </div>
-    <?php
-    });
-    
+?>
+    <div class="swiper-slide">
+        <?php _e('Dashboard', 'lwpcommerce'); ?>
+    </div>
+<?php
+});
 
 add_action("lwpcommerce/customer/tab/header", function () {
 ?>
@@ -48,8 +51,6 @@ add_action("lwpcommerce/customer/tab/header", function () {
     </div>
 <?php
 });
-
-
 add_action("lwpcommerce/customer/tab/header", function () {
 ?>
     <div class="swiper-slide">
@@ -57,6 +58,7 @@ add_action("lwpcommerce/customer/tab/header", function () {
     </div>
 <?php
 }, 9999);
+
 add_action("lwpcommerce/customer/tab/content", function () {
     require_once LWPC_PATH . 'src/templates/presentation/customer/dashboard.php';
 });
@@ -65,13 +67,12 @@ add_action("lwpcommerce/customer/tab/content", function () {
     require_once LWPC_PATH . 'src/templates/presentation/customer/history.php';
 });
 
-
 add_action("lwpcommerce/customer/tab/content", function () {
     require_once LWPC_PATH . 'src/templates/presentation/customer/account.php';
 }, 9999);
 
-
-
+// Pre Transaction
+// Generate Unique Code
 add_action("lokuswp/transaction/pre", function () {
     // $unique_code = rand(1, 6);
     // var_dump($unique_code);
