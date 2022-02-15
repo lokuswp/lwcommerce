@@ -183,7 +183,7 @@ class Metabox_Product
 
 
         // Product Type
-        $product_type = get_post_meta($post->ID, '_type', true) == null ? null : esc_attr(get_post_meta($post->ID, '_type', true));
+        $product_type = get_post_meta($post->ID, '_product_type', true) == null ? null : esc_attr(get_post_meta($post->ID, '_product_type', true));
 
         // Digital
         $attachment_link = get_post_meta($post->ID, '_attachment_link', true) == null ? null : esc_url(get_post_meta($post->ID, '_attachment_link', true));
@@ -243,7 +243,7 @@ class Metabox_Product
         update_post_meta($post_id, '_stock_unit', empty($_POST['_stock_unit']) ? "pcs" : sanitize_text_field($_POST['_stock_unit']));
 
         // Product Type
-        update_post_meta($post_id, '_product_type', empty($_POST['_type']) ? "physical" : sanitize_text_field($_POST['_type']));
+        update_post_meta($post_id, '_product_type', empty($_POST['_product_type']) ? "physical" : sanitize_text_field($_POST['_product_type']));
 
         // Digital Property
         update_post_meta($post_id, '_attachment_link', sanitize_text_field($_POST['_attachment_link']));

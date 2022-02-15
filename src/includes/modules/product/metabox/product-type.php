@@ -9,10 +9,13 @@
                     <span class="asterix">*</span>
                 </label>
                 <div class="form-group-body">
-                    <select class="form-select full" id="lokuswp-product-type" name="_type">
+                    <select class="form-select full" id="lokuswp-product-type" name="_product_type">
                         <option selected="selected" value="physical"><?php _e("Physical Product", 'lwpcommerce'); ?></option>
                         <option value="digital"><?php _e("Digital Product", 'lwpcommerce'); ?></option>
                     </select>
+                    <script>
+                        document.querySelector("#lokuswp-product-type option[value='<?php echo $args['product_type'] ?>']").setAttribute('selected',true);
+                    </script>
                 </div> <!-- .form-group-body -->
             </div> <!-- .form-group -->
             <div class="tab-content">
