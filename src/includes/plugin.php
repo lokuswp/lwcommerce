@@ -33,6 +33,8 @@ class Plugin
 		require_once LWPC_PATH . 'src/includes/modules/shipping/api/class-rajaongkir-api.php';
 		require_once LWPC_PATH . 'src/includes/modules/shipping/api/class-get-shipping-list.php';
 
+
+	include_once LWPC_PATH . 'src/includes/hook.php';
 		add_action('plugins_loaded', [$this, 'load_modules']);
 
 		// // Administration / BackOffice
