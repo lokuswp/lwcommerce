@@ -3,93 +3,102 @@
 
     <form class="full-height">
 
-        <h6 style="margin-bottom:12px;" class="text-primary"><?php _e('Digital Shipping Channel', 'lokuswp'); ?></h6>
-
-        <div class="row">
-            <div class="col-sm-6 col-xs-12 gutter swiper-no-swiping">
-
-                <div class="lsdp-form-group">
-                    <div class="item-radio">
-                        <input type="radio" name="email_courier" id="" checked>
-                        <label for="email">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                <polyline points="22,6 12,13 2,6"></polyline>
-                            </svg>
-                            <h6>Email</h6>
-                        </label>
-                    </div>
-                </div>
-
-            </div>
-            <!-- <div class="col-sm-6 col-xs-12 gutter swiper-no-swiping">
-
-                <div class="lsdp-form-group">
-                    <div class="item-radio">
-                        <input type="radio" name="whatsapp_courier" id="" checked>
-                        <label for="email">
-                            <img style="width:26px;" src="https://senderpad.com/wp-content/uploads/2021/11/senderpad.png" alt="">
-                            <h6>Whatsapp</h6>
-                        </label>
-                    </div>
-                </div>
-
-            </div> -->
-        </div>
-
-        <h6 style="margin-bottom:12px;" class="text-primary"><?php _e('Physical Shipping Channel', 'lokuswp'); ?></h6>
-
         <?php
-        $state_selected = 3;
-        $request = wp_remote_get('http://lokuswp.local/wp-json/lokuswp/v1/rajaongkir/province');
+        $cart = isset($_COOKIE['lokuswp_cart']) ? json_decode(stripslashes($_COOKIE['lokuswp_cart'])) : array();
 
-        if (is_wp_error($request)) {
-            return false; // Bail early
+        $digital_shipping = false;
+        $physical_shipping = false;
+
+        foreach ($cart->items as $key => $item) {
+            if (get_post_meta($item->post_id, '_product_type', true) == 'digital') {
+                $digital_shipping = true;
+            }
+
+            if (get_post_meta($item->post_id, '_product_type', true) == 'physical') {
+                $physical_shipping = true;
+            }
         }
-
-        $body = wp_remote_retrieve_body($request);
-        $states = json_decode($body)->data;
-
-        $request2 = wp_remote_get('http://lokuswp.local/wp-json/lokuswp/v1/rajaongkir/city?province=3');
-
-        if (is_wp_error($request2)) {
-            return false; // Bail early
-        }
-
-        $body = wp_remote_retrieve_body($request2);
-        $cities = json_decode($body)->data;
-
-
         ?>
-        <input type="text" id="country" value="ID" class="hidden">
 
-        <div class="row">
-            <div class="col-sm-6 gutter">
+        <?php if ($digital_shipping) : ?>
+            <h6 style="margin-bottom:12px;" class="text-primary"><?php _e('Digital Shipping', 'lwpcommerce'); ?></h6>
 
-                <div class="form-group">
-                    <select class="form-control custom-select swiper-no-swiping shipping-reset" id="states">
-                        <?php foreach ($states as $key => $state) : ?>
-                            <option value="<?php echo $state->province_id; ?>" <?php echo ($state->province_id == $state_selected) ? 'selected' : ''; ?>><?php echo $state->province; ?></option>
-                        <?php
-                        endforeach; ?>
-                    </select>
-                </div>
+            <div class="row">
+                <div class="col-sm-6 col-xs-12 gutter swiper-no-swiping">
 
-            </div>
-            <div class="col-sm-6 gutter">
-                <div class="form-group">
-
-                    <select class="form-control custom-select swiper-no-swiping shipping-reset" id="cities">
-                        <option value=""><?php _e("Pilih Kota", 'lokuswp'); ?></option>
-                        <?php foreach ($cities as $key => $city) : ?>
-                            <option value="<?php echo $city->city_id; ?>"><?php echo $city->type . ' ' . $city->city_name; ?></option>
-                        <?php endforeach; ?>
-                    </select>
+                    <div class="lokuswp-form-group">
+                        <div class="item-radio">
+                            <input type="radio" name="email_courier" id="" checked>
+                            <label class="svg-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                                <span>Email</span>
+                            </label>
+                        </div>
+                    </div>
 
                 </div>
             </div>
-            <!-- RajaOngkir Pro -->
-            <!-- <div class="col-sm-12 gutter">
+        <?php endif; ?>
+
+        <?php if ($physical_shipping) : ?>
+            <h6 style="margin-bottom:12px;" class="text-primary"><?php _e('Physical Shipping', 'lwpcommerce'); ?></h6>
+
+            <?php
+            // $state_selected = 3;
+            // $request = wp_remote_get('http://lwpcommerce.local/wp-json/lwpcommerce/v1/rajaongkir/province');
+
+            // if (is_wp_error($request)) {
+            //     return false; // Bail early
+            // }
+
+            // $body = wp_remote_retrieve_body($request);
+            // $states = json_decode($body)->data;
+
+            // $request2 = wp_remote_get('http://lwpcommerce.local/wp-json/lwpcommerce/v1/rajaongkir/city?province=3');
+
+            // if (is_wp_error($request2)) {
+            //     return false; // Bail early
+            // }
+
+            // $body = wp_remote_retrieve_body($request2);
+            // $cities = json_decode($body)->data;
+
+            $states  = [];
+            $cities  = [];
+
+            ?>
+            <input type="text" id="country" value="ID" class="hidden">
+
+            <div class="row">
+                <div class="col-sm-6 gutter">
+
+                    <div class="form-group">
+                        <select class="form-control custom-select swiper-no-swiping shipping-reset" id="states">
+                            <?php foreach ($states as $key => $state) : ?>
+                                <option value="<?php echo $state->province_id; ?>" <?php echo ($state->province_id == $state_selected) ? 'selected' : ''; ?>><?php echo $state->province; ?></option>
+                            <?php
+                            endforeach; ?>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="col-sm-6 gutter">
+                    <div class="form-group">
+
+                        <select class="form-control custom-select swiper-no-swiping shipping-reset" id="cities">
+                            <option value=""><?php _e("Pilih Kota", 'lwpcommerce'); ?></option>
+                            <?php foreach ($cities as $key => $city) : ?>
+                                <option value="<?php echo $city->city_id; ?>"><?php echo $city->type . ' ' . $city->city_name; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+
+                    </div>
+                </div>
+                <!-- RajaOngkir Pro -->
+                <!-- <div class="col-sm-12 gutter">
 
                 <div class="form-group">
                     <select name="" class="form-control custom-select">
@@ -102,16 +111,18 @@
                 </div>
 
             </div> -->
-        </div>
+            </div>
 
-        <!-- Shipping Options -->
-        <section id="lwpcommerce-shipping-channel">
-        </section>
+            <!-- Shipping Options -->
+            <section id="lwpcommerce-shipping-channel">
+            </section>
+
+        <?php endif; ?>
 
     </form>
 
     <div class="bottom">
-        <button class="lwp-btn lsdc-btn btn-primary btn-block swiper-no-swiping">
+        <button id="verify-shipping" class="lwp-btn lokus-btn btn-primary btn-block swiper-no-swiping">
             <div class="icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin-top:-4px;" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>

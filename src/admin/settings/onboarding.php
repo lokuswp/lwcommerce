@@ -1,3 +1,4 @@
+- Check Backbone
 - Setting Toko
 - Setting Jenis Usaha
 - Setting Input Produk

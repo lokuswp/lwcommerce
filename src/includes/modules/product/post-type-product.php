@@ -147,8 +147,8 @@ class Post_Type_Product
             'cb' => $columns['cb'],
             'image' => __('Image'),
             'title' => __('Title'),
-            'price' => __('Harga', 'lwpcommerce'),
-            'stock' => __('Stok', 'lwpcommerce'),
+            'price' => __('Pirce', 'lwpcommerce'),
+            'stock' => __('Stock', 'lwpcommerce'),
             'id' => __('ID'),
             'date' => $columns['date'],
         );
@@ -178,12 +178,12 @@ class Post_Type_Product
 
         if ('stock' === $column) {
             if (get_post_meta($post_id, '_stock', true) > 999) {
-                _e('Tersedia', 'lwpcommerce');
+                _e('Available', 'lwpcommerce');
                 return;
             }
 
             if (get_post_meta($post_id, '_stock', true) == 0) {
-                _e('Kosong', 'lwpcommerce');
+                _e('Out of Stock', 'lwpcommerce');
                 return;
             }
 
@@ -191,17 +191,8 @@ class Post_Type_Product
         }
 
         if ('price' === $column) {
-            if (lwpc_get_price($post_id) == 0) {
-                _e('Gratis', 'lwpcommerce');
-                return;
-            }
 
-            if (lwpc_get_discount_price($post_id)) {
-                echo '<span style="text-decoration: line-through">' . lwp_currency_format(true, lwpc_get_price($post_id)) .  '</span><br>';
-                echo lwp_currency_format(true, lwpc_get_discount_price($post_id));
-            } else {
-                echo lwp_currency_format(true, lwpc_get_price($post_id));
-            }
+            lwpc_get_price_html();
         }
 
     ?>

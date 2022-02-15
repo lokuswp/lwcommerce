@@ -1,0 +1,1 @@
+<p style="text-align:center; margin:30px auto;">Powered LWPCommerce</p>

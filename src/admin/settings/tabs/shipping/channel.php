@@ -1,11 +1,13 @@
 <!-- Skelton UI -->
 
 <div class="container columns col-gapless header">
-    <div class="column col-3"><?php _e('Name', 'lokuswp'); ?></div>
-    <div class="column col-2 text-center"><?php _e('Zone', 'lokuswp'); ?></div>
-    <div class="column col-2 text-center"><?php _e('Status', 'lokuswp'); ?></div>
-    <div class="column col-2 text-center"><?php _e('Type', 'lokuswp'); ?></div>
-    <div class="column col text-right"><?php _e('Action', 'lokuswp'); ?></div>
+    <div class="column col-3"><?php _e('Name', 'lwpcommerce'); ?></div>
+    <div class="column col-2 text-center">
+        <?php //_e('Zone', 'lwpcommerce'); ?>
+    </div>
+    <div class="column col-2 text-center"><?php _e('Status', 'lwpcommerce'); ?></div>
+    <div class="column col-2 text-center"><?php _e('Type', 'lwpcommerce'); ?></div>
+    <div class="column col text-right"><?php _e('Action', 'lwpcommerce'); ?></div>
 </div>
 
 <?php
@@ -38,11 +40,11 @@ $shipping_active = lwp_get_option("shipping_active");
                         </div>
 
                         <!-- Zone -->
-                        <div class="column col-2 method text-center">
+                        <div class="column col-2 method text-center" style="padding-top: 8px;">
 
-                            <?php foreach ($shipping_data->zone as $key => $zone) : ?>
+                            <!-- <?php foreach ($shipping_data->zone as $key => $zone) : ?>
                                 <span class="label label-rounded label-primary"><?php esc_attr_e(ucfirst($zone)); ?></span>
-                            <?php endforeach; ?>
+                            <?php endforeach; ?> -->
                         </div>
 
 
@@ -52,7 +54,7 @@ $shipping_active = lwp_get_option("shipping_active");
 
                                 <label class="form-switch">
                                     <input type="checkbox" id="<?php echo $shipping_id; ?>" <?php echo ($shipping_obj->get_status() == 'on') ? 'checked' : ''; ?>>
-                                    <i class="form-icon"></i> <?php _e('Active', 'lokuswp'); ?>
+                                    <i class="form-icon"></i> <?php _e('Active', 'lwpcommerce'); ?>
                                 </label>
 
                             </div>
@@ -60,25 +62,29 @@ $shipping_active = lwp_get_option("shipping_active");
 
                         <!-- Jenis -->
                         <div class="column col-2 method  text-center">
-                            <h6><?php esc_attr_e(ucfirst($shipping_data->type)) ?></h6>
+                            <h6 style="padding-top: 8px;"><?php esc_attr_e(ucfirst($shipping_data->type)) ?></h6>
                         </div>
 
                         <!-- Manage Button -->
                         <div class="column text-right">
-                            <button class="btn lwp-payment-manage" id="<?php echo $shipping_id; ?>">
-                                <?php _e('Manage', 'lokuswp'); ?>
+                            <button class="btn lwp-payment-manage" id="<?php echo $shipping_id; ?>" disabled>
+                                <?php _e('Manage', 'lwpcommerce'); ?>
                             </button>
                         </div>
 
                     </div>
 
                     <!-- Services -->
-                    <div class="services-bar" style="width:100%;border-top:1px solid #ddd;padding-top:8px;">
-                        <?php _e('Services', 'lokuswp'); ?> :
+                    <div class="services-bar" style="width:100%;border-top:1px solid #ddd;">
+                        <?php _e('Services', 'lwpcommerce'); ?> :
                         <?php foreach ($shipping_data->package as $key => $package) : ?>
 
-                            <input type="checkbox" id="<?php esc_attr_e($key) ?>" class="lwpc_shipping_package_status" value="<?php esc_attr_e($key) ?>" <?= ($package === 'on') ? 'checked' : '' ?> data-action="<?= $shipping_id ?>">
-                            <label for="<?php esc_attr_e($key) ?>"><?php esc_attr_e($key) ?></label>
+                            <label class="form-checkbox">
+                                <input type="checkbox" checked=""><i class="form-icon"></i><?php esc_attr_e(ucfirst($key)) ?>
+                            </label>
+
+                            <!-- <input type="checkbox" id="<?php esc_attr_e($key) ?>" class="lwpc_shipping_package_status" value="<?php esc_attr_e($key) ?>" <?= ($package === 'on') ? 'checked' : '' ?> data-action="<?= $shipping_id ?>"> -->
+
 
                         <?php endforeach; ?>
                     </div>
@@ -102,7 +108,16 @@ $shipping_active = lwp_get_option("shipping_active");
 
 
                         .shipping-channel .services-bar {
-                            padding: 0 12px 8px;
+                            padding: 0 12px 0;
+                        }
+
+                        .label.label-primary {
+                            padding: 3px 17px;
+                        }
+
+                        .form-checkbox{
+                            display: inline-block;
+                            margin-left: 4px;
                         }
                     </style>
                 </li>

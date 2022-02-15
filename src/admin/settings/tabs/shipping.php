@@ -20,13 +20,13 @@ class Shipping_Admin {
 
             <div class="tab-nested">
                 <input type="radio" name="tab" id="tab1" checked="checked"/>
-                <label class="tab-item" for="tab1">Channel</label>
+                <label class="tab-item" for="tab1"><?php _e( "Channel", "lwpcommerce" ); ?></label>
 
-                <input type="radio" name="tab" id="tab2"/>
-                <label class="tab-item" for="tab2">Zone</label>
+                <!-- <input type="radio" name="tab" id="tab2"/>
+                <label class="tab-item" for="tab2">Zone</label> -->
 
                 <input type="radio" name="tab" id="tab3"/>
-                <label class="tab-item" for="tab3">RajaOngkir</label>
+                <label class="tab-item" for="tab3"><?php _e( "RajaOngkir", "lwpcommerce" ); ?></label>
 
                 <div class="tab-body-component">
                     <div id="tab-body-1" class="tab-body">

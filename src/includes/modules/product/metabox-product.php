@@ -5,22 +5,15 @@ namespace LokusWP\Commerce\Modules\Product;
 if (!defined('WPTEST')) {
     defined('ABSPATH') or die("Direct access to files is prohibited");
 }
-
-/**
- * Metabox : Product Data
- * For Manage Product Data
- * - Price
- * - Stock
- * - Type
- */
 class Metabox_Product
 {
     public function __construct()
     {
         add_filter('add_meta_boxes', [$this, 'metabox_register'], 0);
+        add_filter('admin_post_thumbnail_html', [$this, 'thumbnail_recommendation'], 10, 3);
+
         add_action('save_post', [$this, 'metabox_save']);
         add_action('new_to_publish', [$this, 'metabox_save']);
-        add_filter('admin_post_thumbnail_html', [$this, 'thumbnail_recommendation'], 10, 3);
     }
 
     /**
@@ -48,15 +41,6 @@ class Metabox_Product
             'product-metabox',
             __('Product Data', 'lwpcommerce'),
             [$this, 'metabox_product_data'],
-            'product',
-            'normal',
-            'high'
-        );
-
-        add_meta_box(
-            'product-format',
-            __('Product Format', 'lwpcommerce'),
-            [$this, 'metabox_product_format'],
             'product',
             'normal',
             'high'
@@ -166,30 +150,61 @@ class Metabox_Product
                 top: 0;
                 opacity: 1
             }
-
         </style>
 
-    <?php
+<?php
     }
 
     public function metabox_product_data()
     {
         global $post;
-        wp_nonce_field(basename(__FILE__), 'lwpc_admin_nonce'); 
+        wp_nonce_field(basename(__FILE__), 'lwpc_admin_nonce');
 
+        // Product Data
         $price_normal = get_post_meta($post->ID, '_price_normal', true) == null ? null : lwp_currency_format(false, lwpc_get_normal_price($post->ID));
-        $price_discount = get_post_meta($post->ID, '_price_discount', true) == null ? null : lwp_currency_format(false, lwpc_get_discount_price($post->ID));
+        $price_promo = get_post_meta($post->ID, '_price_promo', true) == null ? null : lwp_currency_format(false, lwpc_get_promo_price($post->ID));
+
+        $stock_type = get_post_meta($post->ID, '_stock_type', true) == null ? null : esc_attr(get_post_meta($post->ID, '_stock_type', true));
+        $sku_code = get_post_meta($post->ID, '_sku_code', true) == null ? null : esc_attr(get_post_meta($post->ID, '_sku_code', true));
+        $stock = get_post_meta($post->ID, '_stock', true) == null ? null : abs(get_post_meta($post->ID, '_stock', true));
+        $stock_unit = get_post_meta($post->ID, '_stock_unit', true) == null ? null : esc_attr(get_post_meta($post->ID, '_stock_unit', true));
 
         $product_data_args = [
             'price_normal' => $price_normal,
-            'price_discount' => $price_discount,
+            'price_promo' => $price_promo,
+            'stock_type' => $stock_type,
+            'sku_code' => $sku_code,
+            'stock' => $stock,
+            'stock_unit' => $stock_unit,
         ];
-        $product_type_args = [];
+
         $metabox_data = __DIR__ . '/metabox/product-data.php';
-        $metabox_type = __DIR__ . '/metabox/product-type.php';
-
-
         load_template($metabox_data, true, $product_data_args);
+
+
+        // Product Type
+        $product_type = get_post_meta($post->ID, '_product_type', true) == null ? null : esc_attr(get_post_meta($post->ID, '_product_type', true));
+
+        // Digital
+        $attachment_link = get_post_meta($post->ID, '_attachment_link', true) == null ? null : esc_url(get_post_meta($post->ID, '_attachment_link', true));
+        $attachment_version = get_post_meta($post->ID, '_attachment_version', true) == null ? null : esc_attr(get_post_meta($post->ID, '_attachment_version', true));
+
+        // Physical
+        $weight = get_post_meta($post->ID, '_weight', true) == null ? null : intval(get_post_meta($post->ID, '_weight', true));
+        $length = get_post_meta($post->ID, '_length', true) == null ? null : intval(get_post_meta($post->ID, '_length', true));
+        $width = get_post_meta($post->ID, '_width', true) == null ? null : intval(get_post_meta($post->ID, '_width', true));
+        $height = get_post_meta($post->ID, '_height', true) == null ? null : intval(get_post_meta($post->ID, '_height', true));
+
+        $product_type_args = [
+            'product_type' => $product_type,
+            'attachment_link' => $attachment_link,
+            'attachment_version' => $attachment_version,
+            'weight' => $weight,
+            'length' => $length,
+            'width' => $width,
+            'height' => $height,
+        ];
+        $metabox_type = __DIR__ . '/metabox/product-type.php';
         load_template($metabox_type, true, $product_type_args);
     }
 
@@ -211,30 +226,34 @@ class Metabox_Product
 
         if ('product' == $_POST['post_type']) // Checking Posttype
         {
-            if (!current_user_can('edit_page', $post_id)) {
+            if (!current_user_can('edit_page', $post_id)) {  // Check Permission Role
                 return 'cannot edit page';
             }
-        } else if (!current_user_can('edit_post', $post_id)) {
+        } else if (!current_user_can('edit_post', $post_id)) { // Check Permission Role
             return 'cannot edit post';
         }
 
-        update_post_meta($post_id, '_price_normal', lwp_currency_to_number($_POST['price_normal']));
-        update_post_meta($post_id, '_price_discount', lwp_currency_to_number($_POST['price_discount']));
+        // Pricing
+        update_post_meta($post_id, '_price_normal', empty($_POST['_price_normal']) ? 0 : lwp_currency_to_number($_POST['_price_normal']));
+        update_post_meta($post_id, '_price_promo', empty($_POST['_price_promo']) ? null : lwp_currency_to_number($_POST['_price_promo']));
 
-        update_post_meta($post_id, '_stock', empty($_POST['stock']) ? 1 : abs(sanitize_text_field($_POST['stock'])));
-        update_post_meta($post_id, '_stock_unit', sanitize_text_field($_POST['stock_unit']));
-        update_post_meta($post_id, '_min_purchase', intval($_POST['min_purchase']));
-        update_post_meta($post_id, '_max_purchase', intval($_POST['max_purchase']));
+        // Stock
+        update_post_meta($post_id, '_sku_code', empty($_POST['_sku_code']) ? null : sanitize_text_field($_POST['_sku_code']));
+        update_post_meta($post_id, '_stock', empty($_POST['_stock']) ? 0 : abs($_POST['_stock']));
+        update_post_meta($post_id, '_stock_unit', empty($_POST['_stock_unit']) ? "pcs" : sanitize_text_field($_POST['_stock_unit']));
 
-        // update_post_meta($post_id, '_shipping_type', sanitize_text_field($_POST['shipping_tabs']));
-        // update_post_meta($post_id, '_product_type', sanitize_text_field($_POST['shipping_tabs']));
+        // Product Type
+        update_post_meta($post_id, '_product_type', empty($_POST['_product_type']) ? "physical" : sanitize_text_field($_POST['_product_type']));
 
-        // Digital
-        // update_post_meta($post_id, '_digital_file_url', sanitize_text_field($_POST['digital_file_url']));
-        // update_post_meta($post_id, '_digital_file_version', isset($_POST['digital_file_version']) && $_POST['digital_file_version'] != null ? sanitize_text_field($_POST['digital_file_version']) : '1.0.0');
+        // Digital Property
+        update_post_meta($post_id, '_attachment_link', sanitize_text_field($_POST['_attachment_link']));
+        update_post_meta($post_id, '_attachment_version', sanitize_text_field($_POST['_attachment_version']));
 
-        // // Physical
-        // update_post_meta($post_id, '_physical_weight', lwpbb_set_currency_to_number($_POST['physical_weight']));
-        // update_post_meta($post_id, '_physical_volume', lwpbb_set_currency_to_number($_POST['physical_volume']));
+        // Physical Property
+        update_post_meta($post_id, '_weight', empty($_POST['_weight']) ? 0 : abs($_POST['_weight']));
+        update_post_meta($post_id, '_length', empty($_POST['_length']) ? 0 : abs($_POST['_length']));
+        update_post_meta($post_id, '_width', empty($_POST['_width']) ? 0 : abs($_POST['_width']));
+        update_post_meta($post_id, '_height', empty($_POST['_height']) ? 0 : abs($_POST['_height']));
+        update_post_meta($post_id, '_volume', abs($_POST['_length']) * abs($_POST['_width']) * abs($_POST['_height']));
     }
 }
