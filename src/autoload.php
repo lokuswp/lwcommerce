@@ -23,8 +23,6 @@ spl_autoload_register(function ($classname) {
 	if (file_exists($classpath)) {
 		include_once $classpath;
 	}
-
-	include_once LWPC_PATH . 'src/includes/hook.php';
 });
 
 class Boot
@@ -87,4 +85,10 @@ class Boot
 		}
 	}
 }
-new BOOT;
+
+
+if (defined('WPTEST')) {
+	new LokusWP\Commerce\Plugin();
+} else {
+	new BOOT;
+}
