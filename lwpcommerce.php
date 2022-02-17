@@ -2,7 +2,7 @@
 
 /**
  * @wordpress-plugin
- * 
+ *
  * Plugin Name:       LWPCommerce - BETA
  * Plugin URI:        https://lokuswp.id/plugin/lwpcommerce
  * Description:       Jual Beli Online jadi Menyenangkan
@@ -16,10 +16,9 @@
  */
 
 
-
 // Checking Test Env and Direct Access File
 if (!defined('WPTEST')) {
-  defined('ABSPATH') or die("Direct access to files is prohibited");
+	defined('ABSPATH') or die("Direct access to files is prohibited");
 }
 
 /**
@@ -38,36 +37,3 @@ defined('LWPC_STRING_TEXT') or define('LWPC_STRING_TEXT', '0.0.1'); // String Ve
 
 // Autoload
 require_once LWPC_PATH . 'src/autoload.php';
-
-
-function lwpc_cart_data_processing($data)
-{
-
-  $item_id = $data['post_id'];
-  $variation_id = $data['variation_id'];
-  $data['price_normal']   = get_post_meta(!empty($variation_id) ? $variation_id : $item_id, '_price_normal', true) ?? '';
-  $data['price_promo']    = get_post_meta(!empty($variation_id) ? $variation_id : $item_id, '_price_promo', true) ?? '';
-  $data['weight']         = get_post_meta(!empty($variation_id) ? $variation_id : $item_id, '_weight', true) ?? '';
-  $data['stock']          = get_post_meta(!empty($variation_id) ? $variation_id : $item_id, '_stock', true) ?? '';
-  $data['stock_unit']     = get_post_meta($item_id, '_stock_unit', true) ?? '';
-
-  // Not Yet Support Variation
-  $data['calc_price']     = lwpc_get_price( $item_id );
-
-  return $data;
-}
-add_filter('lokuswp/cart/data', 'lwpc_cart_data_processing');
-
-
-function lwpc_pro_cart_data_processing($data)
-{
-
-  $item_id = $data['post_id'];
-  $variation_id = $data['variation_id'];
-  $data['max_purchase']   = get_post_meta($item_id, '_max_purchase', true) ?? '';
-  $data['min_purchase']   = get_post_meta($item_id, '_min_purchase', true) ?? '';
-  $data['variation']     = $variation_id !== null ? $variation->post_excerpt : '';
-
-  return $data;
-}
-add_filter('lokuswp/cart/data', 'lwpc_pro_cart_data_processing');
