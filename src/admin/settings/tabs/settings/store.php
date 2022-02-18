@@ -9,7 +9,9 @@ $whatsapp = lwpc_get_settings('store', 'whatsapp');
 $address            = lwpc_get_settings('store', 'address');
 $country_selected   = lwpc_get_settings('store', 'country');
 $state_selected     = lwpc_get_settings('store', 'state', 'intval');
+$city_selected      = lwpc_get_settings('store', 'city', 'intval');
 $district_selected  = lwpc_get_settings('store', 'district', 'intval');
+
 $latitude           = lwpc_get_settings('store', 'latitude', 'floatval');
 $longitude          = lwpc_get_settings('store', 'longitude', 'floatval');
 
@@ -19,6 +21,24 @@ $categories = [
     'electronics' => __('Electronics, Computer', "lwpcommerce"),
     'fnb' => __('Food and Drink', "lwpcommerce"),
 ];
+
+// Get Data Province
+$request = wp_remote_get(get_rest_url() . 'lwpcommerce/v1/rajaongkir/province');
+
+if (is_wp_error($request)) {
+    return false; // Bail early
+}
+$body = wp_remote_retrieve_body($request);
+$states = json_decode($body)->data;
+
+
+$request2 = wp_remote_get( get_rest_url() . 'lwpcommerce/v1/rajaongkir/city?province=' . $state_selected);
+if (is_wp_error($request2)) {
+    return false; // Bail early
+}
+$body = wp_remote_retrieve_body($request2);
+$cities = json_decode($body)->data;
+
 ?>
 
 <section id="settings" class="form-horizontal">
@@ -52,7 +72,7 @@ $categories = [
                 <label class="form-label" for="description"><?php _e('Description', 'lwpcommerce'); ?></label>
             </div>
             <div class="col-5 col-sm-12">
-                <textarea class="form-input" name="description" placeholder="<?php _e("The best online shop ever", "lwpcommerce"); ?>" rows="3"><?php echo $desc; ?></textarea>
+                <input type="text" class="form-input" name="description" placeholder="<?php _e("The best online shop ever", "lwpcommerce"); ?>" value="<?php echo $desc; ?>" />
             </div>
         </div>
 
@@ -112,7 +132,6 @@ $categories = [
         </div>
 
         <!-- State -->
-        <?php $states = array(); ?>
         <div class="form-group hidden">
             <div class="col-3 col-sm-12">
                 <label class="form-label" for="state"><?php _e('State', 'lwpcommerce'); ?></label>
@@ -120,6 +139,9 @@ $categories = [
             <div class="col-5 col-sm-12">
                 <select class="form-select" name="state" id="form-state">
                     <option value="<?= $state_selected ?? '' ?>"><?php _e('Choose your state', 'lwpcommerce'); ?></option>
+                    <?php foreach ($states as $key => $state) : ?>
+                        <option value="<?php echo $state->province_id; ?>" <?php echo ($state->province_id == $state_selected) ? 'selected' : ''; ?>><?php echo $state->province; ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
         </div>
@@ -131,8 +153,11 @@ $categories = [
             </div>
 
             <div class="col-5 col-sm-12">
-                <select class="form-select" name="city" id="form-city">
+                <select class="form-select" name="city">
                     <option value="<?= $city_selected ?? '' ?>"><?php _e('Choose your city', 'lwpcommerce'); ?></option>
+                    <?php foreach ($cities as $key => $city) : ?>
+                        <option value="<?php echo $city->city_id; ?>" <?php echo ($city->city_id == $city_selected) ? 'selected' : ''; ?>><?php echo $city->type . ' ' . $city->city_name; ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
         </div>

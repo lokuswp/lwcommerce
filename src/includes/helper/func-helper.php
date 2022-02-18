@@ -16,6 +16,10 @@ function lwpc_get_price($post_id)
 	$_price_promo = lwpc_get_promo_price($post_id);
 	$_price_normal = lwpc_get_normal_price($post_id);
 
+	if( $_price_promo == null ) {
+		return $_price_normal;
+	}
+
 	if ($_price_promo < $_price_normal) {
 		return $_price_promo;
 	} else {
@@ -31,12 +35,12 @@ function lwpc_get_price_html()
 	$_price_promo = lwpc_get_promo_price($post_id);
 
 	if ($_price_normal == 0) {
-		$html = '<span style="display:block">' . __("Free", "lwpcommerce") . '</span>';
+		$html = '<span>' . __("Free", "lwpcommerce") . '</span>';
 	} else if ($_price_normal > 0 && $_price_promo == 0 ) {
-		$html = '<span style="display:block">' . lwp_currency_format(true, $_price_normal) . '</span>';
+		$html = '<span>' . lwp_currency_format(true, $_price_normal) . '</span>';
 	} else {
-		$html = '<small style="display:block"><strike>' . lwp_currency_format(true, $_price_normal) . '</strike></small>';
-		$html .= '<span style="display:block">' . lwp_currency_format(true, $_price_promo) . '</span>';
+		$html = '<small><strike>' . lwp_currency_format(true, $_price_normal) . '</strike></small>';
+		$html .= '<span>' . lwp_currency_format(true, $_price_promo) . '</span>';
 	}
 	echo ($html);
 }

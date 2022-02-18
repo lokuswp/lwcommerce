@@ -3,6 +3,7 @@
 namespace LokusWP\Commerce;
 
 use LokusWP\Admin\Tabs;
+use LokusWP\Admin\Shortcode_Lists;
 
 
 if (!defined('WPTEST')) {
@@ -320,10 +321,10 @@ class Admin
 
 		// Add Shortcode List to wp-admin > lwpcommerce > Appearence
 		// require_once LWPC_PATH . 'backend/admin/class-shortcode-lists.php';
-		// Admin\Shortcode_Lists::addShortcodeList( $this->slug, $this->name, array(
-		//     ['shortcode' => '[lwpcommerce_storefront]', 'description' => __("Menampilkan Etalase", 'lwpcommerce')],
-		//     ['shortcode' => '[lwpcommerce_checkout]', 'description' => __("Menampilkan Pembayaran", 'lwpcommerce')],
-		// ));
+		Shortcode_Lists::add_shortcode_list( "lwpcommerce", $this->slug, $this->name, array(
+		    ['shortcode' => '[lwpcommerce_storefront]', 'description' => __("Display Storefront List", 'lwpcommerce')],
+		    ['shortcode' => '[lwpcommerce_customer_area]', 'description' => __("Display Customer Area", 'lwpcommerce')],
+		));
 
 		// // Add Switch Options to wp-admin > lwpcommerce > Appearence
 		// require_once LWPC_PATH . 'backend/admin/class-switch-options.php';

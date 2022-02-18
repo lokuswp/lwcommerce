@@ -67,7 +67,7 @@ class Frontend
     public function enqueue_styles()
     {
         // // Load Theme CSS
-        // wp_register_style('lsdd-theme', plugins_url('/public/assets/css/tm.css', LSDD_BASE), array(), $this->version, 'all');
+        wp_enqueue_style('lwc-skin', plugins_url('/src/public/assets/css/skin.css', LWPC_BASE), array(), $this->version, 'all');
         // wp_register_style('lsdd-listing', plugins_url('/public/assets/css/listing.css', LSDD_BASE), array(), $this->version, 'all');
         // wp_register_style('lsdd-payment', plugins_url('/public/assets/css/payment.css', LSDD_BASE), array(), $this->version, 'all');
         // wp_register_style('lsdd-thankyou', plugins_url('/public/assets/css/thankyou.css', LSDD_BASE), array(), $this->version, 'all');
