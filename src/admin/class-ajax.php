@@ -311,8 +311,8 @@ class AJAX {
 				foreach ( $data[ $key ]->product as $index => $value ) {
 					$data[ $key ]->product[ $index ]->image          = get_the_post_thumbnail_url( $value->ID, 'thumbnail' );
 					$data[ $key ]->product[ $index ]->price          = lwpbb_set_currency_format( true, get_post_meta( $value->ID, '_price_normal', true ) );
-					$data[ $key ]->product[ $index ]->price_discount = get_post_meta( $value->ID, '_price_discount', true ) ? lwpbb_set_currency_format( true,
-						get_post_meta( $value->ID, '_price_discount', true ) ) : null;
+					$data[ $key ]->product[ $index ]->price_promo = get_post_meta( $value->ID, '_price_promo', true ) ? lwpbb_set_currency_format( true,
+						get_post_meta( $value->ID, '_price_promo', true ) ) : null;
 				}
 			}
 

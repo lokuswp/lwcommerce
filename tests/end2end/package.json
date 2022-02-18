@@ -2,5 +2,8 @@
     "scripts": {
         "cy:run:local": "cypress open --config-file lwp-local-config.json",
         "cy:run:beta": "cypress open --config-file lwp-beta-config.json"
+    },
+    "dependencies": {
+        "cypress": "^9.5.0"
     }
 }

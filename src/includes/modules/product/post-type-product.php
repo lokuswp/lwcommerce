@@ -206,6 +206,14 @@ class Post_Type_Product
             .column-stock {
                 width: 13%;
             }
+
+            .column-price small{
+                display: block;
+            }
+
+            .widefat td, .widefat th{
+                vertical-align: middle;
+            }
         </style>
 <?php
     }

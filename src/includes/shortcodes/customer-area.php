@@ -17,7 +17,9 @@ class Customer_Area
         // extract(shortcode_atts(array(
         //     'product_ids' => false,
         // ), $atts));
+        wp_enqueue_style("lokuswp-swiper");
 
+        wp_enqueue_script("lokuswp-swiper");
         wp_enqueue_style("lokuswp-grid");
 
         ob_start();

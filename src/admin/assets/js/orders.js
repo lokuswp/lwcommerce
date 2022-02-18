@@ -137,7 +137,7 @@
                                                 <img src="${item.image || 'https://i.pinimg.com/originals/a6/e8/d6/a6e8d6c8122c34de94463e071a4c7e45.png'}" alt="gedung" width="100px" height="100px" style="margin-right: 0.5rem">
                                                 <div class="lwpc-flex-column">
                                                     <span class="lwpc-text-bold">${item.post_title.escapeHtml()}</span>
-                                                    <span class="lwpc-text-bold">${item.quantity.escapeHtml()} x ${item.price_discount !== null ? `<del class="del">${item.price.escapeHtml()}</del> ${item.price_discount.escapeHtml()}` : item.price.escapeHtml()}</span>
+                                                    <span class="lwpc-text-bold">${item.quantity.escapeHtml()} x ${item.price_promo !== null ? `<del class="del">${item.price.escapeHtml()}</del> ${item.price_promo.escapeHtml()}` : item.price.escapeHtml()}</span>
                                                     <span class="lwpc-text-secondary">"${item.note.escapeHtml().length > 20 ? item.note.escapeHtml().slice(0, 20) + '...' : item.note.escapeHtml()}"</span>
                                                     ${data.product.length > 1 ? `<a style="color: #0EBA29; margin-top: 10px" class="lwpc-hover more-product">Lihat ${data.product.length - 1} Produk Lainya...</a>` : ``}
                                                 </div>

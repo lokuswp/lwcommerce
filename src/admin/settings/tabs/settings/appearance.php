@@ -1,3 +1,13 @@
+<?php
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+use LokusWP\Admin\Shortcode_Lists;
+
+?>
+
 <div class="entry columns col-gapless">
 
     <!-- Appearance Switch Options -->
@@ -18,6 +28,8 @@
         <a class="btn btn-primary " target="_blank" href="">
             <?php _e('Learn Shortcode', 'lwpcommerce'); ?>
         </a>
+        <?php Shortcode_Lists::render("lokuswp"); ?>
+        <?php Shortcode_Lists::render("lwpcommerce"); ?>
     </section>
 
 </div>

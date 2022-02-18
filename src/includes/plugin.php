@@ -51,8 +51,6 @@ class Plugin
 
 		// Register custom meta table
 		$this->register_custom_meta_table();
-
-		// var_dump(lwpc_get_price(5));
 	}
 
 	/**

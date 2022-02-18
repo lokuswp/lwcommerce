@@ -9,13 +9,16 @@ class Rajaongkir_API {
 	}
 
 	public function register() {
-		register_rest_route( 'lokuswp/v1', '/rajaongkir/province', [
+		register_rest_route( 'lwpcommerce/v1', '/rajaongkir/province', [
 			'methods'  => 'GET',
 			'callback' => [ $this, 'get_rajaongkir_province' ],
+			'permission_callback' => false,
+			
 		] );
-		register_rest_route( 'lokuswp/v1', '/rajaongkir/city', [
+		register_rest_route( 'lwpcommerce/v1', '/rajaongkir/city', [
 			'methods'  => 'GET',
 			'callback' => [ $this, 'get_rajaongkir_city' ],
+			'permission_callback' => false,
 		] );
 	}
 
@@ -23,6 +26,8 @@ class Rajaongkir_API {
 		$id   = $data->get_param( 'id' ) ? '?id=' . $data->get_param( 'id' ) : '';
 		$curl = curl_init();
 
+		// TODO :: Ganti ke WP Remote Get
+		// SImpan Hasil Data Get Ke Transient dengan Expired 10 Hari, lalu Return jIka ada dari transient
 		curl_setopt_array( $curl, [
 			CURLOPT_URL            => 'https://api.rajaongkir.com/starter/province' . $id,
 			CURLOPT_RETURNTRANSFER => true,

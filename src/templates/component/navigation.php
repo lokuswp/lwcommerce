@@ -4,9 +4,15 @@
             <img src="<?php echo plugins_url('/src/assets/svg/arrow-prev.svg', LOKUSWP_BASE); ?>" alt="prev">
         </div>
     </div>
-    <div class="col-xs-8 center-sm middle-sm d-flex"><?php the_title(); ?></div>
+
+    <div class="col-xs-8 center-sm middle-sm d-flex">
+        <?php if (!is_singular()) : ?>
+            <?php the_title(); ?>
+        <?php endif; ?>
+    </div>
+
     <div class="col-xs-2 end-sm d-flex">
-        <a href="<?php echo get_permalink(lwp_get_settings('settings', 'cart_page' )); ?>">
+        <a href="<?php echo get_permalink(lwp_get_settings('settings', 'cart_page')); ?>">
             <div class="cart-icon-wrapper"></div>
         </a>
     </div>

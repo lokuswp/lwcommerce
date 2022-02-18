@@ -1,7 +1,9 @@
 <?php
-// Transaction UI Inject
-add_action( "lokuswp/transaction/tab/header", function () {
-	?>
+/**
+ * Adding Tab Shipping 
+ */
+add_action("lokuswp/transaction/tab/header", function () {
+?>
     <div class="swiper-slide">
 		<?php _e( 'Shipping', 'lwpcommerce' ); ?>
     </div>
@@ -23,7 +25,7 @@ function lwpc_cart_data_processing( $data ) {
 	$data['stock_unit']   = get_post_meta( $item_id, '_stock_unit', true ) ?? '';
 
 	// Support variation
-	$data['calc_price'] = $data['price_normal'] * $data['quantity'] === 0 ? $data['price_discount'] * $data['quantity'] : $data['price_normal'] * $data['quantity'];
+	$data['calc_price'] = abs(lwpc_get_price($item_id)) * abs($data['quantity']);
 
 	return $data;
 }
@@ -31,27 +33,15 @@ function lwpc_cart_data_processing( $data ) {
 add_filter( 'lokuswp/cart/data', 'lwpc_cart_data_processing', 10, 1 );
 
 
-function lwpc_cart_scan_product( $data ) {
-
-	$item_id              = $data['post_id'];
-	$variation_id         = $data['variation_id'];
-	$data['max_purchase'] = get_post_meta( $item_id, '_max_purchase', true ) ?? '';
-	$data['min_purchase'] = get_post_meta( $item_id, '_min_purchase', true ) ?? '';
-	$data['variation']    = $variation_id !== null ? $variation->post_excerpt : '';
-
-	return $data;
-}
-
-add_filter( 'lokuswp/cart/cookie', 'lwpc_cart_scan_product' );
-
-
 /**
  * Processing Cart Data from Cart Cookie
- * Rendered based on Ecommerce Plugin for Respect Another Plugin
+ * Scan Product Price
  */
 function lwpc_cart_processing( $cart_item, $post_id ) {
 	if ( get_post_type( $post_id ) == 'product' ) {
 		$cart_item['price'] = abs( lwpc_get_price( $post_id ) );
+		$cart_item['price_normal'] = abs( lwpc_get_normal_price( $post_id ) );
+		$cart_item['price_promo'] = abs( lwpc_get_promo_price( $post_id ) );
 		$cart_item['min']   = 1;
 		$cart_item['max']   = - 1;
 
@@ -60,49 +50,50 @@ function lwpc_cart_processing( $cart_item, $post_id ) {
 
 	return $cart_item;
 }
+add_filter("lokuswp/cart/cookie/item", "lwpc_cart_processing", 10, 2);
 
-add_filter( "lokuswp/cart/cookie/item", "lwpc_cart_processing", 10, 2 );
 
-add_action( "lwpcommerce/customer/tab/header", function () {
-	?>
+/**
+ * Adding Tab to Customer Area
+ */
+add_action("lwpcommerce/customer/tab/header", function () {
+?>
     <div class="swiper-slide">
-		<?php _e( 'Dashboard', 'lwpcommerce' ); ?>
+        <?php _e('Dashboard', 'lwpcommerce'); ?>
     </div>
-	<?php
-} );
+<?php
+});
 
-
-add_action( "lwpcommerce/customer/tab/header", function () {
-	?>
+add_action("lwpcommerce/customer/tab/header", function () {
+?>
     <div class="swiper-slide">
-		<?php _e( 'Transactions', 'lwpcommerce' ); ?>
+		<?php _e( 'Purchase', 'lwpcommerce' ); ?>
     </div>
-	<?php
-} );
-
-
-add_action( "lwpcommerce/customer/tab/header", function () {
-	?>
+<?php
+});
+add_action("lwpcommerce/customer/tab/header", function () {
+?>
     <div class="swiper-slide">
 		<?php _e( 'Account', 'lwpcommerce' ); ?>
     </div>
-	<?php
-}, 9999 );
-add_action( "lwpcommerce/customer/tab/content", function () {
-	require_once LWPC_PATH . 'src/templates/presentation/customer/dashboard.php';
-} );
+<?php
+}, 9999);
+
+add_action("lwpcommerce/customer/tab/content", function () {
+    require_once LWPC_PATH . 'src/templates/presentation/customer/dashboard.php';
+});
 
 add_action( "lwpcommerce/customer/tab/content", function () {
-	require_once LWPC_PATH . 'src/templates/presentation/customer/history.php';
+	require_once LWPC_PATH . 'src/templates/presentation/customer/purchase.php';
 } );
 
+add_action("lwpcommerce/customer/tab/content", function () {
+    require_once LWPC_PATH . 'src/templates/presentation/customer/account.php';
+}, 9999);
 
-add_action( "lwpcommerce/customer/tab/content", function () {
-	require_once LWPC_PATH . 'src/templates/presentation/customer/account.php';
-}, 9999 );
-
-
-add_action( "lokuswp/transaction/pre", function () {
-	// $unique_code = rand(1, 6);
-	// var_dump($unique_code);
-} );
+// Pre Transaction
+// Generate Unique Code
+add_action("lokuswp/transaction/pre", function () {
+    // $unique_code = rand(1, 6);
+    // var_dump($unique_code);
+});
