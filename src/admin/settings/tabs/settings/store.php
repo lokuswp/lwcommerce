@@ -23,21 +23,11 @@ $categories = [
 ];
 
 // Get Data Province
-$request = wp_remote_get(get_rest_url() . 'lwpcommerce/v1/rajaongkir/province');
+$get_states = lwp_get_remote_json(get_rest_url() . 'lwpcommerce/v1/rajaongkir/province', [], 'lokuswp_states', WEEK_IN_SECONDS );
+$states = $get_states->data ?? [];
 
-if (is_wp_error($request)) {
-    return false; // Bail early
-}
-$body = wp_remote_retrieve_body($request);
-$states = json_decode($body)->data;
-
-
-$request2 = wp_remote_get( get_rest_url() . 'lwpcommerce/v1/rajaongkir/city?province=' . $state_selected);
-if (is_wp_error($request2)) {
-    return false; // Bail early
-}
-$body = wp_remote_retrieve_body($request2);
-$cities = json_decode($body)->data;
+$get_cities = lwp_get_remote_json(get_rest_url() . 'lwpcommerce/v1/rajaongkir/city?province=' . $state_selected, [], 'lokuswp_cities_' . $state_selected, WEEK_IN_SECONDS );
+$cities = $get_cities->data ?? [];
 
 ?>
 

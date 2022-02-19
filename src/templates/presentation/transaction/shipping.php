@@ -9,13 +9,15 @@
         $digital_shipping = false;
         $physical_shipping = false;
 
-        foreach ($cart->items as $key => $item) {
-            if (get_post_meta($item->post_id, '_product_type', true) == 'digital') {
-                $digital_shipping = true;
-            }
+        if (isset($cart->items)) {
+            foreach ($cart->items as $key => $item) {
+                if (get_post_meta($item->post_id, '_product_type', true) == 'digital') {
+                    $digital_shipping = true;
+                }
 
-            if (get_post_meta($item->post_id, '_product_type', true) == 'physical') {
-                $physical_shipping = true;
+                if (get_post_meta($item->post_id, '_product_type', true) == 'physical') {
+                    $physical_shipping = true;
+                }
             }
         }
         ?>
@@ -34,7 +36,7 @@
                                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                                     <polyline points="22,6 12,13 2,6"></polyline>
                                 </svg>
-                                <span>Email</span>
+                                <span><?php _e("Email", 'lwpcommerce'); ?></span>
                             </label>
                         </div>
                     </div>
@@ -43,79 +45,58 @@
             </div>
         <?php endif; ?>
 
+        <br>
+
         <?php if ($physical_shipping) : ?>
             <h6 style="margin-bottom:12px;" class="text-primary"><?php _e('Physical Shipping', 'lwpcommerce'); ?></h6>
 
             <?php
-            // $state_selected = 3;
-            // $request = wp_remote_get('http://lwpcommerce.local/wp-json/lwpcommerce/v1/rajaongkir/province');
+            $state_selected = lwpc_get_settings('store', 'state', 'intval');
+            $get_states = lwp_get_remote_json(get_rest_url() . 'lwpcommerce/v1/rajaongkir/province', [], 'lokuswp_states', WEEK_IN_SECONDS);
+            $states = $get_states->data ?? [];
 
-            // if (is_wp_error($request)) {
-            //     return false; // Bail early
-            // }
-
-            // $body = wp_remote_retrieve_body($request);
-            // $states = json_decode($body)->data;
-
-            // $request2 = wp_remote_get('http://lwpcommerce.local/wp-json/lwpcommerce/v1/rajaongkir/city?province=3');
-
-            // if (is_wp_error($request2)) {
-            //     return false; // Bail early
-            // }
-
-            // $body = wp_remote_retrieve_body($request2);
-            // $cities = json_decode($body)->data;
-
-            $states  = [];
-            $cities  = [];
-
+            // $city_selected = lwpc_get_settings('store', 'city', 'intval');
+            $city_selected = null;
+            $get_cities = lwp_get_remote_json(get_rest_url() . 'lwpcommerce/v1/rajaongkir/city?province=' . $state_selected, [], 'lokuswp_cities_' . $state_selected, WEEK_IN_SECONDS);
+            $cities = $get_cities->data ?? [];
             ?>
             <input type="text" id="country" value="ID" class="hidden">
 
             <div class="row">
-                <div class="col-sm-6 gutter">
-
+                <div class="col-xs-12 col-sm-6 gutter">
                     <div class="form-group">
                         <select class="form-control custom-select swiper-no-swiping shipping-reset" id="states">
+                            <option value=""><?php _e("Choose Province", 'lwpcommerce'); ?></option>
                             <?php foreach ($states as $key => $state) : ?>
                                 <option value="<?php echo $state->province_id; ?>" <?php echo ($state->province_id == $state_selected) ? 'selected' : ''; ?>><?php echo $state->province; ?></option>
                             <?php
                             endforeach; ?>
                         </select>
                     </div>
-
                 </div>
-                <div class="col-sm-6 gutter">
+
+                <div class="col-xs-12 col-sm-6 gutter">
                     <div class="form-group">
 
                         <select class="form-control custom-select swiper-no-swiping shipping-reset" id="cities">
-                            <option value=""><?php _e("Pilih Kota", 'lwpcommerce'); ?></option>
+                            <option value=""><?php _e("Choose City", 'lwpcommerce'); ?></option>
                             <?php foreach ($cities as $key => $city) : ?>
-                                <option value="<?php echo $city->city_id; ?>"><?php echo $city->type . ' ' . $city->city_name; ?></option>
+                                <option value="<?php echo $city->city_id; ?>" <?php echo ($city->city_id == $city_selected) ? 'selected' : ''; ?>><?php echo $city->type . ' ' . $city->city_name; ?></option>
                             <?php endforeach; ?>
                         </select>
 
                     </div>
                 </div>
-                <!-- RajaOngkir Pro -->
-                <!-- <div class="col-sm-12 gutter">
 
-                <div class="form-group">
-                    <select name="" class="form-control custom-select">
-                        <option>Pasar Kemis</option>
-                    </select>
+                <div class="col-xs-12 gutter">
+                    <div class="form-group">
+                        <textarea id="shipping_address" class="form-control swiper-no-swiping" placeholder="Alamat"></textarea>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                    <textarea id="shipping_address" class="form-control swiper-no-swiping" placeholder="Alamat"></textarea>
-                </div>
-
-            </div> -->
             </div>
 
-            <!-- Shipping Options -->
-            <section id="lwpcommerce-shipping-channel">
-            </section>
+            <!-- Shipping Services -->
+            <section id="lwpcommerce-shipping-services"></section>
 
         <?php endif; ?>
 
@@ -134,10 +115,7 @@
 
 </div>
 
-
-
-
-<script id="struct-shipping-channel" type="x-template">
+<script id="struct-shipping-services" type="x-template">
     <div class="row">
         {{#shippingChannel}}
             <div class="col-xs-12 col-sm-6 swiper-no-swiping gutter">

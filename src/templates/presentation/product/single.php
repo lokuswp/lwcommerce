@@ -57,19 +57,19 @@ lokuswp_set_meta_counter("_product_view", get_the_ID());
                 <?php the_post_thumbnail(); ?>
             </a>
         </div>
-        <div class="col-xs-12 col-sm-12 row gutter" style="margin-top:8px;padding: 0 8px;">
-            <div class="col-xs-9">
+        <div class="col-xs-12 col-sm-12 row gutter p12" >
+            <div class="col-xs-7 col-sm-9">
                 <h2><?php the_title(); ?></h2>
                 <div class="product-price">
                     <?php lwpc_get_price_html(); ?>
                 </div>
             </div>
-            <div class="col-xs-3 end-sm">
+            <div class="col-xs-5 col-sm-3 end-sm">
                 <?php lwpc_add_to_cart_html(); ?>
                 <?php lwpc_get_stock_html(); ?>
             </div>
         </div>
-        <div class="col-sm-12 gutter">
+        <div class="col-sm-12 gutter p12">
             <p><?php the_content(); ?></p>
         </div>
     </div>
@@ -83,6 +83,10 @@ lokuswp_set_meta_counter("_product_view", get_the_ID());
 
     h2 {
         font-size: 18px;
+    }
+
+    .p12{
+        padding:0 12px;
     }
 </style>
 
