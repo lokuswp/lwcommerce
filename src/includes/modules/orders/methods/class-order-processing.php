@@ -9,16 +9,16 @@ if ( ! defined( 'WPTEST' ) ) {
 class Orders_Processing {
 
 	public function __construct() {
-		add_filter( 'lwpcommerce/orders', [ $this, 'orders_processing' ], 10, 2 );
+		add_action( 'lokuswp/transaction/precommit', [ $this, 'orders_processing' ], 10, 2);
 	}
 
 	public function orders_processing( $request, $transaction_id ): bool {
-		$shipping = lwp_recursive_sanitize_text_field( $request['shipping'] ) ?? '';
+		$shipping = isset($request['shipping']) ? lwp_recursive_sanitize_text_field($request['shipping']) : [];
 
-		$update_shipping = lwpc_update_order_meta( $transaction_id, 'shipping', $shipping );
-		$update_status   = lwpc_update_order_meta( $transaction_id, 'status_processing', 'unprocessed' );
+		lwpc_update_order_meta( $transaction_id, 'shipping', $shipping );
+		lwpc_update_order_meta( $transaction_id, 'status', 'hold' );
 
-		return $update_shipping && $update_status;
+		return true;
 	}
 }
 

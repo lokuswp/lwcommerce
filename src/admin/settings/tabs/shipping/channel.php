@@ -3,7 +3,8 @@
 <div class="container columns col-gapless header">
     <div class="column col-3"><?php _e('Name', 'lwpcommerce'); ?></div>
     <div class="column col-2 text-center">
-        <?php //_e('Zone', 'lwpcommerce'); ?>
+        <?php //_e('Zone', 'lwpcommerce'); 
+        ?>
     </div>
     <div class="column col-2 text-center"><?php _e('Status', 'lwpcommerce'); ?></div>
     <div class="column col-2 text-center"><?php _e('Type', 'lwpcommerce'); ?></div>
@@ -67,7 +68,7 @@ $shipping_active = lwp_get_option("shipping_active");
 
                         <!-- Manage Button -->
                         <div class="column text-right">
-                            <button class="btn lwp-payment-manage" id="<?php echo $shipping_id; ?>" disabled>
+                            <button class="btn lwpc-shipping-manager" id="<?php echo $shipping_id; ?>">
                                 <?php _e('Manage', 'lwpcommerce'); ?>
                             </button>
                         </div>
@@ -115,7 +116,7 @@ $shipping_active = lwp_get_option("shipping_active");
                             padding: 3px 17px;
                         }
 
-                        .form-checkbox{
+                        .form-checkbox {
                             display: inline-block;
                             margin-left: 4px;
                         }
@@ -127,3 +128,187 @@ $shipping_active = lwp_get_option("shipping_active");
     </ul>
 
 <?php endif; ?>
+
+
+<!-- Panel Editor on Manage Click -->
+<div class="sidebar-panel">
+    <div id="lwpc-shipping-manager-editor" class="column panel panel-style">
+
+        <div class="panel-header text-center">
+            <div class="panel-title h5 mt-10 float-left"><?php _e('Pengiriman Digital via Email', 'lokuswp'); ?></div>
+            <div class="panel-close float-right"><i class="icon icon-cross"></i></div>
+        </div>
+
+        <div class="panel-body">
+        <!-- <div class="container-shimmer">
+            <div class="content-shimmer">
+                <div class="form-shimmer shimmer"></div>
+                <div class="form-shimmer shimmer"></div>
+                <div class="form-shimmer shimmer"></div>
+                <div class="form-shimmer shimmer"></div>
+            </div>
+        </div> -->
+
+        <style>
+            /* Action Tab */
+            #tab-log:checked~.tab-body-wrapper #tab-body-log,
+            #tab-delivered:checked~.tab-body-wrapper #tab-body-delivered,
+            #tab-settings:checked~.tab-body-wrapper #tab-body-settings {
+                position: relative;
+                top: 0;
+                opacity: 1;
+            }
+
+            .tab-body-wrapper .table-log th {
+                display: inline-block;
+            }
+
+            .tab-body-wrapper .table-log tr {
+                margin-bottom: 0;
+            }
+
+            .tab-body-wrapper .table-log tbody tr td {
+                display: inline-block;
+                padding: 10px;
+            }
+
+            .tab-body-wrapper .table-log.table td,
+            .tab-body-wrapper .table-log.table th {
+                border-bottom: 0;
+            }
+        </style>
+
+        <div class="tabs-wrapper">
+            <input type="radio" name="shipping" id="tab-log" checked="checked" />
+            <label class="tab" for="tab-log"><?php _e('Log', 'lwpcommerce'); ?></label>
+
+            <input type="radio" name="shipping" id="tab-delivered" />
+            <label class="tab" for="tab-delivered"><?php _e('Delivered', 'lwpcommerce'); ?></label>
+
+            <!-- <input type="radio" name="shipping" id="tab-settings" />
+			<label class="tab" for="tab-settings"><?php _e('Settings', 'lwpcommerce'); ?></label> -->
+
+            <div class="tab-body-wrapper">
+
+                <!------------ Tab : Log ------------>
+                <div id="tab-body-log" class="tab-body">
+
+                    <div class="divider" data-content="Test Email Sent"></div>
+                    <div class="input-group" style="width:50%;">
+                        <input id="lwpcommerce_email_test" style="margin-top:3px;" class="form-input input-md" type="email" placeholder="email@gmail.com">
+                        <button id="lwpcommerce_email_sendtest" style="margin-top:3px;" class="btn btn-primary input-group-btn"><?php _e('Test Email', 'lwpcommerce'); ?></button>
+                    </div>
+                    <br>
+
+                    <table class="table-log table table-striped table-hover">
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <!------------ Tab : On Unpaid ------------>
+                <div id="tab-body-delivered" class="tab-body">
+
+                    <div class="columns col-gapless">
+                     
+                        <!-- Email Preview -->
+                        <div class="column col-12">
+                        <br>
+                            <!-- Name -->
+                            <div class="form-group">
+                                <div class="col-3 col-sm-12">
+                                    <label class="form-label" for="subject"><?php _e('Subject', 'lwpcommerce'); ?></label>
+                                </div>
+                                <div class="col-5 col-sm-12">
+                                    <input type="text" class="form-input" name="subject" placeholder="<?php _e( "Digital Product Delivery", "lwpcommerce" ); ?>" value="" />
+                                </div>
+                            </div>
+
+                            <br>
+
+                            <!-- TODO :: Using Gutenberg Block -->
+                            <div id="lwpcommerce-email-editor-unpaid" class="penplate">
+                                <?php
+                                // Personalize Template Exist ?
+                                // if (file_exists(LOKUSWP_STORAGE . '/status-unpaid-' . $this->country . '.html')) {
+                                // 	require_once LOKUSWP_STORAGE . '/status-unpaid-' . $this->country . '.html';
+                                // } else {
+                                require_once LWPC_PATH . 'src/templates/emails/shipping-digital-download.html'; // Load Default
+                                // }
+                                ?>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!------------ Tab : Settings ------------>
+                <div id="tab-body-settings" class="tab-body">
+                    <form class="form-horizontal" block="settings">
+
+                        <!-- Sender -->
+                        <div class="form-group">
+                            <div class="col-3 col-sm-12">
+                                <label class="form-label" for="country"><?php _e('Sender', 'lwpcommerce'); ?></label>
+                            </div>
+                            <div class="col-9 col-sm-12">
+                                <input class="form-input" type="text" name="sender" placeholder="LokusWP" style="width:320px" value="<?php echo $this->sender; ?>">
+                            </div>
+                        </div>
+
+                        <!-- Sender Email -->
+                        <div class="form-group">
+                            <div class="col-3 col-sm-12">
+                                <label class="form-label" for="country"><?php _e('Sender Email', 'lwpcommerce'); ?></label>
+                            </div>
+                            <div class="col-9 col-sm-12">
+                                <input class="form-input" type="email" name="sender_email" placeholder="noreply@lwpcommerce.com" style="width:320px" value="<?php echo $this->sender_email; ?>">
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary lwpcommerce_admin_option_save" option="lwpcommerce_notification_email" style="width:120px">
+                            <?php _e('Save', 'lwpcommerce'); ?>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .sidebar-panel {
+        position: fixed;
+        right: 0;
+        z-index: 9999;
+        height: 96%;
+        width: 720px;
+        display: block;
+        top: 28px;
+    }
+
+    .panel-style {
+        height: 100%;
+        background: #fff;
+        margin-right: -10px;
+    }
+
+    .panel .panel-body {
+        width: 100%;
+        overflow-x: auto;
+        height: 77vh;
+        margin-bottom: 12px;
+    }
+
+    .panel .panel-header {
+        padding-bottom: 20px !important;
+    }
+
+    .panel .panel-footer {
+        padding: 5px 15px;
+    }
+</style>

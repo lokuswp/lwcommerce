@@ -62,4 +62,52 @@
         });
     });
 
+
+    /**
+     * ⚡ Show Shipping Manager 
+     * Dsiplaying Shipping Manager
+     * 
+     * @scope Global
+     * @since 0.5.0
+     */
+    $(document).on("click", ".lwpc-shipping-manager", function (e) {
+
+        shippingEditor = $("#lwpc-shipping-manager-editor");
+        // On Loading
+        // shippingEditor.html(shimmer);
+
+        // On Completed
+        let thisID = $(this).attr('id');
+
+        // // AJAX Request
+        // $.post(lokuswp_admin.ajax_url, {
+        //     action: 'lokuswp_admin_shipping_manage',
+        //     id: thisID,
+        //     security: lokuswp_admin.ajax_nonce,
+        // }, function (response) {
+
+        //     let html = response;
+
+        //     // Manipulate InnerHTML
+        //     var $html = $('<div />', {
+        //         html: html
+        //     });
+
+        //     $html.find('form').attr("id", thisID + '_form'); // Change ID
+        //     shippingEditor.html($html.html());
+
+        //     //  $(".selectlive").select2({
+        //     //      allowClear: true,
+        //     //      width: '100%',
+        //     //  });
+
+        shippingEditor.find('.shipping-editor').removeClass('d-hide');
+
+        // }).fail(function () {
+        //     alert('Please check your internet connection');
+        // });
+
+        shippingEditor.parent().show();
+        shippingEditor.parent().css('z-index', '9999');
+    });
 })(jQuery)

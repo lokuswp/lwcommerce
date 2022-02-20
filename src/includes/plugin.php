@@ -50,7 +50,7 @@ class Plugin
 		}
 
 		// Register custom meta table
-		$this->register_custom_meta_table();
+		$this->register_ordermeta();
 	}
 
 	/**
@@ -112,10 +112,10 @@ class Plugin
 	{
 		include_once LWPC_PATH . 'src/includes/hook.php';
 		// require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-shipping-processing.php';
-		// require_once LWPC_PATH . 'src/includes/modules/orders/methods/class-order-processing.php';
+		require_once LWPC_PATH . 'src/includes/modules/orders/methods/class-order-processing.php';
 	}
 
-	private function register_custom_meta_table()
+	private function register_ordermeta()
 	{
 		// Registering meta table
 		global $wpdb;
