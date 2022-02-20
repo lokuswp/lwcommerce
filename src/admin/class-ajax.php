@@ -278,7 +278,7 @@ class AJAX {
 					JOIN $table_transaction_meta AS ttm 
 					ON tt.transaction_id=ttm.transaction_id
 					JOIN $table_lwpcommerce_order_meta AS tlcom
-					ON tt.transaction_id=tlcom.transaction_id
+					ON tt.transaction_id=tlcom.lwpcommerce_order_id
 					GROUP BY tt.transaction_id $sql_where
 					ORDER BY $column $order 
 					LIMIT $offset, $length"
