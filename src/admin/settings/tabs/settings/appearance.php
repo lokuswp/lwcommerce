@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use LokusWP\Admin\Shortcode_Lists;
-
+use LokusWP\Admin\Switch_Options;
 ?>
 
 <div class="entry columns col-gapless">
@@ -13,7 +13,8 @@ use LokusWP\Admin\Shortcode_Lists;
     <!-- Appearance Switch Options -->
     <section id="appearance" class="column col-8 form-horizontal">
         <form>
-
+            <?php
+            ?>
         </form>
 
         <br>

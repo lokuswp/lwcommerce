@@ -278,7 +278,7 @@ class AJAX {
 					JOIN $table_transaction_meta AS ttm 
 					ON tt.transaction_id=ttm.transaction_id
 					JOIN $table_lwpcommerce_order_meta AS tlcom
-					ON tt.transaction_id=tlcom.lwpcommerce_order_id 
+					ON tt.transaction_id=tlcom.transaction_id
 					GROUP BY tt.transaction_id $sql_where
 					ORDER BY $column $order 
 					LIMIT $offset, $length"
@@ -294,7 +294,7 @@ class AJAX {
 				$data[ $key ]->address = lwp_get_transaction_meta( $row->transaction_id, 'billing_address' );
 
 				//==================== Total ====================//
-				$data[ $key ]->total = lwpbb_set_currency_format( true, abs( $row->total ) );
+				$data[ $key ]->total = lwp_currency_format( true, abs( $row->total ) );
 
 				//==================== product ====================//
 				$data[ $key ]->product = $wpdb->get_results(
@@ -310,8 +310,8 @@ class AJAX {
 				//==================== add image & price to product ====================//
 				foreach ( $data[ $key ]->product as $index => $value ) {
 					$data[ $key ]->product[ $index ]->image          = get_the_post_thumbnail_url( $value->ID, 'thumbnail' );
-					$data[ $key ]->product[ $index ]->price          = lwpbb_set_currency_format( true, get_post_meta( $value->ID, '_price_normal', true ) );
-					$data[ $key ]->product[ $index ]->price_promo = get_post_meta( $value->ID, '_price_promo', true ) ? lwpbb_set_currency_format( true,
+					$data[ $key ]->product[ $index ]->price          = lwp_currency_format( true, get_post_meta( $value->ID, '_price_normal', true ) );
+					$data[ $key ]->product[ $index ]->price_promo    = get_post_meta( $value->ID, '_price_promo', true ) ? lwp_currency_format( true,
 						get_post_meta( $value->ID, '_price_promo', true ) ) : null;
 				}
 			}

@@ -319,10 +319,10 @@ class Admin
 		);
 
 
-		// Add Shortcode List to wp-admin > lwpcommerce > Appearence
-		// require_once LWPC_PATH . 'backend/admin/class-shortcode-lists.php';
+		// Add Shortcode List to wp-admin > lwpcommerce > settings > apperance
 		Shortcode_Lists::add_shortcode_list( "lwpcommerce", $this->slug, $this->name, array(
-		    ['shortcode' => '[lwpcommerce_storefront]', 'description' => __("Display Storefront List", 'lwpcommerce')],
+		    ['shortcode' => '[lwpcommerce_store_front]', 'description' => __("Display Storefront List", 'lwpcommerce')],
+			['shortcode' => '[lwpcommerce_products]', 'description' => __("Display Product List Only", 'lwpcommerce')],
 		    ['shortcode' => '[lwpcommerce_customer_area]', 'description' => __("Display Customer Area", 'lwpcommerce')],
 		));
 

@@ -90,7 +90,7 @@ class Onboarding
 
 		// Onboarding
 		if (isset($_GET["page"]) && $_GET["page"] == "lwpcommerce-onboarding") {
-			wp_enqueue_style('lpwc-onboarding', LWPC_URL . 'src/admin/assets/css/onboarding.css', array(), $this->version, 'all');
+			wp_enqueue_style('lwpc-onboarding', LWPC_URL . 'src/admin/assets/css/onboarding.css', array(), $this->version, 'all');
 		}
 	}
 

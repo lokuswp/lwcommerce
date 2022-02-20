@@ -30,7 +30,7 @@
 
 .product-price span {
     display: flex;
-    color: var(--lsdc-color);
+    color: var(--lokuswp-secondary-color);
 }
 
 .product-price strike {
@@ -52,7 +52,7 @@
 /* Cart */
 small.cart-qty {
     font-size: 14px;
-    color: var(--lsdc-color);
+    color: var(--lokuswp-secondary-color);
 }
 
 .lwp-cart-content{
@@ -77,5 +77,5 @@ small.cart-qty {
 /* Invoice */
 
 .copy-input a{
-    color: var(--lsdc-color);
+    color: var(--lokuswp-secondary-color);
 }

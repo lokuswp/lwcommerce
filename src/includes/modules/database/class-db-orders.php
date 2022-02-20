@@ -68,7 +68,7 @@ class DB_LWPCommerce_Order_Meta extends Migration {
 
 		$sql = "CREATE TABLE " . static::get_table_name() . " (
 			meta_id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-			lwpcommerce_order_id bigint(20) UNSIGNED NOT NULL,
+			transaction_id bigint(20) UNSIGNED NOT NULL,
 			meta_key varchar(255) NOT NULL,
 			meta_value longtext NOT NULL,
 			PRIMARY KEY (meta_id)

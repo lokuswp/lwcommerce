@@ -5,33 +5,20 @@
  * for Admin LWPCommerce
  * 
  */
+
+use LokusWP\Admin\Tabs;
 ?>
+
 <section id="settings" class="form-horizontal">
+    <?php
+    Tabs::add_nested("lwpcommerce", "settings", "store", __("Store", "lwpcommerce"), function () {
+        require_once LWPC_PATH . 'src/admin/settings/tabs/settings/store.php';
+    });
 
-    <div class="tab-nested">
-        <input type="radio" name="tab" id="tab1" checked="checked" />
-        <label class="tab-item" for="tab1"><?php _e("Store", "lwpcommerce"); ?></label>
+    Tabs::add_nested("lwpcommerce", "settings", "appearance", __("Appearance", "lwpcommerce"), function () {
+        require_once LWPC_PATH . 'src/admin/settings/tabs/settings/appearance.php';
+    });
 
-        <input type="radio" name="tab" id="tab2" />
-        <label class="tab-item" for="tab2"><?php _e("Appearance", "lwpcommerce"); ?></label>
-
-        <div class="tab-body-component">
-            <div id="tab-body-1" class="tab-body">
-                <?php require_once LWPC_PATH . 'src/admin/settings/tabs/settings/store.php'; ?>
-            </div>
-            <div id="tab-body-2" class="tab-body">
-                <?php require_once LWPC_PATH . 'src/admin/settings/tabs/settings/appearance.php'; ?>
-            </div>
-        </div>
-    </div>
-
+    Tabs::list_nested_render("lwpcommerce", "settings");
+    ?>
 </section>
-
-<style>
-    #tab1:checked~.tab-body-component #tab-body-1,
-    #tab2:checked~.tab-body-component #tab-body-2 {
-        position: relative;
-        top: 0;
-        opacity: 1
-    }
-</style>
