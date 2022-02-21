@@ -24,6 +24,7 @@
                 </div>
             </div>
 
+            <!-- 
             <div class="column col-4 filter-item" data-tag="tag-1">
                 <div class="card">
                     <div class="card-header">
@@ -41,7 +42,8 @@
                         <div class="card-subtitle text-gray">Ecommerce Desginer NoCode</div>
                     </div>
                 </div>
-            </div>
+            </div> 
+            -->
 
         </div>
     </div>

@@ -8,7 +8,7 @@
     </div>
     <div class="column col-2 text-center"><?php _e('Status', 'lwpcommerce'); ?></div>
     <div class="column col-2 text-center"><?php _e('Type', 'lwpcommerce'); ?></div>
-    <div class="column col text-right"><?php _e('Action', 'lwpcommerce'); ?></div>
+    <!-- <div class="column col text-right"><?php _e('Action', 'lwpcommerce'); ?></div> -->
 </div>
 
 <?php
@@ -67,11 +67,11 @@ $shipping_active = lwp_get_option("shipping_active");
                         </div>
 
                         <!-- Manage Button -->
-                        <div class="column text-right">
+                        <!-- <div class="column text-right">
                             <button class="btn lwpc-shipping-manager" id="<?php echo $shipping_id; ?>">
                                 <?php _e('Manage', 'lwpcommerce'); ?>
                             </button>
-                        </div>
+                        </div> -->
 
                     </div>
 
@@ -287,7 +287,7 @@ $shipping_active = lwp_get_option("shipping_active");
         z-index: 9999;
         height: 96%;
         width: 720px;
-        display: block;
+        display: none;
         top: 28px;
     }
 

@@ -71,8 +71,8 @@
      * @since 0.5.0
      */
     $(document).on("click", ".lwpc-shipping-manager", function (e) {
-
-        shippingEditor = $("#lwpc-shipping-manager-editor");
+        
+        let shippingEditor = $("#lwpc-shipping-manager-editor");
         // On Loading
         // shippingEditor.html(shimmer);
 
@@ -110,4 +110,23 @@
         shippingEditor.parent().show();
         shippingEditor.parent().css('z-index', '9999');
     });
+
+    /**
+     * ⚡ Close Payment Method Manager Panel
+     * Dsiplaying Payment Method Manager
+     * 
+     * @scope Global
+     * @since 0.5.0
+     */
+    $(document).on("click", "#lwpc-shipping-manager-editor .panel-close", function (e) {
+
+        let shippingEditor = $("#lwpc-shipping-manager-editor");
+
+        shippingEditor.parent().hide();
+        shippingEditor.parent().css('z-index', '0');
+        shippingEditor.html('');
+
+        //  $(".selectlive").select2('destroy');
+    });
+
 })(jQuery)

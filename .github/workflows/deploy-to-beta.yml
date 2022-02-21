@@ -1,0 +1,21 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches: [ unstable ]
+
+jobs:
+
+  continuous-deployment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Deploy FTP
+        uses: sebastianpopp/git-ftp-action@releases/v3
+        with:
+          url: "ftp://beta.lokuswp.com/lwpcommerce/"
+          user: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}

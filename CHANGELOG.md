@@ -1,5 +1,5 @@
 # Changelog
 
-# [v1.0.0]() (2022-02-22)
+# [v0.5.0]() (2022-02-22)
 **Added :**
-✅ Initial Release
+- Public Beta Release
