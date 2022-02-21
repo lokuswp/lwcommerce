@@ -92,8 +92,4 @@
         lokusTransaction.renderExtras();
     });
 
-
-    
-
-
 })(jQuery);
