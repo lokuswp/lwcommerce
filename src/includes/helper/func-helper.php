@@ -35,7 +35,7 @@ function lwpc_get_price_html()
 	$_price_promo = lwpc_get_promo_price($post_id);
 
 	if ($_price_normal == 0) {
-		$html = '<span>' . __("Free", "lwpcommerce") . '</span>';
+		$html = '<span>' . __("Free", "lwcommerce") . '</span>';
 	} else if ($_price_normal > 0 && $_price_promo == 0 ) {
 		$html = '<span>' . lwp_currency_format(true, $_price_normal) . '</span>';
 	} else {
@@ -73,7 +73,7 @@ function lwpc_add_to_cart_html()
  */
 function lwpc_set_settings(string $option, string $item, $value, string $sanitize = 'sanitize_text_field')
 {
-	$settings = get_option('lwpcommerce_' . $option);
+	$settings = get_option('lwcommerce_' . $option);
 
 	$whitelist = ['sanitize_text_field', 'sanitize_option', 'sanitize_key', 'abs', 'esc_url_raw', 'intval', 'floatval', 'absint', 'sanitize_email'];
 	if (!in_array($sanitize, $whitelist)) {
@@ -82,7 +82,7 @@ function lwpc_set_settings(string $option, string $item, $value, string $sanitiz
 
 	$row          = empty($settings) ? array() : $settings;
 	$row[$item] = call_user_func($sanitize, $value);
-	update_option('lwpcommerce_' . $option, $row);
+	update_option('lwcommerce_' . $option, $row);
 }
 
 /**
@@ -99,7 +99,7 @@ function lwpc_set_settings(string $option, string $item, $value, string $sanitiz
 function lwpc_get_settings(string $option = 'general_settings', string $item, string $validator = 'esc_attr', string $fallback = null)
 {
 
-	$settings = get_option('lwpcommerce_' . $option);
+	$settings = get_option('lwcommerce_' . $option);
 
 	// Vuln :: Function Injection -> calL_user_funct
 	$whitelist = ['esc_attr', 'esc_url', 'esc_html', 'abs', 'intval', 'floatval', 'absint', 'array'];
@@ -194,7 +194,7 @@ function lwpc_get_cost_rajaongkir(string $shipping_id, string $service, string $
  */
 function lwpc_get_order_meta($id, $meta_key, $single = true)
 {
-	return get_metadata('lwpcommerce_order', $id, $meta_key, $single);
+	return get_metadata('lwcommerce_order', $id, $meta_key, $single);
 }
 
 /**
@@ -206,7 +206,7 @@ function lwpc_get_order_meta($id, $meta_key, $single = true)
  */
 function lwpc_update_order_meta($id, $meta_key, $value = '')
 {
-	return update_metadata('lwpcommerce_order', $id, $meta_key, $value);
+	return update_metadata('lwcommerce_order', $id, $meta_key, $value);
 }
 
 /**
@@ -218,7 +218,7 @@ function lwpc_update_order_meta($id, $meta_key, $value = '')
  */
 function lwpc_add_order_meta($id, $meta_key, $value = '')
 {
-	return add_metadata('lwpcommerce_order', $id, $meta_key, $value);
+	return add_metadata('lwcommerce_order', $id, $meta_key, $value);
 }
 
 /**
@@ -229,5 +229,5 @@ function lwpc_add_order_meta($id, $meta_key, $value = '')
  */
 function lwpc_delete_order_meta($id, $meta_key = '')
 {
-	return delete_metadata('lwpcommerce_order', $id, $meta_key);
+	return delete_metadata('lwcommerce_order', $id, $meta_key);
 }

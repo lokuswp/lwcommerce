@@ -1,5 +1,5 @@
 <div class="product-action">
-    <button class="lokus-btn btn-primary btn-block lwpc-addtocart" product-id="<?php echo get_the_ID(); ?>"><?php _e( "Add to Cart", "lwpcommerce" ); ?></button>
+    <button class="lokus-btn btn-primary btn-block lwpc-addtocart" product-id="<?php echo get_the_ID(); ?>"><?php _e( "Add to Cart", "lwcommerce" ); ?></button>
     <div class="lokuswp-stepper lwp-hidden" product-id="<?php echo get_the_ID(); ?>">
         <button type="button" class="minus" data-qty-action="minus">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus">

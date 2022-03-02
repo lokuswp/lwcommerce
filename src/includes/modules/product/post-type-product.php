@@ -34,16 +34,16 @@ class Post_Type_Product
         );
 
         $labels = array(
-            'name' => _x('Products', 'plural', 'lwpcommerce'),
-            'singular_name' => _x('Product', 'singular', 'lwpcommerce'),
-            'add_new' => _x('New Product', 'Add Product', 'lwpcommerce'),
-            'add_new_item' => __('Add Product', 'lwpcommerce'),
-            'new_item' => __('New Product', 'lwpcommerce'),
-            'edit_item' => __('Edit Product', 'lwpcommerce'),
-            'view_item' => __('View Product', 'lwpcommerce'),
-            'all_items' => __('All Product', 'lwpcommerce'),
-            'search_items' => __('Find Product', 'lwpcommerce'),
-            'not_found' => __('Product not found.', 'lwpcommerce'),
+            'name' => _x('Products', 'plural', 'lwcommerce'),
+            'singular_name' => _x('Product', 'singular', 'lwcommerce'),
+            'add_new' => _x('New Product', 'Add Product', 'lwcommerce'),
+            'add_new_item' => __('Add Product', 'lwcommerce'),
+            'new_item' => __('New Product', 'lwcommerce'),
+            'edit_item' => __('Edit Product', 'lwcommerce'),
+            'view_item' => __('View Product', 'lwcommerce'),
+            'all_items' => __('All Product', 'lwcommerce'),
+            'search_items' => __('Find Product', 'lwcommerce'),
+            'not_found' => __('Product not found.', 'lwcommerce'),
         );
 
         $args = array(
@@ -72,7 +72,7 @@ class Post_Type_Product
                 'query_var' => true,
                 'public' => true,
                 'rewrite' => array(
-                    'slug' => __('kategori', 'lwpcommerce'),
+                    'slug' => __('kategori', 'lwcommerce'),
                     'with_front' => true,
                     'hierarchical' => true,
                 ),
@@ -85,14 +85,14 @@ class Post_Type_Product
 
     protected function flush()
     {
-        // if (get_option('lwpcommerce_permalink_flush')) {
+        // if (get_option('lwcommerce_permalink_flush')) {
         //     // Force and Flush
         //     global $wp_rewrite;
         //     $wp_rewrite->set_permalink_structure('/%postname%/');
         //     update_option("rewrite_rules", false);
         //     $wp_rewrite->flush_rules(true);
 
-        //     delete_option('lwpcommerce_permalink_flush');
+        //     delete_option('lwcommerce_permalink_flush');
         // }
     }
 
@@ -147,8 +147,8 @@ class Post_Type_Product
             'cb' => $columns['cb'],
             'image' => __('Image'),
             'title' => __('Title'),
-            'price' => __('Pirce', 'lwpcommerce'),
-            'stock' => __('Stock', 'lwpcommerce'),
+            'price' => __('Pirce', 'lwcommerce'),
+            'stock' => __('Stock', 'lwcommerce'),
             'id' => __('ID'),
             'date' => $columns['date'],
         );
@@ -178,12 +178,12 @@ class Post_Type_Product
 
         if ('stock' === $column) {
             if (get_post_meta($post_id, '_stock', true) > 999) {
-                _e('Available', 'lwpcommerce');
+                _e('Available', 'lwcommerce');
                 return;
             }
 
             if (get_post_meta($post_id, '_stock', true) == 0) {
-                _e('Out of Stock', 'lwpcommerce');
+                _e('Out of Stock', 'lwcommerce');
                 return;
             }
 

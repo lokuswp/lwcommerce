@@ -9,7 +9,7 @@ class Shipping_List {
 	}
 
 	public function register() {
-		register_rest_route( 'lwpcommerce/v1', '/shipping/active', [
+		register_rest_route( 'lwcommerce/v1', '/shipping/active', [
 			'methods'             => 'GET',
 			'callback'            => [ $this, 'lists' ],
 			'permission_callback' => '__return_true',

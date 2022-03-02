@@ -31,7 +31,7 @@ class Metabox_Product
         if ('product' !== get_post_type($post_id)) {
             return $content;
         }
-        $caption = '<p>' . esc_html__('Recommended image size: ', 'lwpcommerce') . '<strong>800x800px</strong></p>';
+        $caption = '<p>' . esc_html__('Recommended image size: ', 'lwcommerce') . '<strong>800x800px</strong></p>';
         return $content . $caption;
     }
 
@@ -39,7 +39,7 @@ class Metabox_Product
     {
         add_meta_box(
             'product-metabox',
-            __('Product Data', 'lwpcommerce'),
+            __('Product Data', 'lwcommerce'),
             [$this, 'metabox_product_data'],
             'product',
             'normal',
@@ -54,38 +54,38 @@ class Metabox_Product
 
         <div class="tabs-component">
             <input type="radio" name="tab" id="tab1" checked="checked" />
-            <label class="tab" for="tab1"><?php esc_attr_e('Digital', 'lwpcommerce'); ?></label>
+            <label class="tab" for="tab1"><?php esc_attr_e('Digital', 'lwcommerce'); ?></label>
 
             <input type="radio" name="tab" id="tab2" />
-            <label class="tab" for="tab2"><?php esc_attr_e('Physical', 'lwpcommerce'); ?></label>
+            <label class="tab" for="tab2"><?php esc_attr_e('Physical', 'lwcommerce'); ?></label>
 
             <div class="tab-body-component">
                 <div id="tab-body-1" class="tab-body">
                     <!-- Hookable :: Extending for Upload via DropBox -->
-                    <?php if (has_action("lwpcommerce/product/digital/upload")) : ?>
-                        <?php do_action('lwpcommerce/product/digital/upload'); ?>
+                    <?php if (has_action("lwcommerce/product/digital/upload")) : ?>
+                        <?php do_action('lwcommerce/product/digital/upload'); ?>
                     <?php else : ?>
                         <br>
-                        <label for="digital_file" style="margin-left:10px;"><?php esc_attr_e('File', 'lwpcommerce'); ?> : </label>
+                        <label for="digital_file" style="margin-left:10px;"><?php esc_attr_e('File', 'lwcommerce'); ?> : </label>
                         <input type="text" class="form-input" style="width:50%" name="digital_file_url" placeholder="http://dropbox.com/file.zip" value="<?php echo get_post_meta($post->ID, '_digital_file_url', true); ?>">
 
-                        <label for="digital_file_version"><?php esc_attr_e('Versi', 'lwpcommerce'); ?> :</label>
+                        <label for="digital_file_version"><?php esc_attr_e('Versi', 'lwcommerce'); ?> :</label>
                         <input type="text" class="form-input" name="digital_file_version" placeholder="1.0.0" value="<?php echo get_post_meta($post->ID, '_digital_file_version', true); ?>">
 
 
                     <?php endif; ?>
 
                     <!-- Hookable :: Extending for More Information Digital -->
-                    <?php do_action('lwpcommerce/product/digital'); ?>
+                    <?php do_action('lwcommerce/product/digital'); ?>
                 </div>
 
                 <div id="tab-body-2" class="tab-body">
                     <div class="pane-metabox">
                         <label for="physical_weight">
-                            <?php esc_attr_e('Berat', 'lwpcommerce'); ?> /g :
+                            <?php esc_attr_e('Berat', 'lwcommerce'); ?> /g :
                         </label>
                         <input type="text" class="form-input currency" name="physical_weight" placeholder="50" value="<?php echo get_post_meta($post->ID, '_physical_weight', true); ?>">
-                        <label for="physical_volume" style="margin-left:10px"><?php esc_attr_e('Volume', 'lwpcommerce'); ?> /cm : </label>
+                        <label for="physical_volume" style="margin-left:10px"><?php esc_attr_e('Volume', 'lwcommerce'); ?> /cm : </label>
                         <input type="text" class="form-input currency" name="physical_volume" placeholder="300" value="<?php echo get_post_meta($post->ID, '_physical_volume', true); ?>">
                     </div>
                     <?php $shipping_type = empty(get_post_meta($post->ID, '_shipping_type', true)) ? 'digital' : get_post_meta($post->ID, '_shipping_type', true); ?>

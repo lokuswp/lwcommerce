@@ -31,7 +31,7 @@ if (isset($_GET["tab"])) {
 }
 
 
-// if ($_GET["page"] == "lwpcommerce" ) {
+// if ($_GET["page"] == "lwcommerce" ) {
 //     require_once 'onboarding/onboarding.php';
 // }else{
 
@@ -40,7 +40,7 @@ if (isset($_GET["tab"])) {
     /**
      * Default Admin Tabs
      */
-    Tabs::add('lwpcommerce', 'extensions', __('Extensions', 'lwpcommerce'), function () {
+    Tabs::add('lwcommerce', 'extensions', __('Extensions', 'lwcommerce'), function () {
         require_once 'tabs/extensions.php';
     });
 ?>
@@ -49,9 +49,9 @@ if (isset($_GET["tab"])) {
             display: none;
         }
     </style>
-    <div class="wrap lwpcommerce-admin">
+    <div class="wrap lwcommerce-admin">
 
-        <?php $tab_lists = Tabs::list("lwpcommerce"); ?>
+        <?php $tab_lists = Tabs::list("lwcommerce"); ?>
 
         <div class="column col-12 col-sm-12 px-0">
             <div class="user-avatar">
@@ -61,7 +61,7 @@ if (isset($_GET["tab"])) {
 
                 <?php foreach ((array) $tab_lists as $key => $title) : ?>
                     <li class="tab-item <?php echo $active_tab == $key ? 'active' : ''; ?>">
-                        <a href="?page=lwpcommerce&tab=<?php esc_attr_e($key); ?>"><?php echo esc_attr($title); ?></a>
+                        <a href="?page=lwcommerce&tab=<?php esc_attr_e($key); ?>"><?php echo esc_attr($title); ?></a>
                     </li>
                 <?php endforeach; ?>
     
@@ -74,7 +74,7 @@ if (isset($_GET["tab"])) {
                 float:right;
                 margin: 4px;
             }
-            .lwpcommerce-admin li {
+            .lwcommerce-admin li {
                 margin-bottom: 0;
             }
         </style>
@@ -100,8 +100,8 @@ if (isset($_GET["tab"])) {
                         if ($tabs_query == $key || $active_tab == $key) {
 
                             // Called Using Registered Hook Only, Preventing Injection From Query String
-                            if (has_action("lwpcommerce/admin/tabs/{$key}")) {
-                                do_action("lwpcommerce/admin/tabs/{$key}");
+                            if (has_action("lwcommerce/admin/tabs/{$key}")) {
+                                do_action("lwcommerce/admin/tabs/{$key}");
                             }
                         } else if ($tabs_query == 'app') {
                             require_once 'tabs/app.php';

@@ -1,14 +1,13 @@
 (function ($) {
     'use strict'
-    // console.log("lwpcommerce/public.js");
-
-    function lwpcUpdateCartIcon() {
+    // console.log("lwcommerce/public.js");
+    function lwcUpdateCartIcon() {
         $('.cart-icon-wrapper').html('<div class="cart-icon svg-wrapper"><small class="cart-qty">' + lokusCart.countQty() + '</small><img src="' + lokuswp.plugin_url + 'src/assets/svg/cart.svg' + '" alt="cart-icon"></div>');
     }
 
     $(document).ready(function () {
         // lokusTransaction.setExtra("kode_unik", "", "Unique Code", -241);
-        lwpcUpdateCartIcon();
+        lwcUpdateCartIcon();
     });
 
     /**
@@ -29,19 +28,19 @@
         $(this).closest('.product-action').find('.lokuswp-stepper').removeClass('lwp-hidden');
 
         // Update Troli
-        lwpcUpdateCartIcon();
+        lwcUpdateCartIcon();
     });
 
     /**
      * On User Change Cites in Shipping Section
      * Getting Package Based on Selected Cities
      */
-    $(document).on('change', '#lwpcommerce-shipping #cities', function (e) {
+    $(document).on('change', '#lwcommerce-shipping #cities', function (e) {
 
         let destination = $('#cities').find(":selected").val();
         // Request to REST API
         jQuery.ajax({
-            url: lokuswp.rest_url + "lwpcommerce/v1/shipping/active?destination=" + destination,
+            url: lokuswp.rest_url + "lwcommerce/v1/shipping/active?destination=" + destination,
             type: 'GET',
             success: function (response) {
 
@@ -62,7 +61,7 @@
                 };
 
                 // Rendering with Mustache
-                jQuery("#lwpcommerce-shipping-services").html(Mustache.to_html(shippingStruct, shippingData));
+                jQuery("#lwcommerce-shipping-services").html(Mustache.to_html(shippingStruct, shippingData));
 
                 // Saving to Local with Cache
                 // lokusCookie.set("lokuswp_shipping_list", JSON.stringify(shippingData), 1); // 1 Day Expired
@@ -90,6 +89,16 @@
 
         // Render Summary
         lokusTransaction.renderExtras();
+    });
+
+    /**
+     * Event when user click complete order
+     */
+    $(document).on('click', '#lwc-verify-shipping', function (e) {
+        e.preventDefault();
+
+        //Shipping Checking
+        swiperTabsContent.slideTo(2);
     });
 
 })(jQuery);

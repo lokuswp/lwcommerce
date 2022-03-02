@@ -1,14 +1,14 @@
 <!-- Skelton UI -->
 
 <div class="container columns col-gapless header">
-    <div class="column col-3"><?php _e('Name', 'lwpcommerce'); ?></div>
+    <div class="column col-3"><?php _e('Name', 'lwcommerce'); ?></div>
     <div class="column col-2 text-center">
-        <?php //_e('Zone', 'lwpcommerce'); 
+        <?php //_e('Zone', 'lwcommerce'); 
         ?>
     </div>
-    <div class="column col-2 text-center"><?php _e('Status', 'lwpcommerce'); ?></div>
-    <div class="column col-2 text-center"><?php _e('Type', 'lwpcommerce'); ?></div>
-    <!-- <div class="column col text-right"><?php _e('Action', 'lwpcommerce'); ?></div> -->
+    <div class="column col-2 text-center"><?php _e('Status', 'lwcommerce'); ?></div>
+    <div class="column col-2 text-center"><?php _e('Type', 'lwcommerce'); ?></div>
+    <!-- <div class="column col text-right"><?php _e('Action', 'lwcommerce'); ?></div> -->
 </div>
 
 <?php
@@ -55,7 +55,7 @@ $shipping_active = lwp_get_option("shipping_active");
 
                                 <label class="form-switch">
                                     <input type="checkbox" id="<?php echo $shipping_id; ?>" <?php echo ($shipping_obj->get_status() == 'on') ? 'checked' : ''; ?>>
-                                    <i class="form-icon"></i> <?php _e('Active', 'lwpcommerce'); ?>
+                                    <i class="form-icon"></i> <?php _e('Active', 'lwcommerce'); ?>
                                 </label>
 
                             </div>
@@ -69,7 +69,7 @@ $shipping_active = lwp_get_option("shipping_active");
                         <!-- Manage Button -->
                         <!-- <div class="column text-right">
                             <button class="btn lwpc-shipping-manager" id="<?php echo $shipping_id; ?>">
-                                <?php _e('Manage', 'lwpcommerce'); ?>
+                                <?php _e('Manage', 'lwcommerce'); ?>
                             </button>
                         </div> -->
 
@@ -77,7 +77,7 @@ $shipping_active = lwp_get_option("shipping_active");
 
                     <!-- Services -->
                     <div class="services-bar" style="width:100%;border-top:1px solid #ddd;">
-                        <?php _e('Services', 'lwpcommerce'); ?> :
+                        <?php _e('Services', 'lwcommerce'); ?> :
                         <?php foreach ($shipping_data->package as $key => $package) : ?>
 
                             <label class="form-checkbox">
@@ -180,13 +180,13 @@ $shipping_active = lwp_get_option("shipping_active");
 
         <div class="tabs-wrapper">
             <input type="radio" name="shipping" id="tab-log" checked="checked" />
-            <label class="tab" for="tab-log"><?php _e('Log', 'lwpcommerce'); ?></label>
+            <label class="tab" for="tab-log"><?php _e('Log', 'lwcommerce'); ?></label>
 
             <input type="radio" name="shipping" id="tab-delivered" />
-            <label class="tab" for="tab-delivered"><?php _e('Delivered', 'lwpcommerce'); ?></label>
+            <label class="tab" for="tab-delivered"><?php _e('Delivered', 'lwcommerce'); ?></label>
 
             <!-- <input type="radio" name="shipping" id="tab-settings" />
-			<label class="tab" for="tab-settings"><?php _e('Settings', 'lwpcommerce'); ?></label> -->
+			<label class="tab" for="tab-settings"><?php _e('Settings', 'lwcommerce'); ?></label> -->
 
             <div class="tab-body-wrapper">
 
@@ -195,8 +195,8 @@ $shipping_active = lwp_get_option("shipping_active");
 
                     <div class="divider" data-content="Test Email Sent"></div>
                     <div class="input-group" style="width:50%;">
-                        <input id="lwpcommerce_email_test" style="margin-top:3px;" class="form-input input-md" type="email" placeholder="email@gmail.com">
-                        <button id="lwpcommerce_email_sendtest" style="margin-top:3px;" class="btn btn-primary input-group-btn"><?php _e('Test Email', 'lwpcommerce'); ?></button>
+                        <input id="lwcommerce_email_test" style="margin-top:3px;" class="form-input input-md" type="email" placeholder="email@gmail.com">
+                        <button id="lwcommerce_email_sendtest" style="margin-top:3px;" class="btn btn-primary input-group-btn"><?php _e('Test Email', 'lwcommerce'); ?></button>
                     </div>
                     <br>
 
@@ -218,17 +218,17 @@ $shipping_active = lwp_get_option("shipping_active");
                             <!-- Name -->
                             <div class="form-group">
                                 <div class="col-3 col-sm-12">
-                                    <label class="form-label" for="subject"><?php _e('Subject', 'lwpcommerce'); ?></label>
+                                    <label class="form-label" for="subject"><?php _e('Subject', 'lwcommerce'); ?></label>
                                 </div>
                                 <div class="col-5 col-sm-12">
-                                    <input type="text" class="form-input" name="subject" placeholder="<?php _e( "Digital Product Delivery", "lwpcommerce" ); ?>" value="" />
+                                    <input type="text" class="form-input" name="subject" placeholder="<?php _e( "Digital Product Delivery", "lwcommerce" ); ?>" value="" />
                                 </div>
                             </div>
 
                             <br>
 
                             <!-- TODO :: Using Gutenberg Block -->
-                            <div id="lwpcommerce-email-editor-unpaid" class="penplate">
+                            <div id="lwcommerce-email-editor-unpaid" class="penplate">
                                 <?php
                                 // Personalize Template Exist ?
                                 // if (file_exists(LOKUSWP_STORAGE . '/status-unpaid-' . $this->country . '.html')) {
@@ -250,7 +250,7 @@ $shipping_active = lwp_get_option("shipping_active");
                         <!-- Sender -->
                         <div class="form-group">
                             <div class="col-3 col-sm-12">
-                                <label class="form-label" for="country"><?php _e('Sender', 'lwpcommerce'); ?></label>
+                                <label class="form-label" for="country"><?php _e('Sender', 'lwcommerce'); ?></label>
                             </div>
                             <div class="col-9 col-sm-12">
                                 <input class="form-input" type="text" name="sender" placeholder="LokusWP" style="width:320px" value="<?php echo $this->sender; ?>">
@@ -260,15 +260,15 @@ $shipping_active = lwp_get_option("shipping_active");
                         <!-- Sender Email -->
                         <div class="form-group">
                             <div class="col-3 col-sm-12">
-                                <label class="form-label" for="country"><?php _e('Sender Email', 'lwpcommerce'); ?></label>
+                                <label class="form-label" for="country"><?php _e('Sender Email', 'lwcommerce'); ?></label>
                             </div>
                             <div class="col-9 col-sm-12">
-                                <input class="form-input" type="email" name="sender_email" placeholder="noreply@lwpcommerce.com" style="width:320px" value="<?php echo $this->sender_email; ?>">
+                                <input class="form-input" type="email" name="sender_email" placeholder="noreply@lwcommerce.com" style="width:320px" value="<?php echo $this->sender_email; ?>">
                             </div>
                         </div>
 
-                        <button class="btn btn-primary lwpcommerce_admin_option_save" option="lwpcommerce_notification_email" style="width:120px">
-                            <?php _e('Save', 'lwpcommerce'); ?>
+                        <button class="btn btn-primary lwcommerce_admin_option_save" option="lwcommerce_notification_email" style="width:120px">
+                            <?php _e('Save', 'lwcommerce'); ?>
                         </button>
                     </form>
                 </div>

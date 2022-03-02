@@ -9,8 +9,8 @@ if ( ! defined( 'WPTEST' ) ) {
 class Shipping_Processing {
 
 	public function __construct() {
-		add_filter( 'lwpcommerce/shipping/gateway/jne', [ $this, 'shipping_processing' ], 10, 2 );
-		add_filter( 'lwpcommerce/shipping/gateway/pos', [ $this, 'shipping_processing' ], 10, 2 );
+		add_filter( 'lwcommerce/shipping/gateway/jne', [ $this, 'shipping_processing' ], 10, 2 );
+		add_filter( 'lwcommerce/shipping/gateway/pos', [ $this, 'shipping_processing' ], 10, 2 );
 	}
 
 	public function shipping_processing( $shipping, $transaction ) {

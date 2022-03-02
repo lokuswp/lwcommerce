@@ -1,4 +1,4 @@
 {
     "extends": "./cypress.json",
-    "baseUrl": "https://beta.lokuswp.com/lwpcommerce"
+    "baseUrl": "https://beta.lokuswp.com/lwcommerce"
 }

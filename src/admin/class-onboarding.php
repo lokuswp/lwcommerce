@@ -75,7 +75,6 @@ class Onboarding
 	 */
 	public function admin_init()
 	{
-	
 	}
 
 	/**
@@ -89,8 +88,13 @@ class Onboarding
 		$dev_css = '.css';
 
 		// Onboarding
-		if (isset($_GET["page"]) && $_GET["page"] == "lwpcommerce-onboarding") {
+		if (isset($_GET["page"]) && $_GET["page"] == "lwcommerce-onboarding") {
 			wp_enqueue_style('lwpc-onboarding', LWPC_URL . 'src/admin/assets/css/onboarding.css', array(), $this->version, 'all');
+
+			// Spectre CSS Framework
+			wp_enqueue_style('spectre-exp', LWPC_URL . 'src/includes/libraries/css/spectre/spectre-exp.min.css', array(), '0.5.9', 'all');
+			wp_enqueue_style('spectre-icons', LWPC_URL . 'src/includes/libraries/css/spectre/spectre-icons.min.css', array(), '0.5.9', 'all');
+			wp_enqueue_style('spectre', LWPC_URL . 'src/includes/libraries/css/spectre/spectre.min.css', array(), '0.5.9', 'all');
 		}
 	}
 
@@ -111,14 +115,14 @@ class Onboarding
 		// wp_register_script('datatables-buttons-excel', LWPC_URL . 'src/includes/libraries/js/datatables/jszip.min.js', array('jquery'), $this->version, false);
 		// wp_register_script('datatables-buttons-html5', LWPC_URL . 'src/includes/libraries/js/datatables/buttons.html5.min.js', array('jquery'), $this->version, false);
 
-		// // Load Lib Admin Restrict only lwpcommerce Page
+		// // Load Lib Admin Restrict only lwcommerce Page
 		// if (
-		// 	isset($_GET['page']) && $_GET['page'] == 'lwpcommerce' || strpos(get_post_type(get_the_ID()), 'lwpc-') !== false
-		// 	|| isset($_GET['page']) && strpos($_GET['page'], 'lwpcommerce-') !== false
+		// 	isset($_GET['page']) && $_GET['page'] == 'lwcommerce' || strpos(get_post_type(get_the_ID()), 'lwpc-') !== false
+		// 	|| isset($_GET['page']) && strpos($_GET['page'], 'lwcommerce-') !== false
 		// ) {
 
 		// 	// Load Admin Setting Js
-		// 	if ($_GET['page'] === 'lwpcommerce') {
+		// 	if ($_GET['page'] === 'lwcommerce') {
 		// 		wp_enqueue_script('admin-setting', LWPC_URL . 'src/admin/assets/js/admin-setting' . $dev_js, array('jquery', 'wp-color-picker'), $this->version, false);
 		// 		wp_localize_script('admin-setting', 'lwpc_admin', array(
 		// 			'ajax_url'    => admin_url('admin-ajax.php'),
@@ -130,7 +134,7 @@ class Onboarding
 		// 	}
 
 		// 	// Order JS
-		// 	if ($_GET['page'] === 'lwpcommerce-order' || $_GET['page'] === 'admin.php?page=lwpcommerce-statistics') {
+		// 	if ($_GET['page'] === 'lwcommerce-order' || $_GET['page'] === 'admin.php?page=lwcommerce-statistics') {
 		// 		wp_enqueue_script(
 		// 			'orders-js',
 		// 			LWPC_URL . 'src/admin/assets/js/orders' . $dev_js,
@@ -143,7 +147,7 @@ class Onboarding
 		// 			'ajax_url'    => admin_url('admin-ajax.php'),
 		// 			'ajax_nonce'  => wp_create_nonce('lwpc_admin_nonce'),
 		// 			'plugin_url'  => LWPC_URL,
-		// 			'is_pro'      => in_array('lwpcommerce-pro/lwpcommerce-pro.php', apply_filters('active_plugins', get_option('active_plugins'))),
+		// 			'is_pro'      => in_array('lwcommerce-pro/lwcommerce-pro.php', apply_filters('active_plugins', get_option('active_plugins'))),
 		// 			'translation' => $this->js_translation(),
 		// 		));
 		// 	}
@@ -163,14 +167,14 @@ class Onboarding
 	public function js_translation()
 	{
 		return array(
-			'delete_report' => __('Are you sure you want to delete this item ?', 'lwpcommerce'),
+			'delete_report' => __('Are you sure you want to delete this item ?', 'lwcommerce'),
 		);
 	}
 
 	/**
 	 * Register Menu in Admin Area
 	 *
-	 * lwpcommerce Settings
+	 * lwcommerce Settings
 	 * Products
 	 * Orders
 	 *
@@ -180,7 +184,7 @@ class Onboarding
 	public function register_admin_menu()
 	{
 
-		// Menu lwpcommerce in WP-ADMIN
+		// Menu lwcommerce in WP-ADMIN
 		add_menu_page(
 			$this->name,
 			$this->name,
@@ -190,8 +194,6 @@ class Onboarding
 			'',
 			2
 		);
-
-	
 	}
 
 	/**
@@ -206,7 +208,7 @@ class Onboarding
 	}
 
 	/**
-	 * Including settings lwpcommerce page
+	 * Including settings lwcommerce page
 	 * when clikcing menu LSDDOnation
 	 *
 	 * @return void

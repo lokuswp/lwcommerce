@@ -48,7 +48,7 @@ class AJAX {
 		}
 
 		// Merge Exist Settings
-		$settings = get_option( 'lwpcommerce_store' );
+		$settings = get_option( 'lwcommerce_store' );
 		if ( empty( $settings ) ) {
 			$merge = $sanitize;
 		} else {
@@ -56,7 +56,7 @@ class AJAX {
 		}
 
 		// Update New Settings
-		update_option( 'lwpcommerce_store', $merge );
+		update_option( 'lwcommerce_store', $merge );
 		echo 'action_success';
 
 		wp_die();
@@ -113,7 +113,7 @@ class AJAX {
 		}
 
 		// Merge Exist Settings
-		$settings = get_option( 'lwpcommerce_shipping' );
+		$settings = get_option( 'lwcommerce_shipping' );
 		if ( empty( $settings ) ) {
 			$merge = $sanitize;
 		} else {
@@ -121,7 +121,7 @@ class AJAX {
 		}
 
 		// Update New Settings
-		update_option( 'lwpcommerce_shipping', $merge );
+		update_option( 'lwcommerce_shipping', $merge );
 		echo 'action_success';
 
 		wp_die();
@@ -163,7 +163,7 @@ class AJAX {
 		$table_cart                   = $wpdb->prefix . "lokuswp_carts";
 		$table_transaction            = $wpdb->prefix . "lokuswp_transactions";
 		$table_transaction_meta       = $wpdb->prefix . "lokuswp_transactionmeta";
-		$table_lwpcommerce_order_meta = $wpdb->prefix . "lwpcommerce_ordermeta";
+		$table_lwcommerce_order_meta = $wpdb->prefix . "lwcommerce_ordermeta";
 		$table_post                   = $wpdb->prefix . "posts";
 
 		// Request
@@ -277,8 +277,8 @@ class AJAX {
 					FROM $table_transaction AS tt
 					JOIN $table_transaction_meta AS ttm 
 					ON tt.transaction_id=ttm.transaction_id
-					JOIN $table_lwpcommerce_order_meta AS tlcom
-					ON tt.transaction_id=tlcom.lwpcommerce_order_id
+					JOIN $table_lwcommerce_order_meta AS tlcom
+					ON tt.transaction_id=tlcom.lwcommerce_order_id
 					GROUP BY tt.transaction_id $sql_where
 					ORDER BY $column $order 
 					LIMIT $offset, $length"
@@ -503,8 +503,8 @@ class AJAX {
 		$result = $wpdb->query( $sql );
 
 		if ( $status === 'Paid' && $result ) {
-			if ( has_filter( 'lwpcommerce/growthprice/pusher/manual' ) ) {
-				apply_filters( 'lwpcommerce/growthprice/pusher/manual', $transaction_id );
+			if ( has_filter( 'lwcommerce/growthprice/pusher/manual' ) ) {
+				apply_filters( 'lwcommerce/growthprice/pusher/manual', $transaction_id );
 			}
 		}
 

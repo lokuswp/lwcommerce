@@ -5,7 +5,7 @@
 add_action("lokuswp/transaction/tab/header", function () {
 ?>
     <div class="swiper-slide">
-		<?php _e( 'Shipping', 'lwpcommerce' ); ?>
+		<?php _e( 'Shipping', 'lwcommerce' ); ?>
     </div>
 	<?php
 } );
@@ -56,38 +56,38 @@ add_filter("lokuswp/cart/cookie/item", "lwpc_cart_processing", 10, 2);
 /**
  * Adding Tab to Customer Area
  */
-add_action("lwpcommerce/customer/tab/header", function () {
+add_action("lwcommerce/customer/tab/header", function () {
 ?>
     <div class="swiper-slide">
-        <?php _e('Dashboard', 'lwpcommerce'); ?>
+        <?php _e('Dashboard', 'lwcommerce'); ?>
     </div>
 <?php
 });
 
-add_action("lwpcommerce/customer/tab/header", function () {
+add_action("lwcommerce/customer/tab/header", function () {
 ?>
     <div class="swiper-slide">
-		<?php _e( 'Purchase', 'lwpcommerce' ); ?>
+		<?php _e( 'Purchase', 'lwcommerce' ); ?>
     </div>
 <?php
 });
-add_action("lwpcommerce/customer/tab/header", function () {
+add_action("lwcommerce/customer/tab/header", function () {
 ?>
     <div class="swiper-slide">
-		<?php _e( 'Account', 'lwpcommerce' ); ?>
+		<?php _e( 'Account', 'lwcommerce' ); ?>
     </div>
 <?php
 }, 9999);
 
-add_action("lwpcommerce/customer/tab/content", function () {
+add_action("lwcommerce/customer/tab/content", function () {
     require_once LWPC_PATH . 'src/templates/presentation/customer/dashboard.php';
 });
 
-add_action( "lwpcommerce/customer/tab/content", function () {
+add_action( "lwcommerce/customer/tab/content", function () {
 	require_once LWPC_PATH . 'src/templates/presentation/customer/purchase.php';
 } );
 
-add_action("lwpcommerce/customer/tab/content", function () {
+add_action("lwcommerce/customer/tab/content", function () {
     require_once LWPC_PATH . 'src/templates/presentation/customer/account.php';
 }, 9999);
 

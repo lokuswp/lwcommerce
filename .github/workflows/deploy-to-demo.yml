@@ -35,7 +35,7 @@ jobs:
       - name: Deploy FTP
         uses: sebastianpopp/git-ftp-action@releases/v3
         with:
-          url: "ftp://demo.lokuswp.id/lwpcommerce"
+          url: "ftp://demo.lokuswp.id/lwcommerce"
           user: ${{ secrets.DEMO_USERNAME }}
           password: ${{ secrets.DEMO_PASSWORD }}
           syncroot: ${{ github.event.repository.name }}/

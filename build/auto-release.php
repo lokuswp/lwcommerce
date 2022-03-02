@@ -1,7 +1,7 @@
 <?php
 $dropbox_token = $argv[1];
 $plugin_version = "1.0.0";
-$plugin_slug = 'lwpcommerce';
+$plugin_slug = 'lwcommerce';
 $data = array();
 
 // Read Changelog

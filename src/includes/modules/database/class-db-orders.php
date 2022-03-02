@@ -8,8 +8,8 @@
 // 	protected static $table_name;
 
 // 	public function __construct() {
-// 		static::$table_name    = 'lwpcommerce_orderss';
-// 		$this->table_meta_name = static::wpdb()->prefix . 'lwpcommerce_ordermeta';
+// 		static::$table_name    = 'lwcommerce_orderss';
+// 		$this->table_meta_name = static::wpdb()->prefix . 'lwcommerce_ordermeta';
 // 		$this->version         = '0.1';
 // 	}
 
@@ -58,7 +58,7 @@ class DB_LWPCommerce_Order_Meta extends Migration {
 	protected static $table_name;
 
 	public function __construct() {
-		static::$table_name = 'lwpcommerce_ordermeta';
+		static::$table_name = 'lwcommerce_ordermeta';
 		$this->version      = '0.1';
 		$this->create_table();
 	}
@@ -68,7 +68,7 @@ class DB_LWPCommerce_Order_Meta extends Migration {
 
 		$sql = "CREATE TABLE " . static::get_table_name() . " (
 			meta_id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-			lwpcommerce_order_id bigint(20) UNSIGNED NOT NULL,
+			lwcommerce_order_id bigint(20) UNSIGNED NOT NULL,
 			meta_key varchar(255) NOT NULL,
 			meta_value longtext NOT NULL,
 			PRIMARY KEY (meta_id)

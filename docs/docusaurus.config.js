@@ -12,7 +12,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
     onBrokenMarkdownLinks: 'warn',
     favicon: 'img/favicon.ico',
     organizationName: 'lokuswp', // Usually your GitHub org/user name.
-    projectName: 'lwpcommerce', // Usually your repo name.
+    projectName: 'lwcommerce', // Usually your repo name.
     trailingSlash: false,
 
     presets: [
@@ -48,7 +48,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
             title: 'LWPCommerce',
             logo: {
                 alt: 'LWPCommerce',
-                src: 'img/lwpcommerce.png',
+                src: 'img/lwcommerce.png',
             },
             items: [{
                     type: 'doc',

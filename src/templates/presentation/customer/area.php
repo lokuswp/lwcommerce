@@ -27,7 +27,7 @@
                 /**
                  * Hanger for Hooking Header Tab
                  */
-                do_action("lwpcommerce/customer/tab/header"); 
+                do_action("lwcommerce/customer/tab/header"); 
                 ?>
 
             </div>
@@ -41,7 +41,7 @@
                 /**
                  * Hanger for Hooking Content Tab 
                  */
-                do_action("lwpcommerce/customer/tab/content"); 
+                do_action("lwcommerce/customer/tab/content"); 
                 ?>
 
             </div>

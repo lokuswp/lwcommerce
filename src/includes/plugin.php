@@ -40,7 +40,7 @@ class Plugin
 		add_action('plugins_loaded', [$this, 'load_modules']);
 
 		// // Administration / BackOffice
-		$plugin = array('slug' => 'lwpcommerce', 'name' => 'LWPCommerce', 'version' => LWPC_VERSION);
+		$plugin = array('slug' => 'lwcommerce', 'name' => 'LWPCommerce', 'version' => LWPC_VERSION);
 		if (is_admin()) {
 			require_once LWPC_PATH . 'src/admin/class-admin.php';
 			Admin::register($plugin);
@@ -119,6 +119,6 @@ class Plugin
 	{
 		// Registering meta table
 		global $wpdb;
-		$wpdb->lwpcommerce_ordermeta = $wpdb->prefix . 'lwpcommerce_ordermeta';
+		$wpdb->lwcommerce_ordermeta = $wpdb->prefix . 'lwcommerce_ordermeta';
 	}
 }

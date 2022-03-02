@@ -464,7 +464,7 @@ class Reports {
             <div id="report_editor" class="panel" style="height: 100%;background: #fff;margin-right: -10px;">
                 <div class="panel-header text-center">
 
-                    <div class="panel-title h5 mt-10 float-left"><?php _e( 'Edit Report', 'lwpcommerce' ); ?></div>
+                    <div class="panel-title h5 mt-10 float-left"><?php _e( 'Edit Report', 'lwcommerce' ); ?></div>
                     <section class="panel-close float-right">
                         <i class="icon icon-cross"></i>
                     </section>
@@ -472,32 +472,32 @@ class Reports {
 
                 <div class="panel-body">
                     <div class="form-group">
-                        <label class="form-label" for="nama"><?php _e( 'Name', 'lwpcommerce' ); ?></label>
+                        <label class="form-label" for="nama"><?php _e( 'Name', 'lwcommerce' ); ?></label>
                         <input class="form-input" type="text" id="name" placeholder="John Doe">
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="nohp"><?php _e( 'Phone', 'lwpcommerce' ); ?></label>
+                        <label class="form-label" for="nohp"><?php _e( 'Phone', 'lwcommerce' ); ?></label>
                         <input class="form-input" type="text" id="phone" placeholder="08561655212">
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="status"><?php _e( 'Status', 'lwpcommerce' ); ?></label>
+                        <label class="form-label" for="status"><?php _e( 'Status', 'lwcommerce' ); ?></label>
                         <select id="status" class="select2" style="width:100%;">
-                            <option value="completed"><?php _e( 'Complete', 'lwpcommerce' ); ?></option>
-                            <option value="hold"><?php _e( 'Pending', 'lwpcommerce' ); ?></option>
+                            <option value="completed"><?php _e( 'Complete', 'lwcommerce' ); ?></option>
+                            <option value="hold"><?php _e( 'Pending', 'lwcommerce' ); ?></option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="date"><?php _e( 'Date', 'lwpcommerce' ); ?></label>
+                        <label class="form-label" for="date"><?php _e( 'Date', 'lwcommerce' ); ?></label>
                         <input class="form-input" type="date" id="date" placeholder="12/12/2020">
                     </div>
                 </div>
 
                 <div class="panel-footer">
                     <button class="btn btn-primary btn-block" style="margin-bottom:15px"
-                            id="lsdd_report_update"><?php _e( 'Update', 'lwpcommerce' ); ?></button>
+                            id="lsdd_report_update"><?php _e( 'Update', 'lwcommerce' ); ?></button>
                 </div>
 
             </div>
@@ -513,12 +513,12 @@ class Reports {
                 <div class="modal-header">
                     <button class="btn btn-clear float-right modal-close" aria-label="Close"></button>
                     <div class="modal-title h5">
-						<?php _e( 'Import', 'lwpcommerce' ); ?>
+						<?php _e( 'Import', 'lwcommerce' ); ?>
                     </div>
                 </div>
                 <div class="modal-body" style="padding-top:0;padding-bottom:25px;">
                     <small>
-						<?php _e( 'This will replace all existing data in the database', 'lwpcommerce' ); ?>
+						<?php _e( 'This will replace all existing data in the database', 'lwcommerce' ); ?>
                     </small>
                     <div class="input-group">
                         <input class="form-input" id="import-data" type="file" title="Choose CSV File">
@@ -536,13 +536,13 @@ class Reports {
                                       style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/>
                             </svg>
                             <span style="margin-left: 10px;float: right;margin-top: -1px;">
-								<?php _e( 'Import', 'lwpcommerce' ); ?>
+								<?php _e( 'Import', 'lwcommerce' ); ?>
 							</span>
                         </button>
                     </div>
                     <small>
 						<?php _e( 'You have to adjust the import data first, export and adjust your data',
-							'lwpcommerce' ); ?>
+							'lwcommerce' ); ?>
                     </small>
                 </div>
             </div>
@@ -608,12 +608,12 @@ class Reports {
             <div class="modal-container">
                 <div class="modal-header">
                     <div class="columns">
-                        <div class="column modal-title h5"><?php _e( 'Add Donation', 'lwpcommerce' ) ?></div>
+                        <div class="column modal-title h5"><?php _e( 'Add Donation', 'lwcommerce' ) ?></div>
                         <div class="column" style="text-align:right;">
-                            <label for="reports-bulk-input"><?php _e( 'Input', 'lwpcommerce' ) ?></label>
+                            <label for="reports-bulk-input"><?php _e( 'Input', 'lwcommerce' ) ?></label>
                             <input class="col-2" type="text" id="reports-bulk-input" value="1"
                                    style="text-align:center;" maxlength="3">
-                            <label for="reports-bulk-input"><?php _e( 'data', 'lwpcommerce' ) ?></label>
+                            <label for="reports-bulk-input"><?php _e( 'data', 'lwcommerce' ) ?></label>
                         </div>
                     </div>
                 </div>

@@ -9,13 +9,13 @@ class Rajaongkir_API {
 	}
 
 	public function register() {
-		register_rest_route( 'lwpcommerce/v1', '/rajaongkir/province', [
+		register_rest_route( 'lwcommerce/v1', '/rajaongkir/province', [
 			'methods'  => 'GET',
 			'callback' => [ $this, 'get_rajaongkir_province' ],
 			'permission_callback' => false,
 			
 		] );
-		register_rest_route( 'lwpcommerce/v1', '/rajaongkir/city', [
+		register_rest_route( 'lwcommerce/v1', '/rajaongkir/city', [
 			'methods'  => 'GET',
 			'callback' => [ $this, 'get_rajaongkir_city' ],
 			'permission_callback' => false,

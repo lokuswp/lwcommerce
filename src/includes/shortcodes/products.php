@@ -9,7 +9,7 @@ class Products
      */
     public function __construct()
     {
-        add_shortcode('lwpcommerce_products', [$this, 'render']);
+        add_shortcode('lwcommerce_products', [$this, 'render']);
     }
 
     public function render($atts)

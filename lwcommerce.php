@@ -3,15 +3,15 @@
 /**
  * @wordpress-plugin
  *
- * Plugin Name:       LWPCommerce - BETA
- * Plugin URI:        https://lokuswp.id/plugin/lwpcommerce
- * Description:       Jual Beli Online jadi Menyenangkan
+ * Plugin Name:       LWCommerce - BETA
+ * Plugin URI:        https://lokuswp.id/plugin/lwcommerce
+ * Description:       Sistem Jual Beli Online WordPress
  * Version:           0.5.0
  * Author:            LokusWP
  * Author URI:        https://lokuswp.id/
  * License:           GPL-3.0+
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
- * Text Domain:       lwpcommerce
+ * Text Domain:       lwcommerce
  * Domain Path:       /languages
  */
 
@@ -32,7 +32,7 @@ defined('LWPC_VERSION') or define('LWPC_VERSION', '0.5.0');
 defined('LWPC_BASE') or define('LWPC_BASE', plugin_basename(__FILE__));
 defined('LWPC_PATH') or define('LWPC_PATH', plugin_dir_path(__FILE__));
 defined('LWPC_URL') or define('LWPC_URL', plugin_dir_url(__FILE__));
-defined('LWPC_STORAGE') or define('LWPC_STORAGE', wp_get_upload_dir()['basedir'] . '/lwpcommerce');
+defined('LWPC_STORAGE') or define('LWPC_STORAGE', wp_get_upload_dir()['basedir'] . '/lwcommerce');
 defined('LWPC_STRING_TEXT') or define('LWPC_STRING_TEXT', '0.0.1'); // String Version
 
 // Autoload

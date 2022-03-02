@@ -9,7 +9,7 @@ class Customer_Area
      */
     public function __construct()
     {
-        add_shortcode('lwpcommerce_customer_area', [$this, 'render']);
+        add_shortcode('lwcommerce_customer_area', [$this, 'render']);
     }
 
     public function render($atts)

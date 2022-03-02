@@ -9,7 +9,7 @@ class Storefront
      */
     public function __construct()
     {
-        add_shortcode('lwpcommerce_storefront', [$this, 'render']);
+        add_shortcode('lwcommerce_storefront', [$this, 'render']);
     }
 
     public function render($atts)
