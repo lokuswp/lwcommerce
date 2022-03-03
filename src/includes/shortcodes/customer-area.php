@@ -24,7 +24,7 @@ class Customer_Area
 
         ob_start();
 
-        require_once LWPC_PATH . 'src/templates/presentation/customer/area.php';
+        require_once LWC_PATH . 'src/templates/presentation/customer/area.php';
 
         $render = ob_get_clean();
 

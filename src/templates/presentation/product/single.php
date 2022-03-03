@@ -49,7 +49,7 @@ lokuswp_set_meta_counter("_product_view", get_the_ID());
 </script>
 
 <div class="lwcommerce lwp-container">
-    <?php require_once LWPC_PATH . 'src/templates/component/navigation.php'; ?>
+    <?php require_once LWC_PATH . 'src/templates/component/navigation.php'; ?>
 
     <div class="lwp-product row">
         <div class="col-xs-12 col-sm-12">

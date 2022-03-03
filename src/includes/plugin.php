@@ -10,42 +10,43 @@ class Plugin
 {
 	public function __construct()
 	{
-		$shortcode = new Shortcodes\Storefront;
-		$shortcode = new Shortcodes\Customer_Area;
+		new Shortcodes\Storefront;
+		new Shortcodes\Customer_Area;
 
-		$posttype  = new Modules\Product\Post_Type_Product;
-		$posttype  = new Modules\Product\Metabox_Product;
+		new Modules\Product\Post_Type_Product;
+		new Modules\Product\Metabox_Product;
 
+		new Modules\Plugin\Updater;
 
-		// // Activation and Deactivation
-		register_activation_hook(LWPC_BASE, [$this, 'activation']);
-		register_deactivation_hook(LWPC_BASE, [$this, 'uninstall']);
+		// Activation and Deactivation
+		register_activation_hook(LWC_BASE, [$this, 'activation']);
+		register_deactivation_hook(LWC_BASE, [$this, 'uninstall']);
 
-		require_once LWPC_PATH . 'src/includes/helper/mock/func-mock.php';
-		require_once LWPC_PATH . 'src/includes/helper/func-helper.php';
+		require_once LWC_PATH . 'src/includes/helper/mock/func-mock.php';
+		require_once LWC_PATH . 'src/includes/helper/func-helper.php';
 
 		if (!defined('WPTEST')) {
-			require_once LWPC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
-			require_once LWPC_PATH . 'src/includes/modules/shipping/class-manager.php';
-			require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-email.php';
-			// require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-dine-in.php';
-			require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-jne.php';
-			require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-post-indonesia.php';
+			require_once LWC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
+			require_once LWC_PATH . 'src/includes/modules/shipping/class-manager.php';
+			require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-email.php';
+			// require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-dine-in.php';
+			require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-jne.php';
+			require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-post-indonesia.php';
 
-			//	require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-shipping-processing.php';
-			require_once LWPC_PATH . 'src/includes/modules/shipping/api/class-rajaongkir-api.php';
-			require_once LWPC_PATH . 'src/includes/modules/shipping/api/class-get-shipping-list.php';
+			//	require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-shipping-processing.php';
+			require_once LWC_PATH . 'src/includes/modules/shipping/api/class-rajaongkir-api.php';
+			require_once LWC_PATH . 'src/includes/modules/shipping/api/class-get-shipping-list.php';
 		}
 
 		add_action('plugins_loaded', [$this, 'load_modules']);
 
 		// // Administration / BackOffice
-		$plugin = array('slug' => 'lwcommerce', 'name' => 'LWPCommerce', 'version' => LWPC_VERSION);
+		$plugin = array('slug' => 'lwcommerce', 'name' => 'LWPCommerce', 'version' => LWC_VERSION);
 		if (is_admin()) {
-			require_once LWPC_PATH . 'src/admin/class-admin.php';
+			require_once LWC_PATH . 'src/admin/class-admin.php';
 			Admin::register($plugin);
 		} else {
-			require_once LWPC_PATH . 'src/public/class-public.php';
+			require_once LWC_PATH . 'src/public/class-public.php';
 			Frontend::register($plugin);
 		}
 
@@ -61,7 +62,7 @@ class Plugin
 	 */
 	public function activation()
 	{
-		require_once LWPC_PATH . 'src/includes/common/class-activator.php';
+		require_once LWC_PATH . 'src/includes/common/class-activator.php';
 		Activator::activate();
 	}
 
@@ -73,7 +74,7 @@ class Plugin
 	 */
 	public function uninstall()
 	{
-		require_once LWPC_PATH . 'src/includes/common/class-deactivator.php';
+		require_once LWC_PATH . 'src/includes/common/class-deactivator.php';
 		Deactivator::deactivate();
 	}
 
@@ -110,9 +111,9 @@ class Plugin
 
 	public function load_modules()
 	{
-		include_once LWPC_PATH . 'src/includes/hook.php';
-		// require_once LWPC_PATH . 'src/includes/modules/shipping/methods/class-shipping-processing.php';
-		require_once LWPC_PATH . 'src/includes/modules/orders/methods/class-order-processing.php';
+		include_once LWC_PATH . 'src/includes/hook.php';
+		// require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-shipping-processing.php';
+		require_once LWC_PATH . 'src/includes/modules/orders/methods/class-order-processing.php';
 	}
 
 	private function register_ordermeta()

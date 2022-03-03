@@ -65,7 +65,7 @@ class Onboarding
 		$this->version = $version;
 
 		// Load Required File
-		require_once LWPC_PATH . 'src/admin/class-ajax.php';
+		require_once LWC_PATH . 'src/admin/class-ajax.php';
 	}
 
 	/**
@@ -204,7 +204,7 @@ class Onboarding
 	 */
 	public function admin_menu_order()
 	{
-		include_once LWPC_PATH . 'src/admin/orders/order.php';
+		include_once LWC_PATH . 'src/admin/orders/order.php';
 	}
 
 	/**
@@ -215,7 +215,7 @@ class Onboarding
 	 */
 	public function admin_menu_callback()
 	{
-		include_once LWPC_PATH . 'src/admin/settings/onboarding.php';
+		include_once LWC_PATH . 'src/admin/settings/onboarding.php';
 	}
 
 	/**
@@ -225,7 +225,7 @@ class Onboarding
 	 */
 	public function __clone()
 	{
-		_doing_it_wrong(__FUNCTION__, esc_html(__('Cloning of is forbidden')), LWPC_VERSION);
+		_doing_it_wrong(__FUNCTION__, esc_html(__('Cloning of is forbidden')), LWC_VERSION);
 	}
 
 	/**
@@ -235,6 +235,6 @@ class Onboarding
 	 */
 	public function __wakeup()
 	{
-		_doing_it_wrong(__FUNCTION__, esc_html(__('Unserializing instances of is forbidden')), LWPC_VERSION);
+		_doing_it_wrong(__FUNCTION__, esc_html(__('Unserializing instances of is forbidden')), LWC_VERSION);
 	}
 }

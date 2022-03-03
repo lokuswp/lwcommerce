@@ -67,7 +67,7 @@ class Frontend
     public function enqueue_styles()
     {
         // // Load Theme CSS
-        wp_enqueue_style('lwc-skin', plugins_url('/src/public/assets/css/skin.css', LWPC_BASE), array(), $this->version, 'all');
+        wp_enqueue_style('lwc-skin', plugins_url('/src/public/assets/css/skin.css', LWC_BASE), array(), $this->version, 'all');
         // wp_register_style('lsdd-listing', plugins_url('/public/assets/css/listing.css', LSDD_BASE), array(), $this->version, 'all');
         // wp_register_style('lsdd-payment', plugins_url('/public/assets/css/payment.css', LSDD_BASE), array(), $this->version, 'all');
         // wp_register_style('lsdd-thankyou', plugins_url('/public/assets/css/thankyou.css', LSDD_BASE), array(), $this->version, 'all');
@@ -103,7 +103,7 @@ e.
         // wp_register_script('lsdd-payment', plugins_url('/public/assets/js/payment.js', LSDD_BASE), array('jquery'), $this->version, false);
         // wp_register_script('lsdd-navigo', plugins_url('/includes/core/libraries/js/navigo/navigo.min.js', LSDD_BASE), array(), '8.11.0', false);
 
-        wp_enqueue_script($this->slug, plugins_url('/src/public/assets/js/public.js', LWPC_BASE), array('jquery'), $this->version, false);
+        wp_enqueue_script($this->slug, plugins_url('/src/public/assets/js/public.js', LWC_BASE), array('jquery'), $this->version, false);
         // wp_localize_script($this->slug, 'lsdd_public', array(
         //     'ajax_wp' => admin_url('admin-ajax.php'),
         //     'ajax_url' => LSDD_URL . 'core/utils/lsdd-ajax.php',

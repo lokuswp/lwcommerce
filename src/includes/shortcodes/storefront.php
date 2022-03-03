@@ -22,7 +22,7 @@ class Storefront
 
         ob_start();
 
-        require_once LWPC_PATH . 'src/templates/presentation/product/storefront.php';
+        require_once LWC_PATH . 'src/templates/presentation/product/storefront.php';
 
         $render = ob_get_clean();
 

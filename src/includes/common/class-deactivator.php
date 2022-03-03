@@ -12,7 +12,7 @@ class Deactivator
 {
     public static function deactivate()
     {
-        require LWPC_PATH . 'src/includes/modules/database/class-db-orders.php';
+        require LWC_PATH . 'src/includes/modules/database/class-db-orders.php';
 
         $db_reports_meta = new DB_LWPCommerce_Order_Meta();
         $db_reports_meta->drop_table();

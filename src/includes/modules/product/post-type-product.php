@@ -105,7 +105,7 @@ class Post_Type_Product
     public function archive()
     {
         if (is_post_type_archive('product')) {
-            // return LWPC_PATH . 'frontend/templates/storefront/listing.php';
+            // return LWC_PATH . 'frontend/templates/storefront/listing.php';
         }
     }
 
@@ -120,8 +120,8 @@ class Post_Type_Product
         global $post;
 
         if ($post->post_type == 'product') {
-            if (file_exists(LWPC_PATH . 'src/templates/presentation/product/single.php')) {
-                return LWPC_PATH . 'src/templates/presentation/product/single.php';
+            if (file_exists( LWC_PATH . 'src/templates/presentation/product/single.php')) {
+                return LWC_PATH . 'src/templates/presentation/product/single.php';
             }
         }
 

@@ -58,7 +58,7 @@ function lwpc_get_stock_html()
 
 function lwpc_add_to_cart_html()
 {
-	require LWPC_PATH . 'src/templates/component/add-to-cart.php';
+	require LWC_PATH . 'src/templates/component/add-to-cart.php';
 }
 
 /**

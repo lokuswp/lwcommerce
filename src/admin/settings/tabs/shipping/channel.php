@@ -234,7 +234,7 @@ $shipping_active = lwp_get_option("shipping_active");
                                 // if (file_exists(LOKUSWP_STORAGE . '/status-unpaid-' . $this->country . '.html')) {
                                 // 	require_once LOKUSWP_STORAGE . '/status-unpaid-' . $this->country . '.html';
                                 // } else {
-                                require_once LWPC_PATH . 'src/templates/emails/shipping-digital-download.html'; // Load Default
+                                require_once LWC_PATH . 'src/templates/emails/shipping-digital-download.html'; // Load Default
                                 // }
                                 ?>
                             </div>

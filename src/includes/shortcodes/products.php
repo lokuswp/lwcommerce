@@ -22,7 +22,7 @@ class Products
 
         ob_start();
 
-        require_once LWPC_PATH . 'src/templates/presentation/product/product_list.php';
+        require_once LWC_PATH . 'src/templates/presentation/product/product_list.php';
 
         $render = ob_get_clean();
 

@@ -11,7 +11,7 @@ if (!defined('WPTEST')) {
 class Activator {
 	public static function activate() {
 		// Call The File
-		 require LWPC_PATH . 'src/includes/modules/database/class-db-orders.php';
+		 require LWC_PATH . 'src/includes/modules/database/class-db-orders.php';
 
 		// // Create Table lwpcommers_reports
 		// $db_options = new DB_Reports;

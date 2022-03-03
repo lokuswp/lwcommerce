@@ -11,7 +11,7 @@ add_action("lokuswp/transaction/tab/header", function () {
 } );
 
 add_action( "lokuswp/transaction/tab/content", function () {
-	require_once LWPC_PATH . 'src/templates/presentation/transaction/shipping.php';
+	require_once LWC_PATH . 'src/templates/presentation/transaction/shipping.php';
 } );
 
 function lwpc_cart_data_processing( $data ) {
@@ -80,15 +80,15 @@ add_action("lwcommerce/customer/tab/header", function () {
 }, 9999);
 
 add_action("lwcommerce/customer/tab/content", function () {
-    require_once LWPC_PATH . 'src/templates/presentation/customer/dashboard.php';
+    require_once LWC_PATH . 'src/templates/presentation/customer/dashboard.php';
 });
 
 add_action( "lwcommerce/customer/tab/content", function () {
-	require_once LWPC_PATH . 'src/templates/presentation/customer/purchase.php';
+	require_once LWC_PATH . 'src/templates/presentation/customer/purchase.php';
 } );
 
 add_action("lwcommerce/customer/tab/content", function () {
-    require_once LWPC_PATH . 'src/templates/presentation/customer/account.php';
+    require_once LWC_PATH . 'src/templates/presentation/customer/account.php';
 }, 9999);
 
 // Pre Transaction

@@ -28,12 +28,12 @@ if (!defined('WPTEST')) {
  * Define Constant
  */
 defined('LOKUSWP_VERSION') or define('LOKUSWP_VERSION', '0.5.0');
-defined('LWPC_VERSION') or define('LWPC_VERSION', '0.5.0');
-defined('LWPC_BASE') or define('LWPC_BASE', plugin_basename(__FILE__));
-defined('LWPC_PATH') or define('LWPC_PATH', plugin_dir_path(__FILE__));
+defined('LWC_VERSION') or define('LWC_VERSION', '0.5.0');
+defined('LWC_BASE') or define('LWC_BASE', plugin_basename(__FILE__));
+defined('LWC_PATH') or define('LWC_PATH', plugin_dir_path(__FILE__));
 defined('LWPC_URL') or define('LWPC_URL', plugin_dir_url(__FILE__));
 defined('LWPC_STORAGE') or define('LWPC_STORAGE', wp_get_upload_dir()['basedir'] . '/lwcommerce');
 defined('LWPC_STRING_TEXT') or define('LWPC_STRING_TEXT', '0.0.1'); // String Version
 
 // Autoload
-require_once LWPC_PATH . 'src/autoload.php';
+require_once dirname(__DIR__) . '/lwcommerce/src/autoload.php';

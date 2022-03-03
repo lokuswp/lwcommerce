@@ -66,7 +66,7 @@ class Admin
 		$this->version = $version;
 
 		// Load Required File
-		require_once LWPC_PATH . 'src/admin/class-ajax.php';
+		require_once LWC_PATH . 'src/admin/class-ajax.php';
 	}
 
 	/**
@@ -327,7 +327,7 @@ class Admin
 		));
 
 		// // Add Switch Options to wp-admin > lwcommerce > Appearence
-		// require_once LWPC_PATH . 'backend/admin/class-switch-options.php';
+		// require_once LWC_PATH . 'backend/admin/class-switch-options.php';
 		// Admin\Switch_Options::addOptions( $this->slug, $this->name, array(
 		//     'lsdc_unique_code' => ['name' => __('Kode Unik', 'lwcommerce'), 'desc' => __('Matikan/Hidupkan Kode Unik', 'lwcommerce'), 'override' => false],
 		// ));
@@ -342,7 +342,7 @@ class Admin
 	 */
 	public function admin_menu_order()
 	{
-		include_once LWPC_PATH . 'src/admin/orders/order.php';
+		include_once LWC_PATH . 'src/admin/orders/order.php';
 	}
 
 	/**
@@ -353,7 +353,7 @@ class Admin
 	 */
 	public function admin_menu_callback()
 	{
-		include_once LWPC_PATH . 'src/admin/settings/tab.php';
+		include_once LWC_PATH . 'src/admin/settings/tab.php';
 	}
 
 	/**
@@ -363,7 +363,7 @@ class Admin
 	 */
 	public function __clone()
 	{
-		_doing_it_wrong(__FUNCTION__, esc_html(__('Cloning of is forbidden')), LWPC_VERSION);
+		_doing_it_wrong(__FUNCTION__, esc_html(__('Cloning of is forbidden')), LWC_VERSION);
 	}
 
 	/**
@@ -373,6 +373,6 @@ class Admin
 	 */
 	public function __wakeup()
 	{
-		_doing_it_wrong(__FUNCTION__, esc_html(__('Unserializing instances of is forbidden')), LWPC_VERSION);
+		_doing_it_wrong(__FUNCTION__, esc_html(__('Unserializing instances of is forbidden')), LWC_VERSION);
 	}
 }
