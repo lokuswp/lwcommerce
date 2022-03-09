@@ -19,12 +19,10 @@ if ( ! defined( 'WPTEST' ) ) {
  * @since 1.0.0
  */
 class Email extends Shipping\Gateway {
-	public $id = 'email';
-
+	public $id = 'shipping_email';
 	public $name = "Email";
-	protected $description = "Mengirim produk digital dengan email kepada pembeli";
+	public $description = "Mengirim produk digital dengan email kepada pembeli";
 	public $logo = LWPC_URL . 'src/admin/assets/images/email.png';
-	protected $fee = 0;
 
 	public $zone = [ 'digital' ];
 	public $package = [ 'regular' => 'on' ];
@@ -35,7 +33,6 @@ class Email extends Shipping\Gateway {
 
 	public function __construct() {
 		$this->save_as_data();
-
 	}
 
 	// payment management for admin

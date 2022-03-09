@@ -1,7 +1,17 @@
 (function ($) {
     'use strict';
 
-    String.prototype.escapeHtml = function (unsafe) {
+
+    // Check date if it over 1 hour
+    function checkDate(date) {
+        const now = new Date();
+        const dateTime = new Date(date);
+        const diff = now.getTime() - dateTime.getTime();
+        const diffHours = Math.floor(diff / (1000 * 60 * 60));
+        return diffHours > 1;
+    }
+
+    function escHTML(unsafe) {
         if (!unsafe) {
             unsafe = this;
         }
@@ -20,15 +30,6 @@
         });
     }
 
-    // Check date if it over 1 hour
-    function checkDate(date) {
-        const now = new Date();
-        const dateTime = new Date(date);
-        const diff = now.getTime() - dateTime.getTime();
-        const diffHours = Math.floor(diff / (1000 * 60 * 60));
-        return diffHours > 1;
-    }
-
     // Convert date to Date Month Year indonesia
     function convertDate(date) {
         const dateTime = new Date(date);
@@ -44,6 +45,7 @@
 
 
     $(document).ready(function () {
+
 
         //=============== Datatables ===============//
         const tableOrders = $('#orders').DataTable(
@@ -64,6 +66,8 @@
                         d.orderFilter = $('#orders-filter-value').val();
                     },
                     complete: function (jqXHR) {
+
+                        console.log(jqXHR);
                         $('.lwpc-overlay-table').hide();
                         if (jqXHR.responseJSON.searchQuery.length > 0) {
                             $('.viewing-search').text(jqXHR.responseJSON.searchQuery);
@@ -87,7 +91,7 @@
                         <div class="lwpc-card-header lwpc-card-shadow">
                         ${checkDate(data.created_at) ? `<span class="lwpc-badge lwpc-badge-seccondary">${convertDate(data.created_at)}</span>` : '<button class="lwpc-btn-rounded lwpc-mr-10">Pesanan Baru</button>'}
                             <span class="lwpc-text-red lwpc-mr-10">${data.invoice}</span>
-                            <span class="lwpc-text-bold lwpc-mr-10">${data.name.escapeHtml()}</span>
+                            <span class="lwpc-text-bold lwpc-mr-10">${data.name}</span>
                             <span style="
                                          ${data.status_processing === 'unprocessed' ? `color: #38c;` : ''}
                                          ${data.status_processing === 'processed' ? `color: #38c;` : ''}
@@ -136,9 +140,9 @@
                                             <div class="lwpc-grid-item ${index >= 1 ? 'lwpc-hidden' : ``}">
                                                 <img src="${item.image || 'https://i.pinimg.com/originals/a6/e8/d6/a6e8d6c8122c34de94463e071a4c7e45.png'}" alt="gedung" width="100px" height="100px" style="margin-right: 0.5rem">
                                                 <div class="lwpc-flex-column">
-                                                    <span class="lwpc-text-bold">${item.post_title.escapeHtml()}</span>
-                                                    <span class="lwpc-text-bold">${item.quantity.escapeHtml()} x ${item.price_promo !== null ? `<del class="del">${item.price.escapeHtml()}</del> ${item.price_promo.escapeHtml()}` : item.price.escapeHtml()}</span>
-                                                    <span class="lwpc-text-secondary">"${item.note.escapeHtml().length > 20 ? item.note.escapeHtml().slice(0, 20) + '...' : item.note.escapeHtml()}"</span>
+                                                    <span class="lwpc-text-bold">${item.post_title}</span>
+                                                    <span class="lwpc-text-bold">${item.quantity} x ${item.price_promo !== null ? `<del class="del">${item.price}</del> ${item.price_promo}` : item.price}</span>
+                                                    <span class="lwpc-text-secondary">"${item.note.length > 20 ? item.note.slice(0, 20) + '...' : item.note}"</span>
                                                     ${data.product.length > 1 ? `<a style="color: #0EBA29; margin-top: 10px" class="lwpc-hover more-product">Lihat ${data.product.length - 1} Produk Lainya...</a>` : ``}
                                                 </div>
                                             </div>
@@ -149,33 +153,33 @@
                                 <div class="lwpc-grid-item">
                                     <div class="lwpc-flex-column">
                                         <span class="lwpc-text-bold">Pembeli</span>
-                                        <span style="margin-top: 10px">${data.name.escapeHtml()}</span>
-                                        <span>${data.phone.escapeHtml()}</span>
-                                        <span>${data.email.escapeHtml()}</span>
+                                        <span style="margin-top: 10px">${data.name}</span>
+                                        <span>${data.phone}</span>
+                                        <span>${data.email}</span>
                                     </div>
                                 </div>
                                 <div class="lwpc-grid-item">
                                     <div class="lwpc-flex-column">
                                         <span class="lwpc-text-bold">Alamat</span>
-                                        <span style="margin-top: 10px">${data.address.address.escapeHtml() ?? ''}</span>
+                                        <span style="margin-top: 10px">${data.address.address ?? ''}</span>
                                         <div class="lwpc-flex">
-                                            <span>${data.address.district.escapeHtml() ?? ''}</span>
+                                            <span>${data.address.district ?? ''}</span>
                                             <span>&nbsp;&nbsp;&nbsp;${data.address.postal_code ?? ''}</span>
                                         </div>
-                                        <span>${data.address.city.escapeHtml() ?? ''}</span>
-                                        <span>${data.address.state.escapeHtml() ?? ''}</span>
+                                        <span>${data.address.city ?? ''}</span>
+                                        <span>${data.address.state ?? ''}</span>
                                     </div>
                                 </div>
                                 <div class="lwpc-grid-item">
                                     <div class="lwpc-flex-column">
                                         <span class="lwpc-text-bold">Kurir</span>
-                                        <span>${data.courier.toUpperCase().escapeHtml()} ${data.service.toUpperCase().escapeHtml()}</span>
+                                        <span>${data.courier.toUpperCase()} ${data.service.toUpperCase()}</span>
                                         <span style="margin-top: 10px" class="lwpc-text-bold">Nomor Resi</span>
                                         ${data.status_processing === 'processed' ? `
                                                 <input type="text" class="lwpc-input-text" placeholder="Masukkan nomor resi" id="resi">
                                                 <button class="lwpc-btn-rounded" id="btn-resi" data-id="${data.transaction_id}">tambah</button>
                                             ` : data.status_processing === 'shipping' ? `` : `<span>-</span>`}
-                                        ${data.status_processing === 'shipping' ? `<span class="lwpc-hover lwpc-text-underline__on-hover" style="font-weight: bold; color: #5c5c5c;">${data.no_resi.escapeHtml()}</span>` : ``}
+                                        ${data.status_processing === 'shipping' ? `<span class="lwpc-hover lwpc-text-underline__on-hover" style="font-weight: bold; color: #5c5c5c;">${data.no_resi}</span>` : ``}
                                     </div>
                                 </div>
                             </div>

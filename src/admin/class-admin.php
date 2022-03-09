@@ -321,7 +321,7 @@ class Admin
 
 		// Add Shortcode List to wp-admin > lwcommerce > settings > apperance
 		Shortcode_Lists::add_shortcode_list( "lwcommerce", $this->slug, $this->name, array(
-		    ['shortcode' => '[lwcommerce_store_front]', 'description' => __("Display Storefront List", 'lwcommerce')],
+		    ['shortcode' => '[lwcommerce_storefront]', 'description' => __("Display Storefront List", 'lwcommerce')],
 			['shortcode' => '[lwcommerce_products]', 'description' => __("Display Product List Only", 'lwcommerce')],
 		    ['shortcode' => '[lwcommerce_customer_area]', 'description' => __("Display Customer Area", 'lwcommerce')],
 		));

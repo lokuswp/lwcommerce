@@ -1,6 +1,8 @@
 <?php
 
 use LokusWP\Commerce\Onboarding;
+use LSD\Migration\DB_LWCommerce_Order_Meta;
+
 
 if ( ! defined( 'WPTEST' ) ) {
 	defined( 'ABSPATH' ) or die( "Direct access to files is prohibited" );
@@ -75,6 +77,12 @@ class Boot {
 		} );
 
 		$this->it_has_backbone();
+
+		// Call The File
+//		require LWC_PATH . 'src/includes/modules/database/class-db-orders.php';
+//
+//		$db_reports_meta = new DB_LWCommerce_Order_Meta();
+//		$db_reports_meta->create_table();
 
 		$backbone = (array) apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
 		if ( in_array( 'lokuswp/lokuswp.php', $backbone ) ) {

@@ -154,8 +154,8 @@ abstract class Gateway {
 		$data['payment_class'] = get_class( $this );
 
 
-		if ( empty( lwp_get_option( $this->id ) ) ) {
-			lwp_update_option( $this->id, $data );
+		if ( empty( get_option( $this->id ) ) ) {
+			update_option( $this->id, $data );
 		}
 		$this->save_to_shipping_active();
 		Log::Info( "shipping gateway " . $this->id . " created and activated" );
@@ -169,19 +169,19 @@ abstract class Gateway {
 	 * @since 0.5.0
 	 */
 	private function save_to_shipping_active(): void {
-		$shipping_active = lwp_get_option( "shipping_active" );
+		$shipping_active = get_option( "shipping_active" );
 		$shipping_list   = empty( $shipping_active ) ? array() : $shipping_active;
 
 
 		if ( ! in_array( $this->id, $shipping_list ) ) {
 			$shipping_list[] = $this->id;
-			lwp_update_option( "shipping_active", $shipping_list );
+			update_option( "shipping_active", $shipping_list );
 		}
 
 	}
 
 	public function reset_data(): bool {
-		return lwp_delete_option( $this->id );;
+		return delete_option( $this->id );;
 	}
 
 	/**
@@ -210,7 +210,7 @@ abstract class Gateway {
 	 * @return string
 	 */
 	public function get_status( string $shipping_id = null ): string {
-		$shipping_active = lwp_get_option( "shipping_active" );
+		$shipping_active = get_option( "shipping_active" );
 		$shipping_list   = empty( $shipping_active ) ? array() : $shipping_active;
 
 		$status = "off";

@@ -163,7 +163,7 @@ class AJAX {
 		$table_cart                   = $wpdb->prefix . "lokuswp_carts";
 		$table_transaction            = $wpdb->prefix . "lokuswp_transactions";
 		$table_transaction_meta       = $wpdb->prefix . "lokuswp_transactionmeta";
-		$table_lwcommerce_order_meta = $wpdb->prefix . "lwcommerce_ordermeta";
+		$table_lwcommerce_order_meta  = $wpdb->prefix . "lwcommerce_ordermeta";
 		$table_post                   = $wpdb->prefix . "posts";
 
 		// Request
@@ -301,10 +301,10 @@ class AJAX {
 					"select jj.ID, jj.post_title, jj.quantity , jj.note
 							from $table_transaction as tr
     						join (
-								select tp.ID, tp.post_title, tc.cart_hash, tc.quantity, tc.note from $table_cart as tc
+								select tp.ID, tp.post_title, tc.cart_uuid, tc.quantity, tc.note from $table_cart as tc
 								join $table_post as tp on tc.post_id=tp.ID
 							) as jj
-							on tr.cart_hash=jj.cart_hash where transaction_id='$row->transaction_id'"
+							on tr.cart_uuid=jj.cart_uuid where transaction_id='$row->transaction_id'"
 				);
 
 				//==================== add image & price to product ====================//

@@ -1,8 +1,8 @@
 <?php
 
-// namespace LSD\Migration;
+ namespace LSD\Migration;
 
-// require LOKUSWP_PATH . 'src/includes/libraries/php/db-migrate/dbcore/bootstrap.php';
+ require LOKUSWP_PATH . 'src/includes/libraries/php/db-migrate/dbcore/bootstrap.php';
 
 // class DB_Reports extends Migration {
 // 	protected static $table_name;
@@ -54,7 +54,7 @@
 // 	}
 // }
 
-class DB_LWPCommerce_Order_Meta extends Migration {
+class DB_LWCommerce_Order_Meta extends Migration {
 	protected static $table_name;
 
 	public function __construct() {

@@ -15,7 +15,6 @@ class Shipping_Admin {
 
 	public function __construct() {
 		?>
-
         <section id="shipping" class="form-horizontal">
 
             <div class="tab-nested">
@@ -24,7 +23,7 @@ class Shipping_Admin {
 
                 <!-- <input type="radio" name="tab" id="tab2"/>
                 <label class="tab-item" for="tab2">Zone</label> -->
-<!-- 
+                <!--
                 <input type="radio" name="tab" id="tab3"/>
                 <label class="tab-item" for="tab3"><?php _e( "RajaOngkir", "lwcommerce" ); ?></label> -->
 

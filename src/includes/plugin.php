@@ -26,12 +26,12 @@ class Plugin
 		require_once LWC_PATH . 'src/includes/helper/func-helper.php';
 
 		if (!defined('WPTEST')) {
-			require_once LWC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
-			require_once LWC_PATH . 'src/includes/modules/shipping/class-manager.php';
-			require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-email.php';
+//			require_once LWC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
+//			require_once LWC_PATH . 'src/includes/modules/shipping/class-manager.php';
+//			require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-email.php';
 			// require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-dine-in.php';
-			require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-jne.php';
-			require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-post-indonesia.php';
+//			require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-jne.php';
+//			require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-post-indonesia.php';
 
 			//	require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-shipping-processing.php';
 			require_once LWC_PATH . 'src/includes/modules/shipping/api/class-rajaongkir-api.php';
@@ -41,7 +41,7 @@ class Plugin
 		add_action('plugins_loaded', [$this, 'load_modules']);
 
 		// // Administration / BackOffice
-		$plugin = array('slug' => 'lwcommerce', 'name' => 'LWPCommerce', 'version' => LWC_VERSION);
+		$plugin = array('slug' => 'lwcommerce', 'name' => 'LWCommerce', 'version' => LWC_VERSION);
 		if (is_admin()) {
 			require_once LWC_PATH . 'src/admin/class-admin.php';
 			Admin::register($plugin);
