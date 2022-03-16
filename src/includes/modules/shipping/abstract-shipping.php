@@ -238,7 +238,7 @@ abstract class Gateway {
 	public function set_cost() {
 		// get destination from cache
 		$destination_cost = get_transient( $this->id . '_cost' );
-		$this->origin     = lwpc_get_settings( 'store', 'district', 'intval' );
+		$this->origin     = lwc_get_settings( 'store', 'district', 'intval' );
 		$this->cost       = $destination_cost["{$this->origin}_to_{$this->destination}_with_{$this->service}"] ?? false;
 
 		if ( ! $this->cost ) {

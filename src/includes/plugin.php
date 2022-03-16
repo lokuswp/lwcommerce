@@ -41,7 +41,7 @@ class Plugin
 		add_action('plugins_loaded', [$this, 'load_modules']);
 
 		// // Administration / BackOffice
-		$plugin = array('slug' => 'lwcommerce', 'name' => 'LWPCommerce', 'version' => LWC_VERSION);
+		$plugin = array('slug' => 'lwcommerce', 'name' => 'LWCommerce', 'version' => LWC_VERSION);
 		if (is_admin()) {
 			require_once LWC_PATH . 'src/admin/class-admin.php';
 			Admin::register($plugin);

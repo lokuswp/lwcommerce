@@ -6,7 +6,7 @@ if (!defined('WPTEST')) {
 }
 
 use LSD\Migration\DB_Carts;
-use LSD\Migration\DB_LWPCommerce_Order_Meta;
+use LSD\Migration\DB_LWCommerce_Order_Meta;
 
 class Deactivator
 {
@@ -14,7 +14,7 @@ class Deactivator
     {
         require LWC_PATH . 'src/includes/modules/database/class-db-orders.php';
 
-        $db_reports_meta = new DB_LWPCommerce_Order_Meta();
+        $db_reports_meta = new DB_LWCommerce_Order_Meta();
         $db_reports_meta->drop_table();
     }
 }

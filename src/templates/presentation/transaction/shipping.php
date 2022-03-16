@@ -53,11 +53,11 @@
             <h6 style="margin-bottom:12px;" class="text-primary"><?php _e('Physical Shipping', 'lwcommerce'); ?></h6>
 
             <?php
-            $state_selected = lwpc_get_settings('store', 'state', 'intval');
+            $state_selected = lwc_get_settings('store', 'state', 'intval');
             $get_states = lwp_get_remote_json(get_rest_url() . 'lwcommerce/v1/rajaongkir/province', [], 'lokuswp_states', WEEK_IN_SECONDS);
             $states = $get_states->data ?? [];
 
-            // $city_selected = lwpc_get_settings('store', 'city', 'intval');
+            // $city_selected = lwc_get_settings('store', 'city', 'intval');
             $city_selected = null;
             $get_cities = lwp_get_remote_json(get_rest_url() . 'lwcommerce/v1/rajaongkir/city?province=' . $state_selected, [], 'lokuswp_cities_' . $state_selected, WEEK_IN_SECONDS);
             $cities = $get_cities->data ?? [];

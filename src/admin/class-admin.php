@@ -76,17 +76,14 @@ class Admin
 	 */
 	public function admin_init()
 	{
-		// Redirect to License after activate plugin
+
+
+		// Redirect to License after activate plugining
 		// if (get_option('lwcommerce_activator_redirect')) {
 		// 	delete_option('lwcommerce_activator_redirect');
 		// 	exit(wp_redirect(admin_url('admin.php?page=lwcommerce')));
 		// }
 
-		// Handle Ignoring Email Failure Notice
-		if (isset($_GET['mail-failed-ignored'])) {
-			update_option('lwcommerce_mail_error', false);
-			header("Refresh:0; url=" . get_admin_url());
-		}
 
 		Tabs::add('lwcommerce', 'settings', __('Settings', 'lwcommerce'), function () {
 			require_once 'settings/tabs/settings.php';
@@ -110,7 +107,7 @@ class Admin
 		// Onboarding
 		// $onboarding = false;
 		// if (isset($_GET["page"]) && $_GET["page"] == "lwcommerce" && $onboarding == false) {
-		// 	wp_enqueue_style('lpwc-onboarding', LWPC_URL . 'src/admin/assets/css/onboarding.css', array(), $this->version, 'all');
+		// 	wp_enqueue_style('lpwc-onboarding', LWC_URL . 'src/admin/assets/css/onboarding.css', array(), $this->version, 'all');
 		// }
 
 		// Admin
@@ -118,25 +115,25 @@ class Admin
 			if ($_GET['page'] == 'lwcommerce' || strpos($_GET['page'], 'lwcommerce-') !== false) {
 
 				// Spectre CSS Framework
-				wp_enqueue_style('spectre-exp', LWPC_URL . 'src/includes/libraries/css/spectre/spectre-exp.min.css', array(), '0.5.9', 'all');
-				wp_enqueue_style('spectre-icons', LWPC_URL . 'src/includes/libraries/css/spectre/spectre-icons.min.css', array(), '0.5.9', 'all');
-				wp_enqueue_style('spectre', LWPC_URL . 'src/includes/libraries/css/spectre/spectre.min.css', array(), '0.5.9', 'all');
+				wp_enqueue_style('spectre-exp', LWC_URL . 'src/includes/libraries/css/spectre/spectre-exp.min.css', array(), '0.5.9', 'all');
+				wp_enqueue_style('spectre-icons', LWC_URL . 'src/includes/libraries/css/spectre/spectre-icons.min.css', array(), '0.5.9', 'all');
+				wp_enqueue_style('spectre', LWC_URL . 'src/includes/libraries/css/spectre/spectre.min.css', array(), '0.5.9', 'all');
 
 				wp_enqueue_style('wp-color-picker');
 
 				// Order CSS
 				if ($_GET['page'] === 'lwcommerce-order') {
-					wp_enqueue_style('datatables-style', LWPC_URL . 'src/includes/libraries/js/datatables/datatables.min.css', array(), $this->version, 'all');
-					wp_enqueue_style('datatables-style-buttons', LWPC_URL . 'src/includes/libraries/js/datatables/buttons.dataTables.min.css', array(), $this->version, 'all');
-					wp_enqueue_style('datatables-style-select', LWPC_URL . 'src/includes/libraries/js/datatables/select.dataTables.min.css', array(), $this->version, 'all');
+					wp_enqueue_style('datatables-style', LWC_URL . 'src/includes/libraries/js/datatables/datatables.min.css', array(), $this->version, 'all');
+					wp_enqueue_style('datatables-style-buttons', LWC_URL . 'src/includes/libraries/js/datatables/buttons.dataTables.min.css', array(), $this->version, 'all');
+					wp_enqueue_style('datatables-style-select', LWC_URL . 'src/includes/libraries/js/datatables/select.dataTables.min.css', array(), $this->version, 'all');
 
-					wp_enqueue_style('orders-css', LWPC_URL . 'src/admin/assets/css/orders' . $dev_css, array(), $this->version, 'all');
+					wp_enqueue_style('orders-css', LWC_URL . 'src/admin/assets/css/orders' . $dev_css, array(), $this->version, 'all');
 				}
 			}
 		}
 
 		// Global Admin Styles
-		wp_enqueue_style($this->slug . '-global', LWPC_URL . 'src/admin/assets/css/admin-global' . $dev_css, array(), $this->version, 'all');
+		wp_enqueue_style($this->slug . '-global', LWC_URL . 'src/admin/assets/css/admin-global' . $dev_css, array(), $this->version, 'all');
 	}
 
 	/**
@@ -150,11 +147,11 @@ class Admin
 		$dev_js = '.js';
 
 		// Datatable
-		wp_register_script('datatables', LWPC_URL . 'src/includes/libraries/js/datatables/datatables.min.js', array('jquery'), $this->version, false);
-		wp_register_script('datatables-buttons', LWPC_URL . 'src/includes/libraries/js/datatables/datatables.buttons.min.js', array('jquery'), $this->version, false);
-		wp_register_script('datatables-select', LWPC_URL . 'src/includes/libraries/js/datatables/datatables.select.min.js', array('jquery'), $this->version, false);
-		wp_register_script('datatables-buttons-excel', LWPC_URL . 'src/includes/libraries/js/datatables/jszip.min.js', array('jquery'), $this->version, false);
-		wp_register_script('datatables-buttons-html5', LWPC_URL . 'src/includes/libraries/js/datatables/buttons.html5.min.js', array('jquery'), $this->version, false);
+		wp_register_script('datatables', LWC_URL . 'src/includes/libraries/js/datatables/datatables.min.js', array('jquery'), $this->version, false);
+		wp_register_script('datatables-buttons', LWC_URL . 'src/includes/libraries/js/datatables/datatables.buttons.min.js', array('jquery'), $this->version, false);
+		wp_register_script('datatables-select', LWC_URL . 'src/includes/libraries/js/datatables/datatables.select.min.js', array('jquery'), $this->version, false);
+		wp_register_script('datatables-buttons-excel', LWC_URL . 'src/includes/libraries/js/datatables/jszip.min.js', array('jquery'), $this->version, false);
+		wp_register_script('datatables-buttons-html5', LWC_URL . 'src/includes/libraries/js/datatables/buttons.html5.min.js', array('jquery'), $this->version, false);
 
 		// Load Lib Admin Restrict only lwcommerce Page
 		if (
@@ -164,11 +161,11 @@ class Admin
 
 			// Load Admin Setting Js
 			if ($_GET['page'] === 'lwcommerce') {
-				wp_enqueue_script('admin-setting', LWPC_URL . 'src/admin/assets/js/admin-setting' . $dev_js, array('jquery', 'wp-color-picker'), $this->version, false);
-				wp_localize_script('admin-setting', 'lwpc_admin', array(
+				wp_enqueue_script('admin-setting', LWC_URL . 'src/admin/assets/js/admin-setting' . $dev_js, array('jquery', 'wp-color-picker'), $this->version, false);
+				wp_localize_script('admin-setting', 'lwc_admin', array(
 					'ajax_url'    => admin_url('admin-ajax.php'),
-					'ajax_nonce'  => wp_create_nonce('lwpc_admin_nonce'),
-					'plugin_url'  => LWPC_URL,
+					'ajax_nonce'  => wp_create_nonce('lwc_admin_nonce'),
+					'plugin_url'  => LWC_URL,
 					//				'currency'    => lwpc_get_currency(),
 					'translation' => $this->js_translation(),
 				));
@@ -176,9 +173,10 @@ class Admin
 
 			// Order JS
 			if ($_GET['page'] === 'lwcommerce-order' || $_GET['page'] === 'admin.php?page=lwcommerce-statistics') {
+
 				wp_enqueue_script(
 					'orders-js',
-					LWPC_URL . 'src/admin/assets/js/orders' . $dev_js,
+					LWC_URL . 'src/admin/assets/js/orders' . $dev_js,
 					array('jquery', 'datatables', 'datatables-buttons', 'datatables-select', 'datatables-buttons-excel', 'datatables-buttons-html5'),
 					$this->version,
 					false
@@ -186,11 +184,12 @@ class Admin
 
 				wp_localize_script('orders-js', 'lwpc_orders', array(
 					'ajax_url'    => admin_url('admin-ajax.php'),
-					'ajax_nonce'  => wp_create_nonce('lwpc_admin_nonce'),
-					'plugin_url'  => LWPC_URL,
+					'ajax_nonce'  => wp_create_nonce('lwc_admin_nonce'),
+					'plugin_url'  => LWC_URL,
 					'is_pro'      => in_array('lwcommerce-pro/lwcommerce-pro.php', apply_filters('active_plugins', get_option('active_plugins'))),
 					'translation' => $this->js_translation(),
 				));
+
 			}
 
 			// Enquene Media For Administrator Only
@@ -232,7 +231,7 @@ class Admin
 			'manage_options',
 			$this->slug,
 			[$this, 'admin_menu_callback'],
-			LWPC_URL . 'src/admin/assets/lwcommerce.png',
+			LWC_URL . 'src/admin/assets/lwcommerce.png',
 			2
 		);
 
@@ -292,7 +291,7 @@ class Admin
 			'manage_options',
 			'edit.php?post_type=product',
 			'',
-			LWPC_URL . 'src/admin/assets/svg/product.svg',
+			LWC_URL . 'src/admin/assets/svg/product.svg',
 			3
 		);
 
@@ -314,7 +313,7 @@ class Admin
 			'manage_options',
 			'lwcommerce-order',
 			[$this, 'admin_menu_order'],
-			LWPC_URL . 'src/admin/assets/svg/order.svg',
+			LWC_URL . 'src/admin/assets/svg/order.svg',
 			3
 		);
 
@@ -332,6 +331,27 @@ class Admin
 		//     'lsdc_unique_code' => ['name' => __('Kode Unik', 'lwcommerce'), 'desc' => __('Matikan/Hidupkan Kode Unik', 'lwcommerce'), 'override' => false],
 		// ));
 
+		add_menu_page(
+			$this->name,
+			$this->name,
+			'manage_options',
+			$this->slug . '-onboarding',
+			[ $this, 'onboarding_page' ],
+			LWC_URL . 'src/admin/assets/svg/onboard.svg',
+			2
+		);
+	}
+
+	/**
+	 * Onboarding Page
+	 *
+	 * @since    1.0.0
+	 */
+	public function onboarding_page() {
+		if ( get_option( "lwcommerce_was_installed" )  ) {
+			header( 'Refresh:0; url=' . get_admin_url() . 'admin.php?page=lwcommerce' );
+			exit;
+		}
 	}
 
 	/**

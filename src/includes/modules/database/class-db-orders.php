@@ -54,7 +54,7 @@
 // 	}
 // }
 
-class DB_LWPCommerce_Order_Meta extends Migration {
+class DB_LWCommerce_Order_Meta extends Migration {
 	protected static $table_name;
 
 	public function __construct() {

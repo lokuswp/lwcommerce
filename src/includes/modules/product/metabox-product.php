@@ -158,7 +158,7 @@ class Metabox_Product
     public function metabox_product_data()
     {
         global $post;
-        wp_nonce_field(basename(__FILE__), 'lwpc_admin_nonce');
+        wp_nonce_field(basename(__FILE__), 'lwc_admin_nonce');
 
         // Product Data
         $price_normal = get_post_meta($post->ID, '_price_normal', true) == null ? null : lwp_currency_format(false, lwpc_get_normal_price($post->ID));
@@ -210,7 +210,7 @@ class Metabox_Product
 
     public function metabox_save($post_id)
     {
-        if (!isset($_POST['lwpc_admin_nonce']) || !wp_verify_nonce($_POST['lwpc_admin_nonce'], basename(__FILE__))) {
+        if (!isset($_POST['lwc_admin_nonce']) || !wp_verify_nonce($_POST['lwc_admin_nonce'], basename(__FILE__))) {
             return 'Nonce not Verified';
         }
 

@@ -23,7 +23,7 @@ class Email extends Shipping\Gateway {
 
 	public $name = "Email";
 	protected $description = "Mengirim produk digital dengan email kepada pembeli";
-	public $logo = LWPC_URL . 'src/admin/assets/images/email.png';
+	public $logo = LWC_URL . 'src/admin/assets/images/email.png';
 	protected $fee = 0;
 
 	public $zone = [ 'digital' ];

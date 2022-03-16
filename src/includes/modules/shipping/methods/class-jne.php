@@ -48,7 +48,7 @@ class JNE extends Shipping\Gateway {
 	 *
 	 * @var url
 	 */
-	public $logo = LWPC_URL . 'src/admin/assets/images/jne.png';
+	public $logo = LWC_URL . 'src/admin/assets/images/jne.png';
 
 	/**
 	 * Set Payment Service
@@ -77,7 +77,7 @@ class JNE extends Shipping\Gateway {
 	public $country = "ID";
 
 	public function __construct() {
-		$this->api_key = lwpc_get_settings( 'shipping', 'apikey' ) ?? '';
+		$this->api_key = lwc_get_settings( 'shipping', 'apikey' ) ?? '';
 		$this->save_as_data();
 	}
 

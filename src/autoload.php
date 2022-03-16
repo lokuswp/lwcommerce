@@ -8,19 +8,25 @@ if ( ! defined( 'WPTEST' ) ) {
 
 class Boot {
 	public function __construct() {
-//		if (empty(get_option("lwcommerce_was_installed"))) {
-//		$this->onboarding();
-//		} else {
+
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		}
+
+		if ( ! file_exists( WP_PLUGIN_DIR . '/lokuswp/lokuswp.php' ) ) { // Fresh install
+			$this->onboarding();
+		} else if ( file_exists( WP_PLUGIN_DIR . '/lokuswp/lokuswp.php' ) && ! is_plugin_active( 'lokuswp/lokuswp.php' ) ) { // Was installed but not working
+			$this->onboarding();
+		} else if ( file_exists( WP_PLUGIN_DIR . '/lokuswp/lokuswp.php' ) && is_plugin_active( 'lokuswp/lokuswp.php' ) && get_option( "lwcommerce_was_installed" ) ) { // Already installed and working
 			$this->run();
-//		}
+		}
 	}
 
 	public function onboarding() {
+
 		include_once LWC_PATH . 'src/admin/class-onboarding.php';
 		$plugin = array( 'slug' => 'lwcommerce', 'name' => 'LWCommerce', 'version' => LWC_VERSION );
 		Onboarding::register( $plugin );
-
-		//update_option("lwcommerce_was_installed", "setup");
 	}
 
 	public function it_has_backbone() {

@@ -23,7 +23,7 @@ class Dine_In extends Shipping\Gateway {
 
 	public $name = "Dine In";
 	protected $description = "Pembeli mengambil produk di tempat";
-	public $logo = LWPC_URL . 'src/admin/assets/images/location.png';
+	public $logo = LWC_URL . 'src/admin/assets/images/location.png';
 	protected $fee = 0;
 
 	public $zone = [ 'lokal' ];

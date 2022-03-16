@@ -20,7 +20,7 @@ class AJAX {
 	}
 
 	public function store_settings_save() {
-		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+		if ( ! check_ajax_referer( 'lwc_admin_nonce', 'security' ) ) {
 			wp_send_json_error( 'Invalid security token sent.' );
 		}
 
@@ -57,13 +57,14 @@ class AJAX {
 
 		// Update New Settings
 		update_option( 'lwcommerce_store', $merge );
+		update_option( 'lwcommerce_was_installed', true );
 		echo 'action_success';
 
 		wp_die();
 	}
 
 	public function shipping_package_status() {
-		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+		if ( ! check_ajax_referer( 'lwc_admin_nonce', 'security' ) ) {
 			wp_send_json_error( 'Invalid security token sent.' );
 		}
 
@@ -90,7 +91,7 @@ class AJAX {
 	}
 
 	public function shipping_settings_save() {
-		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+		if ( ! check_ajax_referer( 'lwc_admin_nonce', 'security' ) ) {
 			wp_send_json_error( 'Invalid security token sent.' );
 		}
 
@@ -122,13 +123,14 @@ class AJAX {
 
 		// Update New Settings
 		update_option( 'lwcommerce_shipping', $merge );
+
 		echo 'action_success';
 
 		wp_die();
 	}
 
 	public function update_resi() {
-		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+		if ( ! check_ajax_referer( 'lwc_admin_nonce', 'security' ) ) {
 			wp_send_json_error( 'Invalid security token sent.' );
 		}
 
@@ -153,7 +155,7 @@ class AJAX {
 	}
 
 	public function get_orders() {
-		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+		if ( ! check_ajax_referer( 'lwc_admin_nonce', 'security' ) ) {
 			wp_send_json_error( 'Invalid security token sent.' );
 		}
 
@@ -336,7 +338,7 @@ class AJAX {
 	}
 
 	public function process_order() {
-		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+		if ( ! check_ajax_referer( 'lwc_admin_nonce', 'security' ) ) {
 			wp_send_json_error( 'Invalid security token sent.' );
 		}
 
@@ -360,7 +362,7 @@ class AJAX {
 	}
 
 	public function orders_chart() {
-		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+		if ( ! check_ajax_referer( 'lwc_admin_nonce', 'security' ) ) {
 			wp_send_json_error( 'Invalid security token sent.' );
 		}
 
@@ -489,7 +491,7 @@ class AJAX {
 	}
 
 	public function change_payment_status() {
-		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+		if ( ! check_ajax_referer( 'lwc_admin_nonce', 'security' ) ) {
 			wp_send_json_error( 'Invalid security token sent.' );
 		}
 

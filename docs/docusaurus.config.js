@@ -4,7 +4,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 // With JSDoc @type annotations, IDEs can provide config autocompletion
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 (module.exports = {
-    title: 'LWPCommerce',
+    title: 'LWCommerce',
     tagline: 'Hybrid Ecommerce Plugin WordPress',
     url: 'https://617bbb486961c5b2d772df7f--priceless-tereshkova-b95c3e.netlify.app/',
     baseUrl: '/',
@@ -45,9 +45,9 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
         //     disableSwitch: true,
         // },
         navbar: {
-            title: 'LWPCommerce',
+            title: 'LWCommerce',
             logo: {
-                alt: 'LWPCommerce',
+                alt: 'LWCommerce',
                 src: 'img/lwcommerce.png',
             },
             items: [{

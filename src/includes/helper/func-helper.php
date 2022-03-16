@@ -71,7 +71,7 @@ function lwpc_add_to_cart_html()
  *
  * @return false|void
  */
-function lwpc_set_settings(string $option, string $item, $value, string $sanitize = 'sanitize_text_field')
+function lwc_set_settings(string $option, string $item, $value, string $sanitize = 'sanitize_text_field')
 {
 	$settings = get_option('lwcommerce_' . $option);
 
@@ -96,7 +96,7 @@ function lwpc_set_settings(string $option, string $item, $value, string $sanitiz
  * @return mixed
  * @since 4.0.0
  */
-function lwpc_get_settings(string $option = 'general_settings', string $item, string $validator = 'esc_attr', string $fallback = null)
+function lwc_get_settings(string $option = 'general_settings', string $item, string $validator = 'esc_attr', string $fallback = null)
 {
 
 	$settings = get_option('lwcommerce_' . $option);
@@ -129,9 +129,9 @@ function lwpc_get_settings(string $option = 'general_settings', string $item, st
  *
  * @return false|mixed
  */
-function lwpc_get_cost_rajaongkir(string $shipping_id, string $service, string $destination, string $weight)
+function lwc_get_cost_rajaongkir(string $shipping_id, string $service, string $destination, string $weight)
 {
-	$origin           = lwpc_get_settings('store', 'district', 'intval');
+	$origin           = lwc_get_settings('store', 'district', 'intval');
 	$destination_cost = get_transient($shipping_id . '_cost');
 
 	$cost = $destination_cost["{$origin}_to_{$destination}_with_{$service}"] ?? false;
@@ -140,7 +140,7 @@ function lwpc_get_cost_rajaongkir(string $shipping_id, string $service, string $
 		return $cost;
 	}
 
-	$apikey = lwpc_get_settings('shipping', 'apikey') ?? '';
+	$apikey = lwc_get_settings('shipping', 'apikey') ?? '';
 
 	$header = [
 		'content-type' => 'application/json',

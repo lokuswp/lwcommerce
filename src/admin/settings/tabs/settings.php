@@ -2,7 +2,7 @@
 
 /**
  * Template : Settings
- * for Admin LWPCommerce
+ * for Admin LWCommerce
  * 
  */
 
