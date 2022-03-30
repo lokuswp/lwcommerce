@@ -1,11 +1,5 @@
 <?php
-
 use LokusWP\Commerce\Shipping;
-
-/*********************************************/
-/* Displaying Payments Menu Registered
-/* wp-admin -> LSDDonation -> Payments
-/********************************************/
 
 if ( ! defined( 'WPTEST' ) ) {
 	defined( 'ABSPATH' ) or die( "Direct access to files is prohibited" );
@@ -22,9 +16,9 @@ class Shipping_Admin {
                 <label class="tab-item" for="tab1"><?php _e( "Channel", "lwcommerce" ); ?></label>
 
                 <!-- <input type="radio" name="tab" id="tab2"/>
-                <label class="tab-item" for="tab2">Zone</label> -->
-                <!--
-                <input type="radio" name="tab" id="tab3"/>
+                <label class="tab-item" for="tab2"><?php _e( "Zone", "lwcommerce" ); ?></label> -->
+
+                <!-- <input type="radio" name="tab" id="tab3"/>
                 <label class="tab-item" for="tab3"><?php _e( "RajaOngkir", "lwcommerce" ); ?></label> -->
 
                 <div class="tab-body-component">
@@ -55,7 +49,6 @@ class Shipping_Admin {
         </style>
 
 		<?php
-
 	}
 }
 

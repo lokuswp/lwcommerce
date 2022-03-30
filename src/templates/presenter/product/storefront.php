@@ -12,7 +12,7 @@
 
     <?php require_once LWC_PATH . 'src/templates/component/navigation.php'; ?>
 
-    <?php require_once LWC_PATH . 'src/templates/presentation/product/list.php'; ?>
+    <?php require_once LWC_PATH . 'src/templates/presenter/product/list.php'; ?>
   
     <?php require_once LWC_PATH . 'src/templates/component/powered.php'; ?>
 

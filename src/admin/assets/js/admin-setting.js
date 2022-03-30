@@ -1,4 +1,28 @@
 (function ($) {
+    //=============== Admin - Payment ===============//
+    // Enabled
+    $(document).on("change", ".lwcommerce-shipping-status", function (e) {
+
+        let id = $(this).find('input[type="checkbox"]').attr('id');
+        let state = ($(this).find('input[type="checkbox"]').is(":checked")) ? 'on' : 'off';
+
+        $.post(lwc_admin.ajax_url, {
+            action: 'lwc_admin_shipping_status',
+            id: id,
+            state: state,
+            security: lwc_admin.ajax_nonce,
+        }, function (response) {
+
+            if (response.trim() == 'action_success') {
+                // give feedback
+            }
+
+        }).fail(function () {
+            alert('Please check your internet connection');
+        });
+
+    });
+
 
     // =================== Store Settings =================== //
     $(document).on("click", "#lwpc-setting-store-save", function (e) {
@@ -6,10 +30,10 @@
         $(this).addClass('loading');
         const that = this;
 
-        $.post(lwpc_admin.ajax_url, {
+        $.post(lwc_admin.ajax_url, {
             action: 'lwpc_store_settings_save',
             settings: $("#settings form").serialize(),
-            security: lwpc_admin.ajax_nonce,
+            security: lwc_admin.ajax_nonce,
         }, function (response) {
             if (response.trim() === 'action_success') {
                 $(that).removeClass('loading');
@@ -27,11 +51,11 @@
         const packageId = $(this).attr('data-action');
         const that = $(this);
 
-        $.post(lwpc_admin.ajax_url, {
+        $.post(lwc_admin.ajax_url, {
             action: 'lwpc_shipping_package_status',
             status: that.val(),
             package_id: packageId,
-            security: lwpc_admin.ajax_nonce,
+            security: lwc_admin.ajax_nonce,
         }, function (response) {
             console.log(response)
             // if (!response) alert('action failed');
@@ -47,10 +71,10 @@
         $(this).addClass('loading');
         const that = this;
 
-        $.post(lwpc_admin.ajax_url, {
+        $.post(lwc_admin.ajax_url, {
             action: 'lwpc_shipping_settings_save',
             settings: $("#settings form").serialize(),
-            security: lwpc_admin.ajax_nonce,
+            security: lwc_admin.ajax_nonce,
         }, function (response) {
             if (response.trim() === 'action_success') {
                 $(that).removeClass('loading');
@@ -80,10 +104,10 @@
         let thisID = $(this).attr('id');
 
         // // AJAX Request
-        // $.post(lokuswp_admin.ajax_url, {
-        //     action: 'lokuswp_admin_shipping_manage',
+        // $.post(lwc_admin.ajax_url, {
+        //     action: 'lwc_admin_shipping_manage',
         //     id: thisID,
-        //     security: lokuswp_admin.ajax_nonce,
+        //     security: lwc_admin.ajax_nonce,
         // }, function (response) {
 
         //     let html = response;

@@ -5,8 +5,24 @@
         $('.cart-icon-wrapper').html('<div class="cart-icon svg-wrapper"><small class="cart-qty">' + lokusCart.countQty() + '</small><img src="' + lokuswp.plugin_url + 'src/assets/svg/cart.svg' + '" alt="cart-icon"></div>');
     }
 
+    /**
+     * Processing View After Checkout
+     */
+    document.addEventListener('lokuswp-transaction-success', function ( response ) {
+
+        // Order
+        document.getElementById("lwc-order-id").innerHTML = "#" + response.detail.order_id;
+        document.getElementById("lwc-order-status").innerHTML = response.detail.order_status_text;
+
+        // Button
+        document.getElementById("trx-btn-action").innerText = response.detail.btn_text;
+        document.getElementById("trx-btn-action").setAttribute("href", response.detail.btn_url);
+
+        // Load Download Section
+    }, false);
+
+
     $(document).ready(function () {
-        // lokusTransaction.setExtra("kode_unik", "", "Unique Code", -241);
         lwcUpdateCartIcon();
     });
 

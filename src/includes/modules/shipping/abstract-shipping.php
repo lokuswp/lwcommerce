@@ -7,279 +7,146 @@ if ( ! defined( 'WPTEST' ) ) {
 	defined( 'ABSPATH' ) or die( "Direct access to files is prohibited" );
 }
 
-use LokusWP\Utils\Log;
-
 abstract class Gateway {
+
 	/**
 	 * Shipping ID
 	 *
 	 * @var string
 	 */
-	public $id = null;
+	public string $id;
 
 	/**
 	 * Shipping Name
 	 *
 	 * @var string
 	 */
-	public $name = null;
+	public string $name;
 
 	/**
 	 * Shipping Description
 	 *
 	 * @var string
 	 */
-	protected $description = null;
+	public string $description;
 
 	/**
-	 * Shipping Logo
-	 *
-	 * @var url
-	 */
-	public $logo = null;
-
-	/**
-	 * Shipping Group
+	 * Shipping Logo Url
 	 *
 	 * @var string
 	 */
-	protected $group = null;
+	public string $logo_url;
 
 	/**
-	 * Shipping Group
-	 *
-	 * @var string
-	 */
-	protected $group_name = null;
-
-	/**
-	 * Shipping Documtenation
+	 * Shipping Documentation Url
 	 *
 	 * @var array
 	 */
-	protected $docs_url = null;
-
-	/**
-	 * Shipping Template
-	 *
-	 * @var string
-	 */
-	protected $template = null;
+	public array $docs_url = [];
 
 	/**
 	 * Shipping Country
 	 *
-	 * @var string
+	 * @var array
 	 */
-	protected $country = 'WW';
-
-	/**
-	 * Instruction
-	 *
-	 * @var string
-	 */
-	protected $instruction = "";
+	public array $country = [];
 
 	/**
 	 * Shipping Zone
 	 *
 	 * @var array
 	 */
-	protected $zone = [];
+	public array $zones = [];
 
 	/**
-	 * Shipping Package
+	 * Shipping Service
+	 * Regular, Express, etc
 	 *
 	 * @var array
 	 */
-	protected $package = [];
+	public array $services = [];
 
 	/**
-	 * Shipping Zone
+	 * Shipping Category
 	 *
 	 * @var string
 	 */
-	protected $type = "";
+	public string $category;
 
 	/**
-	 * Shipping cost
-	 *
-	 * @var int
+	 * @return void
 	 */
-	protected $cost = 0;
+	public function init_data(): void {
+		$data                   = array();
+		$data['id']             = $this->id;
+		$data['name']           = $this->name;
+		$data['logo_url']       = $this->logo_url;
+		$data['description']    = $this->description;
+		$data['category']       = $this->category;
+		$data['zones']          = $this->zones;
+		$data['services']       = $this->services;
+		$data['data']           = [];
+		$data['shipping_class'] = get_class( $this );
 
-	/**
-	 * Api Key  Raja Ongkir
-	 */
-	protected $api_key = ''; // ASdgaisgd
+		// Saving Channel Data to DB
+		$shipping_id = 'shipping-' . $this->id;
+		if ( empty( lwp_get_option( $shipping_id ) ) ) {
+			lwp_update_option( $shipping_id, $data );
 
-	/**
-	 * Estimation date
-	 */
-	protected $estimation_date = null;
+			// Saving to Payment Status
+			// Notification Status
+			$shipping_carriers = lwp_get_option( 'shipping_manager' );
 
-	/**
-	 * Payment Service
-	 */
-	public $service = '';
+			if ( ! isset( $shipping_carriers[ $this->id ] ) ) {
+				$shipping_carriers[ $this->id ] = 'on';
+			}
+			lwp_update_option( 'shipping_manager', $shipping_carriers );
+			// Trigger Change Payment
+			// Logger::info( "shipping gateway " . $this->id . " created and activated" );
 
-	/**
-	 * Store location base on Raja Ongkir ID
-	 */
-	public $origin = '';
-
-	/**
-	 * Destination shipping location base on Raja Ongkir ID
-	 */
-	public $destination = '';
-
-	/**
-	 * Weight in gram
-	 */
-	public $weight = 0;
-
-	public function save_as_data(): bool {
-		$data                  = array();
-		$data['id']            = $this->id;
-		$data['name']          = $this->name;
-		$data['logo']          = $this->logo;
-		$data['desc']          = $this->description;
-		$data['group']         = $this->group;
-		$data['zone']          = $this->zone;
-		$data['package']       = $this->package;
-		$data['type']          = $this->type;
-		$data['data']          = [];
-		$data['cost']          = $this->cost;
-		$data['instruction']   = $this->instruction;
-		$data['payment_class'] = get_class( $this );
-
-
-		if ( empty( get_option( $this->id ) ) ) {
-			update_option( $this->id, $data );
 		}
-		$this->save_to_shipping_active();
-		Log::Info( "shipping gateway " . $this->id . " created and activated" );
-
-		return true;
 	}
 
 	/**
-	 * Saving All Shipping Gateway to Shipping Active List
+	 * Reset Shipping Channel in Database
 	 *
-	 * @since 0.5.0
 	 */
-	private function save_to_shipping_active(): void {
-		$shipping_active = get_option( "shipping_active" );
-		$shipping_list   = empty( $shipping_active ) ? array() : $shipping_active;
-
-
-		if ( ! in_array( $this->id, $shipping_list ) ) {
-			$shipping_list[] = $this->id;
-			update_option( "shipping_active", $shipping_list );
-		}
-
-	}
-
 	public function reset_data(): bool {
-		return delete_option( $this->id );;
+		return lwp_delete_option( $this->id );
 	}
 
 	/**
 	 * Get Shipping ID
 	 *
-	 * @return float|int
+	 * @return string
 	 */
-	public function get_ID() {
-		return abs( $this->id );
+	public function get_ID(): string {
+		return $this->id;
 	}
 
 	/**
 	 * Get Description Settings
 	 *
-	 * @return void
+	 * @return string
 	 */
-	public function get_description() {
-		return esc_attr( $this->description );
+	public function get_description(): string {
+		return $this->description;
 	}
 
+
 	/**
-	 * Get Shipping Status based on Shipping Active Data
-	 *
-	 * @param  string|null  $shipping_id
+	 * Get Shipping Status
 	 *
 	 * @return string
 	 */
-	public function get_status( string $shipping_id = null ): string {
-		$shipping_active = get_option( "shipping_active" );
-		$shipping_list   = empty( $shipping_active ) ? array() : $shipping_active;
+	public function get_status(): string {
+		$shipping_carriers = lwp_get_option( 'shipping_manager' );
 
-		$status = "off";
-		if ( in_array( $this->id, $shipping_list ) ) {
-			$status = "on";
+		if ( ! isset( $shipping_carriers[ $this->id ] ) ) {
+			$shipping_carriers[ $this->id ] = 'off';
 		}
 
-		return $status;
-	}
-
-	/**
-	 * Get Shipping Cost
-	 */
-	public function get_cost() {
-		$this->set_cost();
-
-		return $this->cost;
-	}
-
-	/**
-	 * Set Shipping Cost
-	 *
-	 * @return void
-	 */
-	public function set_cost() {
-		// get destination from cache
-		$destination_cost = get_transient( $this->id . '_cost' );
-		$this->origin     = lwpc_get_settings( 'store', 'district', 'intval' );
-		$this->cost       = $destination_cost["{$this->origin}_to_{$this->destination}_with_{$this->service}"] ?? false;
-
-		if ( ! $this->cost ) {
-			$header = [
-				'content-type' => 'application/json',
-				'key'          => $this->api_key,
-			];
-
-			$body = [
-				'origin'      => $this->origin,
-				'destination' => $this->destination,
-				'weight'      => $this->weight,
-				'courier'     => $this->id,
-			];
-
-			$options = [
-				'body'    => wp_json_encode( $body ),
-				'headers' => $header,
-			];
-
-			$request  = wp_remote_post( 'https://api.rajaongkir.com/starter/cost', $options );
-			$response = json_decode( wp_remote_retrieve_body( $request ) );
-			$costs    = $response->rajaongkir->results[0]->costs;
-			$index    = array_search( $this->service, array_column( $costs, 'service' ) );
-
-			$cost            = $costs[ $index ]->cost[0]->value;
-			$estimation_date = $costs[ $index ]->cost[0]->etd;
-
-			// Push new destination to cache
-			$destination_cost["{$this->origin}_to_{$this->destination}_with_{$this->service}"] = [
-				'cost' => $cost,
-				'etd'  => $estimation_date,
-			];
-
-			set_transient( $this->id . '_cost', $destination_cost, WEEK_IN_SECONDS );
-
-			$this->cost = [
-				'cost' => $cost,
-				'etd'  => $estimation_date,
-			];
-		}
+		return $shipping_carriers[ $this->id ] == 'on';
 	}
 
 	/**
@@ -289,4 +156,10 @@ abstract class Gateway {
 	 * @return void
 	 */
 	abstract public function admin_manage( string $shipping_id );
+
+	abstract public function notification_text( object $transaction );
+
+	abstract public function notification_html( object $transaction );
+
+	abstract public function calc_cost( $package );
 }

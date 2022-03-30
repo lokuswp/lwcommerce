@@ -5,10 +5,15 @@ namespace LokusWP\Commerce\Admin;
 class AJAX {
 	public function __construct() {
 		add_action( 'wp_ajax_lwpc_store_settings_save', [ $this, 'store_settings_save' ] );
+
 		add_action( 'wp_ajax_lwpc_shipping_package_status', [ $this, 'shipping_package_status' ] );
 		add_action( 'wp_ajax_lwpc_change_payment_status', [ $this, 'change_payment_status' ] );
 
 		add_action( 'wp_ajax_lwpc_shipping_settings_save', [ $this, 'shipping_settings_save' ] );
+
+		// Shipping
+		add_action( 'wp_ajax_lwc_admin_shipping_status', [ $this, 'admin_shipping_status' ] );
+
 
 		// Orders
 		add_action( 'wp_ajax_lwpc_get_orders', [ $this, 'get_orders' ] );
@@ -19,8 +24,30 @@ class AJAX {
 		add_action( 'wp_ajax_lwpc_orders_chart', [ $this, 'orders_chart' ] );
 	}
 
+	public function admin_shipping_status() {
+		if ( ! check_ajax_referer( 'lwc_admin_nonce', 'security' ) ) {
+			wp_send_json_error( 'Invalid security token sent.' );
+		}
+
+		// Toggle Payment Method
+		$shipping_id = sanitize_key( $_REQUEST['id'] );
+		$state       = sanitize_key( $_REQUEST['state'] );
+
+		$shipping_status = lwp_get_option( 'shipping_manager' ) ?? array();
+		if ( ! is_array( $shipping_status ) ) {
+			$shipping_status = array();
+		}
+
+		$shipping_status[ $shipping_id ] = $state;
+		lwp_update_option( 'shipping_manager', $shipping_status );
+		echo 'action_success';
+
+		wp_die();
+	}
+
+
 	public function store_settings_save() {
-		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+		if ( ! check_ajax_referer( 'lwc_admin_nonce', 'security' ) ) {
 			wp_send_json_error( 'Invalid security token sent.' );
 		}
 
@@ -57,13 +84,14 @@ class AJAX {
 
 		// Update New Settings
 		update_option( 'lwcommerce_store', $merge );
+		update_option( 'lwcommerce_was_installed', true );
 		echo 'action_success';
 
 		wp_die();
 	}
 
 	public function shipping_package_status() {
-		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+		if ( ! check_ajax_referer( 'lwc_admin_nonce', 'security' ) ) {
 			wp_send_json_error( 'Invalid security token sent.' );
 		}
 
@@ -90,7 +118,7 @@ class AJAX {
 	}
 
 	public function shipping_settings_save() {
-		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+		if ( ! check_ajax_referer( 'lwc_admin_nonce', 'security' ) ) {
 			wp_send_json_error( 'Invalid security token sent.' );
 		}
 
@@ -122,13 +150,14 @@ class AJAX {
 
 		// Update New Settings
 		update_option( 'lwcommerce_shipping', $merge );
+
 		echo 'action_success';
 
 		wp_die();
 	}
 
 	public function update_resi() {
-		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+		if ( ! check_ajax_referer( 'lwc_admin_nonce', 'security' ) ) {
 			wp_send_json_error( 'Invalid security token sent.' );
 		}
 
@@ -153,18 +182,18 @@ class AJAX {
 	}
 
 	public function get_orders() {
-		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+		if ( ! check_ajax_referer( 'lwc_admin_nonce', 'security' ) ) {
 			wp_send_json_error( 'Invalid security token sent.' );
 		}
 
 		global $wpdb;
 
 		// Table name
-		$table_cart                   = $wpdb->prefix . "lokuswp_carts";
-		$table_transaction            = $wpdb->prefix . "lokuswp_transactions";
-		$table_transaction_meta       = $wpdb->prefix . "lokuswp_transactionmeta";
-		$table_lwcommerce_order_meta  = $wpdb->prefix . "lwcommerce_ordermeta";
-		$table_post                   = $wpdb->prefix . "posts";
+		$table_cart                  = $wpdb->prefix . "lokuswp_carts";
+		$table_transaction           = $wpdb->prefix . "lokuswp_transactions";
+		$table_transaction_meta      = $wpdb->prefix . "lokuswp_transactionmeta";
+		$table_lwcommerce_order_meta = $wpdb->prefix . "lwcommerce_ordermeta";
+		$table_post                  = $wpdb->prefix . "posts";
 
 		// Request
 		$request = $_GET;
@@ -309,9 +338,9 @@ class AJAX {
 
 				//==================== add image & price to product ====================//
 				foreach ( $data[ $key ]->product as $index => $value ) {
-					$data[ $key ]->product[ $index ]->image          = get_the_post_thumbnail_url( $value->ID, 'thumbnail' );
-					$data[ $key ]->product[ $index ]->price          = lwp_currency_format( true, get_post_meta( $value->ID, '_price_normal', true ) );
-					$data[ $key ]->product[ $index ]->price_promo    = get_post_meta( $value->ID, '_price_promo', true ) ? lwp_currency_format( true,
+					$data[ $key ]->product[ $index ]->image       = get_the_post_thumbnail_url( $value->ID, 'thumbnail' );
+					$data[ $key ]->product[ $index ]->price       = lwp_currency_format( true, get_post_meta( $value->ID, '_unit_price', true ) );
+					$data[ $key ]->product[ $index ]->price_promo = get_post_meta( $value->ID, '_price_promo', true ) ? lwp_currency_format( true,
 						get_post_meta( $value->ID, '_price_promo', true ) ) : null;
 				}
 			}
@@ -336,7 +365,7 @@ class AJAX {
 	}
 
 	public function process_order() {
-		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+		if ( ! check_ajax_referer( 'lwc_admin_nonce', 'security' ) ) {
 			wp_send_json_error( 'Invalid security token sent.' );
 		}
 
@@ -360,7 +389,7 @@ class AJAX {
 	}
 
 	public function orders_chart() {
-		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+		if ( ! check_ajax_referer( 'lwc_admin_nonce', 'security' ) ) {
 			wp_send_json_error( 'Invalid security token sent.' );
 		}
 
@@ -449,7 +478,10 @@ class AJAX {
 			$data_phone_yesterday[] = $item->phone;
 		}
 
-		return wp_send_json( [ [ $data_date, $data_total, $data_phone ], [ $data_total_yesterday, $data_phone_yesterday ] ] );
+		return wp_send_json( [
+			[ $data_date, $data_total, $data_phone ],
+			[ $data_total_yesterday, $data_phone_yesterday ]
+		] );
 	}
 
 	public function get_all_orders() {
@@ -489,7 +521,7 @@ class AJAX {
 	}
 
 	public function change_payment_status() {
-		if ( ! check_ajax_referer( 'lwpc_admin_nonce', 'security' ) ) {
+		if ( ! check_ajax_referer( 'lwc_admin_nonce', 'security' ) ) {
 			wp_send_json_error( 'Invalid security token sent.' );
 		}
 

@@ -27,7 +27,7 @@
                                 <span class="description text-muted">(<?php _e("required", 'lwcommerce'); ?>)</span>
                             </label>
                             <div class="form-group-body has-tooltip">
-                                <input id="lokuswp-price-normal" name="_price_normal" type="text" class="form-control full" placeholder="100.000" value="<?= $args['price_normal'] ?>">
+                                <input id="lokuswp-price-normal" name="_unit_price" type="text" class="form-control full" placeholder="100.000" value="<?= $args['unit_price'] ?>">
                                 <a href="#" class="info-popup-toggler tooltip" toggle="tooltip" data-placement="top" title="Silahkan cek di [https://google.com](Google)"></a>
                             </div> <!-- .dform-group-body -->
                         </div> <!-- .form-group -->

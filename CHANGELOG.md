@@ -1,7 +1,6 @@
 # Changelog
 
-# [v0.5.0]() (2022-03-03)
+# [v0.5.0]() (2022-04-01)
 **Added :**
 - Public Beta Release
-[ ] Shipping Verification JS
-[ ] 
+

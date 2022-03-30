@@ -2,7 +2,7 @@
 
 namespace LokusWP\Commerce\Modules\Plugin;
 
-use LokusWP\Utils\Log;
+//use LokusWP\Utils\Logger;
 use stdClass;
 
 
@@ -34,7 +34,7 @@ class Updater {
 	public function check_automatically() {
 		$this->check_update();
 
-		Log::Info( "[Plugin][Updater] Automatically Checking Update Triggered", "lwcommerce");
+//		Logger::info( "[Plugin][Updater] Automatically Checking Update Triggered", "lwcommerce");
 	}
 
 	public function check_manually() {
@@ -44,7 +44,7 @@ class Updater {
 			$this->check_update();
 //			add_action( 'upgrader_process_complete', array( $this, 'plugin_destroy_update' ), 10, 2 );
 
-			Log::Info( "[Plugin][Updater] Manually Checking Update Triggered" );
+//			Logger::info( "[Plugin][Updater] Manually Checking Update Triggered" );
 		}
 	}
 
@@ -134,7 +134,7 @@ class Updater {
 				$remote = json_decode( $remote['body'] );
 			} else {
 				// Failed to get remote
-				Log::Info( "[Plugin][Updates] Failed to get update, check your CURL " );
+//				Logger::info( "[Plugin][Updates] Failed to get update, check your CURL " );
 				set_transient( $this->plugin_slug . '_update', 'failed_get_update', 300 ); // Waiting 5 minutes
 			}
 
@@ -159,10 +159,10 @@ class Updater {
 		// Transient Process
 		$remote = (object) get_transient( $this->plugin_slug . '_update' );
 
-		Log::Info( (array) $remote, "lwcommerce");
+//		Logger::info( (array) $remote, "lwcommerce");
 
 		// Display Update Notice
-		$remote_version = $remote->version;
+		$remote_version = $remote->version ?? "0.0.1";
 		if ( ! is_wp_error( $remote ) && version_compare( $this->plugin_version, $remote_version, '<' ) ) {
 			$res              = new stdClass();
 			$res->slug        = $remote->slug;

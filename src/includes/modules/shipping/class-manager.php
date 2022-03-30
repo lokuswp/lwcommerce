@@ -2,17 +2,24 @@
 
 namespace LokusWP\Commerce\Shipping;
 
-// Checking Test Env and Direct Access File
 if ( ! defined( 'WPTEST' ) ) {
 	defined( 'ABSPATH' ) or die( "Direct access to files is prohibited" );
 }
 
-class Manager {
-	public static $_shipping = array();
+class Manager
+{
+	public static $carriers = [];
 
-	public static function register( Gateway $payment_instance ): bool {
-		self::$_shipping[ $payment_instance->get_ID() ] = $payment_instance;
+	public static function register(Gateway $item)
+	{
+		self::$carriers[] = $item;
 
-		return true;
+		return self::$carriers;
+	}
+
+	public static function registered(): array
+	{
+
+		return self::$carriers;
 	}
 }

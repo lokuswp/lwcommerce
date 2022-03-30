@@ -158,11 +158,11 @@ class Metabox_Product
     public function metabox_product_data()
     {
         global $post;
-        wp_nonce_field(basename(__FILE__), 'lwpc_admin_nonce');
+        wp_nonce_field(basename(__FILE__), 'lwc_admin_nonce');
 
         // Product Data
-        $price_normal = get_post_meta($post->ID, '_price_normal', true) == null ? null : lwp_currency_format(false, lwpc_get_normal_price($post->ID));
-        $price_promo = get_post_meta($post->ID, '_price_promo', true) == null ? null : lwp_currency_format(false, lwpc_get_promo_price($post->ID));
+        $unit_price = get_post_meta($post->ID, '_unit_price', true) == null ? null : lwp_currency_format(false, lwc_get_unit_price($post->ID));
+        $price_promo = get_post_meta($post->ID, '_price_promo', true) == null ? null : lwp_currency_format(false, lwc_get_price_promo($post->ID));
 
         $stock_type = get_post_meta($post->ID, '_stock_type', true) == null ? null : esc_attr(get_post_meta($post->ID, '_stock_type', true));
         $sku_code = get_post_meta($post->ID, '_sku_code', true) == null ? null : esc_attr(get_post_meta($post->ID, '_sku_code', true));
@@ -170,7 +170,7 @@ class Metabox_Product
         $stock_unit = get_post_meta($post->ID, '_stock_unit', true) == null ? null : esc_attr(get_post_meta($post->ID, '_stock_unit', true));
 
         $product_data_args = [
-            'price_normal' => $price_normal,
+            'unit_price' => $unit_price,
             'price_promo' => $price_promo,
             'stock_type' => $stock_type,
             'sku_code' => $sku_code,
@@ -210,7 +210,7 @@ class Metabox_Product
 
     public function metabox_save($post_id)
     {
-        if (!isset($_POST['lwpc_admin_nonce']) || !wp_verify_nonce($_POST['lwpc_admin_nonce'], basename(__FILE__))) {
+        if (!isset($_POST['lwc_admin_nonce']) || !wp_verify_nonce($_POST['lwc_admin_nonce'], basename(__FILE__))) {
             return 'Nonce not Verified';
         }
 
@@ -234,7 +234,7 @@ class Metabox_Product
         }
 
         // Pricing
-        update_post_meta($post_id, '_price_normal', empty($_POST['_price_normal']) ? 0 : lwp_currency_to_number($_POST['_price_normal']));
+        update_post_meta($post_id, '_unit_price', empty($_POST['_unit_price']) ? 0 : lwp_currency_to_number($_POST['_unit_price']));
         update_post_meta($post_id, '_price_promo', empty($_POST['_price_promo']) ? null : lwp_currency_to_number($_POST['_price_promo']));
 
         // Stock

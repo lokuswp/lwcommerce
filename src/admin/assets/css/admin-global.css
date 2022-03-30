@@ -6,3 +6,11 @@
   font-weight: 600;
   color: rgb(224, 22, 22) !important;
 }
+
+.form-group select,
+.form-group input,
+.form-group textarea,
+.form-group button{
+  max-width: 25rem;
+  display: block;
+}

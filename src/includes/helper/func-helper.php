@@ -1,45 +1,45 @@
 <?php
-function lwpc_get_normal_price($post_id)
+function lwc_get_unit_price($post_id)
 {
-	$_price_normal = get_post_meta($post_id, '_price_normal', true);
-	return isset($_price_normal) ? abs($_price_normal) : 0;
+	$_unit_price = get_post_meta($post_id, '_unit_price', true);
+	return isset($_unit_price) ? abs($_unit_price) : 0;
 }
 
-function lwpc_get_promo_price($post_id)
+function lwc_get_price_promo($post_id)
 {
 	$_price_promo = get_post_meta($post_id, '_price_promo', true);
 	return isset($_price_promo) ? abs($_price_promo) : 0;
 }
 
-function lwpc_get_price($post_id)
+function lwc_get_price($post_id)
 {
-	$_price_promo = lwpc_get_promo_price($post_id);
-	$_price_normal = lwpc_get_normal_price($post_id);
+	$price_promo = lwc_get_price_promo($post_id);
+	$unit_price = lwc_get_unit_price($post_id);
 
-	if( $_price_promo == null ) {
-		return $_price_normal;
+	if( $price_promo == null ) {
+		return $unit_price;
 	}
 
-	if ($_price_promo < $_price_normal) {
-		return $_price_promo;
+	if ($price_promo < $unit_price) {
+		return $price_promo;
 	} else {
-		return $_price_normal;
+		return $_unit_price;
 	}
 }
 
-function lwpc_get_price_html()
+function lwc_get_price_html()
 {	
 	$post_id = get_the_ID();
 	
-	$_price_normal = lwpc_get_normal_price($post_id);
-	$_price_promo = lwpc_get_promo_price($post_id);
+	$_unit_price = lwc_get_unit_price($post_id);
+	$_price_promo = lwc_get_price_promo($post_id);
 
-	if ($_price_normal == 0) {
+	if ($_unit_price == 0) {
 		$html = '<span>' . __("Free", "lwcommerce") . '</span>';
-	} else if ($_price_normal > 0 && $_price_promo == 0 ) {
-		$html = '<span>' . lwp_currency_format(true, $_price_normal) . '</span>';
+	} else if ($_unit_price > 0 && $_price_promo == 0 ) {
+		$html = '<span>' . lwp_currency_format(true, $_unit_price) . '</span>';
 	} else {
-		$html = '<small><strike>' . lwp_currency_format(true, $_price_normal) . '</strike></small>';
+		$html = '<small><strike>' . lwp_currency_format(true, $_unit_price) . '</strike></small>';
 		$html .= '<span>' . lwp_currency_format(true, $_price_promo) . '</span>';
 	}
 	echo ($html);
@@ -71,7 +71,7 @@ function lwpc_add_to_cart_html()
  *
  * @return false|void
  */
-function lwpc_set_settings(string $option, string $item, $value, string $sanitize = 'sanitize_text_field')
+function lwc_set_settings(string $option, string $item, $value, string $sanitize = 'sanitize_text_field')
 {
 	$settings = get_option('lwcommerce_' . $option);
 
@@ -96,7 +96,7 @@ function lwpc_set_settings(string $option, string $item, $value, string $sanitiz
  * @return mixed
  * @since 4.0.0
  */
-function lwpc_get_settings(string $option = 'general_settings', string $item, string $validator = 'esc_attr', string $fallback = null)
+function lwc_get_settings(string $option = 'general_settings', string $item, string $validator = 'esc_attr', string $fallback = null)
 {
 
 	$settings = get_option('lwcommerce_' . $option);
@@ -129,9 +129,9 @@ function lwpc_get_settings(string $option = 'general_settings', string $item, st
  *
  * @return false|mixed
  */
-function lwpc_get_cost_rajaongkir(string $shipping_id, string $service, string $destination, string $weight)
+function lwc_get_cost_rajaongkir(string $shipping_id, string $service, string $destination, string $weight)
 {
-	$origin           = lwpc_get_settings('store', 'district', 'intval');
+	$origin           = lwc_get_settings('store', 'district', 'intval');
 	$destination_cost = get_transient($shipping_id . '_cost');
 
 	$cost = $destination_cost["{$origin}_to_{$destination}_with_{$service}"] ?? false;
@@ -140,7 +140,7 @@ function lwpc_get_cost_rajaongkir(string $shipping_id, string $service, string $
 		return $cost;
 	}
 
-	$apikey = lwpc_get_settings('shipping', 'apikey') ?? '';
+	$apikey = lwc_get_settings('shipping', 'apikey') ?? '';
 
 	$header = [
 		'content-type' => 'application/json',

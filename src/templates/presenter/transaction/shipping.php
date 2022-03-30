@@ -34,7 +34,7 @@
                             <label class="svg-wrapper">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                     stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail">
+                                     stroke-linecap="round" stroke-linejoin="round" >
                                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                                     <polyline points="22,6 12,13 2,6"></polyline>
                                 </svg>
@@ -53,11 +53,11 @@
             <h6 style="margin-bottom:12px;" class="text-primary"><?php _e('Physical Shipping', 'lwcommerce'); ?></h6>
 
             <?php
-            $state_selected = lwpc_get_settings('store', 'state', 'intval');
+            $state_selected = lwc_get_settings('store', 'state', 'intval');
             $get_states = lwp_get_remote_json(get_rest_url() . 'lwcommerce/v1/rajaongkir/province', [], 'lokuswp_states', WEEK_IN_SECONDS);
             $states = $get_states->data ?? [];
 
-            // $city_selected = lwpc_get_settings('store', 'city', 'intval');
+            // $city_selected = lwc_get_settings('store', 'city', 'intval');
             $city_selected = null;
             $get_cities = lwp_get_remote_json(get_rest_url() . 'lwcommerce/v1/rajaongkir/city?province=' . $state_selected, [], 'lokuswp_cities_' . $state_selected, WEEK_IN_SECONDS);
             $cities = $get_cities->data ?? [];

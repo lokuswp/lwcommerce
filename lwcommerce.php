@@ -13,12 +13,13 @@
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       lwcommerce
  * Domain Path:       /languages
+ * Languages:         en_US
  */
 
 
 // Checking Test Env and Direct Access File
-if (!defined('WPTEST')) {
-	defined('ABSPATH') or die("Direct access to files is prohibited");
+if ( ! defined( 'WPTEST' ) ) {
+	defined( 'ABSPATH' ) or die( "Direct access to files is prohibited" );
 }
 
 /**
@@ -27,13 +28,31 @@ if (!defined('WPTEST')) {
  * Rename this for your plugin and update it as you release new versions.
  * Define Constant
  */
-defined('LOKUSWP_VERSION') or define('LOKUSWP_VERSION', '0.5.0');
-defined('LWC_VERSION') or define('LWC_VERSION', '0.5.0');
-defined('LWC_BASE') or define('LWC_BASE', plugin_basename(__FILE__));
-defined('LWC_PATH') or define('LWC_PATH', plugin_dir_path(__FILE__));
-defined('LWPC_URL') or define('LWPC_URL', plugin_dir_url(__FILE__));
-defined('LWPC_STORAGE') or define('LWPC_STORAGE', wp_get_upload_dir()['basedir'] . '/lwcommerce');
-defined('LWPC_STRING_TEXT') or define('LWPC_STRING_TEXT', '0.0.1'); // String Version
+defined( 'LOKUSWP_VERSION' ) or define( 'LOKUSWP_VERSION', '0.5.0' );
+defined( 'LWC_VERSION' ) or define( 'LWC_VERSION', '0.5.0' );
+defined( 'LWC_BASE' ) or define( 'LWC_BASE', plugin_basename( __FILE__ ) );
+defined( 'LWC_PATH' ) or define( 'LWC_PATH', plugin_dir_path( __FILE__ ) );
+defined( 'LWC_URL' ) or define( 'LWC_URL', plugin_dir_url( __FILE__ ) );
+defined( 'LWC_STORAGE' ) or define( 'LWC_STORAGE', wp_get_upload_dir()['basedir'] . '/lwcommerce' );
+defined( 'LWC_STRING_TEXT' ) or define( 'LWC_STRING_TEXT', '0.0.1' ); // String Version
 
 // Autoload
-require_once dirname(__DIR__) . '/lwcommerce/src/autoload.php';
+require_once dirname( __DIR__ ) . '/lwcommerce/src/autoload.php';
+
+/*****************************************
+ * Add Customer in First Step
+ *
+ * @since 0.5.0
+ *****************************************
+ */
+add_action( "lokuswp/transaction/tab/header", function () {
+	?>
+	<div class="swiper-slide">
+		<?php _e( 'Shipping', 'lwcommerce' ); ?>
+	</div>
+	<?php
+},2);
+
+add_action( "lokuswp/transaction/tab/content", function () {
+	require_once LWC_PATH . 'src/templates/presenter/transaction/shipping.php';
+},2);

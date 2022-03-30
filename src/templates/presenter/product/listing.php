@@ -1,4 +1,4 @@
-<div class="lwpc-listing row">
+<div class="lwc-listing row">
 
     <?php
     $args = array(
@@ -24,7 +24,7 @@
                 <h3 class="product-name"><?php the_title(); ?></h3>
             </a>
             <div class="product-price">
-                <?php lwpc_get_price_html(); ?>
+                <?php lwc_get_price_html(); ?>
             </div>
             <?php lwpc_add_to_cart_html(); ?>
         </div>

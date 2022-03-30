@@ -21,8 +21,8 @@ const users = [
 ];
 
 const siteConfig = {
-  title: 'LWPCommerce Docs', // Title for your website.
-  tagline: 'Developer Documentation for LWPCommerce',
+  title: 'LWCommerce Docs', // Title for your website.
+  tagline: 'Developer Documentation for LWCommerce',
 
   // For github.io type URLs, you would set the url and baseUrl like:
   url: 'https://lokuswp.github.io',

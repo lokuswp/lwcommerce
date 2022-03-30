@@ -2,112 +2,112 @@
 
 namespace LokusWP\Commerce\Shipping;
 
-class Rajaongkir_API {
+class RajaOngkir_API {
 
 	public function __construct() {
 		add_action( 'rest_api_init', [ $this, 'register' ] );
 	}
 
 	public function register() {
+
 		register_rest_route( 'lwcommerce/v1', '/rajaongkir/province', [
-			'methods'  => 'GET',
-			'callback' => [ $this, 'get_rajaongkir_province' ],
+			'methods'             => 'GET',
+			'callback'            => [ $this, 'get_rajaongkir_province' ],
 			'permission_callback' => false,
-			
+
 		] );
+
 		register_rest_route( 'lwcommerce/v1', '/rajaongkir/city', [
-			'methods'  => 'GET',
-			'callback' => [ $this, 'get_rajaongkir_city' ],
+			'methods'             => 'GET',
+			'callback'            => [ $this, 'get_rajaongkir_city' ],
 			'permission_callback' => false,
 		] );
+
 	}
 
 	public function get_rajaongkir_province( $data ) {
-		$id   = $data->get_param( 'id' ) ? '?id=' . $data->get_param( 'id' ) : '';
-		$curl = curl_init();
+		$id = $data->get_param( 'id' ) ? '?id=' . sanitize_key( $data->get_param( 'id' ) ) : '';
 
-		// TODO :: Ganti ke WP Remote Get
-		// SImpan Hasil Data Get Ke Transient dengan Expired 10 Hari, lalu Return jIka ada dari transient
-		curl_setopt_array( $curl, [
-			CURLOPT_URL            => 'https://api.rajaongkir.com/starter/province' . $id,
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_SSL_VERIFYHOST => false,
-			CURLOPT_SSL_VERIFYPEER => false,
-			CURLOPT_ENCODING       => '',
-			CURLOPT_MAXREDIRS      => 10,
-			CURLOPT_TIMEOUT        => 30,
-			CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-			CURLOPT_CUSTOMREQUEST  => 'GET',
-			CURLOPT_HTTPHEADER     => [
-				'key: ' . '80aa49704fc30a939124a831882dea72',
-			],
-		] );
+		if ( ! get_transient( 'lwcommerce_rajaongkir_province' ) ) {
+			$apikey = '80aa49704fc30a939124a831882dea72';
+			$server = 'https://api.rajaongkir.com/starter/province' . $id;
+			$remote = wp_remote_get(
+				$server,
+				array(
+					'timeout' => 30,
+					'headers' => array(
+						'Accept' => 'application/json',
+						'key'    => $apikey,
+					)
+				)
+			);
 
-		$response = curl_exec( $curl );
-		$err      = curl_error( $curl );
+			if ( is_wp_error( $remote ) ) {
+				return [
+					'status'  => 'error',
+					'message' => $err,
+				];
+			}
 
-		curl_close( $curl );
-
-		if ( $err ) {
-			return [
-				'status'  => 'error',
-				'message' => $err,
-			];
+			$response = json_decode( $remote['body'], true );
+			set_transient( 'lwcommerce_rajaongkir_province', $response, 60 * 60 * 60 ); // 2,5 Days
 		} else {
-			$response = json_decode( $response, true );
-
-			return [
-				'status'  => 'success',
-				'data'    => $response['rajaongkir']['results'],
-				'message' => 'Province data fetched',
-			];
+			$response = get_transient( 'lwcommerce_rajaongkir_province' );
 		}
+
+		return [
+			'status'  => 'success',
+			'data'    => $response['rajaongkir']['results'],
+			'message' => 'Province data fetched',
+		];
 	}
 
 	public function get_rajaongkir_city( $data ) {
-		$id = $data->get_param( 'id' ) ? '?id=' . $data->get_param( 'id' ) : '';
-		if ( $id !== '' ) {
-			$province_id = $data->get_param( 'province' ) ? '&province=' . $data->get_param( 'province' ) : '';
-		} else {
-			$province_id = $data->get_param( 'province' ) ? '?province=' . $data->get_param( 'province' ) : '';
+		$city_id     = $data->get_param( 'id' ) ? 'id=' . abs( $data->get_param( 'id' ) ) : '';
+		$province_id = $data->get_param( 'province' ) ? 'province=' . abs( $data->get_param( 'province' ) ) : '';
+		$apikey      = '80aa49704fc30a939124a831882dea72';
+
+		// Only Getting City List based on Province ID
+		if ( $province_id && ! $city_id ) {
+			if ( ! get_transient( 'lwcommerce_rajaongkir_city_' . $province_id ) ) {
+				$server = 'https://api.rajaongkir.com/starter/city?' . $province_id;
+				$remote = wp_remote_get(
+					$server,
+					array(
+						'timeout' => 30,
+						'headers' => array(
+							'Accept' => 'application/json',
+							'key'    => $apikey,
+						)
+					)
+				);
+
+				if ( is_wp_error( $remote ) ) {
+					return [
+						'status'  => 'error',
+						'message' => $err,
+					];
+				}
+
+				$response = json_decode( $remote['body'], true );
+				set_transient( 'lwcommerce_rajaongkir_city_' . $province_id, $response, 60 * 60 * 60 ); // 2,5 Days
+			} else {
+				$response = get_transient( 'lwcommerce_rajaongkir_city_' . $province_id );
+			}
 		}
-		$curl = curl_init();
 
-		curl_setopt_array( $curl, [
-			CURLOPT_URL            => 'https://api.rajaongkir.com/starter/city' . $id . $province_id,
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_SSL_VERIFYHOST => false,
-			CURLOPT_SSL_VERIFYPEER => false,
-			CURLOPT_ENCODING       => '',
-			CURLOPT_MAXREDIRS      => 10,
-			CURLOPT_TIMEOUT        => 30,
-			CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-			CURLOPT_CUSTOMREQUEST  => 'GET',
-			CURLOPT_HTTPHEADER     => [
-				'key: ' . '80aa49704fc30a939124a831882dea72',
-			],
-		] );
+		return [
+			'status'  => 'success',
+			'data'    => $response['rajaongkir']['results'],
+			'message' => 'City data fetched',
+		];
 
-		$response = curl_exec( $curl );
-		$err      = curl_error( $curl );
+	}
 
-		curl_close( $curl );
-
-		if ( $err ) {
-			return [
-				'status'  => 'error',
-				'message' => $err,
-			];
-		} else {
-			$response = json_decode( $response, true );
-
-			return [
-				'status'  => 'success',
-				'data'    => $response['rajaongkir']['results'],
-				'message' => 'City data fetched',
-			];
-		}
+	// Shipping Cost Cache Based on Weight
+	// Soon :: jne_1kg_100_to_200 ( Weight 1kg, From Jakarta, to Jogja, Courier : JNE )
+	public function get_rajaongkir_calc( $data ) {
 	}
 }
 
-new Rajaongkir_API();
+new RajaOngkir_API();

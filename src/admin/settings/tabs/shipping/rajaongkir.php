@@ -1,8 +1,10 @@
 <?php
-$apikey = lwpc_get_settings( 'shipping', 'apikey' ) ?? '';
+$apikey = lwc_get_settings( 'shipping', 'apikey' ) ?? '';
 ?>
 <section id="settings" class="form-horizontal">
     <form>
+
+        Setup Store Origin
 
         <!-- Name -->
         <div class="form-group">

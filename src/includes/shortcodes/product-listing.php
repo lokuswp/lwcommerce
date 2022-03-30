@@ -2,14 +2,14 @@
 
 namespace LokusWP\Commerce\Shortcodes;
 
-class Storefront
+class Product_Listing
 {
     /**
      * Register Transaction Shortcode
      */
     public function __construct()
     {
-        add_shortcode('lwcommerce_storefront', [$this, 'render']);
+        add_shortcode('lwcommerce_product_listing', [$this, 'render']);
     }
 
     public function render($atts)
@@ -22,10 +22,8 @@ class Storefront
 
         ob_start();
 
-        require_once LWC_PATH . 'src/templates/presentation/product/storefront.php';
+        include_once LWC_PATH . "/src/templates/presenter/product/listing.php";
 
-        $render = ob_get_clean();
-
-        return $render;
+        return ob_get_clean();
     }
 }

@@ -3,58 +3,70 @@
 use LokusWP\Commerce\Onboarding;
 use LSD\Migration\DB_LWCommerce_Order_Meta;
 
-
 if ( ! defined( 'WPTEST' ) ) {
 	defined( 'ABSPATH' ) or die( "Direct access to files is prohibited" );
 }
 
-class Boot {
+class LWCommerce_Boot {
+
 	public function __construct() {
-//		if (empty(get_option("lwcommerce_was_installed"))) {
-//		$this->onboarding();
-//		} else {
+
+		// Checking The Flag
+		$lokuswp_was_installed    = get_option( "lokuswp_was_installed" );
+		$lwcommerce_was_installed = get_option( "lwcommerce_was_installed" );
+		$is_backbone_active       = in_array( 'lokuswp/lokuswp.php', get_option( 'active_plugins' ) );
+		$is_backbone_exist        = file_exists( WP_PLUGIN_DIR . '/lokuswp/lokuswp.php' );
+
+		// LokusWP Not Found -> Onboarding
+		if ( ! $is_backbone_exist && ! $lwcommerce_was_installed ) {
+			$this->onboarding();
+		}
+
+		// LokusWP Exist and Wast Installed but Not Active -> Activate
+		if ( $is_backbone_exist && ! $is_backbone_active && $lokuswp_was_installed ) {
+			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+			activate_plugins( 'lokuswp/lokuswp.php' );
+		}
+
+		// LokusWP Exist and Active
+		if ( $is_backbone_exist && $is_backbone_active && $lwcommerce_was_installed && $lokuswp_was_installed ) {
 			$this->run();
-//		}
+		}
+		else{
+			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+			activate_plugins( 'lokuswp/lokuswp.php' );
+			$this->onboarding();
+		}
+
+		// SOON :: Checking Version Compatibility
+
 	}
 
+	/**
+	 * Start Onboarding Screen
+	 *
+	 * @return void
+	 */
 	public function onboarding() {
+
+		// Only Run Onboarding System, Not Entire System
 		include_once LWC_PATH . 'src/admin/class-onboarding.php';
-		$plugin = array( 'slug' => 'lwcommerce', 'name' => 'LWCommerce', 'version' => LWC_VERSION );
-		Onboarding::register( $plugin );
+		Onboarding::register( array( 'slug' => 'lwcommerce', 'name' => 'LWCommerce', 'version' => LWC_VERSION ) );
 
-		//update_option("lwcommerce_was_installed", "setup");
+		// Create Table :: Orders
+		require LWC_PATH . 'src/includes/modules/database/class-db-orders.php';
+		$db_reports_meta = new DB_LWCommerce_Order_Meta();
+		$db_reports_meta->create_table();
+
 	}
 
-	public function it_has_backbone() {
-		// $backbone_active = true;
-		// $backbone_version = true;
-
-		// // Checking Backbone Active
-		// if (is_admin() && current_user_can('activate_plugins') && !is_plugin_active('lokuswp/lokuswp.php')) {
-		// 	add_action('admin_notices', function () {
-		// 		echo '<div class="error"><p>' . __('LokusWP required. please activate the backbone plugin first.', 'lwcommerce') . '</p></div>';
-		// 	});
-		// 	$backbone_active = false;
-		// }
-
-
-		// $backbone = get_plugin_data(dirname(dirname(__FILE__)) . '/lokuswp/lokuswp.php');
-		// if (!version_compare($backbone['Version'], LOKUSWP_VERSION, '>=')) {
-		// 	$backbone_version = false;
-		// }
-
-
-		// // Deactive Extension
-		// if (!$backbone_version || !$backbone_active) {
-		// 	deactivate_plugins(plugin_basename(__FILE__));
-
-		// 	if (isset($_GET['activate'])) {
-		// 		unset($_GET['activate']);
-		// 	}
-		// }
-	}
-
+	/**
+	 * Run Plugin After Everything Setup and OK
+	 *
+	 * @return void
+	 */
 	public function run() {
+
 		/**
 		 * Registers the autoloader for classes
 		 *
@@ -70,30 +82,22 @@ class Boot {
 			$classpath = str_replace( "_", "-", $classpath ); // fix path for windows
 			$classpath = LWC_PATH . $classpath;
 
-			// WordPress
+			// Load File Based on Namespace
 			if ( file_exists( $classpath ) ) {
 				include_once $classpath;
 			}
 		} );
 
-		$this->it_has_backbone();
-
-		// Call The File
-//		require LWC_PATH . 'src/includes/modules/database/class-db-orders.php';
-//
-//		$db_reports_meta = new DB_LWCommerce_Order_Meta();
-//		$db_reports_meta->create_table();
-
-		$backbone = (array) apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
-		if ( in_array( 'lokuswp/lokuswp.php', $backbone ) ) {
-			new LokusWP\Commerce\Plugin();
+		// Check if LokusWP is installed and Active
+		if ( in_array( 'lokuswp/lokuswp.php', get_option( 'active_plugins' ) ) ) {
+			new LokusWP\Commerce\Plugin(); // Run LWCommerce, Run !!! 🏃🏃🏃
 		}
 	}
 }
 
 // Booting ...
 if ( defined( 'WPTEST' ) ) {
-	new LokusWP\Commerce\Plugin();
+	new LokusWP\Commerce\Plugin(); // Run LWCommerce for Testing 🧪
 } else {
-	new Boot();
+	new LWCommerce_Boot();
 }

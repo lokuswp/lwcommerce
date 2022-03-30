@@ -120,8 +120,8 @@ class Post_Type_Product
         global $post;
 
         if ($post->post_type == 'product') {
-            if (file_exists( LWC_PATH . 'src/templates/presentation/product/single.php')) {
-                return LWC_PATH . 'src/templates/presentation/product/single.php';
+            if (file_exists( LWC_PATH . 'src/templates/presenter/product/single.php')) {
+                return LWC_PATH . 'src/templates/presenter/product/single.php';
             }
         }
 
@@ -192,7 +192,7 @@ class Post_Type_Product
 
         if ('price' === $column) {
 
-            lwpc_get_price_html();
+            lwc_get_price_html();
         }
 
     ?>
