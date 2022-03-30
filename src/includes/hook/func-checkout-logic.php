@@ -183,6 +183,21 @@ function lwc_rest_cart_item_output( $item_data ) {
 
 add_filter( 'lokuswp/cart/rest/item', 'lwc_rest_cart_item_output', 10, 1 );
 
+add_action( "lokuswp/after-checkout/status", "lwp_after_checkout_status", 10, 1 );
+function lwp_after_checkout_status( $data ) {
+	?>
+    <div class="row mb-2" style="margin-top:12px;">
+        <div class="col-xs-6"><?php _e( "Order Number", "lwcommerce" ); ?></div>
+        <div id="lwc-order-id" class="col-xs-6 txt-right"><strong>#1</strong></div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-xs-6"><?php _e( "Order Status", "lwcommerce" ); ?></div>
+        <div id="lwc-order-status" class="col-xs-6 txt-right"><?php _e( "Awaiting Payment", "lwcommerce" );?></div>
+    </div>
+	<?php
+}
+
 //add_filter( "lokuswp/rest/cart/extras", "lwp_rest_cart_extras", 10, 1 );
 //function lwp_rest_cart_extras( $extras ) {
 //

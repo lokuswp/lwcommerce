@@ -2,7 +2,7 @@
 
 namespace LokusWP\Commerce;
 
-use LokusWP\Plugin\WordPress\Helper;
+use LokusWP\WordPress\Helper;
 
 if ( ! defined( 'WPTEST' ) ) {
 	defined( 'ABSPATH' ) or die( "Direct access to files is prohibited" );
@@ -79,7 +79,7 @@ class Onboarding {
 	 * - Create : Example Page : History
 	 */
 	public function auto_setup() {
-		require_once LOKUSWP_PATH . 'src/includes/abstract/abstract-plugin-setup.php';
+		require_once LOKUSWP_PATH . 'src/includes/helper/class-wp-helper.php';
 
 		// Create Page
 		Helper::generate_post( "page", __( "Product Listing", "lwcommerce" ), "products", "[lwcommerce_product_listing]" );
