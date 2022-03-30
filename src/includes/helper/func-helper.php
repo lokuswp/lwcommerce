@@ -1,14 +1,14 @@
 <?php
 function lwc_get_unit_price($post_id)
 {
-	$_unit_price = get_post_meta($post_id, '_unit_price', true);
-	return isset($_unit_price) ? abs($_unit_price) : 0;
+	$unit_price = get_post_meta($post_id, '_unit_price', true);
+	return isset($unit_price) ? abs($unit_price) : 0;
 }
 
 function lwc_get_price_promo($post_id)
 {
-	$_price_promo = get_post_meta($post_id, '_price_promo', true);
-	return isset($_price_promo) ? abs($_price_promo) : 0;
+	$price_promo = get_post_meta($post_id, '_price_promo', true);
+	return isset($price_promo) ? abs($price_promo) : 0;
 }
 
 function lwc_get_price($post_id)
@@ -23,7 +23,7 @@ function lwc_get_price($post_id)
 	if ($price_promo < $unit_price) {
 		return $price_promo;
 	} else {
-		return $_unit_price;
+		return $unit_price;
 	}
 }
 
@@ -31,16 +31,16 @@ function lwc_get_price_html()
 {	
 	$post_id = get_the_ID();
 	
-	$_unit_price = lwc_get_unit_price($post_id);
-	$_price_promo = lwc_get_price_promo($post_id);
+	$unit_price = lwc_get_unit_price($post_id);
+	$price_promo = lwc_get_price_promo($post_id);
 
-	if ($_unit_price == 0) {
+	if ($unit_price == 0) {
 		$html = '<span>' . __("Free", "lwcommerce") . '</span>';
-	} else if ($_unit_price > 0 && $_price_promo == 0 ) {
-		$html = '<span>' . lwp_currency_format(true, $_unit_price) . '</span>';
+	} else if ($unit_price > 0 && $price_promo == 0 ) {
+		$html = '<span>' . lwp_currency_format(true, $unit_price) . '</span>';
 	} else {
-		$html = '<small><strike>' . lwp_currency_format(true, $_unit_price) . '</strike></small>';
-		$html .= '<span>' . lwp_currency_format(true, $_price_promo) . '</span>';
+		$html = '<small><strike>' . lwp_currency_format(true, $unit_price) . '</strike></small>';
+		$html .= '<span>' . lwp_currency_format(true, $price_promo) . '</span>';
 	}
 	echo ($html);
 }
