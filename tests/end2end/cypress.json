@@ -1,8 +1,0 @@
-{
-    "env": {
-        "baseUrl": "http://lokuswp.local"
-    },
-    "viewportWidth": 1280,
-    "viewportHeight": 660,
-    "video": true
-}

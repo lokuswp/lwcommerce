@@ -3,8 +3,10 @@
 
     <form class="full-height">
 
+
         <?php
         $cart = isset($_COOKIE['lokuswp_cart']) ? json_decode(stripslashes($_COOKIE['lokuswp_cart'])) : array();
+
 
         $digital_shipping = false;
         $physical_shipping = false;
@@ -20,6 +22,9 @@
                 }
             }
         }
+
+
+
         ?>
 
         <?php if ($digital_shipping) : ?>

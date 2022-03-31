@@ -3,7 +3,7 @@
 /**
  * @wordpress-plugin
  *
- * Plugin Name:       LWCommerce - BETA
+ * Plugin Name:       LWCommerce (Beta)
  * Plugin URI:        https://lokuswp.id/plugin/lwcommerce
  * Description:       Sistem Jual Beli Online WordPress
  * Version:           0.5.0
@@ -38,21 +38,3 @@ defined( 'LWC_STRING_TEXT' ) or define( 'LWC_STRING_TEXT', '0.0.1' ); // String 
 
 // Autoload
 require_once dirname( __DIR__ ) . '/lwcommerce/src/autoload.php';
-
-/*****************************************
- * Add Customer in First Step
- *
- * @since 0.5.0
- *****************************************
- */
-add_action( "lokuswp/transaction/tab/header", function () {
-	?>
-	<div class="swiper-slide">
-		<?php _e( 'Shipping', 'lwcommerce' ); ?>
-	</div>
-	<?php
-},2);
-
-add_action( "lokuswp/transaction/tab/content", function () {
-	require_once LWC_PATH . 'src/templates/presenter/transaction/shipping.php';
-},2);

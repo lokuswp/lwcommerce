@@ -13,11 +13,12 @@ class Plugin {
 	public function __construct() {
 		new Shortcodes\Product_Listing();
 		new Shortcodes\Order_History();
+		new Shortcodes\Cart_Icon();
 
 		new Modules\Product\Post_Type_Product;
 		new Modules\Product\Metabox_Product;
 
-		new Modules\Plugin\Updater;
+//		new Modules\Plugin\Updater;
 
 		// Activation and Deactivation
 		register_activation_hook( LWC_BASE, [ $this, 'activation' ] );

@@ -1,15 +1,12 @@
 <?php
-
 namespace LokusWP\Commerce\Modules\Plugin;
 
-//use LokusWP\Utils\Logger;
 use stdClass;
-
 
 class Updater {
 
 	protected string $plugin_slug = 'lwcommerce'; /* ---CHANGE THIS--- */
-	protected string $plugin_file = LWC_BASE; /* ---CHANGE THIS--- */
+	protected $plugin_file = LWC_BASE; /* ---CHANGE THIS--- */
 	protected string $plugin_host = 'https://dash.lsdplugins.com/route/lsd/v1/'; /* ---CHANGE THIS--- */
 	protected string $plugin_version = LWC_VERSION; /* ---CHANGE THIS--- */
 
@@ -33,8 +30,6 @@ class Updater {
 
 	public function check_automatically() {
 		$this->check_update();
-
-//		Logger::info( "[Plugin][Updater] Automatically Checking Update Triggered", "lwcommerce");
 	}
 
 	public function check_manually() {

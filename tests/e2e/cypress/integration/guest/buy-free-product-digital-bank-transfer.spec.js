@@ -1,21 +1,22 @@
+
 const baseUrl = Cypress.env("baseUrl");
 
-Cypress.on('uncaught:exception', (err, runnable) => {
-    // returning false here prevents Cypress from
-    // failing the test
-    return false
-})
+// Cypress.on('uncaught:exception', (err, runnable) => {
+//     // returning false here prevents Cypress from
+//     // failing the test
+//     return false
+// })
 
 describe('Buy Digital Product Free via Bank Transfer', () => {
 
     // Opening StoreFront
     beforeEach(function () {
-        cy.visit(baseUrl + '/storefront');
+        cy.visit( 'http://testwp.local/');
 
         // Cypress.Cookies.preserveOnce('lokuswp_cart', 'remember_token')
-        Cypress.Cookies.defaults({
-            preserve: 'lokuswp_cart',
-        })
+        // Cypress.Cookies.defaults({
+        //     preserve: 'lokuswp_cart',
+        // })
     });
 
     it('add free product to cart', function () {
