@@ -61,7 +61,7 @@ lwp_set_meta_counter("_product_view", get_the_ID());
             <div class="col-xs-7 col-sm-9">
                 <h2><?php the_title(); ?></h2>
                 <div class="product-price">
-                    <?php lwc_get_price_html(); ?>
+                    <?php lwc_get_price_html( get_the_ID() ); ?>
                 </div>
             </div>
             <div class="col-xs-5 col-sm-3 end-sm">

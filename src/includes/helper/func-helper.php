@@ -27,9 +27,12 @@ function lwc_get_price($post_id)
 	}
 }
 
-function lwc_get_price_html()
-{	
-	$post_id = get_the_ID();
+function lwc_get_price_html( $post_id)
+{
+	if( !$post_id ){
+		$post_id = get_the_ID();
+	}
+
 	
 	$unit_price = lwc_get_unit_price($post_id);
 	$price_promo = lwc_get_price_promo($post_id);
@@ -43,7 +46,7 @@ function lwc_get_price_html()
 		$html .= '<small><strike>' . lwp_currency_format(true, $unit_price) . '</strike></small>';
 
 	}
-	echo ($html);
+	return ($html);
 }
 
 

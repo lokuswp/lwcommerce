@@ -1,4 +1,9 @@
 <?php
+/**
+ * Business Logic of Ecommerce
+ *
+ * @since 0.5.0
+ */
 add_filter( "lokuswp/transaction/logic", "lwc_transaction_logic", 10, 1 );
 function lwc_transaction_logic( $transaction ) {
 
@@ -31,7 +36,7 @@ function lwc_transaction_logic( $transaction ) {
 		// as_schedule_single_action(strtotime( '+100 seconds' ), 'lokuswp_notification', array( $trx_id . '-admin' ), "lwcommerce");
 		// as_schedule_single_action( strtotime( '+7 seconds' ), 'lwcommerce_shipping', array( $trx_id . '-shipping' ), "lwcommerce" );
 
-        // Set Notification Shipping
+		// Set Notification Shipping
 		lwc_update_order_meta( $trx_id, "_shipping_type", "digital" );
 
 		// Set Notification Completed
@@ -72,6 +77,11 @@ function lwc_transaction_logic( $transaction ) {
 	return $trx_id;
 }
 
+/**
+ * Transaction Response
+ *
+ * @since 0.5.0
+ */
 add_filter( "lokuswp/rest/transaction/response", "lwc_transaction_response", 10, 2 );
 function lwc_transaction_response( $response, $trx_id ) {
 	$response['screen'] = array(
@@ -81,22 +91,33 @@ function lwc_transaction_response( $response, $trx_id ) {
 		"support"     => "https://wa.me/624115151"
 	);
 
-    $order_status = lwc_get_order_meta( $trx_id, "_order_status", true );
+	$order_status                  = lwc_get_order_meta( $trx_id, "_order_status", true );
 	$response['btn_text']          = "Konfirmasi Pembayaran";
 	$response['btn_url']           = "https://google.com";
 	$response['order_status']      = $order_status;
-	$response['order_status_text'] = lwp_get_transaction_status_text($order_status);
+	$response['order_status_text'] = lwp_get_transaction_status_text( $order_status );
 	$response['order_id']          = lwc_get_order_meta( $trx_id, "_order_id", true );
 
 	return $response;
 }
 
-add_filter("lokuswp/transaction/status/text", "lwc_transaction_status_text", 10, 1);
+/**
+ * Transaction Status Text
+ *
+ * @since 0.5.0
+ */
+add_filter( "lokuswp/transaction/status/text", "lwc_transaction_status_text", 10, 1 );
 function lwc_transaction_status_text( $statuses ) {
-    $statuses['completed'] = __("Selesai", "lwcommerce");
-    return $statuses;
+	$statuses['completed'] = __( "Selesai", "lwcommerce" );
+
+	return $statuses;
 }
 
+/**
+ * Download Section
+ *
+ * @since 0.5.0
+ */
 add_action( "lokuswp/after-checkout/after", "lwc_set_downloads_in_checkout", 10, 2 );
 function lwc_set_downloads_in_checkout( $trx_uuid ) {
 
@@ -160,7 +181,12 @@ function lwc_set_downloads_in_checkout( $trx_uuid ) {
 	<?php endif;
 }
 
-
+/**
+ * Product Item Filter
+ *
+ * @return mixed
+ */
+add_filter( 'lokuswp/cart/rest/item', 'lwc_rest_cart_item_output', 10, 1 );
 function lwc_rest_cart_item_output( $item_data ) {
 
 	$item_id = $item_data['post_id'];
@@ -174,6 +200,7 @@ function lwc_rest_cart_item_output( $item_data ) {
 		$item_data['product_type'] = empty( get_post_meta( $item_id, '_product_type', true ) ) ? 'undefined' : esc_attr( get_post_meta( $item_id, '_product_type', true ) );
 		$item_data['unit_price']   = get_post_meta( ! empty( $variation_id ) ? $variation_id : $item_id, '_unit_price', true ) ?? null;
 		$item_data['price_promo']  = get_post_meta( ! empty( $variation_id ) ? $variation_id : $item_id, '_price_promo', true ) ?? null;
+		$item_data['price_text']   = lwc_get_price_html( $item_id );
 		$item_data['weight']       = get_post_meta( ! empty( $variation_id ) ? $variation_id : $item_id, '_weight', true ) ?? 0;
 		$item_data['stock']        = get_post_meta( ! empty( $variation_id ) ? $variation_id : $item_id, '_stock', true ) ?? 0;
 		$item_data['stock_unit']   = get_post_meta( $item_id, '_stock_unit', true ) ?? '';
@@ -184,8 +211,9 @@ function lwc_rest_cart_item_output( $item_data ) {
 	return $item_data;
 }
 
-add_filter( 'lokuswp/cart/rest/item', 'lwc_rest_cart_item_output', 10, 1 );
-
+/**
+ * Transaction Status
+ */
 add_action( "lokuswp/after-checkout/status", "lwp_after_checkout_status", 10, 1 );
 function lwp_after_checkout_status( $data ) {
 	?>
