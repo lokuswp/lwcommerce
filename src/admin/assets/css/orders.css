@@ -149,6 +149,8 @@ table.dataTable tbody th, table.dataTable tbody td .container {
     border-bottom: 1px solid #e5e5e5;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    display: flex;
+    justify-content: space-between;
 }
 
 /* Make body for card */
@@ -178,14 +180,19 @@ table.dataTable tbody th, table.dataTable tbody td .container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 10px;
-    grid-auto-rows: minmax(100px, auto);
+}
+
+.lwc-grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.lwc-grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 /* Make grid item center */
 .lwc-grid-item {
     display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 /* Col length 6 */
@@ -225,7 +232,6 @@ table.dataTable tbody th, table.dataTable tbody td .container {
 .lwc-flex-column {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     flex-direction: column;
 }
 

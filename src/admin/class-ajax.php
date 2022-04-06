@@ -204,18 +204,15 @@ class AJAX {
 		// Columns
 		$columns = array(
 			0  => 'transaction_id',
-			1  => 'total',
-			2  => 'status',
-			3  => 'note',
-			4  => 'created_at',
-			5  => 'updated_at',
-			6  => 'name',
-			7  => 'phone',
-			8  => 'email',
-			9  => 'status_processing',
-			10 => 'courier',
-			11 => 'service',
-			12 => 'no_resi',
+			1  => 'name',
+			2  => 'phone',
+			3  => 'email',
+			4  => 'order_status',
+			5  => 'shipping_type',
+			6 => 'shipping_status',
+			7 => 'service',
+			8 => 'status',
+			9 => 'raw_total',
 		);
 
 		// Datatable Filters
@@ -293,12 +290,15 @@ class AJAX {
 
 		// Query
 		$total_results = $wpdb->get_results(
-			"SELECT tt.transaction_id, tt.total, tt.status, tt.note, tt.created_at, tt.updated_at,
-						MAX(CASE WHEN ttm.meta_key = 'billing_name' THEN ttm.meta_value ELSE 0 END) name,
-						MAX(CASE WHEN ttm.meta_key = 'billing_phone' THEN ttm.meta_value ELSE 0 END) phone,
-						MAX(CASE WHEN ttm.meta_key = 'billing_email' THEN ttm.meta_value ELSE 0 END) email,
-						MAX(CASE WHEN ttm.meta_key = 'billing_invoice' THEN ttm.meta_value ELSE 0 END) invoice,
-						MAX(CASE WHEN tlcom.meta_key = 'status_processing' THEN tlcom.meta_value ELSE 0 END) status_processing,
+			"SELECT tt.transaction_id, tt.total, tt.status, tt.note, tt.created_at, tt.updated_at, tt.currency, tt.country, tt.status, tt.total as raw_total,
+						MAX(CASE WHEN ttm.meta_key = '_user_field_name' THEN ttm.meta_value ELSE 0 END) name,
+						MAX(CASE WHEN ttm.meta_key = '_user_field_phone' THEN ttm.meta_value ELSE 0 END) phone,
+						MAX(CASE WHEN ttm.meta_key = '_user_field_email' THEN ttm.meta_value ELSE 0 END) email,
+       					MAX(CASE WHEN ttm.meta_key = '_user_field_address' THEN ttm.meta_value ELSE 0 END) address,
+						MAX(CASE WHEN tlcom.meta_key = '_billing_invoice' THEN tlcom.meta_value ELSE 0 END) invoice,
+						MAX(CASE WHEN tlcom.meta_key = '_order_status' THEN tlcom.meta_value ELSE 0 END) order_status,
+						MAX(CASE WHEN tlcom.meta_key = '_shipping_type' THEN tlcom.meta_value ELSE 0 END) shipping_type,
+					    MAX(CASE WHEN tlcom.meta_key = '_order_status' THEN tlcom.meta_value ELSE 0 END) shipping_status,
 						MAX(CASE WHEN tlcom.meta_key = 'no_resi' THEN tlcom.meta_value ELSE 0 END) no_resi,
 						TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when tlcom.meta_key = 'shipping' then tlcom.meta_value else 0 end),';',2),':',-1)) AS courier,
 						TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when tlcom.meta_key = 'shipping' then tlcom.meta_value else 0 end),';',4),':',-1)) AS service,
@@ -306,7 +306,7 @@ class AJAX {
 					FROM $table_transaction AS tt
 					JOIN $table_transaction_meta AS ttm 
 					ON tt.transaction_id=ttm.transaction_id
-					JOIN $table_lwcommerce_order_meta AS tlcom
+					LEFT JOIN $table_lwcommerce_order_meta AS tlcom
 					ON tt.transaction_id=tlcom.lwcommerce_order_id
 					GROUP BY tt.transaction_id $sql_where
 					ORDER BY $column $order 
@@ -318,9 +318,6 @@ class AJAX {
 			$data = $total_results;
 
 			foreach ( $total_results as $key => $row ) {
-
-				//==================== address ====================//
-				$data[ $key ]->address = lwp_get_transaction_meta( $row->transaction_id, 'billing_address' );
 
 				//==================== Total ====================//
 				$data[ $key ]->total = lwp_currency_format( true, abs( $row->total ) );
