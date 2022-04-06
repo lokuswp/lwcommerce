@@ -189,7 +189,7 @@ require_once LWC_PATH . 'src/includes/helper/func-helper.php';
             }).fail(() => alert('please check your internet connection!'));
 
 
-            $('#lwpc-setting-store-save').on('click', function () {
+            $('#lwc-setting-store-save').on('click', function () {
                 $('.step-to-integration').removeClass('hidden');
                 // $(this).addClass('hidden');
             });

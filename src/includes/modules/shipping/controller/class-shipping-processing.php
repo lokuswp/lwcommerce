@@ -19,7 +19,7 @@ class Shipping_Processing {
 		$destination = $shipping['destination'];
 		$weight      = $shipping['weight'] ?? '1';
 
-		$cost = lwpc_get_cost_rajaongkir( $shipping_id, $service, $destination, $weight );
+		$cost = lwc_get_cost_rajaongkir( $shipping_id, $service, $destination, $weight );
 
 		if ( ! $cost ) {
 			return 'shipping not found';

@@ -1,10 +1,10 @@
 <?php 
-function lwpc_set_currency_format( $true, $false )
+function lwc_set_currency_format( $true, $false )
 {
 
 }
 
-function lwpc_set_currency_display()
+function lwc_set_currency_display()
 {
     
 }

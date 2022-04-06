@@ -11,7 +11,7 @@
  * Processing Cart Data from Cart Cookie
  * Scan Product Price
  */
-function lwpc_cart_processing( $cart_item, $post_id ) {
+function lwc_cart_processing( $cart_item, $post_id ) {
 	if ( get_post_type( $post_id ) == 'product' ) {
 		$cart_item['price']        = abs( lwc_get_price( $post_id ) );
 		$cart_item['unit_price'] = abs( lwc_get_unit_price( $post_id ) );
@@ -25,7 +25,7 @@ function lwpc_cart_processing( $cart_item, $post_id ) {
 	return $cart_item;
 }
 
-add_filter( "lokuswp/cart/cookie/item", "lwpc_cart_processing", 10, 2 );
+add_filter( "lokuswp/cart/cookie/item", "lwc_cart_processing", 10, 2 );
 
 
 /**

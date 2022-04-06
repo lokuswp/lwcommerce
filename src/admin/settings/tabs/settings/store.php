@@ -197,7 +197,7 @@ $cities         = $get_cities->data ?? [];
         </div> -->
 
         <br>
-        <button class="btn btn-primary w-120" id="lwpc-setting-store-save"><?php _e( 'Save', 'lwcommerce' ); ?></button>
+        <button class="btn btn-primary w-120" id="lwc-setting-store-save"><?php _e( 'Save', 'lwcommerce' ); ?></button>
     </form>
 </section>
 

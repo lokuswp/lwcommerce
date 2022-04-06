@@ -125,7 +125,7 @@ class Admin {
 
 		// Load Lib Admin Restrict only lwcommerce Page
 		if (
-			isset( $_GET['page'] ) && $_GET['page'] == 'lwcommerce' || strpos( get_post_type( get_the_ID() ), 'lwpc-' ) !== false
+			isset( $_GET['page'] ) && $_GET['page'] == 'lwcommerce' || strpos( get_post_type( get_the_ID() ), 'lwc-' ) !== false
 			|| isset( $_GET['page'] ) && strpos( $_GET['page'], 'lwcommerce-' ) !== false
 		) {
 
@@ -139,7 +139,7 @@ class Admin {
 					'ajax_url'    => admin_url( 'admin-ajax.php' ),
 					'ajax_nonce'  => wp_create_nonce( 'lwc_admin_nonce' ),
 					'plugin_url'  => LWC_URL,
-					//				'currency'    => lwpc_get_currency(),
+					//				'currency'    => lwc_get_currency(),
 					'translation' => $this->js_translation(),
 				) );
 			}
@@ -162,7 +162,7 @@ class Admin {
 					false
 				);
 
-				wp_localize_script( 'orders-js', 'lwpc_orders', array(
+				wp_localize_script( 'orders-js', 'lwc_orders', array(
 					'ajax_url'    => admin_url( 'admin-ajax.php' ),
 					'ajax_nonce'  => wp_create_nonce( 'lwc_admin_nonce' ),
 					'plugin_url'  => LWC_URL,

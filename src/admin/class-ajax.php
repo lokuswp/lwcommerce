@@ -4,24 +4,24 @@ namespace LokusWP\Commerce\Admin;
 
 class AJAX {
 	public function __construct() {
-		add_action( 'wp_ajax_lwpc_store_settings_save', [ $this, 'store_settings_save' ] );
+		add_action( 'wp_ajax_lwc_store_settings_save', [ $this, 'store_settings_save' ] );
 
-		add_action( 'wp_ajax_lwpc_shipping_package_status', [ $this, 'shipping_package_status' ] );
-		add_action( 'wp_ajax_lwpc_change_payment_status', [ $this, 'change_payment_status' ] );
+		add_action( 'wp_ajax_lwc_shipping_package_status', [ $this, 'shipping_package_status' ] );
+		add_action( 'wp_ajax_lwc_change_payment_status', [ $this, 'change_payment_status' ] );
 
-		add_action( 'wp_ajax_lwpc_shipping_settings_save', [ $this, 'shipping_settings_save' ] );
+		add_action( 'wp_ajax_lwc_shipping_settings_save', [ $this, 'shipping_settings_save' ] );
 
 		// Shipping
 		add_action( 'wp_ajax_lwc_admin_shipping_status', [ $this, 'admin_shipping_status' ] );
 
 
 		// Orders
-		add_action( 'wp_ajax_lwpc_get_orders', [ $this, 'get_orders' ] );
-		add_action( 'wp_ajax_lwpc_process_order', [ $this, 'process_order' ] );
-		add_action( 'wp_ajax_lwpc_update_resi', [ $this, 'update_resi' ] );
+		add_action( 'wp_ajax_lwc_get_orders', [ $this, 'get_orders' ] );
+		add_action( 'wp_ajax_lwc_process_order', [ $this, 'process_order' ] );
+		add_action( 'wp_ajax_lwc_update_resi', [ $this, 'update_resi' ] );
 
 		// Statistic
-		add_action( 'wp_ajax_lwpc_orders_chart', [ $this, 'orders_chart' ] );
+		add_action( 'wp_ajax_lwc_orders_chart', [ $this, 'orders_chart' ] );
 	}
 
 	public function admin_shipping_status() {
@@ -168,8 +168,8 @@ class AJAX {
 			$transaction_id = sanitize_text_field( $transaction_id );
 			$no_resi        = sanitize_text_field( $no_resi );
 
-			lwpc_update_order_meta( $transaction_id, 'no_resi', $no_resi );
-			$status = lwpc_update_order_meta( $transaction_id, 'status_processing', 'shipping' );
+			lwc_update_order_meta( $transaction_id, 'no_resi', $no_resi );
+			$status = lwc_update_order_meta( $transaction_id, 'status_processing', 'shipping' );
 
 			if ( $status ) {
 				wp_send_json_success( 'Successfully updated.' );
@@ -246,7 +246,7 @@ class AJAX {
 			$sql_where .= ( ! empty( $sql_where ) ) ? " AND " : "HAVING ";
 
 			$arrStatusPayment = [ 'unpaid', 'paid', 'cancelled' ];
-			$arrStatusOrder   = [ 'unprocessed', 'processing', 'shipping' ];
+			$arrStatusOrder   = [ 'pending', 'processing', 'shipping', 'completed' ];
 
 			if ( in_array( $order_filter, $arrStatusPayment ) && ! in_array( $order_filter, $arrStatusOrder ) ) {
 				$sql_where .= "status = '" . sanitize_text_field( $order_filter ) . "'";
@@ -376,7 +376,7 @@ class AJAX {
 			$transaction_id = sanitize_text_field( $transaction_id );
 			$status         = sanitize_text_field( $status );
 
-			$transaction_id = lwpc_update_order_meta( $transaction_id, 'status_processing', $status );
+			$transaction_id = lwc_update_order_meta( $transaction_id, 'status_processing', $status );
 
 			if ( $transaction_id ) {
 				wp_send_json_success( 'Successfully updated.' );

@@ -4,7 +4,7 @@
         <h6 style="margin-bottom:12px;" class="text-primary"><?php _e('Status', 'lwcommerce'); ?></h6>
 
         <div class="top">
-            <div class="lwpc-dashboard row" style="width:100%">
+            <div class="lwc-dashboard row" style="width:100%">
                 <div class="col-sm-3">
                     <div class="box">
                
@@ -49,7 +49,7 @@
                 text-align: center;
             }
 
-            .lwpc-dashboard h4{
+            .lwc-dashboard h4{
                 margin-bottom: 4px;
             }
 

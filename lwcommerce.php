@@ -3,7 +3,7 @@
 /**
  * @wordpress-plugin
  *
- * Plugin Name:       LWCommerce (Beta)
+ * Plugin Name:       LWCommerce (beta)
  * Plugin URI:        https://lokuswp.id/plugin/lwcommerce
  * Description:       Sistem Jual Beli Online WordPress
  * Version:           0.5.0

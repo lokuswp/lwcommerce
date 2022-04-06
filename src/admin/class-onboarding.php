@@ -92,23 +92,32 @@ class Onboarding {
 
 	private function create_product() {
 
-		// Create Product
-		$lwc_id = Helper::generate_post( "product", __( 'LWCommerce - Digital Product Free', 'lwcommerce' ), "lwcommerce", "WordPress Ecommerce Plugin" );
-		update_post_meta( $lwc_id, "_unit_price", 0 );
-		update_post_meta( $lwc_id, "_stock", 9999 );
-		update_post_meta( $lwc_id, "_product_type", "digital" );
+		// Create Free Product
+		$digital_free = Helper::generate_post( "product", __( 'LWCommerce - Digital Product Free', 'lwcommerce' ), "lwcommerce", "WordPress Ecommerce Plugin" );
+		update_post_meta( $digital_free, "_unit_price", 0 );
+		update_post_meta( $digital_free, "_stock", 9999 );
+		update_post_meta( $digital_free, "_product_type", "digital" );
 
 		$thumbnail = LWC_URL . 'src/admin/assets/images/lwcommerce.jpg';
-		Helper::set_featured_image( $thumbnail, $lwc_id );
+		Helper::set_featured_image( $thumbnail, $digital_free );
 
-		// Create Product LWDonation
-		$lwd_id = Helper::generate_post( "product", __( 'LWDonation - Paid Digital Products', 'lwcommerce' ), "lwdonation", "WordPress Donation Plugin" );
-		update_post_meta( $lwd_id, "_unit_price", 580000 );
-		update_post_meta( $lwd_id, "_stock", 1000 );
-		update_post_meta( $lwc_id, "_product_type", "digital" );
+		// Create Paid Product
+		$digital_paid = Helper::generate_post( "product", __( 'LWDonation - Paid Digital Products', 'lwcommerce' ), "lwdonation", "WordPress Donation Plugin" );
+		update_post_meta( $digital_paid, "_unit_price", 580000 );
+		update_post_meta( $digital_paid, "_stock", 1000 );
+		update_post_meta( $digital_paid, "_product_type", "digital" );
 
 		$thumbnail = LWC_URL . 'src/admin/assets/images/lwdonation.jpg';
-		Helper::set_featured_image( $thumbnail, $lwd_id );
+		Helper::set_featured_image( $thumbnail, $digital_paid );
+
+		// Create Paid Product Physical
+		$phsyical_paid = Helper::generate_post( "product", __( 'Tshirt LokusWP - Paid Physical Products', 'lwcommerce' ), "tshirt-lokuswp", "Tshirt with LokusWP Design" );
+		update_post_meta( $phsyical_paid, "_unit_price", 120000 );
+		update_post_meta( $phsyical_paid, "_stock", 10 );
+		update_post_meta( $phsyical_paid, "_product_type", "physical" );
+
+		$thumbnail = LWC_URL . 'src/admin/assets/images/lwdonation.jpg';
+		Helper::set_featured_image( $thumbnail, $phsyical_paid );
 
 		// Setup Permalink Post Name
 		Helper::set_postname();

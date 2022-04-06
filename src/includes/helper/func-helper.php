@@ -39,24 +39,25 @@ function lwc_get_price_html()
 	} else if ($unit_price > 0 && $price_promo == 0 ) {
 		$html = '<span>' . lwp_currency_format(true, $unit_price) . '</span>';
 	} else {
-		$html = '<small><strike>' . lwp_currency_format(true, $unit_price) . '</strike></small>';
-		$html .= '<span>' . lwp_currency_format(true, $price_promo) . '</span>';
+		$html = '<span>' . lwp_currency_format(true, $price_promo) . '</span>';
+		$html .= '<small><strike>' . lwp_currency_format(true, $unit_price) . '</strike></small>';
+
 	}
 	echo ($html);
 }
 
 
-function lwpc_get_stock()
+function lwc_get_stock()
 {
 }
 
 
-function lwpc_get_stock_html()
+function lwc_get_stock_html()
 {
 	// Get Template ELement
 }
 
-function lwpc_add_to_cart_html()
+function lwc_add_to_cart_html()
 {
 	require LWC_PATH . 'src/templates/component/add-to-cart.php';
 }
@@ -192,7 +193,7 @@ function lwc_get_cost_rajaongkir(string $shipping_id, string $service, string $d
  *
  * @return array|false|mixed
  */
-function lwpc_get_order_meta($id, $meta_key, $single = true)
+function lwc_get_order_meta($id, $meta_key, $single = true)
 {
 	return get_metadata('lwcommerce_order', $id, $meta_key, $single);
 }
@@ -204,7 +205,7 @@ function lwpc_get_order_meta($id, $meta_key, $single = true)
  *
  * @return bool|int
  */
-function lwpc_update_order_meta($id, $meta_key, $value = '')
+function lwc_update_order_meta($id, $meta_key, $value = '')
 {
 	return update_metadata('lwcommerce_order', $id, $meta_key, $value);
 }
@@ -216,7 +217,7 @@ function lwpc_update_order_meta($id, $meta_key, $value = '')
  *
  * @return false|int
  */
-function lwpc_add_order_meta($id, $meta_key, $value = '')
+function lwc_add_order_meta($id, $meta_key, $value = '')
 {
 	return add_metadata('lwcommerce_order', $id, $meta_key, $value);
 }
@@ -227,7 +228,33 @@ function lwpc_add_order_meta($id, $meta_key, $value = '')
  *
  * @return bool
  */
-function lwpc_delete_order_meta($id, $meta_key = '')
+function lwc_delete_order_meta($id, $meta_key = '')
 {
 	return delete_metadata('lwcommerce_order', $id, $meta_key);
+}
+
+
+function lwc_get_product_types( $cart_uuid ) {
+	$cart          = lwp_get_cart_by( "cart_uuid", $cart_uuid );
+	$product_types = [];
+
+	foreach ( $cart as $item ) {
+		$product_id      = $item->post_id;
+		$product_type    = get_post_meta( $product_id, '_product_type', true );
+		$product_types[] = $product_type;
+	}
+
+	return array_unique( $product_types );
+}
+
+function lwc_get_subtotal( $cart_uuid ) {
+	$cart     = lwp_get_cart_by( "cart_uuid", $cart_uuid );
+	$subtotal = 0;
+
+	foreach ( $cart as $item ) {
+		$product_id = $item->post_id;
+		$subtotal   += lwc_get_price( $product_id );
+	}
+
+	return $subtotal;
 }

@@ -16,6 +16,6 @@ $apikey = lwc_get_settings( 'shipping', 'apikey' ) ?? '';
             </div>
         </div>
 
-        <button class="btn btn-primary w-120" id="lwpc-setting-shipping-save"><?php _e( 'Save', 'lwcommerce' ); ?></button>
+        <button class="btn btn-primary w-120" id="lwc-setting-shipping-save"><?php _e( 'Save', 'lwcommerce' ); ?></button>
     </form>
 </section>

@@ -8,7 +8,7 @@
  */
 ?>
 
-<section id="lwpc-etalase" class="lwp-mobile-width">
+<section id="lwc-etalase" class="lwp-mobile-width">
 
     <?php require_once LWC_PATH . 'src/templates/component/navigation.php'; ?>
 

@@ -31,7 +31,7 @@
      * 
      * @since 0.5.0
      */
-    $(document).on("click", ".lwpc-addtocart", function (e) {
+    $(document).on("click", ".lwc-addtocart", function (e) {
         e.preventDefault();
 
         let productID = $(this).attr("product-id");

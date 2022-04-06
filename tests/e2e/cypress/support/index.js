@@ -18,3 +18,12 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+// Cypress.on('uncaught:exception', () => {
+//     return false;
+// });
+
+// Cypress.Cookies.defaults({
+//     preserve: ['lokuswp_cart', 'lokuswp_cart'],
+// })
+
+Cypress.Cookies.preserveOnce('lokuswp_cart', 'lokuswp_session')

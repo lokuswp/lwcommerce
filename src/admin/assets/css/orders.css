@@ -43,14 +43,14 @@
     --tw-backdrop-sepia:  ;
 }
 
-.lwpc-admin {
+.lwc-admin {
     background: #fff;
     /* margin-top: 25px; */
     padding: 0px 10px 25px 5px;
     height: 100%;
 }
 
-.lwpc-screen-loading {
+.lwc-screen-loading {
     color: transparent !important;
     pointer-events: none;
     position: absolute;
@@ -60,7 +60,7 @@
     z-index: 6;
 }
 
-.lwpc-screen-loading::after {
+.lwc-screen-loading::after {
     animation: loading .5s infinite linear;
     border: .3rem solid #5755d9;
     border-radius: 50%;
@@ -143,7 +143,7 @@ table.dataTable tbody th, table.dataTable tbody td .container {
 }
 
 /* Make header for card */
-.lwpc-card-header {
+.lwc-card-header {
     background: #fff;
     padding: 10px;
     border-bottom: 1px solid #e5e5e5;
@@ -152,7 +152,7 @@ table.dataTable tbody th, table.dataTable tbody td .container {
 }
 
 /* Make body for card */
-.lwpc-card-body {
+.lwc-card-body {
     background: #fff;
     padding: 10px;
     border-bottom-left-radius: 5px;
@@ -160,7 +160,7 @@ table.dataTable tbody th, table.dataTable tbody td .container {
 }
 
 /* Make footer for card */
-.lwpc-card-footer {
+.lwc-card-footer {
     background: #fff;
     padding: 10px;
     border-top: 1px solid #e5e5e5;
@@ -169,12 +169,12 @@ table.dataTable tbody th, table.dataTable tbody td .container {
 }
 
 /*make shadow*/
-.lwpc-card-shadow {
+.lwc-card-shadow {
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
 }
 
 /* Make grid layout */
-.lwpc-grid {
+.lwc-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 10px;
@@ -182,7 +182,7 @@ table.dataTable tbody th, table.dataTable tbody td .container {
 }
 
 /* Make grid item center */
-.lwpc-grid-item {
+.lwc-grid-item {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -194,35 +194,35 @@ table.dataTable tbody th, table.dataTable tbody td .container {
 }
 
 /* Make flex layout */
-.lwpc-flex {
+.lwc-flex {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     flex-direction: row;
 }
 
-.lwpc-gap-1{
+.lwc-gap-1{
     gap: 0.25rem;
 }
 
-.lwpc-gap-4{
+.lwc-gap-4{
     gap: 1rem;
 }
 
-.lwpc-gap-12{
+.lwc-gap-12{
     gap: 3rem;
 }
 
-.lwpc-gap-14{
+.lwc-gap-14{
     gap: 3.5rem;
 }
 
-.lwpc-justify-content-space-between {
+.lwc-justify-content-space-between {
     justify-content: space-between;
 }
 
 /* flex column */
-.lwpc-flex-column {
+.lwc-flex-column {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -230,7 +230,7 @@ table.dataTable tbody th, table.dataTable tbody td .container {
 }
 
 /* Make button rounded with primary background */
-.lwpc-btn-rounded-primary {
+.lwc-btn-rounded-primary {
     border-radius: 5px;
     background: #5755d9;
     color: #fff;
@@ -240,13 +240,13 @@ table.dataTable tbody th, table.dataTable tbody td .container {
 }
 
 /*Make button hover rounded with primary background*/
-.lwpc-btn-rounded-primary:hover {
+.lwc-btn-rounded-primary:hover {
     background: #3d3ddb;
     color: #fff;
 }
 
 /* Make button rounded with #BFFFD1 background */
-.lwpc-btn-rounded {
+.lwc-btn-rounded {
     border-radius: 5px;
     background-color: #00bd12;
     color: white;
@@ -256,13 +256,13 @@ table.dataTable tbody th, table.dataTable tbody td .container {
 }
 
 /* Make button rounded with hover */
-.lwpc-btn-rounded:hover {
+.lwc-btn-rounded:hover {
     background-color: #00990f;
     color: white;
 }
 
 /* Make button rounded with secondary background */
-.lwpc-btn-rounded-secondary {
+.lwc-btn-rounded-secondary {
     border-radius: 5px;
     background: #A9A9A9;
     color: #fff;
@@ -272,7 +272,7 @@ table.dataTable tbody th, table.dataTable tbody td .container {
 }
 
 /* Make button rounded with danger background */
-.lwpc-btn-rounded-danger {
+.lwc-btn-rounded-danger {
     border-radius: 5px;
     background: #ff0000;
     color: #fff;
@@ -282,7 +282,7 @@ table.dataTable tbody th, table.dataTable tbody td .container {
 }
 
 /* Make button rounded with warning background */
-.lwpc-btn-rounded-warning {
+.lwc-btn-rounded-warning {
     border-radius: 5px;
     background: #ffc107;
     color: #fff;
@@ -292,59 +292,59 @@ table.dataTable tbody th, table.dataTable tbody td .container {
 }
 
 /* Make Text bold */
-.lwpc-text-bold {
+.lwc-text-bold {
     font-weight: bold;
 }
 
 /* Make Text secondary */
-.lwpc-text-secondary {
+.lwc-text-secondary {
     color: #939393;
 }
 
 /* Make Text red */
-.lwpc-text-red {
+.lwc-text-red {
     color: #ff0000;
 }
 
 /* Make margin right 10px */
-.lwpc-mr-10 {
+.lwc-mr-10 {
     margin-right: 10px;
 }
 
 /* Make margin right 40px */
-.lwpc-mr-40 {
+.lwc-mr-40 {
     margin-right: 40px;
 }
 
 /* Make margin right 80px */
-.lwpc-mr-100 {
+.lwc-mr-100 {
     margin-right: 100px;
 }
 
 /* Make margin 20px */
-.lwpc-m-20 {
+.lwc-m-20 {
     margin: 20px;
 }
 
 /* Make margin bottom 0px */
-.lwpc-mb-0 {
+.lwc-mb-0 {
     margin-bottom: 0px;
 }
 
 /* On hover change mouse cursor to pointer */
-.lwpc-hover:hover {
+.lwc-hover:hover {
     cursor: pointer;
 }
 
-.lwpc-text-underline {
+.lwc-text-underline {
     text-decoration: underline;
 }
 
-.lwpc-text-underline__on-hover:hover {
+.lwc-text-underline__on-hover:hover {
     text-decoration: underline;
 }
 
-.lwpc-report-input {
+.lwc-report-input {
     width: 400px;
     border-color: #D9D9D9;
 }
@@ -355,7 +355,7 @@ table.dataTable tbody th, table.dataTable tbody td .container {
 }
 
 /* make item hidden */
-.lwpc-hidden {
+.lwc-hidden {
     display: none;
 }
 
@@ -370,7 +370,7 @@ table.dataTable tbody th, table.dataTable tbody td .container {
 }
 
 /*make loading*/
-.lwpc-loading {
+.lwc-loading {
     animation: loading .5s infinite linear;
     border: .3rem solid #000;
     border-radius: 50%;
@@ -396,7 +396,7 @@ table.dataTable tbody th, table.dataTable tbody td .container {
 }
 
 /*make loading on button*/
-.lwpc-loading-btn {
+.lwc-loading-btn {
     animation: loading .5s infinite linear;
     border: .3rem solid #000;
     border-radius: 50%;
@@ -414,7 +414,7 @@ table.dataTable tbody th, table.dataTable tbody td .container {
 }
 
 /*make background white who overlay all element*/
-.lwpc-overlay {
+.lwc-overlay {
     background: #fff;
     position: fixed;
     top: 0;
@@ -423,7 +423,7 @@ table.dataTable tbody th, table.dataTable tbody td .container {
     height: 100%;
 }
 
-.lwpc-badge {
+.lwc-badge {
     background: #00bd12;
     color: #fff;
     padding: 5px 10px;
@@ -432,7 +432,7 @@ table.dataTable tbody th, table.dataTable tbody td .container {
     cursor: pointer;
 }
 
-.lwpc-badge-danger {
+.lwc-badge-danger {
     background: #ff0000;
     color: #fff;
     padding: 5px 10px;
@@ -441,7 +441,7 @@ table.dataTable tbody th, table.dataTable tbody td .container {
     cursor: pointer;
 }
 
-.lwpc-badge-seccondary {
+.lwc-badge-seccondary {
     background: #A9A9A9;
     color: #fff;
     padding: 5px 10px;
@@ -450,7 +450,7 @@ table.dataTable tbody th, table.dataTable tbody td .container {
     cursor: pointer;
 }
 
-.lwpc-btn-dropdown {
+.lwc-btn-dropdown {
     display: inline-flex;
     width: 100%;
     justify-content: center;
@@ -471,12 +471,12 @@ table.dataTable tbody th, table.dataTable tbody td .container {
     cursor: pointer;
 }
 
-.lwpc-btn-dropdown:hover {
+.lwc-btn-dropdown:hover {
     --tw-bg-opacity: 1;
     background-color: rgb(21 128 61 / var(--tw-bg-opacity));
 }
 
-.lwpc-btn-dropdown:focus {
+.lwc-btn-dropdown:focus {
     outline: 2px solid transparent;
     outline-offset: 2px;
     --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
@@ -488,14 +488,14 @@ table.dataTable tbody th, table.dataTable tbody td .container {
     --tw-ring-offset-color: #f3f4f6;
 }
 
-.lwpc-dropdown-icon-down {
+.lwc-dropdown-icon-down {
     margin-right: -0.25rem;
     margin-left: 0.5rem;
     height: 1.25rem;
     width: 1.25rem;
 }
 
-.lwpc-dropdown-icon-up{
+.lwc-dropdown-icon-up{
     display: none;
     margin-right: -0.25rem;
     margin-left: 0.5rem;
@@ -503,7 +503,7 @@ table.dataTable tbody th, table.dataTable tbody td .container {
     width: 1.25rem;
 }
 
-.lwpc-dropdown-content {
+.lwc-dropdown-content {
     position: absolute;
     right: 0px;
     margin-top: 0.5rem;
@@ -521,12 +521,12 @@ table.dataTable tbody th, table.dataTable tbody td .container {
     display: none;
 }
 
-.lwpc-dropdown-content:focus {
+.lwc-dropdown-content:focus {
     outline: 2px solid transparent;
     outline-offset: 2px;
 }
 
-.lwpc-dropdown-item {
+.lwc-dropdown-item {
     display: block;
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
@@ -535,13 +535,13 @@ table.dataTable tbody th, table.dataTable tbody td .container {
     color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 
-.lwpc-dropdown {
+.lwc-dropdown {
     position: relative;
     display: inline-block;
     text-align: left;
 }
 
-.lwpc-container-filter{
+.lwc-container-filter{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -549,12 +549,12 @@ table.dataTable tbody th, table.dataTable tbody td .container {
     gap: 0.5rem;
 }
 
-.lwpc-search-box{
+.lwc-search-box{
     width: 100%;
     position: relative;
 }
 
-.lwpc-btn-search{
+.lwc-btn-search{
     position: absolute;
     top: 0.3rem;
     left: 0.5rem;
@@ -565,7 +565,7 @@ table.dataTable tbody th, table.dataTable tbody td .container {
     cursor: pointer;
 }
 
-.lwpc-btn-filter{
+.lwc-btn-filter{
     border: solid 1px #ccc;
     border-radius: 5px;
     padding: 5px 10px;
@@ -578,27 +578,27 @@ table.dataTable tbody th, table.dataTable tbody td .container {
     gap: 0.2rem;
 }
 
-.lwpc-search-icon{
+.lwc-search-icon{
     height: 1.25rem;
     width: 1.25rem;
 }
 
-.lwpc-input-search{
+.lwc-input-search{
     padding-left: 2rem !important;
     padding-top: 0.2rem !important;
     padding-bottom: 0.1rem !important;
     width: 100%;
 }
 
-.lwpc-input-search:focus ~ .lwpc-floating-label,
-.lwpc-input-search:not(:focus):valid ~ .lwpc-floating-label{
+.lwc-input-search:focus ~ .lwc-floating-label,
+.lwc-input-search:not(:focus):valid ~ .lwc-floating-label{
     top: -0.2rem;
     left: 2.1rem;
     font-size: 11px;
     font-weight: 500;
 }
 
-.lwpc-floating-label {
+.lwc-floating-label {
     position: absolute;
     pointer-events: none;
     top: 0.4rem;
@@ -607,14 +607,14 @@ table.dataTable tbody th, table.dataTable tbody td .container {
     color: #a2a2a2;
 }
 
-.lwpc-dropdown-filter{
+.lwc-dropdown-filter{
     margin-right: 2.4rem;
     margin-left:1.4rem;
     max-width: 40%;
     display: none;
 }
 
-.lwpc-card-shadow-blue{
+.lwc-card-shadow-blue{
     box-shadow: 0px 0px 5px 0px rgba(1, 15, 255, 0.2);
 }
 
@@ -650,15 +650,15 @@ table.dataTable tbody th, table.dataTable tbody td .container {
     color: #f68;
 }
 
-.lwpc-relative{
+.lwc-relative{
     position: relative;
 }
 
-.lwpc-absolute{
+.lwc-absolute{
     position: absolute;
 }
 
-.lwpc-loading-filter{
+.lwc-loading-filter{
     width: 100%;
     height: 100%;
     position: absolute;
@@ -667,31 +667,31 @@ table.dataTable tbody th, table.dataTable tbody td .container {
     background: #ffffff;
 }
 
-.lwpc-product-image{
+.lwc-product-image{
     width: 100px;
     height: 100px;
 }
 
-.lwpc-skeleton{
+.lwc-skeleton{
     opacity: 0.7;
     animation: skeleton-loading 0.5s linear infinite alternate;
 }
 
-.lwpc-skeleton-text{
+.lwc-skeleton-text{
     width: 130px;
     height: 0.8rem;
     margin-bottom: .25rem;
     border-radius: .125rem;
 }
 
-.lwpc-skeleton-button{
+.lwc-skeleton-button{
     width: 140px;
     height: 1rem;
     margin-bottom: .25rem;
     border-radius: .125rem;
 }
 
-.lwpc-skeleton-input{
+.lwc-skeleton-input{
     width: 340px;
     height: 1.5rem;
     margin-bottom: .25rem;
@@ -708,7 +708,7 @@ table.dataTable tbody th, table.dataTable tbody td .container {
     }
 }
 
-.lwpc-overlay-table {
+.lwc-overlay-table {
     height: 100%;
     width: 100%;
     position: absolute;
@@ -721,7 +721,7 @@ table.dataTable tbody th, table.dataTable tbody td .container {
     opacity: 0.75;
     display: none;
 }
-.lwpc-overlay-table h3 {
+.lwc-overlay-table h3 {
     position: absolute;
     top: 50%;left: 50%;transform: translate(-50%, -50%);
 }

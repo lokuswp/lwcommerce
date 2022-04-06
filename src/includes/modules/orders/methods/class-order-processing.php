@@ -15,8 +15,8 @@ class Orders_Processing {
 	public function orders_processing( $request, $transaction_id ): bool {
 		$shipping = isset($request['shipping']) ? lwp_recursive_sanitize_text_field($request['shipping']) : [];
 
-		lwpc_update_order_meta( $transaction_id, 'shipping', $shipping );
-		lwpc_update_order_meta( $transaction_id, 'status', 'hold' );
+		lwc_update_order_meta( $transaction_id, 'shipping', $shipping );
+		lwc_update_order_meta( $transaction_id, 'status', 'hold' );
 
 		return true;
 	}

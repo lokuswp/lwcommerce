@@ -1,4 +1,4 @@
-<div class="lwc-listing row">
+<div class="lwc-listing row lwp-mobile-width">
 
     <?php
     $args = array(
@@ -26,7 +26,7 @@
             <div class="product-price">
                 <?php lwc_get_price_html(); ?>
             </div>
-            <?php lwpc_add_to_cart_html(); ?>
+            <?php lwc_add_to_cart_html(); ?>
         </div>
     <?php
     endwhile;
@@ -42,7 +42,7 @@
             padding-left:0.25rem
         }
 
-        .lwpc-listing .col-xs-6{
+        .lwc-listing .col-xs-6{
             margin-bottom: 0.25rem;
         }
     </style>

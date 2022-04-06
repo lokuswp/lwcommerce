@@ -1,89 +1,96 @@
 
-const baseUrl = Cypress.env("baseUrl");
+const baseUrl = 'http://localhost:10039'
 
-// Cypress.on('uncaught:exception', (err, runnable) => {
-//     // returning false here prevents Cypress from
-//     // failing the test
-//     return false
-// })
+Cypress.on('uncaught:exception', (err, runnable) => {
+    // returning false here prevents Cypress from
+    // failing the test
+    cy.clearCookies()
+    return false
+})
 
-describe('Buy Digital Product Free via Bank Transfer', () => {
+
+describe('Buy Free Digital Product via Bank Transfer', () => {
 
     // Opening StoreFront
-    beforeEach(function () {
-        cy.visit( 'http://testwp.local/');
-
-        // Cypress.Cookies.preserveOnce('lokuswp_cart', 'remember_token')
-        // Cypress.Cookies.defaults({
-        //     preserve: 'lokuswp_cart',
-        // })
-    });
+    beforeEach(() => {
+        cy.viewport('macbook-13')
+    })
 
     it('add free product to cart', function () {
-        cy.get('button.lwpc-addtocart').eq(1).click();
+        // Kunjungi Halaman Daftar Product
+        // cy.visit(baseUrl + '/products');
 
-        // Assert Quantity 1
+        // Pilih Produk Pertama ( Gratis )
+        // cy.get('button.lwc-addtocart').eq(0).click();
+
+        // Cek :: Keranjang punya 1 produk
         // cy.get('.cart-qty').contains('1');
     });
 
-    it('manage product in cart', function () {
-        cy.visit(baseUrl + '/cart');
+    it('add quantity in cart', function () {
+        // Kunjungi Halaman Keranjang
+        // cy.visit(baseUrl + '/cart');
+        // cy.wait(500)
 
-        // Add New Item in Cart
-        cy.wait(500)
-        cy.get('tr:first() .plus').click()
+        // Tambahkan Quantity
+        // cy.get('tr:first() .plus').click()
+
+        // Cek :: Keranjang punya 2 produk
+        //
     });
 
-    it('start checkout', function () {
-        cy.visit(baseUrl + '/checkout');
-        // cy.getCookies().should('be.empty')
-        // cy.setCookie('session_id', '189jd09sufh33aaiidhf99d09')
-        // cy.getCookie('session_id').should(
-        //     'have.property',
-        //     'value',
-        //     '189jd09sufh33aaiidhf99d09'
-        // )
-        //
-        // Fill Form
-        cy.get(':nth-child(1) > .form-control').type("Hafid")
-        cy.get(':nth-child(2) > .form-control').type("085216746174")
-        cy.get(':nth-child(3) > .form-control').type("hafid@lokuswp.com")
+    it('self checkout', function () {
 
+        // Kunjungi Halaman Checkout
+        // cy.visit(baseUrl + '/checkout');
+
+        // Isi Data Pembeli
+        // cy.get(':nth-child(1) > .form-control').type("Hafid")
+        // cy.get(':nth-child(2) > .form-control').type("085216746174")
+        // cy.get(':nth-child(3) > .form-control').type("hafid@lokuswp.com")
+
+        // Klik Tombol Selanjutnya
         // cy.get('[data-cy="verify-form"]').click()
-        //
-        // // Choose Shipping Template
+
+        // Cek :: Pindah ke Halaman Pengiriman
+
+        // Klik Tombol Selanjutnya
         // cy.get('[data-cy="verify-shipping"]').click()
 
-        // Click Payment Tab
-        cy.get('.swiper-tabs-nav > .swiper-wrapper > .swiper-slide').contains("Payment").click()
+        // Cek :: Pindah ke Halaman Pembayaran
 
-        // Click Payment Transfer Bank
-        cy.get('.form-group:first() .item-radio > label').click()
+        // Pilih Metode Pembayaran Transfer Bank
+        // cy.get('.form-group:first() .item-radio > label').click()
 
-        // Make Transaction
+        // Buat Pesanan
         // cy.get('[data-cy="make-a-checkout"]').click();
-
-        // Checking Confirmation Page
-        // Terimakasih, Pesanan Selesai
-        // Detail Pesanan
-        // Tombol Download File
-        // cy.get('#instruction').should('contain', 'Please make payment').end();
     });
 
-    it('instruction', function () {
+    it('checkout - fill form buyer', function () {
 
     });
 
-    it('download file', function () {
+    it('checkout - choose shipping', function () {
 
     });
 
-    it('check order history', function () {
+    it('checkout - choose payment method', function () {
 
     });
 
+    it('aftercheckout - have thankyou screen', function () {
 
-    it('admin check shipping email was sending', function () {
+    });
+
+    it('aftercheckout - have order status section', function () {
+
+    });
+
+    it('aftercheckout - have download file section', function () {
+
+    });
+
+    it('AdminCheck - system was sending notification email : Completed', function () {
 
     });
 

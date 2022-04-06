@@ -1,9 +1,9 @@
-.lwpc-listing {
+.lwc-listing {
     padding: 8px 0;
     text-align: center;
 }
 
-.lwpc-listing .product-name {
+.lwc-listing .product-name {
     font-size: 16px;
 
 }
@@ -24,13 +24,18 @@
 .product-price small {
     font-size: 80%;
     display: flex;
-    flex-grow: 1;
+
     align-items: center;
 }
 
 .product-price span {
     display: flex;
+
     color: var(--lokuswp-secondary-color);
+}
+
+.lwc-listing .product-price span{
+    flex-grow: 1;
 }
 
 .product-price strike {
@@ -55,6 +60,10 @@ small.cart-qty {
     color: var(--lokuswp-secondary-color);
 }
 
+td.product-item-detail strike {
+    margin-left: 6px;
+}
+
 .lwp-cart-content{
     padding:0 8px;
 }
@@ -66,12 +75,9 @@ small.cart-qty {
     margin-bottom: 2px;
 }
 
-.lwp-product .product-price span{
-    flex-grow: 28;
-}
-
 .lwp-product .product-price small{
     margin-top: 4px;
+    margin-left:8px;
 }
 
 /* Invoice */

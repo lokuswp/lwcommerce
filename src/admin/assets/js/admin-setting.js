@@ -25,13 +25,13 @@
 
 
     // =================== Store Settings =================== //
-    $(document).on("click", "#lwpc-setting-store-save", function (e) {
+    $(document).on("click", "#lwc-setting-store-save", function (e) {
         e.preventDefault();
         $(this).addClass('loading');
         const that = this;
 
         $.post(lwc_admin.ajax_url, {
-            action: 'lwpc_store_settings_save',
+            action: 'lwc_store_settings_save',
             settings: $("#settings form").serialize(),
             security: lwc_admin.ajax_nonce,
         }, function (response) {
@@ -46,13 +46,13 @@
     });
 
     // =================== Shipping Package Status =================== //
-    $(document).on("change", ".lwpc_shipping_package_status", function (e) {
+    $(document).on("change", ".lwc_shipping_package_status", function (e) {
         $(this).addClass('loading');
         const packageId = $(this).attr('data-action');
         const that = $(this);
 
         $.post(lwc_admin.ajax_url, {
-            action: 'lwpc_shipping_package_status',
+            action: 'lwc_shipping_package_status',
             status: that.val(),
             package_id: packageId,
             security: lwc_admin.ajax_nonce,
@@ -66,13 +66,13 @@
     });
 
     // =================== Shipping Settings =================== //
-    $(document).on("click", "#lwpc-setting-shipping-save", function (e) {
+    $(document).on("click", "#lwc-setting-shipping-save", function (e) {
         e.preventDefault();
         $(this).addClass('loading');
         const that = this;
 
         $.post(lwc_admin.ajax_url, {
-            action: 'lwpc_shipping_settings_save',
+            action: 'lwc_shipping_settings_save',
             settings: $("#settings form").serialize(),
             security: lwc_admin.ajax_nonce,
         }, function (response) {
@@ -94,9 +94,9 @@
      * @scope Global
      * @since 0.5.0
      */
-    $(document).on("click", ".lwpc-shipping-manager", function (e) {
+    $(document).on("click", ".lwc-shipping-manager", function (e) {
         
-        let shippingEditor = $("#lwpc-shipping-manager-editor");
+        let shippingEditor = $("#lwc-shipping-manager-editor");
         // On Loading
         // shippingEditor.html(shimmer);
 
@@ -142,9 +142,9 @@
      * @scope Global
      * @since 0.5.0
      */
-    $(document).on("click", "#lwpc-shipping-manager-editor .panel-close", function (e) {
+    $(document).on("click", "#lwc-shipping-manager-editor .panel-close", function (e) {
 
-        let shippingEditor = $("#lwpc-shipping-manager-editor");
+        let shippingEditor = $("#lwc-shipping-manager-editor");
 
         shippingEditor.parent().hide();
         shippingEditor.parent().css('z-index', '0');
