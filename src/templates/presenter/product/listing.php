@@ -24,7 +24,7 @@
                 <h3 class="product-name"><?php the_title(); ?></h3>
             </a>
             <div class="product-price">
-                <?php lwc_get_price_html(); ?>
+                <?php lwc_get_price_html( get_the_ID()); ?>
             </div>
             <?php lwc_add_to_cart_html(); ?>
         </div>

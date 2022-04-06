@@ -2,56 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ab31ce4-f36a-4294-bc20-ef2ce3a0ac4a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/templates/component/emails/shipping.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/templates/emails/id/order-cancelled.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/templates/emails/id/order-processing.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/templates/emails/id/shipping-physical.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/e2e/cypress/integration/guest/order-confirm-ship-digital-product.spec.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/templates/emails/id_ID/processing.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/lwcommerce.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/lwcommerce.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/tests_end2end_cypress_integration_guest_buy_free_product_digital_bank_transfer_spec_js.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/webResources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwcommerce.php" beforeDir="false" afterPath="$PROJECT_DIR$/lwcommerce.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin/assets/css/orders.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/assets/css/orders.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin/assets/js/admin-setting.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/assets/js/admin-setting.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin/assets/js/orders.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/assets/js/orders.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin/class-admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/class-admin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin/class-ajax.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/class-ajax.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin/class-onboarding.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/class-onboarding.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin/orders/order.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/orders/order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin/settings/onboarding.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/settings/onboarding.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin/settings/tabs/settings/store.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/settings/tabs/settings/store.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin/settings/tabs/shipping/rajaongkir.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/settings/tabs/shipping/rajaongkir.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/common/class-activator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/common/class-activator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/includes/helper/func-helper.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/helper/func-helper.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/helper/mock/func-mock.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/helper/mock/func-mock.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/hook.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/includes/hook/func-checkout-logic.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook/func-checkout-logic.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/modules/orders/methods/class-order-processing.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/modules/orders/methods/class-order-processing.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/modules/shipping/carriers/class-email-smtp.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/modules/shipping/carriers/class-email-smtp.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/modules/shipping/controller/class-shipping-processing.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/modules/shipping/controller/class-shipping-processing.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/assets/css/skin.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/assets/css/skin.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/assets/js/public.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/assets/js/public.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/templates/component/add-to-cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/component/add-to-cart.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/templates/emails/id/order-completed.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/emails/id/order-completed.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/templates/emails/id/order-delivery.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook/func-order-create.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/templates/emails/id/shipping-digital-download.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/emails/id/shipping-digital.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/templates/presenter/customer/account.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/templates/presenter/customer/dashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/presenter/customer/dashboard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/templates/presenter/customer/history.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/presenter/customer/history.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/plugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/plugin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/templates/emails/id/order-cancelled.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook/func-notification-scheduler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/templates/emails/id/order-completed.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/emails/id_ID/completed.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/templates/emails/id/order-processing.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook/func-notification.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/templates/emails/id/shipping-digital.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/emails/id_ID/shipping.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/templates/emails/id/shipping-physical.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/emails/id_ID/cancelled.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/templates/presenter/product/listing.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/presenter/product/listing.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/templates/presenter/product/single.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/presenter/product/single.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/templates/presenter/product/storefront.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/presenter/product/storefront.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/e2e/cypress.json" beforeDir="false" afterPath="$PROJECT_DIR$/tests/e2e/cypress.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/e2e/cypress/integration/guest/buy-free-product-digital-bank-transfer.spec.js" beforeDir="false" afterPath="$PROJECT_DIR$/tests/e2e/cypress/integration/guest/buy-free-product-digital-bank-transfer.spec.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/e2e/cypress/integration/guest/buy-free-product-digital-cash.spec.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/e2e/cypress/integration/guest/buy-paid-product-digital-bank-transfer.spec.js" beforeDir="false" afterPath="$PROJECT_DIR$/tests/e2e/cypress/integration/guest/buy-paid-product-digital-bank-transfer.spec.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/e2e/cypress/integration/guest/buy-paid-product-digital-cash.spec.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/e2e/cypress/integration/guest/buy-paid-product-physical-jne-bank-transfer.spec.js" beforeDir="false" afterPath="$PROJECT_DIR$/tests/e2e/cypress/integration/guest/buy-paid-product-physical-jne-bank-transfer.spec.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/e2e/cypress/integration/guest/buy-paid-product-physical-pos-bank-transfer.spec.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/e2e/cypress/support/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/tests/e2e/cypress/support/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,9 +35,6 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/../../debug.log" root0="FORCE_HIGHLIGHTING" />
-  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -88,13 +48,14 @@
     <option name="autoscrollFromSource" value="true" />
     <option name="autoscrollToSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../lokuswp/languages" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../lwcommerce-pro" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="web-ide.project.structure" />
@@ -117,7 +78,7 @@
       <option name="presentableId" value="Default" />
       <updated>1649124772018</updated>
       <workItem from="1649124773553" duration="29061000" />
-      <workItem from="1649213973651" duration="4468000" />
+      <workItem from="1649213973651" duration="15048000" />
     </task>
     <servers />
   </component>

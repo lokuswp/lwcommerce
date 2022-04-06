@@ -31,6 +31,9 @@ class Plugin {
 		require_once LWC_PATH . 'src/includes/hook/func-checkout-logic.php';
 		require_once LWC_PATH . 'src/includes/hook/func-checkout-tab.php';
 
+		require_once LWC_PATH . 'src/includes/hook/func-notification.php';
+		require_once LWC_PATH . 'src/includes/hook/func-notification-scheduler.php';
+
 		// Shipping Module
 		require_once LWC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
 		require_once LWC_PATH . 'src/includes/modules/shipping/class-manager.php';
