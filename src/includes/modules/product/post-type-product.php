@@ -147,7 +147,7 @@ class Post_Type_Product
             'cb' => $columns['cb'],
             'image' => __('Image'),
             'title' => __('Title'),
-            'price' => __('Pirce', 'lwcommerce'),
+            'price' => __('Price', 'lwcommerce'),
             'stock' => __('Stock', 'lwcommerce'),
             'id' => __('ID'),
             'date' => $columns['date'],
@@ -191,15 +191,14 @@ class Post_Type_Product
         }
 
         if ('price' === $column) {
-
-            lwc_get_price_html();
+            lwc_get_price_html( get_the_ID() );
         }
 
     ?>
         <style>
             .column-image,
             .column-id {
-                width: 3.8%;
+                width: 4%;
             }
 
             .column-price,

@@ -1,13 +1,15 @@
 <?php
+
 namespace LokusWP\Commerce\Modules\Plugin;
 
+use LokusWP\Utils\Logger;
 use stdClass;
 
 class Updater {
 
 	protected string $plugin_slug = 'lwcommerce'; /* ---CHANGE THIS--- */
-	protected $plugin_file = LWC_BASE; /* ---CHANGE THIS--- */
-	protected string $plugin_host = 'https://dash.lsdplugins.com/route/lsd/v1/'; /* ---CHANGE THIS--- */
+	protected string $plugin_file = LWC_BASE; /* ---CHANGE THIS--- */
+	protected string $plugin_host = 'https://digitalcraft.id/api/v1/product/plugin/update/'; /* ---CHANGE THIS--- */
 	protected string $plugin_version = LWC_VERSION; /* ---CHANGE THIS--- */
 
 	public function __construct() {
@@ -21,31 +23,25 @@ class Updater {
 		add_filter( 'plugins_api', array( $this, 'plugin_info' ), 9999, 3 );
 		add_action( 'upgrader_process_complete', array( $this, 'plugin_destroy_update' ), 10, 2 );
 
+		// Only Run Checking Update in Plugins Page
 		if ( $pagenow == 'plugins.php' ) {
-			$this->check_manually();
-		}
+			if ( isset( $_GET['manual-check'] ) && $_GET['manual-check'] == $this->plugin_slug ) {
+				delete_transient( $this->plugin_slug . '_update' );
+				delete_transient( $this->plugin_slug . '_update_check' );
+				$this->check_update();
 
-		 $this->check_automatically();
-	}
+				Logger::info( "[Plugin][Updater] Manually Checking Update Triggered" );
+			} else {
+				$this->check_update();
 
-	public function check_automatically() {
-		$this->check_update();
-	}
-
-	public function check_manually() {
-		global $pagenow;
-
-		if ( isset( $_GET['manual-check'] ) && $_GET['manual-check'] == $this->plugin_slug && $pagenow == 'plugins.php' ) {
-			$this->check_update();
-//			add_action( 'upgrader_process_complete', array( $this, 'plugin_destroy_update' ), 10, 2 );
-
-//			Logger::info( "[Plugin][Updater] Manually Checking Update Triggered" );
+				Logger::info( "[Plugin][Updater] Automatically Checking Update  Triggered" );
+			}
 		}
 	}
 
 	public function check_update() {
-		add_filter( 'site_transient_update_plugins', array( $this, 'plugin_add_update' ) );
-		add_filter( 'transient_update_plugins', array( $this, 'plugin_add_update' ) );
+		add_filter( 'site_transient_update_plugins', array( $this, 'plugin_updater_logic' ) );
+		add_filter( 'transient_update_plugins', array( $this, 'plugin_updater_logic' ) );
 	}
 
 	public function plugin_info( $res, $action, object $args ) {
@@ -114,8 +110,9 @@ class Updater {
 		if ( ! get_transient( $this->plugin_slug . '_update' ) ) {
 
 			// Remote GET
-			$server = "https://12d91b96-91d2-4e7e-982e-e2189462d57f.mock.pstmn.io/api/v1/product/plugin/update/" . $this->plugin_slug;
-			$remote = wp_remote_get(
+			$remote = null;
+			$server = $this->plugin_host . $this->plugin_slug;
+			$response = wp_remote_get(
 				$server,
 				array(
 					'timeout' => 30,
@@ -125,18 +122,18 @@ class Updater {
 				)
 			);
 
-			if ( ! is_wp_error( $remote ) ) {
-				$remote = json_decode( $remote['body'] );
+			if ( ! is_wp_error( $response ) ) {
+				$remote = json_decode( wp_remote_retrieve_body( $response ), false ) ?? null;
 			} else {
 				// Failed to get remote
-//				Logger::info( "[Plugin][Updates] Failed to get update, check your CURL " );
+				Logger::info( "[Plugin][Updates] Failed to get update, check your CURL " );
 				set_transient( $this->plugin_slug . '_update', 'failed_get_update', 300 ); // Waiting 5 minutes
 			}
 
 			//Get Response Body
-			if ( ! is_wp_error( $remote ) && isset( $remote->slug ) && $remote->slug == $this->plugin_slug ) {
-				set_transient( $this->plugin_slug . '_update', $remote, 60 * 60 * 6 ); // 6 hours cache
-
+			if ( ! is_wp_error( $response ) && isset( $remote->data ) && $remote->data->slug == $this->plugin_slug ) {
+				set_transient( $this->plugin_slug . '_update', $remote->data, 60 * 60 * 6 ); // 6 hours cache
+				Logger::info( "[Plugin][Updates] Successful Get Plugin Data Update " );
 				return true;
 			} else {
 				set_transient( $this->plugin_slug . '_update', 'failed_get_update', 60 * 3 ); // 3 minutes
@@ -146,7 +143,7 @@ class Updater {
 		return false;
 	}
 
-	public function plugin_add_update( $transient ) {
+	public function plugin_updater_logic( $transient ) {
 
 		// Get new update from remote
 		$this->plugin_updater_host( $transient );
@@ -154,19 +151,18 @@ class Updater {
 		// Transient Process
 		$remote = (object) get_transient( $this->plugin_slug . '_update' );
 
-//		Logger::info( (array) $remote, "lwcommerce");
-
 		// Display Update Notice
-		$remote_version = $remote->version ?? "0.0.1";
+		$remote_version = isset( $remote->version ) ?? null;
 		if ( ! is_wp_error( $remote ) && version_compare( $this->plugin_version, $remote_version, '<' ) ) {
 			$res              = new stdClass();
 			$res->slug        = $remote->slug;
 			$res->plugin      = $this->plugin_slug . '/' . $this->plugin_slug . '.php';
 			$res->new_version = $remote_version;
 			$res->tested      = $remote->tested;
-			if ( isset( $remote->download_link ) ) {
-				$res->package = $remote->download_link;
+			if ( isset( $remote->download_url ) ) {
+				$res->package = $remote->download_url;
 			}
+			// TODO : ERROR
 			$transient->response[ $res->plugin ] = $res;
 		}
 

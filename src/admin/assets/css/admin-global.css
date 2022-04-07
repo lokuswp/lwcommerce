@@ -14,3 +14,14 @@
   max-width: 25rem;
   display: block;
 }
+
+#section-changelog h6 {
+  margin: 0;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+#section-changelog ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}

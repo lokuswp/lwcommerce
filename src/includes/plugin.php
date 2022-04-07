@@ -18,7 +18,7 @@ class Plugin {
 		new Modules\Product\Post_Type_Product;
 		new Modules\Product\Metabox_Product;
 
-//		new Modules\Plugin\Updater;
+		new Modules\Plugin\Updater;
 
 		// Activation and Deactivation
 		register_activation_hook( LWC_BASE, [ $this, 'activation' ] );

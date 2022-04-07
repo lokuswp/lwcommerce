@@ -30,11 +30,6 @@ jobs:
             name: ${{ github.event.repository.name }}
             path: build/${{ github.event.repository.name }}.zip
 
-      - name: Auto Release to Updater Plugin
-        run: |
-          php build/auto-release.php ${{ secrets.DROPBOX_API }}
-          curl -X POST ${{ secrets.RELEASE_ENDPOINT }} -H 'Content-Type: application/json' -H "Authorization: Bearer ${{ secrets.RELEASE_API }}" -d @release.json 
-
       - name: Add ${{ github.event.repository.name }}.zip to Release Page Github
         uses: JasonEtco/upload-to-release@master
         with:

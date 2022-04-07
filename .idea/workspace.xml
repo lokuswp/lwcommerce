@@ -2,19 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ab31ce4-f36a-4294-bc20-ef2ce3a0ac4a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/templates/emails/id_ID/processing.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/lwcommerce.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/lwcommerce.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/rolling-release.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/rolling-release.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/helper/func-helper.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/helper/func-helper.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/hook/func-checkout-logic.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook/func-checkout-logic.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin/assets/css/admin-global.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/assets/css/admin-global.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/hook/func-order-create.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook/func-order-create.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/modules/plugin/updater.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/modules/plugin/updater.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/modules/product/post-type-product.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/modules/product/post-type-product.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/includes/plugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/plugin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/templates/emails/id/order-cancelled.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook/func-notification-scheduler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/templates/emails/id/order-completed.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/emails/id_ID/completed.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/templates/emails/id/order-processing.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook/func-notification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/templates/emails/id/shipping-digital.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/emails/id_ID/shipping.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/templates/emails/id/shipping-physical.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/emails/id_ID/cancelled.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/templates/presenter/product/listing.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/presenter/product/listing.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/templates/presenter/product/single.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/presenter/product/single.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +39,6 @@
   </component>
   <component name="ProjectId" id="27MKyhDJ5qfYV9IaM8wMaJ3ciyP" />
   <component name="ProjectViewState">
-    <option name="autoscrollFromSource" value="true" />
     <option name="autoscrollToSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="false" />
@@ -78,7 +71,9 @@
       <option name="presentableId" value="Default" />
       <updated>1649124772018</updated>
       <workItem from="1649124773553" duration="29061000" />
-      <workItem from="1649213973651" duration="15048000" />
+      <workItem from="1649213973651" duration="19022000" />
+      <workItem from="1649286161252" duration="9117000" />
+      <workItem from="1649324186301" duration="1473000" />
     </task>
     <servers />
   </component>
