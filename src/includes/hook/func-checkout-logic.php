@@ -13,8 +13,9 @@ function lwc_transaction_logic( $transaction ) {
 	$product_types = lwc_get_product_types( $cart_uuid );
 	$subtotal      = lwc_get_subtotal( $cart_uuid );
 
+
 	// Business Logic :: Only Free Product Digital
-	if ( $subtotal == 0 && ! in_array( 'physical', $product_types ) && $product_types[0] == "digital" ) {
+	if ( $subtotal == 0 && ! in_array( 'physical', $product_types ) && isset($product_types[0]) && $product_types[0] == "digital" ) {
 
 		// Create Transaction
 		$trx_id = ( new LWP_Transaction() )
@@ -253,3 +254,5 @@ function lwp_after_checkout_status( $data ) {
 //
 //	return $extras;
 //}
+
+//var_dump(lwc_get_product_types( "7b6a97a9-bf35-458a-aedb-1a9d00f7032c" ));

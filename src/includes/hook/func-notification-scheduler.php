@@ -11,7 +11,7 @@ function lwp_transaction_paid( $trx_id ) {
 //as_schedule_single_action(strtotime( '+100 seconds' ), 'lokuswp_notification', array( $trx_id . '-cancelled' ), "lwcommerce");
 
 // Only Digital
-	if ( $product_types[0] == "digital" ) {
+	if ( isset($product_types[0]) && $product_types[0] == "digital" ) {
 		as_schedule_single_action( strtotime( '+100 seconds' ), 'lokuswp_notification', array( $trx_id . '-completed' ), "lwcommerce" );
 
 // Pro Version Only
@@ -19,7 +19,7 @@ function lwp_transaction_paid( $trx_id ) {
 	}
 
 // Only Physical
-	if ( $product_types[0] == "physical" ) {
+	if ( isset($product_types[0]) && $product_types[0] == "physical" ) {
 		as_schedule_single_action( strtotime( '+100 seconds' ), 'lokuswp_notification', array( $trx_id . '-processing' ), "lwcommerce" );
 	}
 
