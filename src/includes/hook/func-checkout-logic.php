@@ -20,6 +20,7 @@ function lwc_transaction_logic( $transaction ) {
 		// Create Transaction
 		$trx_id = ( new LWP_Transaction() )
 			->set_cart( $cart_uuid )
+			->set_coupon( $transaction['coupon_code'] )
 			->set_payment( $transaction['payment_id'] )
 			->set_user_fields( $transaction['user_fields'] )
 			->set_paid()
@@ -48,6 +49,7 @@ function lwc_transaction_logic( $transaction ) {
 	if ( $subtotal > 0 && ! in_array( 'physical', $product_types ) && $product_types[0] == "digital" ) {
 		$trx_id = ( new LWP_Transaction() )
 			->set_cart( $cart_uuid )
+			->set_coupon( $transaction['coupon_code'] )
 			->set_payment( $transaction['payment_id'] )
 			->set_user_fields( $transaction['user_fields'] )
 			->create();
