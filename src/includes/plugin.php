@@ -30,6 +30,8 @@ class Plugin {
 		// Hook
 		require_once LWC_PATH . 'src/includes/hook/func-checkout-logic.php';
 		require_once LWC_PATH . 'src/includes/hook/func-checkout-tab.php';
+		
+		require_once LWC_PATH . 'src/includes/hook/func-transaction-extras.php';
 
 		require_once LWC_PATH . 'src/includes/hook/func-notification.php';
 		require_once LWC_PATH . 'src/includes/hook/func-notification-scheduler.php';
@@ -51,7 +53,7 @@ class Plugin {
 
 		add_action( 'plugins_loaded', [ $this, 'load_modules' ] );
 
-		 // Administration / BackOffice
+		// Administration / BackOffice
 		$plugin = array( 'slug' => 'lwcommerce', 'name' => 'LWCommerce', 'version' => LWC_VERSION );
 		if ( is_admin() ) {
 			require_once LWC_PATH . 'src/admin/class-admin.php';

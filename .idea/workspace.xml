@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ab31ce4-f36a-4294-bc20-ef2ce3a0ac4a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/includes/hook/func-transaction-extras.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/autoload.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/autoload.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/includes/hook/func-checkout-logic.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook/func-checkout-logic.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/plugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/plugin.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +80,7 @@
       <workItem from="1649324186301" duration="11438000" />
       <workItem from="1649382428185" duration="4686000" />
       <workItem from="1649435545972" duration="717000" />
-      <workItem from="1649474539250" duration="785000" />
+      <workItem from="1649474539250" duration="4034000" />
     </task>
     <servers />
   </component>

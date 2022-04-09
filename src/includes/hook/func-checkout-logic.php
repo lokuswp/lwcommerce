@@ -17,9 +17,11 @@ function lwc_transaction_logic( $transaction ) {
 	// Business Logic :: Only Free Product Digital
 	if ( $subtotal == 0 && ! in_array( 'physical', $product_types ) && isset( $product_types[0] ) && $product_types[0] == "digital" ) {
 
+
 		// Create Transaction
 		$trx_id = ( new LWP_Transaction() )
 			->set_cart( $cart_uuid )
+			->set_extras( $transaction['extras'] )
 			->set_payment( $transaction['payment_id'] )
 			->set_user_fields( $transaction['user_fields'] )
 			->set_paid()
@@ -42,9 +44,9 @@ function lwc_transaction_logic( $transaction ) {
 	// Business Logic :: Only Paid Product Digital
 	if ( $subtotal > 0 && ! in_array( 'physical', $product_types ) && $product_types[0] == "digital" ) {
 
-
 		$trx_id = ( new LWP_Transaction() )
 			->set_cart( $cart_uuid )
+			->set_extras( $transaction['extras'] )
 			->set_payment( $transaction['payment_id'] )
 			->set_user_fields( $transaction['user_fields'] )
 			->create();
