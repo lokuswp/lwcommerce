@@ -78,8 +78,8 @@ class LWCommerce_Boot {
 			$classpath = LWC_PATH . 'src/includes' . DIRECTORY_SEPARATOR . $class . '.php';
 			$classpath = str_replace( "lokuswp/commerce/", "", $classpath );
 			$classpath = str_replace( "lokuswp\\commerce\\", "", $classpath ); // fix path for windows
-			$classpath = explode( "lwcommerce/", $classpath )[1]; // prevent replacing public_html
-			$classpath = str_replace( "_", "-", $classpath ); // fix path for windows
+			$classpath = explode( "plugins/lwcommerce/", $classpath )[1];
+			$classpath = str_replace( "_", "-", $classpath ); // prevent replacing public_html
 			$classpath = LWC_PATH . $classpath;
 
 			// Load File Based on Namespace

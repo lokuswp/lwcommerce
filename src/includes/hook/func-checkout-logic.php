@@ -15,24 +15,18 @@ function lwc_transaction_logic( $transaction ) {
 
 
 	// Business Logic :: Only Free Product Digital
-	if ( $subtotal == 0 && ! in_array( 'physical', $product_types ) && isset($product_types[0]) && $product_types[0] == "digital" ) {
+	if ( $subtotal == 0 && ! in_array( 'physical', $product_types ) && isset( $product_types[0] ) && $product_types[0] == "digital" ) {
 
 		// Create Transaction
 		$trx_id = ( new LWP_Transaction() )
 			->set_cart( $cart_uuid )
-			->set_coupon( $transaction['coupon_code'] )
 			->set_payment( $transaction['payment_id'] )
 			->set_user_fields( $transaction['user_fields'] )
 			->set_paid()
 			->create();
 
 		// Create Order Meta
-		lwc_update_order_meta( $trx_id, "_order_id", $trx_id );
 		lwc_update_order_meta( $trx_id, "_order_status", "completed" ); //[ "pending", "processing", "cancelled", "shipping", "completed" ]
-
-		lwc_update_order_meta( $trx_id, "_billing_name", lwp_get_transaction_meta( $trx_id, "_user_field_name" ) );
-		lwc_update_order_meta( $trx_id, "_billing_phone", lwp_get_transaction_meta( $trx_id, "_user_field_phone" ) );
-		lwc_update_order_meta( $trx_id, "_billing_email", lwp_get_transaction_meta( $trx_id, "_user_field_email" ) );
 
 		// Pro Version :: Set Notification for Admin
 		// as_schedule_single_action(strtotime( '+100 seconds' ), 'lokuswp_notification', array( $trx_id . '-admin' ), "lwcommerce");
@@ -47,13 +41,40 @@ function lwc_transaction_logic( $transaction ) {
 
 	// Business Logic :: Only Paid Product Digital
 	if ( $subtotal > 0 && ! in_array( 'physical', $product_types ) && $product_types[0] == "digital" ) {
+
+
 		$trx_id = ( new LWP_Transaction() )
 			->set_cart( $cart_uuid )
-			->set_coupon( $transaction['coupon_code'] )
 			->set_payment( $transaction['payment_id'] )
 			->set_user_fields( $transaction['user_fields'] )
 			->create();
+
+		lwc_update_order_meta( $trx_id, "_order_status", "pending" ); //[ "pending", "processing", "cancelled", "shipping", "completed" ]
+
+		// Set Notification Shipping
+		lwc_update_order_meta( $trx_id, "_shipping_type", "digital" );
+
+		// Set Notification Completed
+		as_schedule_single_action( strtotime( '+3 seconds' ), 'lokuswp_notification', array( $trx_id . '-pending' ), "lwcommerce" );
+
 	}
+
+	lwc_update_order_meta( $trx_id, "_order_id", $trx_id );
+	lwc_update_order_meta( $trx_id, "_billing_name", lwp_get_transaction_meta( $trx_id, "_user_field_name" ) );
+	lwc_update_order_meta( $trx_id, "_billing_phone", lwp_get_transaction_meta( $trx_id, "_user_field_phone" ) );
+	lwc_update_order_meta( $trx_id, "_billing_email", lwp_get_transaction_meta( $trx_id, "_user_field_email" ) );
+
+
+	// Business Logic :: Only Paid Product Digital with Coupon
+//	if ( $subtotal > 0 && ! in_array( 'physical', $product_types ) && $product_types[0] == "digital" ) {
+//		$trx_id = ( new LWP_Transaction() )
+//			->set_cart( $cart_uuid )
+//			->set_coupon( $transaction['coupon_code'] )
+//			->set_payment( $transaction['payment_id'] )
+//			->set_user_fields( $transaction['user_fields'] )
+//			->create();
+//	}
+
 
 //	// Business Logic :: Paid Product Physical
 //	if ( $subtotal > 0 && ! in_array( 'digital', $product_types ) && $product_types[0] == "phsyical" ) {
@@ -256,5 +277,12 @@ function lwp_after_checkout_status( $data ) {
 //
 //	return $extras;
 //}
+
+add_filter( "lokuswp/cart/item/price", "lwp_items_price", 10, 1 );
+function lwp_items_price( $post_id ) {
+	if ( get_post_type( $post_id ) == 'product' ) {
+		return lwc_get_price( $post_id );
+	}
+}
 
 //var_dump(lwc_get_product_types( "7b6a97a9-bf35-458a-aedb-1a9d00f7032c" ));
