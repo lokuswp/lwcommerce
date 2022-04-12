@@ -31,8 +31,7 @@ class LWCommerce_Boot {
 		// LokusWP Exist and Active
 		if ( $is_backbone_exist && $is_backbone_active && $lwcommerce_was_installed && $lokuswp_was_installed ) {
 			$this->run();
-		}
-		else{
+		} else {
 			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 			activate_plugins( 'lokuswp/lokuswp.php' );
 			$this->onboarding();
@@ -78,7 +77,15 @@ class LWCommerce_Boot {
 			$classpath = LWC_PATH . 'src/includes' . DIRECTORY_SEPARATOR . $class . '.php';
 			$classpath = str_replace( "lokuswp/commerce/", "", $classpath );
 			$classpath = str_replace( "lokuswp\\commerce\\", "", $classpath ); // fix path for windows
-			$classpath = explode( "plugins/lwcommerce/", $classpath )[1];
+
+			// TODO :: Test run on linux
+			// if on windows
+			if ( strtoupper( substr( PHP_OS, 0, 3 ) ) === 'WIN' ) {
+				$classpath = explode( "plugins\lwcommerce/", $classpath )[1];
+			} else {
+				$classpath = explode( "plugins/lwcommerce/", $classpath )[1];
+			}
+
 			$classpath = str_replace( "_", "-", $classpath ); // prevent replacing public_html
 			$classpath = LWC_PATH . $classpath;
 
