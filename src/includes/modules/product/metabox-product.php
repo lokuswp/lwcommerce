@@ -28,17 +28,18 @@ class Metabox_Product
      */
     public function thumbnail_recommendation($content, $post_id, $thumbnail_id)
     {
-        if ('product' !== get_post_type($post_id)) {
-            return $content;
-        }
-        $caption = '<p>' . esc_html__('Recommended image size: ', 'lwcommerce') . '<strong>800x800px</strong></p>';
-        return $content . $caption;
+	    if ('product' === get_post_type($post_id)) {
+		    $caption = '<p>' . esc_html__('Recommended image size: ', 'lwcommerce') . '<strong>800x800px</strong></p>';
+		    return $content . $caption;
+	    }
+
+	    return  $content;
     }
 
     public function metabox_register()
     {
         add_meta_box(
-            'product-metabox',
+            'product_data',
             __('Product Data', 'lwcommerce'),
             [$this, 'metabox_product_data'],
             'product',
@@ -51,7 +52,6 @@ class Metabox_Product
     {
         global $post;
 ?>
-
         <div class="tabs-component">
             <input type="radio" name="tab" id="tab1" checked="checked" />
             <label class="tab" for="tab1"><?php esc_attr_e('Digital', 'lwcommerce'); ?></label>

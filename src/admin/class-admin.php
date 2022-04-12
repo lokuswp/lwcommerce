@@ -276,10 +276,10 @@ class Admin {
 		// Submenu Product -> Categories
 		add_submenu_page(
 			'edit.php?post_type=product',
-			__( 'Category', 'lwcommerce' ),
-			__( 'Category', 'lwcommerce' ),
+			__( 'Categories', 'lwcommerce' ),
+			__( 'Categories', 'lwcommerce' ),
 			'manage_options',
-			'edit-tags.php?taxonomy=product-category&post_type=product',
+			'edit-tags.php?taxonomy=product_category&post_type=product',
 			''
 		);
 
