@@ -1,7 +1,6 @@
 (function ($) {
     'use strict';
 
-
     // Check date if it over 1 hour
     function checkDate(date) {
         const now = new Date();
@@ -37,16 +36,16 @@
         const month = monthNames[dateTime.getMonth()];
         const year = dateTime.getFullYear();
         const day = dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate();
-        // add 0 if hour, minute, second < 10
+
+        // add leading 0 if hour, minute, second < 10
         const hour = dateTime.getHours() < 10 ? '0' + dateTime.getHours() : dateTime.getHours();
         const minute = dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes();
         const second = dateTime.getSeconds() < 10 ? '0' + dateTime.getSeconds() : dateTime.getSeconds();
+
         return day + ' ' + month + ' ' + year + ' - ' + hour + ':' + minute + ':' + second;
     }
 
-
     $(document).ready(function () {
-
 
         //=============== Datatables ===============//
         const tableOrders = $('#orders').DataTable(
@@ -68,7 +67,6 @@
                     },
                     complete: function (jqXHR) {
 
-                        console.log(jqXHR);
                         $('.lwc-overlay-table').hide();
                         if (jqXHR.responseJSON.searchQuery.length > 0) {
                             $('.viewing-search').text(jqXHR.responseJSON.searchQuery);
@@ -135,7 +133,8 @@
                                             <div class="lwc-flex-column">
                                                 <span>Kupon:</span>
                                                 <span>${data.coupon !== 0 ? data.coupon : '-'}</span>
-                                            </div>` : ``}
+                                            </div>` : ``
+                        }
                                     </div>
                                     <div class="lwc-grid-item">
                                         <div class="lwc-flex-column">
@@ -159,8 +158,7 @@
                                                     <span>-</span>`
                                 :
                                 `<span class="lwc-text-bold">Kurir</span>
-                                                    ${data.courier ?
-                                    `-`
+                                                    ${data.courier ? `-`
                                     :
                                     `<span>${data.courier.toUpperCase()} ${data.service.toUpperCase()}</span>
                                                         <span style="margin-top: 10px" class="lwc-text-bold">Nomor Resi</span>
@@ -247,8 +245,7 @@
                     `;
                     }
                 }],
-            }
-        )
+            })
 
         tableOrders.on('processing.dt', function (e, settings, processing) {
             $('.lwc-overlay-table').show();
@@ -276,12 +273,6 @@
                     transaction_id: $(this).attr('data-id'),
                     status: $(this).attr('data-status'),
                 },
-                success: data => {
-                    if (data.success) {
-                        console.log(data)
-                        tableOrders.ajax.reload(null, false);
-                    }
-                }
             })
         })
 
@@ -382,7 +373,6 @@
         }
 
         $(document).on('keyup', '#search-order', delay(function () {
-            console.log(this.value);
             tableOrders.search(this.value).draw();
         }, 500))
 
