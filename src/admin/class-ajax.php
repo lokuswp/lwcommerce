@@ -203,12 +203,12 @@ class AJAX {
 
 		// Columns
 		$columns = array(
-			0  => 'transaction_id',
-			1  => 'name',
-			2  => 'phone',
-			3  => 'email',
-			4  => 'order_status',
-			5  => 'shipping_type',
+			0 => 'transaction_id',
+			1 => 'name',
+			2 => 'phone',
+			3 => 'email',
+			4 => 'order_status',
+			5 => 'shipping_type',
 			6 => 'shipping_status',
 			7 => 'service',
 			8 => 'status',
@@ -295,6 +295,7 @@ class AJAX {
 						MAX(CASE WHEN ttm.meta_key = '_user_field_phone' THEN ttm.meta_value ELSE 0 END) phone,
 						MAX(CASE WHEN ttm.meta_key = '_user_field_email' THEN ttm.meta_value ELSE 0 END) email,
        					MAX(CASE WHEN ttm.meta_key = '_user_field_address' THEN ttm.meta_value ELSE 0 END) address,
+       					MAX(CASE WHEN ttm.meta_key = '_extras_coupon' THEN ttm.meta_value ELSE 0 END) coupon,
 						MAX(CASE WHEN tlcom.meta_key = '_billing_invoice' THEN tlcom.meta_value ELSE 0 END) invoice,
 						MAX(CASE WHEN tlcom.meta_key = '_order_status' THEN tlcom.meta_value ELSE 0 END) order_status,
 						MAX(CASE WHEN tlcom.meta_key = '_shipping_type' THEN tlcom.meta_value ELSE 0 END) shipping_type,

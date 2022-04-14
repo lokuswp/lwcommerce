@@ -2,14 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5ab31ce4-f36a-4294-bc20-ef2ce3a0ac4a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/templates/emails/id_ID/pending.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/lwcommerce.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwcommerce.php" beforeDir="false" afterPath="$PROJECT_DIR$/lwcommerce.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/hook/func-notification-scheduler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook/func-notification-scheduler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/hook/func-notification.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/hook/func-transaction-extras.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook/func-transaction-extras.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/plugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/plugin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/templates/emails/id_ID/shipping.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin/assets/js/orders.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/assets/js/orders.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin/class-ajax.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/class-ajax.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/modules/product/metabox-product.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/modules/product/metabox-product.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +91,7 @@
       <workItem from="1649719225549" duration="6428000" />
       <workItem from="1649812749879" duration="18239000" />
       <workItem from="1649906866187" duration="247000" />
-      <workItem from="1649907142943" duration="9018000" />
+      <workItem from="1649907142943" duration="9331000" />
     </task>
     <servers />
   </component>
