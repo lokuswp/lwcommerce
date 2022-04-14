@@ -18,7 +18,8 @@ class Plugin {
 		new Modules\Product\Post_Type_Product;
 		new Modules\Product\Metabox_Product;
 
-		new Modules\Plugin\Updater;
+//		new Modules\Plugin\Updater;
+		require_once LWC_PATH . 'src/includes/hook/func-notification-scheduler.php';
 
 		// Activation and Deactivation
 		register_activation_hook( LWC_BASE, [ $this, 'activation' ] );
@@ -33,8 +34,6 @@ class Plugin {
 		
 		require_once LWC_PATH . 'src/includes/hook/func-transaction-extras.php';
 
-		require_once LWC_PATH . 'src/includes/hook/func-notification.php';
-		require_once LWC_PATH . 'src/includes/hook/func-notification-scheduler.php';
 
 		// Shipping Module
 		require_once LWC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
@@ -121,6 +120,8 @@ class Plugin {
 	public function load_modules() {
 		require_once LWC_PATH . 'src/includes/hook.php';
 		// require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-shipping-processing.php';
+
+
 		require_once LWC_PATH . 'src/includes/modules/orders/methods/class-order-processing.php';
 	}
 

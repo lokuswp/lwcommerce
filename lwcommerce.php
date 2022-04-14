@@ -38,3 +38,4 @@ defined( 'LWC_STRING_TEXT' ) or define( 'LWC_STRING_TEXT', '0.0.1' ); // String 
 
 // Autoload
 require_once dirname( __DIR__ ) . '/lwcommerce/src/autoload.php';
+
