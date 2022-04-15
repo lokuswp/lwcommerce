@@ -61,6 +61,11 @@ function lwc_transaction_logic( $transaction ) {
 
 	}
 
+	if(empty($trx_id)){
+		return false;
+	}
+
+
 	lwc_update_order_meta( $trx_id, "_order_id", $trx_id );
 	lwc_update_order_meta( $trx_id, "_billing_name", lwp_get_transaction_meta( $trx_id, "_user_field_name" ) );
 	lwc_update_order_meta( $trx_id, "_billing_phone", lwp_get_transaction_meta( $trx_id, "_user_field_phone" ) );
@@ -99,6 +104,7 @@ function lwc_transaction_logic( $transaction ) {
 //			->set_user_fields( 'name', 'Test Name' )
 //			->create();
 //	}
+
 
 	return $trx_id;
 }
