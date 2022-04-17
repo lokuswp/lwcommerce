@@ -31,7 +31,6 @@ function lwc_get_price_html( $post_id ) {
 		$post_id = get_the_ID();
 	}
 
-
 	$unit_price  = lwc_get_unit_price( $post_id );
 	$price_promo = lwc_get_price_promo( $post_id );
 

@@ -1,23 +1,30 @@
 <?php
 /**
- * Adding Tab Shipping
- */
-
-
-
-
-
-/**
  * Processing Cart Data from Cart Cookie
  * Scan Product Price
  */
 function lwc_cart_processing( $cart_item, $post_id ) {
 	if ( get_post_type( $post_id ) == 'product' ) {
-		$cart_item['price']        = abs( lwc_get_price( $post_id ) );
-		$cart_item['unit_price'] = abs( lwc_get_unit_price( $post_id ) );
-		$cart_item['price_promo']  = abs( lwc_get_price_promo( $post_id ) );
-		$cart_item['min']          = 1;
-		$cart_item['max']          = - 1;
+		$cart_item['price']       = abs( lwc_get_price( $post_id ) );
+		$cart_item['unit_price']  = abs( lwc_get_unit_price( $post_id ) );
+		$cart_item['price_promo'] = abs( lwc_get_price_promo( $post_id ) );
+		$cart_item['min']         = 1;
+		$cart_item['max']         = 1;
+
+        // TODO :: Delegate Logic to Pro
+		if ( $cart_item['max'] == 1 ) {
+			$cart_item['quantity'] = $cart_item['max'];
+		}
+
+		// Quantity More than Max -> Set Max
+        if( $cart_item['quantity'] > get_post_meta( $post_id, '_max', true ) ) {
+            $cart_item['quantity'] = get_post_meta( $post_id, '_max', true );
+        }
+
+        // Quantity Lower than Min -> Set Min
+		if( $cart_item['quantity'] < get_post_meta( $post_id, '_min', true ) ) {
+			$cart_item['quantity'] = get_post_meta( $post_id, '_min', true );
+		}
 
 		lwp_set_meta_counter( "_product_on_cart", $post_id );
 	}

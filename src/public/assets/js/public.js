@@ -43,6 +43,14 @@
         $(this).hide();
         $(this).closest('.product-action').find('.lokuswp-stepper').removeClass('lwp-hidden');
 
+        // Hook for Event Trigger
+        let product = {
+            id: productID,
+            price: 100000,
+            currency: "IDR",
+        };
+        Hooks.do_action('lwcommerce/product/addtocart', product );
+
         // Update Troli
         lwcUpdateCartIcon();
     });

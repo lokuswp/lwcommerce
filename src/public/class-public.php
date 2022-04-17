@@ -144,47 +144,6 @@ e.
         // wp_register_script('lsdd-swiper', plugins_url('/public/assets/js/main.js', LSDD_BASE), array('jquery'), $this->version, false);
     }
 
-    /**
-     * Setting Unique Code
-     *
-     * @param array $extras
-     * @return void
-     */
-    function add_unique_code($extras)
-    {
-        // //Getting ID from Cart
-        // if (isset($_COOKIE['_lsdd_cart'])) {
-        //     $carts = (array) json_decode(stripslashes($_COOKIE['_lsdd_cart']));
-        //     if ($carts) {
-        //         $program_id = array_keys($carts)[0];
-        //     }
-        // }
-
-        // $program_id = isset($program_id) ? $program_id : null;
-
-        // $settings = get_option('lsdd_appearance_settings');
-        // $option = isset($settings['lsdd_unique_code']) ? esc_attr($settings['lsdd_unique_code']) : 'off';
-        // $minus = isset($settings['lsdd_unique_code_minus']) ? esc_attr($settings['lsdd_unique_code_minus']) : 'off';
-
-        // // Zakat Exception
-        // if (get_post_type($program_id) != 'lsdd-zakat') {
-        //     if ($option != 'off') {
-        //         $unique = array(
-        //             array(
-        //                 'title' => __('Unique Code', 'lsddonation'),
-        //                 'price' => lsdd_generate_uniquecode(),
-        //                 'operation' => $minus == 'on' ? '-' : '+',
-        //             ),
-        //         );
-
-        //         $extras = is_array($extras) ? $extras : [];
-        //         $extras = array_merge($unique, $extras);
-        //     }
-        // }
-
-        // return $extras;
-    }
-
 
 
     /**

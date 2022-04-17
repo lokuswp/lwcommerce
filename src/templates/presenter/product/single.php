@@ -91,3 +91,7 @@ lwp_set_meta_counter("_product_view", get_the_ID());
 </style>
 
 <?php get_footer(); ?>
+
+<script>
+    Hooks.do_action('lwcommerce/product/single' );
+</script>

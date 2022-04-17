@@ -188,7 +188,7 @@ class Post_Type_Product {
 		}
 
 		if ( 'price' === $column ) {
-			lwc_get_price_html( get_the_ID() );
+			echo lwc_get_price_html( get_the_ID() );
 		}
 
 		?>

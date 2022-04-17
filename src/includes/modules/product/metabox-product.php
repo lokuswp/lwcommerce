@@ -49,52 +49,58 @@ class Metabox_Product {
 		global $post;
 		?>
 
-		<div class="tabs-component">
-			<input type="radio" name="tab" id="tab1" checked="checked"/>
-			<label class="tab" for="tab1"><?php esc_attr_e( 'Digital', 'lwcommerce' ); ?></label>
+        <div class="tabs-component">
+            <input type="radio" name="tab" id="tab1" checked="checked"/>
+            <label class="tab" for="tab1"><?php esc_attr_e( 'Digital', 'lwcommerce' ); ?></label>
 
-			<input type="radio" name="tab" id="tab2"/>
-			<label class="tab" for="tab2"><?php esc_attr_e( 'Physical', 'lwcommerce' ); ?></label>
+            <input type="radio" name="tab" id="tab2"/>
+            <label class="tab" for="tab2"><?php esc_attr_e( 'Physical', 'lwcommerce' ); ?></label>
 
-			<div class="tab-body-component">
-				<div id="tab-body-1" class="tab-body">
-					<!-- Hookable :: Extending for Upload via DropBox -->
+            <div class="tab-body-component">
+                <div id="tab-body-1" class="tab-body">
+                    <!-- Hookable :: Extending for Upload via DropBox -->
 					<?php if ( has_action( "lwcommerce/product/digital/upload" ) ) : ?>
 						<?php do_action( 'lwcommerce/product/digital/upload' ); ?>
 					<?php else : ?>
-						<br>
-						<label for="digital_file" style="margin-left:10px;"><?php esc_attr_e( 'File', 'lwcommerce' ); ?> : </label>
-						<input type="text" class="form-input" style="width:50%" name="digital_file_url" placeholder="http://dropbox.com/file.zip"
-						       value="<?php echo get_post_meta( $post->ID, '_digital_file_url', true ); ?>">
+                        <br>
+                        <label for="digital_file" style="margin-left:10px;"><?php esc_attr_e( 'File', 'lwcommerce' ); ?>
+                            : </label>
+                        <input type="text" class="form-input" style="width:50%" name="digital_file_url"
+                               placeholder="http://dropbox.com/file.zip"
+                               value="<?php echo get_post_meta( $post->ID, '_digital_file_url', true ); ?>">
 
-						<label for="digital_file_version"><?php esc_attr_e( 'Versi', 'lwcommerce' ); ?> :</label>
-						<input type="text" class="form-input" name="digital_file_version" placeholder="1.0.0" value="<?php echo get_post_meta( $post->ID, '_digital_file_version', true ); ?>">
+                        <label for="digital_file_version"><?php esc_attr_e( 'Versi', 'lwcommerce' ); ?> :</label>
+                        <input type="text" class="form-input" name="digital_file_version" placeholder="1.0.0"
+                               value="<?php echo get_post_meta( $post->ID, '_digital_file_version', true ); ?>">
 
 
 					<?php endif; ?>
 
-					<!-- Hookable :: Extending for More Information Digital -->
+                    <!-- Hookable :: Extending for More Information Digital -->
 					<?php do_action( 'lwcommerce/product/digital' ); ?>
-				</div>
+                </div>
 
-				<div id="tab-body-2" class="tab-body">
-					<div class="pane-metabox">
-						<label for="physical_weight">
+                <div id="tab-body-2" class="tab-body">
+                    <div class="pane-metabox">
+                        <label for="physical_weight">
 							<?php esc_attr_e( 'Berat', 'lwcommerce' ); ?> /g :
-						</label>
-						<input type="text" class="form-input currency" name="physical_weight" placeholder="50" value="<?php echo get_post_meta( $post->ID, '_physical_weight', true ); ?>">
-						<label for="physical_volume" style="margin-left:10px"><?php esc_attr_e( 'Volume', 'lwcommerce' ); ?> /cm : </label>
-						<input type="text" class="form-input currency" name="physical_volume" placeholder="300" value="<?php echo get_post_meta( $post->ID, '_physical_volume', true ); ?>">
-					</div>
+                        </label>
+                        <input type="text" class="form-input currency" name="physical_weight" placeholder="50"
+                               value="<?php echo get_post_meta( $post->ID, '_physical_weight', true ); ?>">
+                        <label for="physical_volume"
+                               style="margin-left:10px"><?php esc_attr_e( 'Volume', 'lwcommerce' ); ?> /cm : </label>
+                        <input type="text" class="form-input currency" name="physical_volume" placeholder="300"
+                               value="<?php echo get_post_meta( $post->ID, '_physical_volume', true ); ?>">
+                    </div>
 					<?php $shipping_type = empty( get_post_meta( $post->ID, '_shipping_type', true ) ) ? 'digital' : get_post_meta( $post->ID, '_shipping_type', true ); ?>
-					<script>
+                    <script>
                         jQuery('input[value="<?php echo esc_attr( $shipping_type ); ?>"]').prop("checked", true);
-					</script>
-				</div>
-			</div>
-		</div>
+                    </script>
+                </div>
+            </div>
+        </div>
 
-		<style>
+        <style>
             .tabs-component input[type=radio] {
                 display: none !important;
             }
@@ -148,7 +154,7 @@ class Metabox_Product {
                 top: 0;
                 opacity: 1
             }
-		</style>
+        </style>
 
 		<?php
 	}
@@ -167,6 +173,7 @@ class Metabox_Product {
 		$stock_unit = get_post_meta( $post->ID, '_stock_unit', true ) == null ? null : esc_attr( get_post_meta( $post->ID, '_stock_unit', true ) );
 
 		$product_data_args = [
+			'post_id'     => $post->ID,
 			'unit_price'  => $unit_price,
 			'price_promo' => $price_promo,
 			'stock_type'  => $stock_type,
@@ -251,5 +258,8 @@ class Metabox_Product {
 		update_post_meta( $post_id, '_width', empty( $_POST['_width'] ) ? 0 : abs( $_POST['_width'] ) );
 		update_post_meta( $post_id, '_height', empty( $_POST['_height'] ) ? 0 : abs( $_POST['_height'] ) );
 		update_post_meta( $post_id, '_volume', abs( $_POST['_length'] ) * abs( $_POST['_width'] ) * abs( $_POST['_height'] ) );
+
+        // Do Action
+        do_action( 'lwcommerce/product/data/save', $post_id, $_POST );
 	}
 }

@@ -1,27 +1,31 @@
 .wp-submenu.wp-submenu-wrap {
-  margin: 0;
+    margin: 0;
 }
 
-.wp-has-submenu.toplevel_page_lwcommerce ul li:last-child a{
-  font-weight: 600;
-  color: rgb(224, 22, 22) !important;
+.wp-has-submenu.toplevel_page_lwcommerce ul li:last-child a {
+    font-weight: 600;
+    color: rgb(224, 22, 22) !important;
 }
 
-.form-group select,
-.form-group input,
-.form-group textarea,
-.form-group button{
-  max-width: 25rem;
-  display: block;
+#toplevel_page_edit-post_type-coupon img {
+    padding: 7px 0 0 !important;
+}
+
+.toplevel_page_lokuswp .form-group select,
+.toplevel_page_lokuswp .form-group input,
+.toplevel_page_lokuswp .form-group textarea,
+.toplevel_page_lokuswp .form-group button {
+    max-width: 25rem;
+    display: block;
 }
 
 #section-changelog h6 {
-  margin: 0;
-  font-size: 14px;
-  text-transform: capitalize;
+    margin: 0;
+    font-size: 14px;
+    text-transform: capitalize;
 }
 
 #section-changelog ul {
-  margin-top: 0;
-  margin-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
 }
