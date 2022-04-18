@@ -103,9 +103,13 @@
                                             ${data.status.toLowerCase() === 'unpaid' ? 'Processing' : ''}
                                         </span>
                                     </span>
-                                    <button class="lwc-btn-rounded-secondary">
-                                        Kirim Promo
-                                    </button>
+                                    ${data.shipping_type === 'digital' ? `
+                                        <button class="btn btn-primary order-action" data-status="${data.shipping_status}" data-id="${data.transaction_id}">
+                                                ${data.shipping_status === 'pending' ? 'Sudah Dibayar' : ''}
+                                                ${data.shipping_status === 'shipped' ? 'Completed' : ''}
+                                                ${data.shipping_status === 'completed' ? 'Refunded' : ''} 
+                                        </button>
+                                    ` : ''}
                                 </div>
                             </div>
                             <div class="lwc-card-body lwc-card-shadow">
@@ -390,5 +394,29 @@
             tableOrders.draw();
             $('.lwc-loading-filter').show();
         });
+
+        // One tap order action
+        $(document).on('click', '.order-action', function () {
+            const that = $(this);
+            $(this).addClass('loading');
+            $(this).attr('disabled', true);
+            const action = $(this).attr('data-status');
+            const orderId = $(this).attr('data-id');
+            $.ajax({
+                url: lwc_orders.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'lwc_order_action',
+                    security: lwc_orders.ajax_nonce,
+                    order_id: orderId,
+                    action_type: action,
+                },
+                success: data => {
+                    console.log(data);
+                    that.removeClass('loading');
+                    tableOrders.draw();
+                }
+            })
+        })
     });
 })(jQuery)
