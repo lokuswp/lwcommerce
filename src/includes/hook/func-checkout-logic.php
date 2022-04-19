@@ -61,7 +61,7 @@ function lwc_transaction_logic( $transaction ) {
 
 	}
 
-	if(empty($trx_id)){
+	if ( empty( $trx_id ) ) {
 		return false;
 	}
 
@@ -160,39 +160,44 @@ function lwc_set_downloads_in_checkout( $trx_uuid ) {
 	$cart = lwp_get_cart_by( 'transaction_uuid', $trx_uuid, 'on-transaction' );
 
 	if ( isset( $cart ) ) :?>
-        <h5><?php _e( "Downloads", "lokuswp" ); ?> </h5>
+        <div id="lwcommerce-downloads">
+            <h5><?php _e( "Downloads", "lokuswp" ); ?> </h5>
 
-        <table class="table table-borderless spacing">
-            <tbody>
+            <table class="table table-borderless spacing">
+                <tbody>
 
-			<?php foreach ( $cart as $item ) : ?>
-                <tr>
-                    <td class="product-thumbnail">
-                        <a href="<?php echo get_permalink( $item->post_id ); ?>">
-                            <img src=<?php echo get_the_post_thumbnail_url( $item->post_id ); ?>" alt="<?php echo get_the_title( $item->post_id ); ?>
-                            ">
-                        </a>
-                    </td>
-                    <td class="product-item">
-                        <h6><?php echo get_the_title( $item->post_id ); ?></h6>
-                        <strong><?php echo get_post_meta( $item->post_id, "_attachment_version", true ); ?></strong>
-                    </td>
-                    <td class="txt-right">
-                        <a href="<?php echo get_post_meta( $item->post_id, "_attachment_link", true ) ?? "#"; ?>"
-                           class="lokus-btn btn-primary btn-block">
-							<?php _e( "Download", "lokuswp" ); ?>
-                        </a>
-                    </td>
-                </tr>
-			<?php endforeach; ?>
+				<?php foreach ( $cart as $item ) : ?>
+                    <tr>
+                        <td class="product-thumbnail">
+                            <a href="<?php echo get_permalink( $item->post_id ); ?>">
+                                <img src=<?php echo get_the_post_thumbnail_url( $item->post_id ); ?>" alt="<?php echo get_the_title( $item->post_id ); ?>
+                                ">
+                            </a>
+                        </td>
+                        <td class="product-item">
+                            <h6><?php echo get_the_title( $item->post_id ); ?></h6>
+                            <strong><?php echo get_post_meta( $item->post_id, "_attachment_version", true ); ?></strong>
+                        </td>
+                        <td class="txt-right">
+                            <a href="<?php echo get_post_meta( $item->post_id, "_attachment_link", true ) ?? "#"; ?>"
+                               class="lokus-btn btn-primary btn-block">
+								<?php _e( "Download", "lokuswp" ); ?>
+                            </a>
+                        </td>
+                    </tr>
+				<?php endforeach; ?>
 
-            </tbody>
-        </table>
-
+                </tbody>
+            </table>
+        </div>
         <style>
             td {
                 padding: 0 !important;
                 vertical-align: middle !important;
+            }
+
+            #lwcommerce-downloads{
+                padding: 12px;
             }
 
             .product-thumbnail {

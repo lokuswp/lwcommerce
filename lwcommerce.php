@@ -6,7 +6,7 @@
  * Plugin Name:       LWCommerce (beta)
  * Plugin URI:        https://lokuswp.id/plugin/lwcommerce
  * Description:       Sistem Jual Beli Online WordPress
- * Version:           0.1.0
+ * Version:           0.1.0-beta
  * Author:            LokusWP
  * Author URI:        https://lokuswp.id/
  * License:           GPL-3.0+
