@@ -19,6 +19,7 @@ class AJAX {
 		add_action( 'wp_ajax_lwc_get_orders', [ $this, 'get_orders' ] );
 		add_action( 'wp_ajax_lwc_process_order', [ $this, 'process_order' ] );
 		add_action( 'wp_ajax_lwc_update_resi', [ $this, 'update_resi' ] );
+		add_action( 'wp_ajax_lwc_order_action', [ $this, 'order_action' ] );
 
 		// Statistic
 		add_action( 'wp_ajax_lwc_orders_chart', [ $this, 'orders_chart' ] );
@@ -539,6 +540,30 @@ class AJAX {
 		}
 
 		return wp_send_json_success( 'success' );
+	}
+
+	public function order_action() {
+		if ( ! check_ajax_referer( 'lwc_admin_nonce', 'security' ) ) {
+			wp_send_json_error( 'Invalid security token sent.' );
+		}
+
+		$order_id = sanitize_key( $_POST['order_id'] );
+
+		$action = sanitize_text_field( $_POST['action_type'] );
+		if ( $action === 'pending' ) {
+			if ( has_action( 'lokuswp/admin/order/action' ) ) {
+				do_action( 'lokuswp/admin/order/action', $order_id );
+			}
+			lwc_update_order_meta( $order_id, '_order_status', 'shipped' );
+		}
+		if ( $action === 'shipped' ) {
+			lwc_update_order_meta( $order_id, '_order_status', 'completed' );
+		}
+		if ( $action === 'completed' ) {
+			lwc_update_order_meta( $order_id, '_order_status', 'refunded' );
+		}
+
+		wp_send_json_success( 'success' );
 	}
 }
 
