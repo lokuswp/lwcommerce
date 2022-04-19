@@ -2,18 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1243600f-69ea-4c64-b0d8-b1b0a79a21c6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/includes/hook/func-cart-processing.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin/assets/css/admin-global.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/assets/css/admin-global.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin/assets/css/orders.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/assets/css/orders.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/helper/func-helper.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/helper/func-helper.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/hook.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/modules/product/metabox-product.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/modules/product/metabox-product.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/modules/product/post-type-product.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/modules/product/post-type-product.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/assets/js/public.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/assets/js/public.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/class-public.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/class-public.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/templates/presenter/product/listing.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/presenter/product/listing.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/templates/presenter/product/single.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/presenter/product/single.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwcommerce.php" beforeDir="false" afterPath="$PROJECT_DIR$/lwcommerce.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin/class-onboarding.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/class-onboarding.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/hook/func-checkout-logic.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook/func-checkout-logic.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/templates/presenter/customer/history.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/presenter/customer/history.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,15 +37,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../lwcommerce-pro" />
-    <property name="settings.editor.selected.configurable" value="web-ide.project.structure" />
-    <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/lnx/Local Sites/localwp/app/public/wp-content/plugins/lwcommerce-pro/src/admin/assets/images/payments&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../lwcommerce-pro/src/admin/assets/images/payments" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/../lwcommerce-pro/src/includes/modules/marketing/coupon" />
     </key>
@@ -67,6 +62,9 @@
       <updated>1650064977935</updated>
       <workItem from="1650064982373" duration="20784000" />
       <workItem from="1650160152697" duration="15679000" />
+      <workItem from="1650254344558" duration="1213000" />
+      <workItem from="1650266864329" duration="19728000" />
+      <workItem from="1650337937529" duration="4296000" />
     </task>
     <servers />
   </component>

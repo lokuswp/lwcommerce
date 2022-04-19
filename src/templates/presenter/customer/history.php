@@ -4,8 +4,11 @@
 
 		<?php
 		$buckets = isset( $_COOKIE['_lokuswp_beta_bucket'] ) ? $_COOKIE['_lokuswp_beta_bucket'] : array();
-		$buckets = stripslashes( $buckets );
-		$buckets = json_decode( $buckets );
+        if( $buckets ){
+	        $buckets = stripslashes( $buckets );
+	        $buckets = json_decode( $buckets );
+        }
+
 		?>
 
 		<?php foreach ( $buckets as $id ) : ?>
