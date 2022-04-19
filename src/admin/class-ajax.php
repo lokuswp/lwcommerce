@@ -554,6 +554,7 @@ class AJAX {
 			if ( has_action( 'lokuswp/admin/order/action' ) ) {
 				do_action( 'lokuswp/admin/order/action', $order_id );
 			}
+			lwc_update_order_meta( $order_id, '_order_status', 'shipped' );
 		}
 		if ( $action === 'shipped' ) {
 			lwc_update_order_meta( $order_id, '_order_status', 'completed' );
