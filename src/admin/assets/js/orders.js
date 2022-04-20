@@ -10,6 +10,10 @@
         return diffHours > 1;
     }
 
+    const ucfirst = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1)
+    }
+
     function escHTML(unsafe) {
         if (!unsafe) {
             unsafe = this;
@@ -96,18 +100,19 @@
                                     <span style="font-weight: bold; padding: 0 .4rem 0 .4rem">
                                         Status:
                                         <span style="
-                                             ${data.status.toLowerCase() === 'unpaid' ? `color: #38c;` : ''}
-                                             ${data.status.toLowerCase() === 'paid' ? `color: #085;` : ''}
+                                             ${data.order_status.toLowerCase() === 'pending' ? `color: #38c;` : ''}
+                                             ${data.order_status.toLowerCase() === 'shipped' ? `color: #ffb300;` : ''}
+                                             ${data.order_status.toLowerCase() === 'completed' ? `color: #085;` : ''}
+                                             ${data.order_status.toLowerCase() === 'refunded' ? `color: #ff0000;` : ''}
                                               ">
-                                            ${data.status.toLowerCase() === 'paid' ? 'Selesai' : ''}
-                                            ${data.status.toLowerCase() === 'unpaid' ? 'Processing' : ''}
+                                            ${ucfirst(data.order_status.toLowerCase())}
                                         </span>
                                     </span>
                                     ${data.shipping_type === 'digital' ? `
                                         <button class="btn btn-primary order-action" data-status="${data.shipping_status}" data-id="${data.transaction_id}">
-                                                ${data.shipping_status === 'pending' ? 'Sudah Dibayar' : ''}
-                                                ${data.shipping_status === 'shipped' ? 'Completed' : ''}
-                                                ${data.shipping_status === 'completed' ? 'Refunded' : ''} 
+                                                ${data.order_status === 'pending' ? 'Sudah Dibayar' : ''}
+                                                ${data.order_status === 'shipped' ? 'Completed' : ''}
+                                                ${data.order_status === 'completed' ? 'Refunded' : ''} 
                                         </button>
                                     ` : ''}
                                 </div>
@@ -136,7 +141,7 @@
                                         ${lwc_orders.is_pro ? `
                                             <div class="lwc-flex-column">
                                                 <span>Kupon:</span>
-                                                <span>${data.coupon !== 0 ? data.coupon : '-'}</span>
+                                                <span>${data.coupon !== '0' ? data.coupon : '-'}</span>
                                             </div>` : ``
                         }
                                     </div>
@@ -226,8 +231,7 @@
                                         ` : ``}
                                     </div>
                                     <div class="lwc-flex lwc-justify-content-space-between">
-                                        ${lwc_orders.is_pro ? `
-                                        <button class="btn btn-success lwc-mr-40 lwc-btn-follow-up" data-id="${data.transaction_id}">
+                                        <button class="btn btn-success lwc-mr-40 lwc-btn-follow-up" data-phone="${data.phone}">
                                             <div class="lwc-flex">
                                                 <svg class="lwc-search-icon lwc-mr-10" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
                                                   <path
@@ -237,7 +241,6 @@
                                                 <span>Follow Up</span>
                                             </div>
                                         </button>
-                                        ` : ``}
                                     </div>
                                     <div class="lwc-flex lwc-justify-content-space-between">
                                         <span class="lwc-text-bold">Status: ${data.shipping_status === '0' ? '{{Shipping Status}}' : data.shipping_status}</span>
@@ -418,5 +421,13 @@
                 }
             })
         })
+
+        // followup wwhatsaap
+        $(document).on('click', '.lwc-btn-follow-up', function () {
+            const phone = $(this).attr('data-phone').replace(/[^\d+]/g, '');
+            const newPhone = phone.replace(/^08/, '628');
+            const url = `https://wa.me/${newPhone}`;
+            window.open(url, '_blank');
+        });
     });
 })(jQuery)
