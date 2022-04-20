@@ -231,7 +231,7 @@
                                         ` : ``}
                                     </div>
                                     <div class="lwc-flex lwc-justify-content-space-between">
-                                        <button class="btn btn-success lwc-mr-40 lwc-btn-follow-up" data-phone="${data.phone}">
+                                        <button class="btn btn-success lwc-mr-40 lwc-btn-follow-up" data-phone="${data.phone}" data-order='${JSON.stringify(data)}'>
                                             <div class="lwc-flex">
                                                 <svg class="lwc-search-icon lwc-mr-10" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
                                                   <path
@@ -422,12 +422,28 @@
             })
         })
 
-        // followup wwhatsaap
+        // followup whatsaap
         $(document).on('click', '.lwc-btn-follow-up', function () {
-            const phone = $(this).attr('data-phone').replace(/[^\d+]/g, '');
-            const newPhone = phone.replace(/^08/, '628');
-            const url = `https://wa.me/${newPhone}`;
-            window.open(url, '_blank');
+            const that = $(this);
+            const order = that.attr('data-order')
+
+            that.addClass('loading');
+            that.attr("disabled", "disabled");
+            $.ajax({
+                url: lwc_orders.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'lwc_follow_up_whatsapp',
+                    security: lwc_orders.ajax_nonce,
+                    data_order: JSON.parse(order),
+                    phone_number: that.attr('data-phone'),
+                },
+                success: data => {
+                    window.open(`https://wa.me/${data.phone}?text=${data.message}`, '_blank');
+                    that.removeClass('loading');
+                    that.removeAttr('disabled');
+                }
+            })
         });
     });
 })(jQuery)

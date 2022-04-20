@@ -14,12 +14,14 @@ class AJAX {
 		// Shipping
 		add_action( 'wp_ajax_lwc_admin_shipping_status', [ $this, 'admin_shipping_status' ] );
 
-
 		// Orders
 		add_action( 'wp_ajax_lwc_get_orders', [ $this, 'get_orders' ] );
 		add_action( 'wp_ajax_lwc_process_order', [ $this, 'process_order' ] );
 		add_action( 'wp_ajax_lwc_update_resi', [ $this, 'update_resi' ] );
 		add_action( 'wp_ajax_lwc_order_action', [ $this, 'order_action' ] );
+
+		// Follow-Up WhatsApp
+		add_action( 'wp_ajax_lwc_follow_up_whatsapp', [ $this, 'follow_up_whatsapp' ] );
 
 		// Statistic
 		add_action( 'wp_ajax_lwc_orders_chart', [ $this, 'orders_chart' ] );
@@ -291,7 +293,7 @@ class AJAX {
 
 		// Query
 		$total_results = $wpdb->get_results(
-			"SELECT tt.transaction_id, tt.total, tt.status, tt.note, tt.created_at, tt.updated_at, tt.currency, tt.country, tt.status, tt.total as raw_total,
+			"SELECT tt.transaction_id, tt.total, tt.status, tt.note, tt.created_at, tt.payment_id, tt.updated_at, tt.currency, tt.country, tt.status, tt.total as raw_total,
 						MAX(CASE WHEN ttm.meta_key = '_user_field_name' THEN ttm.meta_value ELSE 0 END) name,
 						MAX(CASE WHEN ttm.meta_key = '_user_field_phone' THEN ttm.meta_value ELSE 0 END) phone,
 						MAX(CASE WHEN ttm.meta_key = '_user_field_email' THEN ttm.meta_value ELSE 0 END) email,
@@ -564,6 +566,22 @@ class AJAX {
 		}
 
 		wp_send_json_success( 'success' );
+	}
+
+	public function follow_up_whatsapp() {
+		if ( ! check_ajax_referer( 'lwc_admin_nonce', 'security' ) ) {
+			wp_send_json_error( 'Invalid security token sent.' );
+		}
+
+		$data_order = $_POST['data_order'];
+		$phone      = lwp_sanitize_phone( sanitize_text_field( $_POST['phone_number'] ), $data_order['country'] );
+
+		$template = apply_filters( 'lokuswp/whatsapp/template/processing', $data_order );
+		wp_send_json( [
+			'status'  => 'success',
+			'message' => urlencode( $template ),
+			'phone'   => $phone,
+		] );
 	}
 }
 
