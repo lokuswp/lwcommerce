@@ -115,6 +115,9 @@
                                                 ${data.order_status === 'completed' ? 'Refunded' : ''} 
                                         </button>
                                     ` : ''}
+                                    <button class="btn btn-error delete-action" data-id="${data.transaction_id}">
+                                        Delete
+                                    </button>
                                 </div>
                             </div>
                             <div class="lwc-card-body lwc-card-shadow">
@@ -445,5 +448,35 @@
                 }
             })
         });
+
+        // delete order
+        $(document).on('click', '.delete-action', function () {
+            const that = $(this);
+            const orderId = $(this).attr('data-id');
+
+            if (confirm('Yakin ingin menghapus pesanan?')) {
+                that.addClass('loading');
+                that.attr('disabled', true);
+
+                $.ajax({
+                    url: lwc_orders.ajax_url,
+                    type: 'POST',
+                    data: {
+                        action: 'lwc_delete_order',
+                        security: lwc_orders.ajax_nonce,
+                        order_id: orderId,
+                    },
+                    success: data => {
+                        if (data.success) {
+                            that.removeClass('loading');
+                            that.removeAttr('disabled');
+                            tableOrders.draw();
+                        } else {
+                            alert('Gagal menghapus pesanan');
+                        }
+                    }
+                })
+            }
+        })
     });
 })(jQuery)
