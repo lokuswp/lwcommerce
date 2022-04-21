@@ -31,7 +31,7 @@ class Plugin {
 		// Hook
 		require_once LWC_PATH . 'src/includes/hook/func-checkout-logic.php';
 		require_once LWC_PATH . 'src/includes/hook/func-checkout-tab.php';
-		
+
 		require_once LWC_PATH . 'src/includes/hook/func-transaction-extras.php';
 
 
@@ -119,6 +119,7 @@ class Plugin {
 
 	public function load_modules() {
 		require_once LWC_PATH . 'src/includes/hook.php';
+		require_once LWC_PATH . 'src/includes/modules/whatsapp/class-wahtsapp.php';
 		// require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-shipping-processing.php';
 
 
