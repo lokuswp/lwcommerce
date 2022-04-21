@@ -11,6 +11,10 @@ if ( ! defined( 'WPTEST' ) ) {
 class Plugin {
 
 	public function __construct() {
+		// Activation and Deactivation
+		register_activation_hook( LWC_BASE, [ $this, 'activation' ] );
+		register_deactivation_hook( LWC_BASE, [ $this, 'uninstall' ] );
+
 		new Shortcodes\Product_Listing();
 		new Shortcodes\Order_History();
 		new Shortcodes\Cart_Icon();
@@ -20,10 +24,6 @@ class Plugin {
 
 //		new Modules\Plugin\Updater;
 		require_once LWC_PATH . 'src/includes/hook/func-notification-scheduler.php';
-
-		// Activation and Deactivation
-		register_activation_hook( LWC_BASE, [ $this, 'activation' ] );
-		register_deactivation_hook( LWC_BASE, [ $this, 'uninstall' ] );
 
 		require_once LWC_PATH . 'src/includes/helper/mock/func-mock.php';
 		require_once LWC_PATH . 'src/includes/helper/func-helper.php';

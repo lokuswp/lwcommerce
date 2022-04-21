@@ -1,41 +1,66 @@
+<?php
+/**
+ * Template : Order History
+ *
+ * @since 0.1.0
+ */
+?>
+
 <section id="lwcommerce-order-history">
-    <h5>Order History</h5>
+    <h5><?php _e( "Order History", "lwcommerce" ); ?></h5>
+
     <div class="lwp-list-card">
-
 		<?php
-		$buckets = isset( $_COOKIE['_lokuswp_beta_bucket'] ) ? $_COOKIE['_lokuswp_beta_bucket'] : array();
-        if( $buckets ){
-	        $buckets = stripslashes( $buckets );
-	        $buckets = json_decode( $buckets );
-        }
+		// Getting Data based on Cookie
+		$buckets           = isset( $_COOKIE['_lokuswp_beta_bucket'] ) ? $_COOKIE['_lokuswp_beta_bucket'] : array();
 
-		?>
+		// Empty Bucket
+		if ( ! $buckets ) {
+			$buckets = [];
+		}
 
-		<?php foreach ( $buckets as $id ) : ?>
-			<?php
-//			$trx    = (object) lwp_get_transaction_by_uuid( $id );
-//			$trx_id = $trx->transaction_id;
-			?>
+		// Processing Order History
+		if ( $buckets ) :
+			$buckets = json_decode( stripslashes( $buckets ) );
 
-            <div class="lwc-card">
-                <div class="row lwc-card-content">
-                    <div class="col-6">
-                        No Pesanan #51242
-                        <small>1 x LWCommerce</small>
-                        <br>
-                        <span>3 Jam yang lalu</span>
-                    </div>
-                    <div class="col-6">
-                        <p class="item-order"> 1 Barang</p>
-                        <br>
-                        <br>
-                        <span class="status-order">
-                        Selesai SVG
-                    </span>
-                    </div>
+			foreach ( $buckets as $id ) :
+
+				$trx = (object) lwp_get_transaction_by_uuid( $id );
+				$trx_id    = $trx->transaction_id;
+				$cart_uuid = $trx->cart_uuid;
+				$cart      = lwp_get_cart_by( "cart_uuid", $cart_uuid, 'on-transaction' );
+
+				$order_id      = lwc_get_order_meta( $trx_id, '_order_id' );
+				$order_date    = human_time_diff( strtotime( $trx->created_at ), strtotime( (string) lwp_current_date() ) ) . ' ' . __( 'ago', 'lwcommerce' );
+				$first_product = isset( $cart[0] ) ? abs( $cart[0]->quantity ) . ' x ' . html_entity_decode( get_the_title( $cart[0]->post_id ) ) : '';
+				$count_product = count( $cart );
+				$order_status  = lwc_get_order_meta( $order_id, '_order_status' );
+				$order_link    = get_permalink(lwp_get_settings( 'settings', 'checkout_page' )) . '/' . $trx->transaction_uuid;
+				?>
+
+                <div class="lwc-card">
+                    <a href="<?= $order_link; ?>" target="_blank">
+                        <div class="row lwc-card-content">
+                            <div class="col-6">
+								<?php _e( "Order ID", "lwcommerce" ); ?> #<?= $order_id; ?>
+                                <small><?= $first_product; ?></small>
+                                <br>
+                                <span><?= $order_date; ?></span>
+                            </div>
+                            <div class="col-6">
+                                <p class="item-order"><?= $count_product; ?> <?php _e( "Item", "lwcommerce" ); ?> </p>
+                                <br>
+                                <br>
+                                <span class="status-order">
+                                <?= ucfirst( $order_status ); ?>
+                            </span>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </div>
-		<?php endforeach; ?>
+
+			<?php endforeach;
+		endif; ?>
 
     </div>
 </section>
@@ -61,6 +86,11 @@
         border-radius: 8px;
         position: relative;
         margin: 12px 0;
+    }
+
+    .lwc-card a{
+        text-decoration: none;
+        color: #2a2a2a;
     }
 
     .status-order {

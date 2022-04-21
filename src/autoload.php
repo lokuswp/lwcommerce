@@ -61,8 +61,8 @@ class LWCommerce_Boot {
 
 		// Create Table :: Orders
 		require LWC_PATH . 'src/includes/modules/database/class-db-orders.php';
-		$db_reports_meta = new DB_LWCommerce_Order_Meta();
-		$db_reports_meta->create_table();
+		$db_orders_meta = new DB_LWCommerce_Order_Meta();
+		$db_orders_meta->create_table();
 
 	}
 

@@ -12,22 +12,20 @@ function lwc_transaction_logic( $transaction ) {
 	$product_types = lwc_get_product_types( $cart_uuid );
 	$subtotal      = lwc_get_subtotal( $cart_uuid );
 
-	// Business Logic :: Only Free Product Digital
+	// 🔁 Business Logic :: Only Free Product Digital
 	if ( $subtotal == 0 && ! in_array( 'physical', $product_types ) && isset( $product_types[0] ) && $product_types[0] == "digital" ) {
 
 		// Create Transaction
 		$trx_id = ( new LWP_Transaction() )
 			->set_cart( $cart_uuid )
-			->set_extras( $transaction['extras'] )
-			->set_payment( $transaction['payment_id'] )
 			->set_user_fields( $transaction['user_fields'] )
+			->set_payment( $transaction['payment_id'] )
+			->set_extras( $transaction['extras'] )
 			->set_paid()
 			->create();
 
 		// Hook for Digital Products
 		do_action( "lwcommerce/logic/product/digital", $trx_id );
-		// Pro Version
-		// as_schedule_single_action( strtotime( '+7 seconds' ), 'lwcommerce_shipping', array( $trx_id . '-shipping' ), "lwcommerce" );
 
 		// Set Notification Shipping
 		lwc_update_order_meta( $trx_id, "_shipping_type", "digital" );
@@ -35,10 +33,10 @@ function lwc_transaction_logic( $transaction ) {
 
 		// Set Notification Completed
 		lwc_update_order_meta( $trx_id, "_order_status", "completed" );
-		as_schedule_single_action( strtotime( '+3 seconds' ), 'lokuswp_notification', array( $trx_id . '-completed' ), "lwcommerce" );
+		as_schedule_single_action( strtotime( '+3 seconds' ), 'lokuswp_notification', array( $trx_id . '-completed' ), "lwcommerce" ); // Send to User and Admin
 	}
 
-	// Business Logic :: Only Paid Product Digital
+	// 🔁 Business Logic :: Only Paid Product Digital
 	if ( $subtotal > 0 && ! in_array( 'physical', $product_types ) && $product_types[0] == "digital" ) {
 
 		$trx_id = ( new LWP_Transaction() )
@@ -58,71 +56,71 @@ function lwc_transaction_logic( $transaction ) {
 
 	}
 
+	// 🔁 Business Logic :: Only Paid Product Digital with Coupon
+	// 🔁 Business Logic :: Free and Paid Product Digital
+
+	// 🔁 Business Logic :: Paid Physical Product
+
+	// Checking Transaction ID
 	if ( empty( $trx_id ) ) {
 		return false;
 	}
 
-
+	// Common Meta Data
 	lwc_update_order_meta( $trx_id, "_order_id", $trx_id );
 	lwc_update_order_meta( $trx_id, "_billing_name", lwp_get_transaction_meta( $trx_id, "_user_field_name" ) );
 	lwc_update_order_meta( $trx_id, "_billing_phone", lwp_get_transaction_meta( $trx_id, "_user_field_phone" ) );
 	lwc_update_order_meta( $trx_id, "_billing_email", lwp_get_transaction_meta( $trx_id, "_user_field_email" ) );
 
-
-	// Business Logic :: Only Paid Product Digital with Coupon
-//	if ( $subtotal > 0 && ! in_array( 'physical', $product_types ) && $product_types[0] == "digital" ) {
-//		$trx_id = ( new LWP_Transaction() )
-//			->set_cart( $cart_uuid )
-//			->set_coupon( $transaction['coupon_code'] )
-//			->set_payment( $transaction['payment_id'] )
-//			->set_user_fields( $transaction['user_fields'] )
-//			->create();
-//	}
-
-
-//	// Business Logic :: Paid Product Physical
-//	if ( $subtotal > 0 && ! in_array( 'digital', $product_types ) && $product_types[0] == "phsyical" ) {
-//		$transaction_id = ( new LWP_Transaction() )
-//			->set_cart( $cart_uuid )
-//			->set_payment( 'bank-transfer' )
-//			->set_user_shipping( "digital", [ "shipper" => "smtp", "service" => "regular" ] )
-//			->set_user_fields( 'name', 'Test Name' )
-//			->create();
-//	}
-//
-//	// Business Logic :: Paid Product Physical and Digital
-//	if ( $subtotal > 0 && in_array( 'digital', $product_types ) || in_array( 'physical', $product_types ) ) {
-//		$transaction_id = ( new LWP_Transaction() )
-//			->set_cart( $cart_uuid )
-//			->set_payment( 'bank-transfer' )
-//			->set_user_shipping( "digital", [ "shipper" => "smtp", "service" => "regular" ] )
-//			->set_user_shipping( "physical", [ "shipper" => "jne", "service" => "oke" ] )
-//			->set_shipping_address( "rumah", [ "country" => "ID", "state" => "Banten", "city" => "Kab Tangerang", "address" => "Alamat Rumah", "zip_code" => 15561 ] )
-//			->set_user_fields( 'name', 'Test Name' )
-//			->create();
-//	}
-
-
-	return $trx_id;
+	return abs( $trx_id );
 }
 
 /**
  * Transaction Response
  *
- * @since 0.5.0
+ * @since 0.1.0
  */
 add_filter( "lokuswp/rest/transaction/response", "lwc_transaction_response", 10, 2 );
 function lwc_transaction_response( $response, $trx_id ) {
+
+	$order_status = lwc_get_order_meta( $trx_id, "_order_status", true );
+
+	switch ( $order_status ) {
+		case 'pending':
+			$title       = __( "Pending", "lwcommerce" );
+			$description = __( "Deskripsi Pesanan", "lwcommerce" );
+			break;
+		case 'completed':
+			$title       = __( "Order was Complete", "lwcommerce" );
+			$description = __( "Completed", "lwcommerce" );
+			break;
+		case 'cancelled':
+			$response['status'] = 'cancelled';
+			break;
+		case 'shipping':
+			$response['status'] = 'shipping';
+			break;
+		case 'processing':
+			$response['status'] = 'processing';
+			break;
+		default:
+			$response['status'] = 'pending';
+			break;
+	}
+
+	$support = "https://wa.me" . lwp_get_option( 'support_phone' );
+
+	// Screen Based on Status
 	$response['screen'] = array(
-		"title"       => "Pesanan sudah selesai",
-		"thumbnail"   => "https://zerodha.com/static/images/img3.png",
-		"description" => "Deskripsi",
-		"support"     => "https://wa.me/624115151"
+		"title"       => $title,
+		"thumbnail"   => LWC_URL . "src/public/assets/images/illustration-" . $order_status . ".png",
+		"description" => $description,
+		"support"     => $support
 	);
 
-	$order_status                  = lwc_get_order_meta( $trx_id, "_order_status", true );
-	$response['btn_text']          = "Konfirmasi Pembayaran";
-	$response['btn_url']           = "https://google.com";
+	$response['btn_text'] = __( "Manual Confirmation", "lwcommerce" );
+	$response['btn_url']  = lwp_get_settings( 'settings', 'confirmation_link', 'esc_url' );
+
 	$response['order_status']      = $order_status;
 	$response['order_status_text'] = lwp_get_transaction_status_text( $order_status );
 	$response['order_id']          = lwc_get_order_meta( $trx_id, "_order_id", true );
@@ -256,36 +254,9 @@ function lwp_after_checkout_status( $data ) {
 	<?php
 }
 
-//add_filter( "lokuswp/rest/cart/extras", "lwp_rest_cart_extras", 10, 1 );
-//function lwp_rest_cart_extras( $extras ) {
-//
-//
-////	$new['unique_code'] = array(
-////		"title"     => "",
-////		"text"      => "Unique Code",
-////		"amount"    => 214,
-////		"operator"  => "+",
-////		"formatted" => "Rp 214",
-////	);
-////
-////	array_push( $extras, $new );
-//
-////	$new[]['biaya_pembayaran'] = array(
-////		"title"     => "",
-////		"text"      => "Payment Fee",
-////		"amount"    => 5000,
-////		"operator"  => "+",
-////		"formatted" => "Rp 5000",
-////	);
-//
-//	return $extras;
-//}
-
 add_filter( "lokuswp/cart/item/price", "lwp_items_price", 10, 1 );
 function lwp_items_price( $post_id ) {
 	if ( get_post_type( $post_id ) == 'product' ) {
 		return lwc_get_price( $post_id );
 	}
 }
-
-//var_dump(lwc_get_product_types( "7b6a97a9-bf35-458a-aedb-1a9d00f7032c" ));

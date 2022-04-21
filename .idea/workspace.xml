@@ -2,14 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1243600f-69ea-4c64-b0d8-b1b0a79a21c6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/public/assets/images/illustration-completed.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin/class-onboarding.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/class-on-boarding.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/autoload.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/autoload.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/hook.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/includes/hook/func-checkout-logic.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook/func-checkout-logic.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/plugin.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/plugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/plugin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/templates/presenter/customer/history.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/presenter/customer/history.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/e2e/cypress/integration/guest/buy-free-product-digital-bank-transfer.spec.js" beforeDir="false" afterPath="$PROJECT_DIR$/tests/e2e/cypress/integration/guest/buy-free-product-digital-bank-transfer.spec.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,16 +39,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/lnx/Local Sites/localwp/app/public/wp-content/plugins/lwcommerce-pro/src/admin/assets/images/payments&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/lnx/Local Sites/localwp/app/public/wp-content/plugins/lwcommerce/src/public/assets/images",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "web-ide.project.structure",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/public/assets/images" />
       <recent name="$PROJECT_DIR$/../lwcommerce-pro/src/admin/assets/images/payments" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -73,7 +74,7 @@
       <workItem from="1650337937529" duration="7847000" />
       <workItem from="1650398990375" duration="7421000" />
       <workItem from="1650464478361" duration="3869000" />
-      <workItem from="1650511043138" duration="7468000" />
+      <workItem from="1650511043138" duration="19264000" />
     </task>
     <servers />
   </component>

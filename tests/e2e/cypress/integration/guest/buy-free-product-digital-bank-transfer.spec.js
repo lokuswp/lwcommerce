@@ -78,20 +78,25 @@ describe('Buy Free Digital Product via Bank Transfer', () => {
 
     });
 
-    it('aftercheckout - have thankyou screen', function () {
+    it('afterCheckout - have thankyou screen', function () {
 
     });
 
-    it('aftercheckout - have order status section', function () {
+    it('afterCheckout - have order status section', function () {
 
     });
 
-    it('aftercheckout - have download file section', function () {
+    it('afterCheckout - have download file section', function () {
 
     });
 
-    it('AdminCheck - system was sending notification email : Completed', function () {
+    it('systemCheck - system was sending notification email to User : Completed', function () {
+        // Pesanan Anda sudah Selesai
+        // Anda bisa mendownload file di halaman ini
+    });
 
+    it('systemCheck - system was sending notification email to Admin : Completed', function () {
+        // Ada Pesanan Baru
     });
 
 })
