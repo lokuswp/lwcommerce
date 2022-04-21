@@ -7,6 +7,11 @@ if ( ! defined( 'WPTEST' ) ) {
 	defined( 'ABSPATH' ) or die( "Direct access to files is prohibited" );
 }
 
+/**
+ * Firs Boot the plugin
+ *
+ * @since 0.1.0
+ */
 class LWCommerce_Boot {
 
 	public function __construct() {
@@ -17,12 +22,12 @@ class LWCommerce_Boot {
 		$is_backbone_active       = in_array( 'lokuswp/lokuswp.php', get_option( 'active_plugins' ) );
 		$is_backbone_exist        = file_exists( WP_PLUGIN_DIR . '/lokuswp/lokuswp.php' );
 
-		// LokusWP Not Found -> Onboarding
+		// LokusWP Not Found -> Onboard
 		if ( ! $is_backbone_exist && ! $lwcommerce_was_installed ) {
-			$this->onboarding();
+			$this->on_board_screen();
 		}
 
-		// LokusWP Exist and Wast Installed but Not Active -> Activate
+		// LokusWP Exist and `was installed` but `not activated` -> Activate
 		if ( $is_backbone_exist && ! $is_backbone_active && $lokuswp_was_installed ) {
 			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 			activate_plugins( 'lokuswp/lokuswp.php' );
@@ -32,24 +37,26 @@ class LWCommerce_Boot {
 		if ( $is_backbone_exist && $is_backbone_active && $lwcommerce_was_installed && $lokuswp_was_installed ) {
 			$this->run();
 		} else {
+			// Reactive LokusWP on Disable
 			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 			activate_plugins( 'lokuswp/lokuswp.php' );
-			$this->onboarding();
+			$this->on_board_screen();
 		}
 
-		// SOON :: Checking Version Compatibility
-
+		// TODO :: Checking Version Compatibility
 	}
 
 	/**
-	 * Start Onboarding Screen
+	 * Start Onboard Screen
+	 * Only on Once
 	 *
 	 * @return void
+	 * @version 0.1.0
 	 */
-	public function onboarding() {
+	public function on_board_screen() {
 
-		// Only Run Onboarding System, Not Entire System
-		include_once LWC_PATH . 'src/admin/class-onboarding.php';
+		// Only Run On-boarding Screen, Not Entire System
+		include_once LWC_PATH . 'src/admin/class-on-boarding.php';
 		Onboarding::register( array( 'slug' => 'lwcommerce', 'name' => 'LWCommerce', 'version' => LWC_VERSION ) );
 
 		// Create Table :: Orders
@@ -63,23 +70,26 @@ class LWCommerce_Boot {
 	 * Run Plugin After Everything Setup and OK
 	 *
 	 * @return void
+	 * @version 0.1.0
 	 */
 	public function run() {
 
 		/**
 		 * Registers the autoloader for classes
+		 * Thanks to Michiel Tramper 🙏
 		 *
-		 * @author Michiel Tramper - https://www.makeitworkpress.com
+		 * @author Michiel Tramper
+		 * @link https://www.makeitworkpress.com
 		 */
 		spl_autoload_register( function ( $classname ) {
 
+			// Getting Path based on Class Name
 			$class     = str_replace( '\\', DIRECTORY_SEPARATOR, strtolower( $classname ) );
-			$classpath = LWC_PATH . 'src/includes' . DIRECTORY_SEPARATOR . $class . '.php';
+			$classpath = LWC_PATH . 'src/includes' . DIRECTORY_SEPARATOR . $class . '.php'; // only load inside folder includes
 			$classpath = str_replace( "lokuswp/commerce/", "", $classpath );
 			$classpath = str_replace( "lokuswp\\commerce\\", "", $classpath ); // fix path for windows
 
-			// TODO :: Test run on linux
-			// if on windows
+			// Windows Environment
 			if ( strtoupper( substr( PHP_OS, 0, 3 ) ) === 'WIN' ) {
 				$classpath = explode( "plugins\lwcommerce/", $classpath )[1];
 			} else {
@@ -87,7 +97,7 @@ class LWCommerce_Boot {
 			}
 
 			$classpath = str_replace( "_", "-", $classpath ); // prevent replacing public_html
-			$classpath = LWC_PATH . $classpath;
+			$classpath = LWC_PATH . $classpath; // Add Root Path
 
 			// Load File Based on Namespace
 			if ( file_exists( $classpath ) ) {
@@ -103,8 +113,8 @@ class LWCommerce_Boot {
 }
 
 // Booting ...
-if ( defined( 'WPTEST' ) ) {
-	new LokusWP\Commerce\Plugin(); // Run LWCommerce for Testing 🧪
+if ( defined( 'WPTEST' ) ) { // Skip on-boarding when run in Testing Mode
+	new LokusWP\Commerce\Plugin();
 } else {
 	new LWCommerce_Boot();
 }

@@ -56,7 +56,7 @@ class Onboarding {
 	}
 
 	/**
-	 * Onboarding constructor.
+	 * On boarding constructor.
 	 *
 	 * @param string $slug
 	 * @param string $name

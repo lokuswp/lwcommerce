@@ -3,10 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="1243600f-69ea-4c64-b0d8-b1b0a79a21c6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwcommerce.php" beforeDir="false" afterPath="$PROJECT_DIR$/lwcommerce.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin/class-onboarding.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/class-onboarding.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin/class-onboarding.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/class-on-boarding.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/autoload.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/autoload.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/hook.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/includes/hook/func-checkout-logic.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook/func-checkout-logic.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/templates/presenter/customer/history.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/presenter/customer/history.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/plugin.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +44,7 @@
   &quot;keyToString&quot;: {
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/lnx/Local Sites/localwp/app/public/wp-content/plugins/lwcommerce-pro/src/admin/assets/images/payments&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -49,6 +53,8 @@
       <recent name="$PROJECT_DIR$/../lwcommerce-pro/src/admin/assets/images/payments" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/includes" />
+      <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/../lwcommerce-pro/src/includes/modules/marketing/coupon" />
     </key>
   </component>
@@ -64,7 +70,10 @@
       <workItem from="1650160152697" duration="15679000" />
       <workItem from="1650254344558" duration="1213000" />
       <workItem from="1650266864329" duration="19728000" />
-      <workItem from="1650337937529" duration="4296000" />
+      <workItem from="1650337937529" duration="7847000" />
+      <workItem from="1650398990375" duration="7421000" />
+      <workItem from="1650464478361" duration="3869000" />
+      <workItem from="1650511043138" duration="7468000" />
     </task>
     <servers />
   </component>

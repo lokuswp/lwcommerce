@@ -2,21 +2,18 @@
 /**
  * Business Logic of Ecommerce
  *
- * @since 0.5.0
+ * @since 0.1.0
  */
 add_filter( "lokuswp/transaction/logic", "lwc_transaction_logic", 10, 1 );
 function lwc_transaction_logic( $transaction ) {
 
-	// Business Logic For Digital Product and Free
-	$cart_uuid = $transaction['cart'];
-
+	// Getting Data
+	$cart_uuid     = $transaction['cart_uuid'];
 	$product_types = lwc_get_product_types( $cart_uuid );
 	$subtotal      = lwc_get_subtotal( $cart_uuid );
 
-
 	// Business Logic :: Only Free Product Digital
 	if ( $subtotal == 0 && ! in_array( 'physical', $product_types ) && isset( $product_types[0] ) && $product_types[0] == "digital" ) {
-
 
 		// Create Transaction
 		$trx_id = ( new LWP_Transaction() )
@@ -27,17 +24,17 @@ function lwc_transaction_logic( $transaction ) {
 			->set_paid()
 			->create();
 
-		// Create Order Meta
-		lwc_update_order_meta( $trx_id, "_order_status", "completed" ); //[ "pending", "processing", "cancelled", "shipping", "completed" ]
-
-		// Pro Version :: Set Notification for Admin
-		// as_schedule_single_action(strtotime( '+100 seconds' ), 'lokuswp_notification', array( $trx_id . '-admin' ), "lwcommerce");
+		// Hook for Digital Products
+		do_action( "lwcommerce/logic/product/digital", $trx_id );
+		// Pro Version
 		// as_schedule_single_action( strtotime( '+7 seconds' ), 'lwcommerce_shipping', array( $trx_id . '-shipping' ), "lwcommerce" );
 
 		// Set Notification Shipping
 		lwc_update_order_meta( $trx_id, "_shipping_type", "digital" );
+		lwc_update_order_meta( $trx_id, "_shipping_status", "completed" );
 
 		// Set Notification Completed
+		lwc_update_order_meta( $trx_id, "_order_status", "completed" );
 		as_schedule_single_action( strtotime( '+3 seconds' ), 'lokuswp_notification', array( $trx_id . '-completed' ), "lwcommerce" );
 	}
 
@@ -196,7 +193,7 @@ function lwc_set_downloads_in_checkout( $trx_uuid ) {
                 vertical-align: middle !important;
             }
 
-            #lwcommerce-downloads{
+            #lwcommerce-downloads {
                 padding: 12px;
             }
 
@@ -223,14 +220,8 @@ function lwc_set_downloads_in_checkout( $trx_uuid ) {
  *
  * @return mixed
  */
-add_filter( 'lokuswp/cart/rest/item', 'lwc_rest_cart_item_output', 10, 1 );
-function lwc_rest_cart_item_output( $item_data ) {
-
-	$item_id = $item_data['post_id'];
-
-	// WP Common Data
-	$item_data['title']     = html_entity_decode( get_the_title( $item_id ), ENT_NOQUOTES, 'UTF-8' );
-	$item_data['thumbnail'] = get_the_post_thumbnail_url( $item_id ) ?? LOKUSWP_URI . "src/assets/images/thumbnail-600x350.png";
+add_filter( 'lokuswp/cart/rest/item', 'lwc_rest_cart_item_output', 10, 2 );
+function lwc_rest_cart_item_output( $item_data, $item_id ) {
 
 	if ( get_post_type( $item_id ) == 'product' ) {
 		//	$variation_id = $item_data['variation_id'];
@@ -241,9 +232,8 @@ function lwc_rest_cart_item_output( $item_data ) {
 		$item_data['weight']       = get_post_meta( ! empty( $variation_id ) ? $variation_id : $item_id, '_weight', true ) ?? 0;
 		$item_data['stock']        = get_post_meta( ! empty( $variation_id ) ? $variation_id : $item_id, '_stock', true ) ?? 0;
 		$item_data['stock_unit']   = get_post_meta( $item_id, '_stock_unit', true ) ?? '';
+		$item_data['amount']       = abs( lwc_get_price( $item_id ) ) * abs( $item_data['quantity'] );
 	}
-
-	$item_data['amount'] = abs( lwc_get_price( $item_id ) ) * abs( $item_data['quantity'] );
 
 	return $item_data;
 }

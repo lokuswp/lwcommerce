@@ -8,24 +8,8 @@ function lwc_cart_processing( $cart_item, $post_id ) {
 		$cart_item['price']       = abs( lwc_get_price( $post_id ) );
 		$cart_item['unit_price']  = abs( lwc_get_unit_price( $post_id ) );
 		$cart_item['price_promo'] = abs( lwc_get_price_promo( $post_id ) );
-		$cart_item['min']         = 1;
-		$cart_item['max']         = 1;
 
-        // TODO :: Delegate Logic to Pro
-		if ( $cart_item['max'] == 1 ) {
-			$cart_item['quantity'] = $cart_item['max'];
-		}
-
-		// Quantity More than Max -> Set Max
-        if( $cart_item['quantity'] > get_post_meta( $post_id, '_max', true ) ) {
-            $cart_item['quantity'] = get_post_meta( $post_id, '_max', true );
-        }
-
-        // Quantity Lower than Min -> Set Min
-		if( $cart_item['quantity'] < get_post_meta( $post_id, '_min', true ) ) {
-			$cart_item['quantity'] = get_post_meta( $post_id, '_min', true );
-		}
-
+		// Funnel Tracking
 		lwp_set_meta_counter( "_product_on_cart", $post_id );
 	}
 
@@ -33,6 +17,7 @@ function lwc_cart_processing( $cart_item, $post_id ) {
 }
 
 add_filter( "lokuswp/cart/cookie/item", "lwc_cart_processing", 10, 2 );
+
 
 
 /**
