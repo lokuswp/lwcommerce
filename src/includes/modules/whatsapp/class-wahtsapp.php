@@ -4,8 +4,36 @@ namespace LokusWP\Commerce\Modules;
 
 class WhatsApp {
 
+	protected string $template_followup = 'Halo *{{buyer_name}}*
+Kami ingin mengingatkan terkait pesanan Anda
+Yang masih belum diselesaikan
+
+Detail Pesanan *#{{order_id}}* :
+{{order_detail}}
+
+*Pembayaran* :
+{{payment_detail}}
+
+Terimakasih
+{{store_name}}
+';
+
 	public function __construct() {
-		add_filter( 'lokuswp/whatsapp/template/processing', [ $this, 'templating' ], 10, 1 );
+		$this->setup();
+
+		add_filter( 'lokuswp/order/followup/template', [ $this, 'templating' ], 10, 1 );
+	}
+
+	public function setup() {
+		/* Empty Settings -> Set Default Data */
+		$settings = lwp_get_option( 'followup_order_whatsapp' );
+
+		if ( empty( $settings ) ) {
+			$options = [
+				'followup' => $this->template_followup
+			];
+			lwp_update_option( 'followup_order_whatsapp', $options );
+		}
 	}
 
 	/**
@@ -16,49 +44,33 @@ class WhatsApp {
 	 * @return object
 	 */
 	public function prepare_data( $order_data ): object {
-		$payment_registered = lwp_get_option( "payment_registered" );
+		// Getting Payment is Active ??
+		$payment_id              = 'payment-custom-bank-transfer';
+		$payment_active          = lwp_get_option( "payment_manager" );
+		$payment_data            = [];
+		$payment_detail_template = '';
 
-		$payment_data = [];
-		foreach ( $payment_registered as $payment_id ) {
-			$payment = (object) lwp_get_option( $payment_id );
+		if ( in_array( $payment_id, $payment_active ) ) { // Check Payment is Active
+			// Payment Data Exist
+			$payment_data = lwp_get_option( $payment_id );
+			if ( ! empty( $payment_data ) ) {
+				// Getting Template From Payment
+				$instance                = new $payment_data['payment_class'];
+				$payment_detail_template = $instance->notification_text();
 
-			// Skipping On Empty
-			if ( ! isset( $payment->id ) ) {
-				continue;
-			}
-
-			if ( $payment->id === $order_data['payment_id'] ) {
-				$payment_data = $payment->data;
-				break;
 			}
 		}
 
 		$store_name['store_name'] = lwc_get_settings( 'store', 'name' );
 
-		return (object) array_merge( $payment_data, $order_data, $store_name );
+		return (object) array_merge( [ 'payment_data' => $payment_data ], $order_data, $store_name, [ 'payment_detail_template' => $payment_detail_template ] );
 	}
 
-	/**
-	 * Prepared Template Email
-	 *
-	 * @param $locale
-	 * @param $status
-	 * @param $path
-	 *
-	 * @return string|void
-	 */
-	public function prepare_template( $locale, $path ) {
+	public function prepare_template() {
 
-		// Email Template based on Status and Locale
-		if ( file_exists( $path . '/' . $locale . '/' . 'follow-up.html' ) ) {
-			$template = file_get_contents( $path . '/' . $locale . '/' . 'follow-up.html' );
-		}
+		$settings = lwp_get_option( 'followup_order_whatsapp' );
 
-		if ( empty( $template ) ) {
-			return;
-		}
-
-		return $template;
+		return $settings['followup'];
 	}
 
 	/**
@@ -69,11 +81,7 @@ class WhatsApp {
 		// Change order data to object
 		$data = $this->prepare_data( $order_data );
 
-		$locale        = lwp_get_locale_by_country( $data->country ); // id_ID
-		$template_path = LWC_PATH . 'src/templates/whatsapp/';
-
-		// Getting Template based on Local, Status and Path
-		$template = $this->prepare_template( $locale, $template_path );
+		$template = $this->prepare_template();
 
 		$template = str_replace( "{{buyer_name}}", $data->name, $template );
 		$template = str_replace( "{{order_id}}", $data->transaction_id, $template );
@@ -95,10 +103,19 @@ class WhatsApp {
 	}
 
 	private function payment_detail( $data ): string {
-		$payment_detail = $data->account_number . " *" . $data->bank_swift . "* (" . $data->bank_code . ") \n";
-		$payment_detail .= "A.n " . "*" . $data->account_name . "*";
+		$payment_data            = (object) $data->payment_data;
+		$payment_detail_template = $data->payment_detail_template;
+		$data_payment            = $payment_data->data;
 
-		return $payment_detail;
+		$payment_detail_template = str_replace( "{{bank_name}}", $payment_data->name, $payment_detail_template );
+		$payment_detail_template = str_replace( "{{#code}}", $data_payment['bank_swift_code'], $payment_detail_template );
+		$payment_detail_template = str_replace( "{{code}}", $data_payment['bank_code'], $payment_detail_template );
+		$payment_detail_template = str_replace( "{{/code}}", '', $payment_detail_template );
+		$payment_detail_template = str_replace( "{{account_number}}", $data_payment['bank_account_number'], $payment_detail_template );
+		$payment_detail_template = str_replace( "{{account_owner}}", $data_payment['bank_account_owner'], $payment_detail_template );
+		$payment_detail_template = str_replace( "{{instruction}}", $payment_data->instruction, $payment_detail_template );
+
+		return $payment_detail_template;
 	}
 }
 

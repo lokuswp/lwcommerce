@@ -576,7 +576,7 @@ class AJAX {
 		$data_order = $_POST['data_order'];
 		$phone      = lwp_sanitize_phone( sanitize_text_field( $_POST['phone_number'] ), $data_order['country'] );
 
-		$template = apply_filters( 'lokuswp/whatsapp/template/processing', $data_order );
+		$template = apply_filters( 'lokuswp/order/followup/template', $data_order );
 		wp_send_json( [
 			'status'  => 'success',
 			'message' => urlencode( $template ),
