@@ -19,6 +19,7 @@ class AJAX {
 		add_action( 'wp_ajax_lwc_process_order', [ $this, 'process_order' ] );
 		add_action( 'wp_ajax_lwc_update_resi', [ $this, 'update_resi' ] );
 		add_action( 'wp_ajax_lwc_order_action', [ $this, 'order_action' ] );
+		add_action( 'wp_ajax_lwc_delete_order', [ $this, 'delete_order' ] );
 
 		// Follow-Up WhatsApp
 		add_action( 'wp_ajax_lwc_follow_up_whatsapp', [ $this, 'follow_up_whatsapp' ] );
@@ -576,12 +577,41 @@ class AJAX {
 		$data_order = $_POST['data_order'];
 		$phone      = lwp_sanitize_phone( sanitize_text_field( $_POST['phone_number'] ), $data_order['country'] );
 
-		$template = apply_filters( 'lokuswp/whatsapp/template/processing', $data_order );
+		$template = apply_filters( 'lokuswp/order/followup/template', $data_order );
 		wp_send_json( [
 			'status'  => 'success',
 			'message' => urlencode( $template ),
 			'phone'   => $phone,
 		] );
+	}
+
+	public function delete_order() {
+		if ( ! check_ajax_referer( 'lwc_admin_nonce', 'security' ) ) {
+			wp_send_json_error( 'Invalid security token sent.' );
+		}
+
+		$order_id = sanitize_key( $_POST['order_id'] );
+
+		// delete transaction and the meta
+		global $wpdb;
+
+		$table_transaction     = $wpdb->prefix . 'lokuswp_transactions';
+		$table_transactionmeta = $wpdb->prefix . 'lokuswp_transactionmeta';
+		$table_lwc_ordermeta   = $wpdb->prefix . 'lwcommerce_ordermeta';
+
+		$wpdb->query( 'START TRANSACTION' );
+
+		$transaction      = $wpdb->query( $wpdb->prepare( "DELETE FROM $table_transaction WHERE transaction_id = %d", $order_id ) );
+		$transaction_meta = $wpdb->query( $wpdb->prepare( "DELETE FROM $table_transactionmeta WHERE transaction_id = %d", $order_id ) );
+		$order_meta       = $wpdb->query( $wpdb->prepare( "DELETE FROM $table_lwc_ordermeta WHERE lwcommerce_order_id = %d", $order_id ) );
+
+		if ( $transaction && $transaction_meta && $order_meta ) {
+			$wpdb->query( 'COMMIT' );
+			wp_send_json_success( 'success' );
+		} else {
+			$wpdb->query( 'ROLLBACK' );
+			wp_send_json_error( 'error' );
+		}
 	}
 }
 
