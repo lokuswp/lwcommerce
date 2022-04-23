@@ -3,6 +3,10 @@
     text-align: center;
 }
 
+.lwc-listing a{
+    text-decoration: none !important;
+}
+
 .lwc-listing .product-name {
     font-size: 16px;
 
@@ -55,9 +59,14 @@
 }
 
 /* Cart */
+a.cart-icon{
+    text-decoration: none;
+}
+
 small.cart-qty {
     font-size: 14px;
     color: var(--lokuswp-secondary-color);
+    text-decoration: none;
 }
 
 td.product-item-detail strike {

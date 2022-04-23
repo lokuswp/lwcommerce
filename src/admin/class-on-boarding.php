@@ -87,7 +87,7 @@ class Onboarding {
 
 		$this->create_product();
 
-		//Helper::set_translation("lwcommerce", LWC_STRING_TEXT, 'id_ID');
+		//Helper::set_translation("lwcommerce", LWC_TEXT_VERSION, 'id_ID');
 	}
 
 	private function create_product() {

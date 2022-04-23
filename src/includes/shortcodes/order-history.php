@@ -2,30 +2,23 @@
 
 namespace LokusWP\Commerce\Shortcodes;
 
-class Order_History
-{
-    /**
-     * Register Transaction Shortcode
-     */
-    public function __construct()
-    {
-        add_shortcode('lwcommerce_order_history', [$this, 'render']);
-    }
+class Order_History {
 
-    public function render($atts)
-    {
-        // extract(shortcode_atts(array(
-        //     'product_ids' => false,
-        // ), $atts));
+	public function __construct() {
+		add_shortcode( 'lwcommerce_order_history', [ $this, 'render' ] );
+	}
 
-        wp_enqueue_style("lokuswp-grid");
+	public function render( $atts ) {
+		// extract(shortcode_atts(array(
+		//     'product_ids' => false,
+		// ), $atts));
 
-        ob_start();
+		wp_enqueue_style( "lokuswp-grid" );
 
-        require_once LWC_PATH . 'src/templates/presenter/customer/history.php';
+		ob_start();
 
-        $render = ob_get_clean();
+		require_once LWC_PATH . 'src/templates/presenter/customer/history.php';
 
-        return $render;
-    }
+		return ob_get_clean();
+	}
 }

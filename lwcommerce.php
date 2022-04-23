@@ -5,7 +5,7 @@
  *
  * Plugin Name:       LWCommerce (beta)
  * Plugin URI:        https://lokuswp.id/plugin/lwcommerce
- * Description:       Sistem Jual Beli Online WordPress
+ * Description:       Local First eCommerce WordPress
  * Version:           0.1.0-beta
  * Author:            LokusWP
  * Author URI:        https://lokuswp.id/
@@ -34,7 +34,7 @@ defined( 'LWC_BASE' ) or define( 'LWC_BASE', plugin_basename( __FILE__ ) );
 defined( 'LWC_PATH' ) or define( 'LWC_PATH', plugin_dir_path( __FILE__ ) );
 defined( 'LWC_URL' ) or define( 'LWC_URL', plugin_dir_url( __FILE__ ) );
 defined( 'LWC_STORAGE' ) or define( 'LWC_STORAGE', wp_get_upload_dir()['basedir'] . '/lwcommerce' );
-defined( 'LWC_STRING_TEXT' ) or define( 'LWC_STRING_TEXT', '0.0.1' ); // String Version
+defined( 'LWC_TEXT_VERSION' ) or define( 'LWC_TEXT_VERSION', '0.0.1' ); // String Version
 
 // Autoload
 require_once dirname( __DIR__ ) . '/lwcommerce/src/autoload.php';

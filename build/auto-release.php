@@ -1,7 +1,20 @@
 <?php
+/**
+ * Auto Release Plugin
+ * Make it fast deploy to user, when new release updated
+ *
+ * - Upload File to Dropbox
+ * - Create Release Json Data
+ */
+
+function getVersion($str) {
+	preg_match("/(?:version|v)\s*((?:[0-9]+\.?)+)/i", $str, $matches);
+	return $matches[1];
+}
+
 $dropbox_token = $argv[1];
-$plugin_version = "1.0.0";
-$plugin_slug = 'lwcommerce';
+$plugin_version = getVersion( $argv[2] );
+$plugin_slug = "lwcommerce";
 $data = array();
 
 // Read Changelog

@@ -12,11 +12,11 @@
     <div class="lwp-list-card">
 		<?php
 		// Getting Data based on Cookie
-		$buckets           = isset( $_COOKIE['_lokuswp_beta_bucket'] ) ? $_COOKIE['_lokuswp_beta_bucket'] : array();
+		$buckets = isset( $_COOKIE['_lokuswp_bucket'] ) ? $_COOKIE['_lokuswp_bucket'] : "{}";
 
 		// Empty Bucket
-		if ( ! $buckets ) {
-			$buckets = [];
+		if ( ! $buckets || $buckets == "{}" ) {
+			$buckets = null;
 		}
 
 		// Processing Order History
@@ -25,7 +25,11 @@
 
 			foreach ( $buckets as $id ) :
 
-				$trx = (object) lwp_get_transaction_by_uuid( $id );
+				if ( ! $id ) {
+					continue;
+				}
+
+				$trx       = (object) lwp_get_transaction_by_uuid( $id );
 				$trx_id    = $trx->transaction_id;
 				$cart_uuid = $trx->cart_uuid;
 				$cart      = lwp_get_cart_by( "cart_uuid", $cart_uuid, 'on-transaction' );
@@ -35,7 +39,7 @@
 				$first_product = isset( $cart[0] ) ? abs( $cart[0]->quantity ) . ' x ' . html_entity_decode( get_the_title( $cart[0]->post_id ) ) : '';
 				$count_product = count( $cart );
 				$order_status  = lwc_get_order_meta( $order_id, '_order_status' );
-				$order_link    = get_permalink(lwp_get_settings( 'settings', 'checkout_page' )) . '/' . $trx->transaction_uuid;
+				$order_link    = get_permalink( lwp_get_settings( 'settings', 'checkout_page' ) ) . '/' . $trx->transaction_uuid;
 				?>
 
                 <div class="lwc-card">
@@ -48,7 +52,7 @@
                                 <span><?= $order_date; ?></span>
                             </div>
                             <div class="col-6">
-                                <p class="item-order"><?= $count_product; ?> <?php _e( "Item", "lwcommerce" ); ?> </p>
+                                <p class="item-order"><?= $count_product; ?><?php _e( "Item", "lwcommerce" ); ?> </p>
                                 <br>
                                 <br>
                                 <span class="status-order">
@@ -60,7 +64,10 @@
                 </div>
 
 			<?php endforeach;
+		else:
+			_e( "No orders have been made yet", "lwcommerce" );
 		endif; ?>
+    </div>
 
     </div>
 </section>
@@ -88,7 +95,7 @@
         margin: 12px 0;
     }
 
-    .lwc-card a{
+    .lwc-card a {
         text-decoration: none;
         color: #2a2a2a;
     }

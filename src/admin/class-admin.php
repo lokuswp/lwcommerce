@@ -5,7 +5,6 @@ namespace LokusWP\Commerce;
 use LokusWP\Admin\Tabs;
 use LokusWP\Admin\Shortcode_Lists;
 
-
 if ( ! defined( 'WPTEST' ) ) {
 	defined( 'ABSPATH' ) or die( "Direct access to files is prohibited" );
 }
@@ -67,9 +66,9 @@ class Admin {
 			require_once 'settings/tabs/settings.php';
 		} );
 
-		Tabs::add( 'lwcommerce', 'shipping', __( 'Shipping', 'lwcommerce' ), function () {
-			require_once 'settings/tabs/shipping.php';
-		} );
+//		Tabs::add( 'lwcommerce', 'shipping', __( 'Shipping', 'lwcommerce' ), function () {
+//			require_once 'settings/tabs/shipping.php';
+//		} );
 	}
 
 	/**
@@ -209,7 +208,7 @@ class Admin {
 			'manage_options',
 			$this->slug,
 			[ $this, 'admin_menu_callback' ],
-			LWC_URL . 'src/admin/assets/lwcommerce.png',
+			LWC_URL . 'src/admin/assets/images/lwcommerce.png',
 			2
 		);
 

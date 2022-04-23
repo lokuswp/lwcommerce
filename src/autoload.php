@@ -8,7 +8,7 @@ if ( ! defined( 'WPTEST' ) ) {
 }
 
 /**
- * Firs Boot the plugin
+ * First Boot the plugin
  *
  * @since 0.1.0
  */

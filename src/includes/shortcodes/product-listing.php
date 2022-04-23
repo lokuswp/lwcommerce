@@ -2,28 +2,23 @@
 
 namespace LokusWP\Commerce\Shortcodes;
 
-class Product_Listing
-{
-    /**
-     * Register Transaction Shortcode
-     */
-    public function __construct()
-    {
-        add_shortcode('lwcommerce_product_listing', [$this, 'render']);
-    }
+class Product_Listing {
 
-    public function render($atts)
-    {
-        extract(shortcode_atts(array(
-            'product_ids' => false,
-        ), $atts));
+	public function __construct() {
+		add_shortcode( 'lwcommerce_product_listing', [ $this, 'render' ] );
+	}
 
-        wp_enqueue_style("lokuswp-grid");
+	public function render( $atts ) {
+		extract( shortcode_atts( array(
+			'product_ids' => false,
+		), $atts ) );
 
-        ob_start();
+		wp_enqueue_style( "lokuswp-grid" );
 
-        include_once LWC_PATH . "/src/templates/presenter/product/listing.php";
+		ob_start();
 
-        return ob_get_clean();
-    }
+		include_once LWC_PATH . "/src/templates/presenter/product/listing.php";
+
+		return ob_get_clean();
+	}
 }

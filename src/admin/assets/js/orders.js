@@ -120,7 +120,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="lwc-card-body lwc-card-shadow">
+                            <div class="lwc-card-body ">
                                 <div class="lwc-grid lwc-grid-cols-3">
                                     <div class="lwc-grid-item lwc-justify-content-space-between">
                                         <div class="lwc-flex-column">
