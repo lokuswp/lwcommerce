@@ -78,7 +78,7 @@ describe('Buy Free Digital Product via Bank Transfer', () => {
 
     });
 
-    it('afterCheckout - have thankyou screen', function () {
+    it('afterCheckout - have thank you screen', function () {
 
     });
 
@@ -91,12 +91,11 @@ describe('Buy Free Digital Product via Bank Transfer', () => {
     });
 
     it('systemCheck - system was sending notification email to User : Completed', function () {
-        // Pesanan Anda sudah Selesai
-        // Anda bisa mendownload file di halaman ini
+
     });
 
     it('systemCheck - system was sending notification email to Admin : Completed', function () {
-        // Ada Pesanan Baru
+
     });
 
 })

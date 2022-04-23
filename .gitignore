@@ -1,5 +1,4 @@
 vendor/*
 node_modules/*
-tmp/*
 tests/e2e/node_modules/*
 .idea/*

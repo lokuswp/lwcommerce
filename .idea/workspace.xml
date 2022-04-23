@@ -2,90 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1243600f-69ea-4c64-b0d8-b1b0a79a21c6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/includes/helper/func-price.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/includes/helper/func-stock.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/includes/hook/cart/func-cart-processing.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/includes/hook/checkout/func-checkout-tab.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/includes/hook/checkout/func-post-checkout.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/deploy-to-beta.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/deploy-to-beta.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/deploy-to-demo.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.git-ftp-ignore" beforeDir="false" afterPath="$PROJECT_DIR$/.git-ftp-ignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.git-ftp-include" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/auto-release.php" beforeDir="false" afterPath="$PROJECT_DIR$/build/auto-release.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/.idea/documentation.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/babel.config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/blog/2019-05-28-first-blog-post.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/blog/2019-05-29-long-blog-post.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/blog/2021-08-01-mdx-blog-post.mdx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/blog/2021-08-26-welcome/docusaurus-plushie-banner.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/blog/2021-08-26-welcome/index.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/blog/authors.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/docs/intro.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/docs/order/_category_.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/docs/order/manage.mdx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/docs/product/_category_.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/docs/product/manage.mdx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/docs/settings/_category_.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/docs/settings/api.mdx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/docs/settings/integration.mdx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/docs/shipping/_category_.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/docs/shipping/integration.mdx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/docs/shipping/manage.mdx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/docusaurus.config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/sidebars.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/siteConfig.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/src/components/HomepageFeatures.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/src/components/HomepageFeatures.module.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/src/css/custom.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/src/pages/index.module.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/src/pages/markdown-page.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/src/pages/test-page.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/static/.nojekyll" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/helper/func-getter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/static/img/docusaurus.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/static/img/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/static/img/logo.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/static/img/lwpcommerce.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/static/img/tutorial/docsVersionDropdown.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/static/img/tutorial/localeDropdown.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/static/img/undraw_docusaurus_mountain.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/static/img/undraw_docusaurus_react.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/static/img/undraw_docusaurus_tree.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwcommerce.php" beforeDir="false" afterPath="$PROJECT_DIR$/lwcommerce.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin/assets/css/orders.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/assets/css/orders.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin/assets/js/orders.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/assets/js/orders.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin/assets/lokuswp.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin/assets/lwcommerce.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/assets/images/lwcommerce.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin/class-admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/class-admin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin/class-on-boarding.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/class-on-boarding.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/admin/settings/tabs/settings/store.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/settings/tabs/settings/store.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/autoload.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/autoload.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/common/class-activator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/common/class-activation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/common/class-deactivator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/common/class-deactivation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/helper/func-helper.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/helper/func-helper.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/helper/mock/func-mock.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/hook.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/hook/func-cart-processing.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/helper/func-order-meta.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/hook/func-checkout-logic.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook/checkout/func-checkout-logic.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/hook/func-checkout-tab.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/hook/func-notification-scheduler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook/notification/func-notification-scheduler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/hook/func-order-create.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook/order/func-order-create.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/hook/func-transaction-extras.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/helper/func-setter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/modules/orders/methods/class-order-processing.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/modules/order/methods/class-order-processing.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/modules/whatsapp/class-wahtsapp.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/modules/order/class-followup-whatsapp.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/plugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/plugin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/shortcodes/cart-icon.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/shortcodes/cart-icon.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/shortcodes/order-history.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/shortcodes/order-history.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/includes/shortcodes/product-listing.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/shortcodes/product-listing.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/assets/css/skin.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/assets/css/skin.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/class-public.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/class-public.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/templates/presenter/customer/history.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/presenter/customer/history.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/e2e/cypress/integration/guest/buy-free-product-digital-bank-transfer.spec.js" beforeDir="false" afterPath="$PROJECT_DIR$/tests/e2e/cypress/integration/guest/buy-free-product-digital-bank-transfer.spec.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uninstall.php" beforeDir="false" afterPath="$PROJECT_DIR$/uninstall.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,6 +27,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="develop" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -155,7 +84,7 @@
       <workItem from="1650464478361" duration="3869000" />
       <workItem from="1650511043138" duration="20898000" />
       <workItem from="1650581507104" duration="10948000" />
-      <workItem from="1650643293706" duration="8024000" />
+      <workItem from="1650643293706" duration="9450000" />
     </task>
     <servers />
   </component>
