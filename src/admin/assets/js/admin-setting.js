@@ -26,6 +26,7 @@
 
     // =================== Store Settings =================== //
     $(document).on("click", "#lwc-setting-store-save", function (e) {
+        console.log($("#settings form").serialize())
         e.preventDefault();
         $(this).addClass('loading');
         const that = this;
@@ -88,14 +89,14 @@
 
 
     /**
-     * ⚡ Show Shipping Manager 
+     * ⚡ Show Shipping Manager
      * Dsiplaying Shipping Manager
-     * 
+     *
      * @scope Global
      * @since 0.5.0
      */
     $(document).on("click", ".lwc-shipping-manager", function (e) {
-        
+
         let shippingEditor = $("#lwc-shipping-manager-editor");
         // On Loading
         // shippingEditor.html(shimmer);
@@ -138,7 +139,7 @@
     /**
      * ⚡ Close Payment Method Manager Panel
      * Dsiplaying Payment Method Manager
-     * 
+     *
      * @scope Global
      * @since 0.5.0
      */
