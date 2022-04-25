@@ -31,11 +31,11 @@ class Updater {
 				delete_transient( $this->plugin_slug . '_update_check' );
 				$this->check_update();
 
-//				Logger::info( "[Plugin][Updater] Manually Checking Update Triggered" );
+				Logger::info( "[Plugin][Updater] Manually Checking Update Triggered" );
 			} else {
 				$this->check_update();
 
-//				Logger::info( "[Plugin][Updater] Automatically Checking Update  Triggered" );
+				Logger::info( "[Plugin][Updater] Automatically Checking Update  Triggered" );
 			}
 		}
 	}
@@ -71,7 +71,7 @@ class Updater {
 				// parsedown (Markdown to html)
 				require_once LWC_PATH . 'src/includes/libraries/php/Parsedown.php';
 				$parsedown = new Parsedown();
-				
+
 				$res                 = new stdClass();
 				$res->name           = $transient->name;
 				$res->slug           = $this->plugin_slug;
@@ -127,7 +127,7 @@ class Updater {
 
 		if ( is_wp_error( $response ) ) {
 			// Failed to get remote
-//				Logger::info( "[Plugin][Updates] Failed to get update, check your CURL " );
+			Logger::info( "[Plugin][Updates] Failed to get update, check your CURL " );
 			set_transient( $this->plugin_slug . '_update', 'failed_get_update', 300 ); // Waiting 5 minutes
 
 			return false;
@@ -147,7 +147,7 @@ class Updater {
 
 		//Get Response Body
 		set_transient( $this->plugin_slug . '_update', $remote, 60 * 60 * 6 ); // 6 hours cache
-//				Logger::info( "[Plugin][Updates] Successful Get Plugin Data Update " );
+		Logger::info( "[Plugin][Updates] Successful Get Plugin Data Update " );
 
 		return true;
 	}
