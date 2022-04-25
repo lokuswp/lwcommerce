@@ -141,9 +141,14 @@ class Updater {
 			return false;
 		}
 
-		if ( is_array( $remote ) ) { // If it is an array
-			$remote = current( $remote ); // Get the first item
+		if ( ! is_array( $remote ) ) {
+			// Git Hub limit exceeded
+			Logger::info( "[Plugin][Updates] Git Hub limit exceeded " );
+
+			return false;
 		}
+
+		$remote = current( $remote ); // Get the first item
 
 		//Get Response Body
 		set_transient( $this->plugin_slug . '_update', $remote, 60 * 60 * 6 ); // 6 hours cache
