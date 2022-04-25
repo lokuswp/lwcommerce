@@ -31,6 +31,14 @@ $get_cities     = lwp_get_remote_json( get_rest_url() . 'lwcommerce/v1/rajaongki
 $cities         = $get_cities->data ?? [];
 ?>
 
+
+<style>
+    #settings .form-input,
+    #settings .btn{
+        max-width: 500px;
+        display: block;
+    }
+</style>
 <section id="settings" class="form-horizontal">
     <form>
 

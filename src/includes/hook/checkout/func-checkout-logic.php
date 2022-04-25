@@ -1,4 +1,7 @@
 <?php
+
+use LokusWP\Commerce\Order;
+
 /**
  * Business Logic of Ecommerce
  *
@@ -31,8 +34,7 @@ function lwc_transaction_logic( $transaction ) {
 		lwc_update_order_meta( $trx_id, "_shipping_type", "digital" );
 		lwc_update_order_meta( $trx_id, "_shipping_status", "completed" );
 
-		// Set Notification Completed
-		lwc_update_order_meta( $trx_id, "_order_status", "completed" );
+		Order::set_status( $trx_id, "completed" );
 	}
 
 	// 🔁 Business Logic :: Only Paid Product Digital
@@ -45,14 +47,11 @@ function lwc_transaction_logic( $transaction ) {
 			->set_user_fields( $transaction['user_fields'] )
 			->create();
 
-		lwc_update_order_meta( $trx_id, "_order_status", "pending" ); //[ "pending", "processing", "cancelled", "shipping", "completed" ]
+		Order::set_status( $trx_id, "pending" );
 
 		// Set Notification Shipping
 		lwc_update_order_meta( $trx_id, "_shipping_type", "digital" );
-
-		// Set Notification Completed
-		as_schedule_single_action( strtotime( '+3 seconds' ), 'lokuswp_notification', array( $trx_id . '-pending' ), "lwcommerce" );
-
+		lwc_update_order_meta( $trx_id, "_shipping_status", "pending" );
 	}
 
 	// 🔁 Business Logic :: Only Paid Product Digital with Coupon
@@ -110,7 +109,9 @@ function lwc_rest_cart_item_output( $item_data, $item_id ) {
 	return $item_data;
 }
 
-
+/**
+ * Set Item Price Globally
+ */
 add_filter( "lokuswp/cart/item/price", "lwp_items_price", 10, 1 );
 function lwp_items_price( $post_id ) {
 	if ( get_post_type( $post_id ) == 'product' ) {

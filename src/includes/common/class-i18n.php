@@ -8,9 +8,13 @@ if ( ! defined( 'WPTEST' ) ) {
 }
 
 class i18n {
-	public function boot() {
-		load_plugin_textdomain( 'lwcommerce', false, LOKUSWP_PATH . '/languages/' );
+	public function __construct() {
+		add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
+	}
+
+	public function load_textdomain() {
+		load_plugin_textdomain( 'lwcommerce', false, LWC_PATH . '/languages/' );
 	}
 }
 
-add_action( 'plugins_loaded', [ i18n, 'boot' ] );
+new i18n();

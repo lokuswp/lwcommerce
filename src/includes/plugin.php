@@ -13,6 +13,7 @@ class Plugin {
 		// Activation and Deactivation
 		register_activation_hook( LWC_BASE, [ $this, 'activation' ] );
 		register_deactivation_hook( LWC_BASE, [ $this, 'uninstall' ] );
+		require_once LWC_PATH . 'src/includes/common/class-i18n.php';
 
 		// Shortcodes
 		new Shortcodes\Product_Listing();
@@ -41,6 +42,9 @@ class Plugin {
 		require_once LWC_PATH . 'src/includes/hook/checkout/func-post-checkout.php';
 		require_once LWC_PATH . 'src/includes/hook/notification/func-notification-scheduler.php';
 		require_once LWC_PATH . 'src/includes/hook/order/func-order-create.php';
+
+		// Order
+		require_once LWC_PATH . 'src/includes/modules/order/class-order.php';
 
 		// Shipping Module
 		// require_once LWC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
@@ -86,7 +90,7 @@ class Plugin {
 	 */
 	public function global_loaded() {
 
-		if(is_admin()){
+		if ( is_admin() ) {
 			require_once LWC_PATH . 'src/includes/modules/order/class-followup-whatsapp.php';
 		}
 

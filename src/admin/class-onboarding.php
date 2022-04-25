@@ -56,7 +56,7 @@ class Onboarding {
 	}
 
 	/**
-	 * On boarding constructor.
+	 * Onboarding constructor.
 	 *
 	 * @param string $slug
 	 * @param string $name
@@ -87,7 +87,7 @@ class Onboarding {
 
 		$this->create_product();
 
-		//Helper::set_translation("lwcommerce", LWC_TEXT_VERSION, 'id_ID');
+		//Helper::set_translation("lwcommerce", LWC_STRING_TEXT, 'id_ID');
 	}
 
 	private function create_product() {
@@ -312,8 +312,8 @@ class Onboarding {
 
 	public function admin_menu(): void {
 		add_menu_page(
-			"LWC Setup",
-			"LWC Setup",
+			$this->name,
+			$this->name,
 			'manage_options',
 			$this->slug,
 			[ $this, 'onboarding_page' ],

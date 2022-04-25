@@ -2,14 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1243600f-69ea-4c64-b0d8-b1b0a79a21c6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.git-ftp-ignore" beforeDir="false" afterPath="$PROJECT_DIR$/.git-ftp-ignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.git-ftp-include" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/admin/assets/images/lokuswp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/includes/modules/order/class-order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/deploy-to-beta.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/deploy-to-beta.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/e2e/cypress/integration/guest/buy-free-product-digital-bank-transfer.spec.js" beforeDir="false" afterPath="$PROJECT_DIR$/tests/e2e/cypress/integration/guest/buy-free-product-digital-bank-transfer.spec.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uninstall.php" beforeDir="false" afterPath="$PROJECT_DIR$/uninstall.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lwcommerce.php" beforeDir="false" afterPath="$PROJECT_DIR$/lwcommerce.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin/class-on-boarding.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/class-on-boarding.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/admin/settings/tabs/settings/store.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/admin/settings/tabs/settings/store.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/common/class-i18n.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/common/class-i18n.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/hook/checkout/func-checkout-logic.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook/checkout/func-checkout-logic.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/hook/notification/func-notification-scheduler.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/hook/notification/func-notification-scheduler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/modules/order/methods/class-order-processing.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/includes/plugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/includes/plugin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/templates/presenter/customer/area.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/templates/presenter/customer/dashboard.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/templates/presenter/customer/history.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/presenter/customer/history.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/templates/presenter/customer/purchase.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/templates/presenter/product/single.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/presenter/product/single.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +57,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/lnx/Local Sites/localwp/app/public/wp-content/plugins/lwcommerce/src/public/assets/images&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/lnx/Local Sites/localwp/app/public/wp-content/plugins/lwdonation/src/admin/assets/css&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;web-ide.project.structure&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
@@ -56,15 +65,18 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/public/assets/images" />
-      <recent name="$PROJECT_DIR$/../lwcommerce-pro/src/admin/assets/images/payments" />
+      <recent name="$PROJECT_DIR$/../lwdonation/src/admin/assets/css" />
+      <recent name="$PROJECT_DIR$/../lwdonation/src/admin/assets/images" />
+      <recent name="$PROJECT_DIR$/src/admin/assets/images" />
+      <recent name="$PROJECT_DIR$/../lwdonation/src/admin/settings/tabs" />
+      <recent name="$PROJECT_DIR$/../lwdonation/src/admin" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../lwdonation/src/admin/assets/images" />
+      <recent name="$PROJECT_DIR$/../lwdonation/src/admin/settings" />
       <recent name="$PROJECT_DIR$/src/admin/assets/images" />
       <recent name="$PROJECT_DIR$/src/includes/hook/order" />
       <recent name="$PROJECT_DIR$/src/includes/hook/notification" />
-      <recent name="$PROJECT_DIR$/src/includes/hook/checkout" />
-      <recent name="$PROJECT_DIR$/src/includes" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -84,7 +96,10 @@
       <workItem from="1650464478361" duration="3869000" />
       <workItem from="1650511043138" duration="20898000" />
       <workItem from="1650581507104" duration="10948000" />
-      <workItem from="1650643293706" duration="9450000" />
+      <workItem from="1650643293706" duration="10475000" />
+      <workItem from="1650700343813" duration="599000" />
+      <workItem from="1650702346387" duration="14963000" />
+      <workItem from="1650770390989" duration="4188000" />
     </task>
     <servers />
   </component>

@@ -52,7 +52,7 @@
                                 <span><?= $order_date; ?></span>
                             </div>
                             <div class="col-6">
-                                <p class="item-order"><?= $count_product; ?><?php _e( "Item", "lwcommerce" ); ?> </p>
+                                <p class="item-order"><?= $count_product; ?> <?php _e( "Item", "lwcommerce" ); ?> </p>
                                 <br>
                                 <br>
                                 <span class="status-order">

@@ -58,13 +58,13 @@ lwp_set_meta_counter("_product_view", get_the_ID());
             </a>
         </div>
         <div class="col-xs-12 col-sm-12 row gutter p12" >
-            <div class="col-xs-7 col-sm-9">
+            <div class="col-xs-7 col-sm-8">
                 <h2><?php the_title(); ?></h2>
                 <div class="product-price">
-                    <?php lwc_get_price_html( get_the_ID() ); ?>
+                    <?php echo lwc_get_price_html(); ?>
                 </div>
             </div>
-            <div class="col-xs-5 col-sm-3 end-sm">
+            <div class="col-xs-5 col-sm-4 end-sm">
                 <?php lwc_add_to_cart_html(); ?>
                 <?php lwc_get_stock_html(); ?>
             </div>
