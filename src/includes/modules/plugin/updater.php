@@ -3,13 +3,14 @@
 namespace LokusWP\Commerce\Modules\Plugin;
 
 use LokusWP\Utils\Logger;
+use Parsedown;
 use stdClass;
 
 class Updater {
 
 	protected string $plugin_slug = 'lwcommerce'; /* ---CHANGE THIS--- */
 	protected string $plugin_file = LWC_BASE; /* ---CHANGE THIS--- */
-	protected string $plugin_host = 'https://digitalcraft.id/api/v1/product/plugin/update/'; /* ---CHANGE THIS--- */
+	protected string $plugin_host = 'https://api.github.com/repos/lokuswp/lwcommerce/releases'; /* ---CHANGE THIS--- */
 	protected string $plugin_version = LWC_VERSION; /* ---CHANGE THIS--- */
 
 	public function __construct() {
@@ -30,11 +31,11 @@ class Updater {
 				delete_transient( $this->plugin_slug . '_update_check' );
 				$this->check_update();
 
-				Logger::info( "[Plugin][Updater] Manually Checking Update Triggered" );
+//				Logger::info( "[Plugin][Updater] Manually Checking Update Triggered" );
 			} else {
 				$this->check_update();
 
-				Logger::info( "[Plugin][Updater] Automatically Checking Update  Triggered" );
+//				Logger::info( "[Plugin][Updater] Automatically Checking Update  Triggered" );
 			}
 		}
 	}
@@ -61,35 +62,36 @@ class Updater {
 		$transient = (object) get_transient( $this->plugin_slug . '_update' );
 
 		if ( ! is_wp_error( $transient ) ) {
-
 			if ( ! isset( $args->slug ) ) {
 				$args->slug = null;
 			}
 
 			if ( $args->slug == $this->plugin_slug ) {
+
+				// parsedown (Markdown to html)
+				require_once LWC_PATH . 'src/includes/libraries/php/Parsedown.php';
+				$parsedown = new Parsedown();
+				
 				$res                 = new stdClass();
 				$res->name           = $transient->name;
-				$res->slug           = $transient->slug;
-				$res->version        = $transient->version;
-				$res->tested         = $transient->tested;
-				$res->requires       = $transient->requires;
-				$res->author         = $transient->author;
-				$res->author_profile = $transient->author_profile;
-				if ( isset( $transient->download_url ) ) {
-					$res->download_link = $transient->download_link;
-					$res->trunk         = $transient->download_link;
+				$res->slug           = $this->plugin_slug;
+				$res->version        = $transient->tag_name;
+				$res->tested         = '5.9.3';
+				$res->requires       = '5.8';
+				$res->author         = "<a href='https://lokuswp.id'>LWCommerce</a>";
+				$res->author_profile = "https://lokuswp.id";
+				if ( isset( $transient->zipball_url ) ) {
+					$res->download_url = $transient->zipball_url;
+					$res->trunk        = $transient->zipball_url;
 				}
-				$res->last_updated = $transient->last_updated;
-				$sections          = $transient->sections;
-				$res->sections     = array(
-					'description'  => $sections->description, // description tab
-					'installation' => $sections->installation, // installation tab
-					'changelog'    => $sections->changelog
+				$res->sections = array(
+					'description'  => 'Plugin Toko Online WordPress dari LokusWP', // description tab
+					'installation' => 'Upload File, dan Aktifkan Plugin', // installation tab
+					'changelog'    => $parsedown->text( $transient->body ), // changelog tab
 				);
-				$banners           = $transient->banners;
-				$res->banners      = array(
-					'low'  => $banners->low,
-					'high' => $banners->high
+				$res->banners  = array(
+					'low'  => 'https://lokuswp.id/wp-content/uploads/2022/04/lwcommerce-banner-772x250-1.jpg',
+					'high' => 'https://lokuswp.id/wp-content/uploads/2022/04/lwcommerce-banner-772x250-1.jpg'
 				);
 			}
 
@@ -106,41 +108,48 @@ class Updater {
 		// Identity
 		// $domain = lwp_clean_http( get_site_url() ); -> Send User Domain when Request
 
-		// Empty Transient and Remote
-		if ( ! get_transient( $this->plugin_slug . '_update' ) ) {
-
-			// Remote GET
-			$remote = null;
-			$server = $this->plugin_host . $this->plugin_slug;
-			$response = wp_remote_get(
-				$server,
-				array(
-					'timeout' => 30,
-					'headers' => array(
-						'Accept' => 'application/json',
-					)
-				)
-			);
-
-			if ( ! is_wp_error( $response ) ) {
-				$remote = json_decode( wp_remote_retrieve_body( $response ), false ) ?? null;
-			} else {
-				// Failed to get remote
-				Logger::info( "[Plugin][Updates] Failed to get update, check your CURL " );
-				set_transient( $this->plugin_slug . '_update', 'failed_get_update', 300 ); // Waiting 5 minutes
-			}
-
-			//Get Response Body
-			if ( ! is_wp_error( $response ) && isset( $remote->data ) && $remote->data->slug == $this->plugin_slug ) {
-				set_transient( $this->plugin_slug . '_update', $remote->data, 60 * 60 * 6 ); // 6 hours cache
-				Logger::info( "[Plugin][Updates] Successful Get Plugin Data Update " );
-				return true;
-			} else {
-				set_transient( $this->plugin_slug . '_update', 'failed_get_update', 60 * 3 ); // 3 minutes
-			}
+		// Available Transient
+		if ( get_transient( $this->plugin_slug . '_update' ) ) {
+			return false;
 		}
 
-		return false;
+		// Remote GET
+		$server   = $this->plugin_host;
+		$response = wp_remote_get(
+			$server,
+			array(
+				'timeout' => 30,
+				'headers' => array(
+					'Accept' => 'application/json',
+				)
+			)
+		);
+
+		if ( is_wp_error( $response ) ) {
+			// Failed to get remote
+//				Logger::info( "[Plugin][Updates] Failed to get update, check your CURL " );
+			set_transient( $this->plugin_slug . '_update', 'failed_get_update', 300 ); // Waiting 5 minutes
+
+			return false;
+		}
+
+		$remote = json_decode( wp_remote_retrieve_body( $response ), false ) ?? null;
+
+		if ( ! isset( $remote ) ) {
+			set_transient( $this->plugin_slug . '_update', 'failed_get_update', 60 * 3 ); // 3 minutes
+
+			return false;
+		}
+
+		if ( is_array( $remote ) ) { // If it is an array
+			$remote = current( $remote ); // Get the first item
+		}
+
+		//Get Response Body
+		set_transient( $this->plugin_slug . '_update', $remote, 60 * 60 * 6 ); // 6 hours cache
+//				Logger::info( "[Plugin][Updates] Successful Get Plugin Data Update " );
+
+		return true;
 	}
 
 	public function plugin_updater_logic( $transient ) {
@@ -151,16 +160,19 @@ class Updater {
 		// Transient Process
 		$remote = (object) get_transient( $this->plugin_slug . '_update' );
 
+
 		// Display Update Notice
-		$remote_version = isset( $remote->version ) ?? null;
+		$remote_version = $remote->tag_name ?? null;
+		$remote_version = str_replace( 'v', '', $remote_version );
+
 		if ( ! is_wp_error( $remote ) && version_compare( $this->plugin_version, $remote_version, '<' ) ) {
 			$res              = new stdClass();
-			$res->slug        = $remote->slug;
+			$res->slug        = $this->plugin_slug;
 			$res->plugin      = $this->plugin_slug . '/' . $this->plugin_slug . '.php';
 			$res->new_version = $remote_version;
-			$res->tested      = $remote->tested;
-			if ( isset( $remote->download_url ) ) {
-				$res->package = $remote->download_url;
+			$res->tested      = '5.0';
+			if ( isset( $remote->zipball_url ) ) {
+				$res->package = $remote->zipball_url;
 			}
 			// TODO : ERROR
 			$transient->response[ $res->plugin ] = $res;
@@ -182,7 +194,7 @@ class Updater {
 		if ( empty( $data['package'] ) ) {
 			printf( __( 'Please download in %s Member Area %s to update', 'lwcommerce' ), '<a href="https://member.lokuswp.id/" target="_blank">', '</a>' );
 		}
-		//printf( lwp_transient_timeout( $this->plugin_slug . '_update' ) );
+		printf( lwp_transient_timeout( $this->plugin_slug . '_update' ) );
 	}
 
 	public function plugin_row( $links, $plugin_file ) {

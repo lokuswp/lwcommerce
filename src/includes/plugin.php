@@ -24,7 +24,7 @@ class Plugin {
 		new Modules\Product\Metabox_Product;
 
 		// System
-		// new Modules\Plugin\Updater;
+		new Modules\Plugin\Updater;
 
 		// Helper
 		require_once LWC_PATH . 'src/includes/helper/func-order-meta.php';
@@ -86,7 +86,7 @@ class Plugin {
 	 */
 	public function global_loaded() {
 
-		if(is_admin()){
+		if ( is_admin() ) {
 			require_once LWC_PATH . 'src/includes/modules/order/class-followup-whatsapp.php';
 		}
 
