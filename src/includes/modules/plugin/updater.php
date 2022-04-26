@@ -11,7 +11,7 @@ class Updater {
 	protected string $plugin_slug = 'lwcommerce'; /* ---CHANGE THIS--- */
 	protected string $plugin_file = LWC_BASE; /* ---CHANGE THIS--- */
 	protected string $plugin_host = 'https://api.github.com/repos/lokuswp/lwcommerce/releases'; /* ---CHANGE THIS--- */
-	protected string $plugin_version = '0.0.0'; /* ---CHANGE THIS--- */
+	protected string $plugin_version = LWC_VERSION; /* ---CHANGE THIS--- */
 
 	public function __construct() {
 		global $pagenow;
@@ -31,16 +31,17 @@ class Updater {
 				delete_transient( $this->plugin_slug . '_update_check' );
 				$this->check_update();
 
-//				Logger::info( "[Plugin][Updater] Manually Checking Update Triggered" );
+				Logger::info( "[Plugin][Updater] Manually Checking Update Triggered" );
 			} else {
 				$this->check_update();
 
-//				Logger::info( "[Plugin][Updater] Automatically Checking Update  Triggered" );
+				Logger::info( "[Plugin][Updater] Automatically Checking Update  Triggered" );
 			}
 		}
 	}
 
 	public function check_update() {
+		add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'plugin_updater_logic' ) );
 		add_filter( 'site_transient_update_plugins', array( $this, 'plugin_updater_logic' ) );
 		add_filter( 'transient_update_plugins', array( $this, 'plugin_updater_logic' ) );
 	}
@@ -128,7 +129,7 @@ class Updater {
 
 		if ( is_wp_error( $response ) ) {
 			// Failed to get remote
-//			Logger::info( "[Plugin][Updates] Failed to get update, check your CURL " );
+			Logger::info( "[Plugin][Updates] Failed to get update, check your CURL " );
 			set_transient( $this->plugin_slug . '_update', 'failed_get_update', 300 ); // Waiting 5 minutes
 
 			return false;
@@ -144,7 +145,7 @@ class Updater {
 
 		if ( ! is_array( $remote ) ) {
 			// Git Hub limit exceeded
-//			Logger::info( "[Plugin][Updates] Git Hub limit exceeded " );
+			Logger::info( "[Plugin][Updates] Git Hub limit exceeded " );
 
 			return false;
 		}
@@ -153,7 +154,7 @@ class Updater {
 
 		//Get Response Body
 		set_transient( $this->plugin_slug . '_update', $remote, 60 * 60 * 6 ); // 6 hours cache
-//		Logger::info( "[Plugin][Updates] Successful Get Plugin Data Update " );
+		Logger::info( "[Plugin][Updates] Successful Get Plugin Data Update " );
 
 		return true;
 	}
