@@ -10,7 +10,7 @@ class Updater {
 
 	protected string $plugin_slug = 'lwcommerce'; /* ---CHANGE THIS--- */
 	protected string $plugin_file = LWC_BASE; /* ---CHANGE THIS--- */
-	protected string $plugin_host = 'https://api.github.com/repos/lokuswp/lwcommerce/releases'; /* ---CHANGE THIS--- */
+	protected string $plugin_host = 'https://api.github.com/repos/lokuswp/lwcommerce/releases/latest'; /* ---CHANGE THIS--- */
 	protected string $plugin_version = LWC_VERSION; /* ---CHANGE THIS--- */
 
 	public function __construct() {
@@ -31,11 +31,11 @@ class Updater {
 				delete_transient( $this->plugin_slug . '_update_check' );
 				$this->check_update();
 
-				Logger::info( "[Plugin][Updater] Manually Checking Update Triggered" );
+//				Logger::info( "[Plugin][Updater] Manually Checking Update Triggered" );
 			} else {
 				$this->check_update();
 
-				Logger::info( "[Plugin][Updater] Automatically Checking Update  Triggered" );
+//				Logger::info( "[Plugin][Updater] Automatically Checking Update  Triggered" );
 			}
 		}
 	}
@@ -127,9 +127,18 @@ class Updater {
 			)
 		);
 
+		$rate_limit = wp_remote_retrieve_header( $response, 'X-RateLimit-Remaining' );
+
+		if ( $rate_limit == 0 ) {
+			//			Logger::info( "[Plugin][Updates] Github limit exceeded " );
+			set_transient( $this->plugin_slug . '_update', 'failed_get_update', 600 ); // 10 minutes
+
+			return $transient;
+		}
+
 		if ( is_wp_error( $response ) ) {
 			// Failed to get remote
-			Logger::info( "[Plugin][Updates] Failed to get update, check your CURL " );
+//			Logger::info( "[Plugin][Updates] Failed to get update, check your CURL " );
 			set_transient( $this->plugin_slug . '_update', 'failed_get_update', 300 ); // Waiting 5 minutes
 
 			return false;
@@ -143,18 +152,9 @@ class Updater {
 			return false;
 		}
 
-		if ( ! is_array( $remote ) ) {
-			// Git Hub limit exceeded
-			Logger::info( "[Plugin][Updates] Git Hub limit exceeded " );
-
-			return false;
-		}
-
-		$remote = current( $remote ); // Get the first item
-
 		//Get Response Body
 		set_transient( $this->plugin_slug . '_update', $remote, 60 * 60 * 6 ); // 6 hours cache
-		Logger::info( "[Plugin][Updates] Successful Get Plugin Data Update " );
+//		Logger::info( "[Plugin][Updates] Successful Get Plugin Data Update " );
 
 		return true;
 	}
@@ -167,6 +167,15 @@ class Updater {
 		// Transient Process
 		$remote = (object) get_transient( $this->plugin_slug . '_update' );
 
+		// failed update handler
+		if ( isset( $remote->scalar ) && $remote->scalar === 'failed_get_update' ) {
+			return $transient;
+		}
+
+		// update not found handler
+		if ( isset( $remote->message ) && $remote->message === 'Not Found' ) {
+			return $transient;
+		}
 
 		// Display Update Notice
 		$remote_version = $remote->tag_name ?? null;
