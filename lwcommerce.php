@@ -6,7 +6,7 @@
  * Plugin Name:       LWCommerce (beta)
  * Plugin URI:        https://lokuswp.id/plugin/lwcommerce
  * Description:       Local First eCommerce WordPress
- * Version:           0.1.0-beta
+ * Version:           0.0.0
  * Author:            LokusWP
  * Author URI:        https://lokuswp.id/
  * License:           GPL-3.0+

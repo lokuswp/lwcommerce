@@ -11,7 +11,7 @@ class Updater {
 	protected string $plugin_slug = 'lwcommerce'; /* ---CHANGE THIS--- */
 	protected string $plugin_file = LWC_BASE; /* ---CHANGE THIS--- */
 	protected string $plugin_host = 'https://api.github.com/repos/lokuswp/lwcommerce/releases'; /* ---CHANGE THIS--- */
-	protected string $plugin_version = LWC_VERSION; /* ---CHANGE THIS--- */
+	protected string $plugin_version = '0.0.0'; /* ---CHANGE THIS--- */
 
 	public function __construct() {
 		global $pagenow;
@@ -31,11 +31,11 @@ class Updater {
 				delete_transient( $this->plugin_slug . '_update_check' );
 				$this->check_update();
 
-				Logger::info( "[Plugin][Updater] Manually Checking Update Triggered" );
+//				Logger::info( "[Plugin][Updater] Manually Checking Update Triggered" );
 			} else {
 				$this->check_update();
 
-				Logger::info( "[Plugin][Updater] Automatically Checking Update  Triggered" );
+//				Logger::info( "[Plugin][Updater] Automatically Checking Update  Triggered" );
 			}
 		}
 	}
@@ -71,6 +71,7 @@ class Updater {
 				// parsedown (Markdown to html)
 				require_once LWC_PATH . 'src/includes/libraries/php/Parsedown.php';
 				$parsedown = new Parsedown();
+				$assets    = current( $transient->assets ) ?? null;
 
 				$res                 = new stdClass();
 				$res->name           = $transient->name;
@@ -80,9 +81,9 @@ class Updater {
 				$res->requires       = '5.8';
 				$res->author         = "<a href='https://lokuswp.id'>LWCommerce</a>";
 				$res->author_profile = "https://lokuswp.id";
-				if ( isset( $transient->zipball_url ) ) {
-					$res->download_url = $transient->zipball_url;
-					$res->trunk        = $transient->zipball_url;
+				if ( isset( $assets->browser_download_url ) ) {
+					$res->download_url = $assets->browser_download_url;
+					$res->trunk        = $assets->browser_download_url;
 				}
 				$res->sections = array(
 					'description'  => 'Plugin Toko Online WordPress dari LokusWP', // description tab
@@ -127,7 +128,7 @@ class Updater {
 
 		if ( is_wp_error( $response ) ) {
 			// Failed to get remote
-			Logger::info( "[Plugin][Updates] Failed to get update, check your CURL " );
+//			Logger::info( "[Plugin][Updates] Failed to get update, check your CURL " );
 			set_transient( $this->plugin_slug . '_update', 'failed_get_update', 300 ); // Waiting 5 minutes
 
 			return false;
@@ -143,7 +144,7 @@ class Updater {
 
 		if ( ! is_array( $remote ) ) {
 			// Git Hub limit exceeded
-			Logger::info( "[Plugin][Updates] Git Hub limit exceeded " );
+//			Logger::info( "[Plugin][Updates] Git Hub limit exceeded " );
 
 			return false;
 		}
@@ -152,7 +153,7 @@ class Updater {
 
 		//Get Response Body
 		set_transient( $this->plugin_slug . '_update', $remote, 60 * 60 * 6 ); // 6 hours cache
-		Logger::info( "[Plugin][Updates] Successful Get Plugin Data Update " );
+//		Logger::info( "[Plugin][Updates] Successful Get Plugin Data Update " );
 
 		return true;
 	}
@@ -169,6 +170,7 @@ class Updater {
 		// Display Update Notice
 		$remote_version = $remote->tag_name ?? null;
 		$remote_version = str_replace( 'v', '', $remote_version );
+		$assets         = current( $remote->assets ) ?? null;
 
 		if ( ! is_wp_error( $remote ) && version_compare( $this->plugin_version, $remote_version, '<' ) ) {
 			$res              = new stdClass();
@@ -176,8 +178,8 @@ class Updater {
 			$res->plugin      = $this->plugin_slug . '/' . $this->plugin_slug . '.php';
 			$res->new_version = $remote_version;
 			$res->tested      = '5.0';
-			if ( isset( $remote->zipball_url ) ) {
-				$res->package = $remote->zipball_url;
+			if ( isset( $assets->browser_download_url ) ) {
+				$res->package = $assets->browser_download_url;
 			}
 			// TODO : ERROR
 			$transient->response[ $res->plugin ] = $res;
