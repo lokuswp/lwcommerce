@@ -5,6 +5,7 @@ if ( ! is_user_logged_in() ) {
 	exit;
 }
 require_once LWC_PATH . 'src/includes/helper/func-helper.php';
+require_once LWC_PATH . 'src/includes/helper/func-getter.php';
 ?>
 <div class="columns col-12">
 
@@ -16,7 +17,7 @@ require_once LWC_PATH . 'src/includes/helper/func-helper.php';
                 <a href="#" class="btn btn-link">Showcase</a>
             </section>
             <section class="navbar-center">
-                <img src="<?php echo LWC_URL . '/src/admin/assets/lwcommerce.png' ?>" alt="lwcommerce" width="30px">
+                <img src="<?php echo LWC_URL . '/src/admin/assets/images/lwcommerce.png' ?>" alt="lwcommerce" width="30px">
             </section>
             <section class="navbar-section">
                 <a href="#" class="btn btn-link">Community</a>
@@ -43,7 +44,7 @@ require_once LWC_PATH . 'src/includes/helper/func-helper.php';
             <div class="empty">
                 <br>
                 <div class="empty-icon">
-                    <img src="<?php echo LWC_URL . '/src/admin/assets/lokuswp.png' ?>" alt="lokuswp" width="60px">
+                    <img src="<?php echo LWC_URL . '/src/admin/assets/images/lokuswp.png' ?>" alt="lokuswp" width="60px">
                     <div class="loading loading-lg" style="margin-top: -55px;"></div>
                 </div>
 
@@ -168,7 +169,7 @@ require_once LWC_PATH . 'src/includes/helper/func-helper.php';
         'use strict';
 
         $(document).ready(function () {
-
+            console.log('installing...');
             $.ajax({
                 url: lwc_admin.ajax_url,
                 method: 'POST',
