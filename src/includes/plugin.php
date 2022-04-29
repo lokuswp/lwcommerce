@@ -42,6 +42,9 @@ class Plugin {
 		require_once LWC_PATH . 'src/includes/hook/notification/func-notification-scheduler.php';
 		require_once LWC_PATH . 'src/includes/hook/order/func-order-create.php';
 
+		// License
+		require_once LWC_PATH . 'src/includes/modules/license/class-license.php';
+
 		// Shipping Module
 		// require_once LWC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
 		// require_once LWC_PATH . 'src/includes/modules/shipping/class-manager.php';

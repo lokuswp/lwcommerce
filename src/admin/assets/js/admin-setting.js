@@ -88,14 +88,14 @@
 
 
     /**
-     * ⚡ Show Shipping Manager 
+     * ⚡ Show Shipping Manager
      * Dsiplaying Shipping Manager
-     * 
+     *
      * @scope Global
      * @since 0.5.0
      */
     $(document).on("click", ".lwc-shipping-manager", function (e) {
-        
+
         let shippingEditor = $("#lwc-shipping-manager-editor");
         // On Loading
         // shippingEditor.html(shimmer);
@@ -138,7 +138,7 @@
     /**
      * ⚡ Close Payment Method Manager Panel
      * Dsiplaying Payment Method Manager
-     * 
+     *
      * @scope Global
      * @since 0.5.0
      */
@@ -151,6 +151,47 @@
         shippingEditor.html('');
 
         //  $(".selectlive").select2('destroy');
+    });
+
+    /******************************************/
+    /* Save license
+    /******************************************/
+    $(document).on("click", ".lwc-license-register", function (e) {
+        const that = $(this);
+        const inputKey = $(this).closest('.card-header').find('input.lwc-license-key');
+        const errorMessage = $('#error-message');
+        errorMessage.hide();
+
+        if (inputKey.val() !== '') {
+            that.addClass('loading');
+            $.ajax({
+                url: lwc_admin.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'lwc_license_save',
+                    license_key: inputKey.val(),
+                    slug: that.attr('data-slug'),
+                    security: lwc_admin.ajax_nonce,
+                },
+                success: data => {
+                    if (data.success === 'false' || !data.success) {
+                        errorMessage.show();
+                        errorMessage.html(data.message);
+                        inputKey.css('border', '1px solid red');
+                        that.removeClass('loading');
+                        return;
+                    }
+
+                    location.reload();
+                }
+            }).fail(function () {
+                alert('Please check your internet connection');
+            })
+        } else {
+            inputKey.css('border', '1px solid red');
+            errorMessage.show();
+            errorMessage.html('Please enter a license key');
+        }
     });
 
 })(jQuery)
