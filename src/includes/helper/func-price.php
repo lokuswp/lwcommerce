@@ -20,12 +20,12 @@ function lwc_get_unit_price( $product_id = null ) {
 /**
  * Get Price Promo based on ID
  *
- * @param $product_id
+ * @param int $product_id
  *
  * @return float|int
  * @since 0.1.0
  */
-function lwc_get_price_promo( $product_id = null ) {
+function lwc_get_price_promo( int $product_id ) {
 	if ( ! $product_id ) {
 		$product_id = get_the_ID();
 	}
@@ -39,12 +39,13 @@ function lwc_get_price_promo( $product_id = null ) {
  * Get Right Price between Unit Price and Price Promo
  * based on ID
  *
- * @param $product_id
+ * @param int $product_id
+ * @param string $currency
  *
  * @return float|int
  * @since 0.1.0
  */
-function lwc_get_price( $product_id = null ) {
+function lwc_get_price( int $product_id, string $currency = "IDR" ) {
 	if ( ! $product_id ) {
 		$product_id = get_the_ID();
 	}
@@ -52,15 +53,19 @@ function lwc_get_price( $product_id = null ) {
 	$price_promo = lwc_get_price_promo( $product_id );
 	$unit_price  = lwc_get_unit_price( $product_id );
 
-	if ( $price_promo == null ) {
-		return $unit_price;
+	$price = 0;
+
+	if ( empty( $price_promo ) ) {
+		$price = $unit_price;
 	}
 
-	if ( $price_promo < $unit_price ) {
-		return $price_promo;
+	if ( $price_promo < $unit_price && ! empty( $price_promo ) ) {
+		$price = $price_promo;
 	} else {
-		return $unit_price;
+		$price = $unit_price;
 	}
+
+	return $price;
 }
 
 /**

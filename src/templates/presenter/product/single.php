@@ -53,13 +53,13 @@ lwp_set_meta_counter("_product_view", get_the_ID());
 
     <div class="lwp-product row">
         <div class="col-xs-12 col-sm-12">
-            <a href="<?php echo get_permalink(); ?>">
+            <a href="<?php echo get_permalink(); ?>" class="product-image">
                 <?php the_post_thumbnail(); ?>
             </a>
         </div>
-        <div class="col-xs-12 col-sm-12 row gutter p12" >
+        <div class="col-xs-12 col-sm-12 row no-gutter">
             <div class="col-xs-7 col-sm-8">
-                <h2><?php the_title(); ?></h2>
+                <h2 class="product-title"><?php the_title(); ?></h2>
                 <div class="product-price">
                     <?php echo lwc_get_price_html(); ?>
                 </div>
@@ -69,7 +69,7 @@ lwp_set_meta_counter("_product_view", get_the_ID());
                 <?php lwc_get_stock_html(); ?>
             </div>
         </div>
-        <div class="col-sm-12 gutter p12">
+        <div class="col-sm-12 no-gutter">
             <p><?php the_content(); ?></p>
         </div>
     </div>

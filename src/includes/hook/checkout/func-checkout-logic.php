@@ -103,7 +103,7 @@ function lwc_rest_cart_item_output( $item_data, $item_id ) {
 		$item_data['weight']       = get_post_meta( ! empty( $variation_id ) ? $variation_id : $item_id, '_weight', true ) ?? 0;
 		$item_data['stock']        = get_post_meta( ! empty( $variation_id ) ? $variation_id : $item_id, '_stock', true ) ?? 0;
 		$item_data['stock_unit']   = get_post_meta( $item_id, '_stock_unit', true ) ?? '';
-		$item_data['amount']       = abs( lwc_get_price( $item_id ) ) * abs( $item_data['quantity'] );
+		$item_data['amount']       = floatval( lwc_get_price( $item_id ) ) * abs( $item_data['quantity'] );
 	}
 
 	return $item_data;
@@ -112,9 +112,26 @@ function lwc_rest_cart_item_output( $item_data, $item_id ) {
 /**
  * Set Item Price Globally
  */
-add_filter( "lokuswp/cart/item/price", "lwp_items_price", 10, 1 );
-function lwp_items_price( $post_id ) {
-	if ( get_post_type( $post_id ) == 'product' ) {
-		return lwc_get_price( $post_id );
+add_filter( "lokuswp/item/price", "lwc_set_item_price", 10, 4 );
+function lwc_set_item_price( $price, $post_id, $currency, $payment_id ) {
+
+	if ( get_post_type( $post_id ) == 'product' && $currency == "IDR" ) {
+		$price = lwc_get_price( $post_id, $currency );
 	}
+
+	return $price;
 }
+
+/**
+ * Set Item Price Globally
+ */
+add_filter( "lokuswp/item/price", "lokuswp_paypal_set_item_price", 10, 4 );
+function lokuswp_paypal_set_item_price( $price, $post_id, $currency, $payment_id ) {
+
+	if ( $payment_id == "paypal" && $currency == "USD" ) {
+		$price = get_post_meta( $post_id, '_price_usd', true );
+	}
+
+	return $price;
+}
+

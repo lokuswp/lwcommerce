@@ -108,8 +108,8 @@ function lwc_transaction_response( $response, $trx_id ) {
 			$description = __( "Deskripsi Pesanan", "lwcommerce" );
 			break;
 		case 'completed':
-			$title       = __( "Order was Complete", "lwcommerce" );
-			$description = __( "Completed", "lwcommerce" );
+			$title       = __( "Thankyou", "lwcommerce" );
+			$description = __( "Thankyou for ordering in our store", "lwcommerce" );
 			break;
 		case 'cancelled':
 			$title       = __( "Order Cancelled", "lwcommerce" );
@@ -130,7 +130,7 @@ function lwc_transaction_response( $response, $trx_id ) {
 	// Screen Based on Status
 	$response['screen'] = array(
 		"title"       => $title,
-		"thumbnail"   => LWC_URL . "src/public/assets/images/illustration-" . $order_status . ".png",
+		"thumbnail"   => LWC_URL . "src/public/assets/images/illustration-" . $order_status . ".jpg",
 		"description" => $description,
 		"support"     => $support
 	);

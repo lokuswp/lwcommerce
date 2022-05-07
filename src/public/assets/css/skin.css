@@ -3,7 +3,7 @@
     text-align: center;
 }
 
-.lwc-listing a{
+.lwc-listing a {
     text-decoration: none !important;
 }
 
@@ -12,33 +12,8 @@
 
 }
 
-.product-name {
-    color: #282828;
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 4px;
-    text-align: left;
-}
 
-.product-price {
-    display: flex;
-    padding: 4px 0;
-}
-
-.product-price small {
-    font-size: 80%;
-    display: flex;
-
-    align-items: center;
-}
-
-.product-price span {
-    display: flex;
-
-    color: var(--lokuswp-secondary-color);
-}
-
-.lwc-listing .product-price span{
+.lwc-listing .product-price span {
     flex-grow: 1;
 }
 
@@ -54,43 +29,93 @@
     font-weight: 600;
 }
 
-.product-image img {
-    border-radius: 8px;
-}
-
-/* Cart */
-a.cart-icon{
-    text-decoration: none;
-}
-
-small.cart-qty {
-    font-size: 14px;
-    color: var(--lokuswp-secondary-color);
-    text-decoration: none;
-}
 
 td.product-item-detail strike {
     margin-left: 6px;
 }
 
-.lwp-cart-content{
-    padding:0 8px;
+.lwp-cart-content {
+    padding: 0 8px;
 }
 
 /* Single */
-.lwp-product h2{
+.lwp-product h2 {
     color: #282828;
     font-weight: 600;
     margin-bottom: 2px;
 }
 
-.lwp-product .product-price small{
+.lwp-product .product-price small {
     margin-top: 4px;
-    margin-left:8px;
+    margin-left: 8px;
 }
+
+
+/* Product Skin */
+.product-image img {
+    border: 1px solid #E5E8EB;
+    border-radius: 3%;
+}
+
+/* Product Listing */
+
+.lwc-product-item {
+    /*border: 1px solid #E5E8EB;*/
+    padding: 8px !important;
+}
+
+.lwc-product-item h3.product-title {
+    margin: 0.3em 0;
+}
+
+.lwc-product-item .product-name {
+    color: #1d1f1a;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    text-align: left;
+}
+
+/* Product Price */
+
+.product-price {
+    display: flex;
+    padding: 4px 0;
+}
+
+.product-price small {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.product-price span {
+    display: flex;
+    font-weight: 600;
+    color: var(--lokuswp-secondary-color);
+}
+
+/* Cart Icon */
+.cart-icon {
+    position: relative;
+    text-decoration: none;
+}
+
+.cart-icon .cart-qty {
+    font-size: 14px;
+    color: var(--lokuswp-secondary-color);
+    text-decoration: none;
+}
+
 
 /* Invoice */
 
-.copy-input a{
+.copy-input a {
     color: var(--lokuswp-secondary-color);
+}
+
+
+/* Single Product  */
+.single-product .product-title{
+    padding: 8px 12px 0 0;
 }

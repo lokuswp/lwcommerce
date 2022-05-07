@@ -227,15 +227,15 @@ class Admin {
 		);
 
 
-		add_submenu_page(
-			$this->slug,
-			__( 'Shipping', 'lwcommerce' ),
-			__( 'Shipping', 'lwcommerce' ),
-			'manage_options',
-			'admin.php?page=lwcommerce&tab=shipping',
-			'',
-			1
-		);
+//		add_submenu_page(
+//			$this->slug,
+//			__( 'Shipping', 'lwcommerce' ),
+//			__( 'Shipping', 'lwcommerce' ),
+//			'manage_options',
+//			'admin.php?page=lwcommerce&tab=shipping',
+//			'',
+//			1
+//		);
 
 		$backbone = (array) apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
 		if ( ! in_array( 'lwcommerce/lwcommerce.php', $backbone ) ) {

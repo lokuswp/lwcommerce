@@ -12,7 +12,7 @@
     </div>
 
     <div class="col-xs-2 end-xs d-flex">
-        <a href="<?php echo get_permalink(lwp_get_settings('settings', 'cart_page')); ?>">
+        <a class="cart-icon" href="<?php echo get_permalink(lwp_get_settings('settings', 'cart_page')); ?>">
             <div class="cart-icon-wrapper"></div>
         </a>
     </div>

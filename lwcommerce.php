@@ -28,7 +28,7 @@ if ( ! defined( 'WPTEST' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  * Define Constant
  */
-defined( 'LWC_VERSION' ) or define( 'LWC_VERSION', '0.1.0' );
+defined( 'LWC_VERSION' ) or define( 'LWC_VERSION', '0.0.0' );
 defined( 'LWC_BASE' ) or define( 'LWC_BASE', plugin_basename( __FILE__ ) );
 defined( 'LWC_PATH' ) or define( 'LWC_PATH', plugin_dir_path( __FILE__ ) );
 defined( 'LWC_URL' ) or define( 'LWC_URL', plugin_dir_url( __FILE__ ) );
