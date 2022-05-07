@@ -46,6 +46,9 @@ class Plugin {
 		// Order
 		require_once LWC_PATH . 'src/includes/modules/order/class-order.php';
 
+		// License
+		require_once LWC_PATH . 'src/includes/modules/license/class-license.php';
+
 		// Shipping Module
 		// require_once LWC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
 		// require_once LWC_PATH . 'src/includes/modules/shipping/class-manager.php';
