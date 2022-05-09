@@ -1,0 +1,28 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+
+  continuous-deployment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Deploy to Beta
+        uses: sebastianpopp/git-ftp-action@releases/v3
+        with:
+          url: "ftp://${{ secrets.FTP_BETA_HOST }}/lwcommerce/"
+          user: ${{ secrets.FTP_BETA_USERNAME }}
+          password: ${{ secrets.FTP_BETA_PASSWORD }}
+
+      - name: Deploy to Development
+        uses: sebastianpopp/git-ftp-action@releases/v3
+        with:
+          url: "ftp://${{ secrets.FTP_DEV_HOST }}/lwcommerce/"
+          user: ${{ secrets.FTP_DEV_USERNAME }}
+          password: ${{ secrets.FTP_DEV_PASSWORD }}

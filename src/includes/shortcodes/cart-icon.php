@@ -19,14 +19,7 @@ class Cart_Icon {
 		// TODO :: Change to Skeleton
 		?>
 
-        <a href="<?php echo get_permalink( lwp_get_settings( 'settings', 'cart_page' ) ); ?>" class="cart-icon">
-            <div class="cart-icon-wrapper">
-                <div class="cart-icon svg-wrapper">
-                    <small class="cart-qty">1</small>
-                    <img src="<?= LOKUSWP_URL . 'src/assets/svg/cart.svg'; ?>" alt="cart-icon">
-                </div>
-            </div>
-        </a>
+
 
 		<?php
 

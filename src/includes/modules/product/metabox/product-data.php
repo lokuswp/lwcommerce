@@ -34,8 +34,7 @@
 
                         <div class="form-group col-6">
                             <label for="lokuswp-price-promo"><?php _e( "Promo Price", 'lwcommerce' ); ?>
-                                <span class="asterix">*</span>
-                                <span class="description text-muted">(<?php _e( "required", 'lwcommerce' ); ?>)</span>
+                                <span class="description text-muted">(<?php _e( "optional", 'lwcommerce' ); ?>)</span>
                             </label>
                             <div class="form-group-body has-tooltip">
                                 <input id="lokuswp-price-promo" name="_price_promo" type="text" class="form-control full" placeholder="50.000" value="<?= $args['price_promo'] ?>">
@@ -62,7 +61,7 @@
                             </label>
                             <div class="form-group-body has-input-action">
                                 <input type="text" name="_sku_code" id="lokuswp-product-sku" class="form-control full" value="<?= $args['sku_code'] ?>"
-                                       placeholder="<?php _e( "SKU Code", 'lwcommerce' ); ?>">
+                                       placeholder="LWP-CMMRC-PRSNL-001">
 
                                 <!-- <a href="#" id="btn-generate-sku" class="input-action btn"><?php _e( "Generate", 'lwcommerce' ); ?></a> -->
 

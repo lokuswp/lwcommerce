@@ -35,8 +35,10 @@
 add_filter( "lokuswp/notification/email/data", "lwc_notification_email_data", 10, 2 );
 function lwc_notification_email_data( $notification, $trx_id ) {
 
-	$notification->status = lwc_get_order_meta( $trx_id, '_order_status', true );
-	$notification->path   = LWC_PATH . 'src/templates/emails/';
+	$notification['status'] = lwc_get_order_meta( $trx_id, '_order_status', true );
+	$notification['path']   = LWC_PATH . 'src/templates/emails/';
+	$notification['name'] = lwc_get_settings( 'store', 'name' );
+	$notification['logo_url'] = 'https://lokuswp.id/wp-content/uploads/2021/12/lokago.png';
 	// $notification->status = "shipped";
 
 	return $notification;

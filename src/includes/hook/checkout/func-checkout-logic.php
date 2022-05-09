@@ -1,9 +1,8 @@
 <?php
-
 use LokusWP\Commerce\Order;
 
 /**
- * Business Logic of Ecommerce
+ * Business Logic on Checkout
  *
  * @since 0.1.0
  */
