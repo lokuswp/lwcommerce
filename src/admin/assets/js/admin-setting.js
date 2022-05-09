@@ -169,7 +169,7 @@
                 url: lwc_admin.ajax_url,
                 type: 'POST',
                 data: {
-                    action: 'lwc_license_save',
+                    action: 'lokuswp_license_save',
                     license_key: inputKey.val(),
                     slug: that.attr('data-slug'),
                     security: lwc_admin.ajax_nonce,

@@ -23,7 +23,7 @@
                         <small><?php echo 'v' . LWC_VERSION; ?> - <?php _e( 'Input your license key', 'lwcommerce' ); ?> </small>
                         <input autocomplete="off" style="margin-top:5px;" class="form-input lwc-license-key" type="text" placeholder="License Key">
                         <span style="color: red;font-size: 12px; display: none" id="error-message"></span>
-                        <button class="btn btn-block my-2 bg-success lwc-license-register" style="border:none;" data-slug="lwcommerce-pro"><?php _e( 'Register',
+                        <button class="btn btn-block my-2 bg-success lwc-license-register" style="border:none;" data-slug="lwcommerce-pro"><?php _e( 'Insert',
 								'lwcommerce' ); ?></button>
                     </div>
                 </div>
