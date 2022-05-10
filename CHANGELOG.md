@@ -1,6 +1,9 @@
 # Changelog
 
-# [v0.1.0](https://lokuswp.id/berita/rilis-lwcommerce-0-1-0-beta/) (2022-04-22)
+# [v0.0.1-alpha](https://lokuswp.id/berita/rilis-lwcommerce-0-1-0-beta/) (2022-04-22)
 **Added :**
-- Public Beta Release
+- Alpha release 1
 
+# [v0.0.2-alpha](https://lokuswp.id/berita/rilis-lwcommerce-0-1-0-beta/) (2022-05-10)
+**Added :**
+- Alpha release 2
