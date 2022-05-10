@@ -11,6 +11,20 @@
     padding: 7px 0 0 !important;
 }
 
+
+/* LWPCommerce Admin Support */
+li#toplevel_page_lwcommerce-order .wp-menu-image img,
+li#toplevel_page_edit-post_type-product .wp-menu-image img,
+li#toplevel_page_edit-post_type-program .wp-menu-image img,
+li#toplevel_page_lwcommerce .wp-menu-image img {
+    padding: 8px 0 0 0 !important;
+}
+
+#toplevel_page_lwcommerce img {
+    margin-top: -3px;
+    width: 24px;
+}
+
 .toplevel_page_lokuswp .form-group select,
 .toplevel_page_lokuswp .form-group input,
 .toplevel_page_lokuswp .form-group textarea,

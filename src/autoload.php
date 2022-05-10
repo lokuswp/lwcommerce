@@ -56,7 +56,7 @@ class LWCommerce_Boot {
 	public function on_board_screen() {
 
 		// Only Run On-boarding Screen, Not Entire System
-		include_once LWC_PATH . 'src/admin/class-on-boarding.php';
+		include_once LWC_PATH . 'src/admin/class-onboarding.php';
 		Onboarding::register( array( 'slug' => 'lwcommerce', 'name' => 'LWCommerce', 'version' => LWC_VERSION ) );
 
 		// Create Table :: Orders

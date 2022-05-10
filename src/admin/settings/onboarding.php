@@ -1,40 +1,87 @@
 <?php
+/**
+ * Screen :: Onboarding
+ *
+ * @since 0.1.0
+ */
+
 // Check User Logged In
 if ( ! is_user_logged_in() ) {
 	wp_redirect( get_site_url() );
 	exit;
 }
+
+// Require Function
 require_once LWC_PATH . 'src/includes/helper/func-helper.php';
 require_once LWC_PATH . 'src/includes/helper/func-getter.php';
 ?>
-<div class="columns col-12">
 
+<style>
+    .empty {
+        background: #fff !important;
+        padding-bottom: 18px;
+    }
+
+    .center {
+        text-align: center;
+        margin: 60px auto 30px;
+    }
+
+    .w-120 {
+        min-width: 120px;
+    }
+
+    .step-to-integration {
+        float: right;
+        margin-top: -44px;
+    }
+
+    .tile.tile-centered {
+        border: 1px solid #ddd;
+        padding: 12px;
+        margin: 8px auto;
+    }
+
+    .tile-icon {
+        padding: 7px 14px;
+    }
+
+    .hidden {
+        display: none !important;
+    }
+</style>
+
+<div class="columns col-12">
 
     <div class="col-6" style="margin: 30px auto;">
         <header class="navbar">
             <section class="navbar-section">
-                <a href="#" class="btn btn-link">LokusWP</a>
-                <a href="#" class="btn btn-link">Showcase</a>
+                <!--<a href="#" class="btn btn-link">LokusWP</a>-->
+                <!--<a href="#" class="btn btn-link">Showcase</a>-->
             </section>
             <section class="navbar-center">
-                <img src="<?php echo LWC_URL . '/src/admin/assets/images/lwcommerce.png' ?>" alt="lwcommerce" width="30px">
+                <img src="<?php echo LWC_URL . '/src/admin/assets/images/lwcommerce.png' ?>" alt="lwcommerce"
+                     width="60">
             </section>
             <section class="navbar-section">
-                <a href="#" class="btn btn-link">Community</a>
-                <a href="#" class="btn btn-link">Guide</a>
+                <!--<a href="#" class="btn btn-link">Community</a>-->
+                <!--<a href="#" class="btn btn-link">Guide</a>-->
             </section>
         </header>
 
-        <br> <br>
+        <br><br>
         <ul class="step">
             <li class="step-item">
-                <a href="#" class="tooltip" data-tooltip="Dependency">Dependency</a>
+                <a href="#" class="tooltip"
+                   data-tooltip="<?php _e( "Dependency", "lwcommerce" ); ?>"><?php _e( "Dependency", "lwcommerce" ); ?></a>
             </li>
             <li class="step-item ">
-                <a href="#" class="tooltip" data-tooltip="Store">Store</a>
+                <a href="#" class="tooltip"
+                   data-tooltip="<?php _e( "Store", "lwcommerce" ); ?>"><?php _e( "Store", "lwcommerce" ); ?></a>
             </li>
             <li class="step-item active">
-                <a href="#" class="tooltip" data-tooltip="Integration">Integration</a>
+                <a href="#" class="tooltip"
+                   data-tooltip="<?php _e( "Integration", "lwcommerce" ); ?>"><?php _e( "Integration", "lwcommerce" ); ?></a>
             </li>
         </ul>
 
@@ -44,11 +91,12 @@ require_once LWC_PATH . 'src/includes/helper/func-getter.php';
             <div class="empty">
                 <br>
                 <div class="empty-icon">
-                    <img src="<?php echo LWC_URL . '/src/admin/assets/images/lokuswp.png' ?>" alt="lokuswp" width="60px">
+                    <img src="<?php echo LWC_URL . '/src/admin/assets/images/lokuswp.png' ?>" alt="lokuswp"
+                         width="60px">
                     <div class="loading loading-lg" style="margin-top: -55px;"></div>
                 </div>
 
-                <p class="empty-title h5"><?php _e( "LokusWP Backbone Downloading...", "lwcommerce" ); ?></p>
+                <p class="empty-title h5"><?php _e( "Downloading LokusWP Backbone...", "lwcommerce" ); ?></p>
                 <p class="empty-subtitle"><?php _e( "Please wait a moment until this process is complete", "lwcommerce" ); ?></p>
 
             </div>
@@ -56,7 +104,7 @@ require_once LWC_PATH . 'src/includes/helper/func-getter.php';
 
         <div id="store-step" class="hidden">
             <div class="column col-12 col-sm-12 px-0">
-				<?php require_once LWC_PATH . 'src/admin/settings/tabs/settings/store.php'; ?>
+				<?php require_once LWC_PATH . 'src/admin/settings/tabs/general/store.php'; ?>
                 <button class="btn w-120 step-to-integration hidden"><?php _e( 'Continue', 'lwcommerce' ); ?></button>
             </div>
         </div>
@@ -124,90 +172,4 @@ require_once LWC_PATH . 'src/includes/helper/func-getter.php';
 
         </div>
     </div>
-
 </div>
-
-<style>
-
-    .empty {
-        background: #fff !important;
-        padding-bottom: 18px;
-    }
-
-    .center {
-        text-align: center;
-        margin: 60px auto 30px;
-    }
-
-    .w-120 {
-        min-width: 120px;
-    }
-
-    .step-to-integration {
-        float: right;
-        margin-top: -44px;
-    }
-
-    .tile.tile-centered {
-        border: 1px solid #ddd;
-        padding: 12px;
-        margin: 8px auto;
-    }
-
-    .tile-icon {
-        padding: 7px 14px;
-    }
-
-    .hidden{
-        display: none !important;
-    }
-</style>
-
-
-<script>
-    (function ($) {
-        'use strict';
-
-        $(document).ready(function () {
-            console.log('installing...');
-            $.ajax({
-                url: lwc_admin.ajax_url,
-                method: 'POST',
-                data: {
-                    action: 'lwcommerce_download_plugin',
-                    security: lwc_admin.ajax_nonce,
-                },
-                success: (res) => {
-                    if (res == "ajax_success") {
-                        $('#store-step').removeClass('hidden');
-                        $('#dependency-step').addClass('hidden');
-                    } else if (res == "ajax_lwcommerce") {
-                        window.location.href = lwc_admin.admin_url;
-                    } else {
-                        alert('please check your internet connection!')
-                    }
-                },
-            }).fail(() => alert('please check your internet connection!'));
-
-
-            $('#lwc-setting-store-save').on('click', function () {
-                $('.step-to-integration').removeClass('hidden');
-                // $(this).addClass('hidden');
-            });
-
-            $('.step-to-integration').on('click', function () {
-
-                let textarea = $('textarea[name="address"]').val();
-                if (!textarea) {
-                    alert('Please fill your store Data');
-                    $('textarea[name="address"]').css('border', '1px solid red');
-                } else {
-                    $('#integration-step').removeClass('hidden');
-                    $('#store-step').addClass('hidden');
-                }
-
-            });
-
-        });
-    })(jQuery)
-</script>

@@ -37,4 +37,3 @@ defined( 'LWC_TEXT_VERSION' ) or define( 'LWC_TEXT_VERSION', '0.0.1' ); // Strin
 
 // Autoload
 require_once dirname( __DIR__ ) . '/lwcommerce/src/autoload.php';
-

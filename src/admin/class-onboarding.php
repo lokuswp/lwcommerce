@@ -51,7 +51,7 @@ class Onboarding {
 		add_action( 'admin_enqueue_scripts', [ $admin, 'enqueue_styles' ] );
 		add_action( 'admin_enqueue_scripts', [ $admin, 'enqueue_scripts' ] );
 
-		add_action( 'wp_ajax_lwcommerce_download_plugin', [ $admin, 'download_plugin' ] );
+		add_action( 'wp_ajax_lwcommerce_download_backbone', [ $admin, 'download_backbone' ] );
 		add_action( 'wp_ajax_lwcommerce_auto_setup', [ $admin, 'auto_setup' ] );
 	}
 
@@ -138,7 +138,7 @@ class Onboarding {
 
 	}
 
-	public function download_plugin() {
+	public function download_backbone() {
 
 		$server = "https://dev.digitalcraft.id/api/v1/product/plugin/update/lokuswp";
 		$remote = wp_remote_get( $server,
@@ -283,7 +283,7 @@ class Onboarding {
 
 		// Load Admin Setting Js
 		if ( isset( $_GET["page"] ) && $_GET["page"] == "lwcommerce" ) {
-			wp_enqueue_script( 'admin-onboarding', LWC_URL . 'src/admin/assets/js/admin-setting' . $dev_js, array(
+			wp_enqueue_script( 'admin-onboarding', LWC_URL . 'src/admin/assets/js/onboarding' . $dev_js, array(
 				'jquery',
 				'wp-color-picker'
 			), $this->version, false );

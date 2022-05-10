@@ -1,6 +1,6 @@
 <?php
 $name = lwc_get_settings( 'store', 'name' );
-$logo = lwc_get_settings( 'store', 'logo', 'esc_url', 'https://lokuswp.id/wp-content/uploads/2021/12/lokago.png' );
+$logo = lwc_get_settings( 'store', 'logo', 'esc_url', LWC_URL . 'src/admin/assets/images/lwcommerce.png' );
 $desc = lwc_get_settings( 'store', 'description' );
 
 $email    = lwc_get_settings( 'store', 'email' );
@@ -23,12 +23,12 @@ $categories = [
 ];
 
 // Get Data Province
-$get_states = lwp_get_remote_json( get_rest_url() . 'lwcommerce/v1/rajaongkir/province', [], 'lwcommerce_states', WEEK_IN_SECONDS );
-$states     = $get_states->data ?? [];
-
-$state_selected = $state_selected == 0 ? 3 : $state_selected;
-$get_cities     = lwp_get_remote_json( get_rest_url() . 'lwcommerce/v1/rajaongkir/city?province=' . $state_selected, [], 'lwcommerce_cities_' . $state_selected, WEEK_IN_SECONDS );
-$cities         = $get_cities->data ?? [];
+//$get_states = lwp_get_remote_json( get_rest_url() . 'lwcommerce/v1/rajaongkir/province', [], 'lwcommerce_states', WEEK_IN_SECONDS );
+//$states     = $get_states->data ?? [];
+//
+//$state_selected = $state_selected == 0 ? 3 : $state_selected;
+//$get_cities     = lwp_get_remote_json( get_rest_url() . 'lwcommerce/v1/rajaongkir/city?province=' . $state_selected, [], 'lwcommerce_cities_' . $state_selected, WEEK_IN_SECONDS );
+//$cities         = $get_cities->data ?? [];
 ?>
 
 
