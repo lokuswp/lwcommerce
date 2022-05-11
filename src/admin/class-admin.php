@@ -165,7 +165,7 @@ class Admin {
 					'ajax_url'    => admin_url( 'admin-ajax.php' ),
 					'ajax_nonce'  => wp_create_nonce( 'lwc_admin_nonce' ),
 					'plugin_url'  => LWC_URL,
-					'is_pro'      => in_array( 'lwcommerce-pro/lwcommerce-pro.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ),
+					'is_pro'      => apply_filters( 'lwcommerce/license/correct', false ),
 					'translation' => $this->js_translation(),
 				) );
 
@@ -296,9 +296,9 @@ class Admin {
 
 		// Add Shortcode List to wp-admin > lwcommerce > settings > apperance
 		Shortcode_Lists::add_shortcode_list( "lwcommerce", $this->slug, $this->name, array(
-			['shortcode' => '[lwcommerce_product_listing]', 'description' => __("Display Product Listing", 'lwcommerce')],
-			['shortcode' => '[lwcommerce_order_history]', 'description' => __("Display Order History", 'lwcommerce')],
-		));
+			[ 'shortcode' => '[lwcommerce_product_listing]', 'description' => __( "Display Product Listing", 'lwcommerce' ) ],
+			[ 'shortcode' => '[lwcommerce_order_history]', 'description' => __( "Display Order History", 'lwcommerce' ) ],
+		) );
 
 		// // Add Switch Options to wp-admin > lwcommerce > Appearence
 		// require_once LWC_PATH . 'backend/admin/class-switch-options.php';
