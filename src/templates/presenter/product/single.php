@@ -1,8 +1,8 @@
 <?php
 get_header();
-wp_enqueue_style("lokuswp-grid");
+wp_enqueue_style( "lokuswp-grid" );
 
-lwp_set_meta_counter("_product_view", get_the_ID());
+lwp_set_meta_counter( "_product_view", get_the_ID() );
 ?>
 
 <!-- Google Rich Snippet -->
@@ -46,27 +46,42 @@ lwp_set_meta_counter("_product_view", get_the_ID());
             "availability": "https://schema.org/InStock"
         }
     }
+
+
+
+
+
+
+
+
+
 </script>
 
 <div class="lwcommerce lwp-container">
-    <?php require_once LWC_PATH . 'src/templates/component/navigation.php'; ?>
+	<?php require_once LWC_PATH . 'src/templates/component/navigation.php'; ?>
 
     <div class="lwp-product row">
         <div class="col-xs-12 col-sm-12">
             <a href="<?php echo get_permalink(); ?>" class="product-image">
-                <?php the_post_thumbnail(); ?>
+				<?php the_post_thumbnail(); ?>
             </a>
         </div>
         <div class="col-xs-12 col-sm-12 row no-gutter">
             <div class="col-xs-7 col-sm-8">
                 <h2 class="product-title"><?php the_title(); ?></h2>
                 <div class="product-price">
-                    <?php echo lwc_get_price_html(); ?>
+					<?php echo lwc_get_price_html(); ?>
                 </div>
             </div>
+
+        </div>
+        <div class="col-xs-12 col-sm-12 row no-gutter">
+			<?php do_action( 'lokuswp/product/variant' ); ?>
+        </div>
+        <div class="col-xs-12 col-sm-12 row no-gutter">
             <div class="col-xs-5 col-sm-4 end-sm">
-                <?php lwc_add_to_cart_html(); ?>
-                <?php lwc_get_stock_html(); ?>
+				<?php lwc_add_to_cart_html(); ?>
+				<?php lwc_get_stock_html(); ?>
             </div>
         </div>
         <div class="col-sm-12 no-gutter">
@@ -85,13 +100,13 @@ lwp_set_meta_counter("_product_view", get_the_ID());
         font-size: 18px;
     }
 
-    .p12{
-        padding:0 12px;
+    .p12 {
+        padding: 0 12px;
     }
 </style>
 
 <?php get_footer(); ?>
 
 <script>
-    Hooks.do_action('lwcommerce/product/single' );
+    Hooks.do_action('lwcommerce/product/single');
 </script>

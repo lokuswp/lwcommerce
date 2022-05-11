@@ -1,4 +1,5 @@
 <?php
+
 use LokusWP\Commerce\Order;
 
 /**
@@ -93,7 +94,7 @@ function lwc_transaction_status_text( $statuses ) {
 add_filter( 'lokuswp/cart/rest/item', 'lwc_rest_cart_item_output', 10, 2 );
 function lwc_rest_cart_item_output( $item_data, $item_id ) {
 
-	if ( get_post_type( $item_id ) == 'product' ) {
+	if ( get_post_type( $item_id ) == 'product' || get_post_type( $item_id ) == 'product_variant' ) {
 		//	$variation_id = $item_data['variation_id'];
 		$item_data['product_type'] = empty( get_post_meta( $item_id, '_product_type', true ) ) ? 'undefined' : esc_attr( get_post_meta( $item_id, '_product_type', true ) );
 		$item_data['unit_price']   = get_post_meta( ! empty( $variation_id ) ? $variation_id : $item_id, '_unit_price', true ) ?? null;
