@@ -55,6 +55,8 @@ lwp_set_meta_counter( "_product_view", get_the_ID() );
 
 
 
+
+
 </script>
 
 <div class="lwcommerce lwp-container">
@@ -81,7 +83,7 @@ lwp_set_meta_counter( "_product_view", get_the_ID() );
         <div class="col-xs-12 col-sm-12 row no-gutter">
             <div class="col-xs-5 col-sm-4 end-sm">
 				<?php lwc_add_to_cart_html(); ?>
-				<?php lwc_get_stock_html(); ?>
+				<?= lwc_get_stock_html(); ?>
             </div>
         </div>
         <div class="col-sm-12 no-gutter">
