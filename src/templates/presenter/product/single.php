@@ -57,6 +57,15 @@ lwp_set_meta_counter( "_product_view", get_the_ID() );
 
 
 
+
+
+
+
+
+
+
+
+
 </script>
 
 <div class="lwcommerce lwp-container">
@@ -81,9 +90,12 @@ lwp_set_meta_counter( "_product_view", get_the_ID() );
 			<?php do_action( 'lokuswp/product/variant' ); ?>
         </div>
         <div class="col-xs-12 col-sm-12 row no-gutter">
-            <div class="col-xs-5 col-sm-4 end-sm">
+            <div class="col-xs-5 col-sm-4">
 				<?php lwc_add_to_cart_html(); ?>
 				<?= lwc_get_stock_html(); ?>
+            </div>
+            <div class="col-xs-7 col-sm-8 end-sm">
+				<?php lwc_whatsapp_button_html(); ?>
             </div>
         </div>
         <div class="col-sm-12 no-gutter">
