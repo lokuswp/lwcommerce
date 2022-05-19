@@ -69,6 +69,7 @@ td.product-item-detail strike {
 }
 
 .lwc-product-item .product-name {
+    margin-top:4px;
     color: #1d1f1a;
     font-size: 16px;
     font-weight: 600;

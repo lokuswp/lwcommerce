@@ -23,3 +23,5 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Cookies.debug(true, { verbose: false })
+Cypress.Cookies.preserveOnce('lokuswp_cart', 'lokuswp_cart_session', 'lokuswp_cart_data')

@@ -69,7 +69,7 @@
 		endif; ?>
     </div>
 
-    </div>
+    <p style="text-align:center; margin:30px auto;font-weight:600;">Powered by LWCommerce</p>
 </section>
 
 <style>

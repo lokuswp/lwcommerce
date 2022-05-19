@@ -22,8 +22,5 @@ import './commands'
 //     return false;
 // });
 
-// Cypress.Cookies.defaults({
-//     preserve: ['lokuswp_cart', 'lokuswp_cart'],
-// })
 
-Cypress.Cookies.preserveOnce('lokuswp_cart', 'lokuswp_session')
+

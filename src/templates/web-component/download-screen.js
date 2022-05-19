@@ -1,4 +1,4 @@
-class LWPCartIcon extends HTMLElement {
+class LWCDownloadScreen extends HTMLElement {
     constructor() {
         super();
         this.shadow = this.attachShadow({mode: 'open'});
@@ -26,5 +26,5 @@ class LWPCartIcon extends HTMLElement {
     }
 }
 
-window.customElements.define('lwp-cart-icon', LWPCartIcon)
+window.customElements.define('lwc-download-screen', LWCDownloadScreen)
 
