@@ -303,7 +303,6 @@ class AJAX {
 						MAX(CASE WHEN tlcom.meta_key = '_billing_invoice' THEN tlcom.meta_value ELSE 0 END) invoice,
 						MAX(CASE WHEN tlcom.meta_key = '_order_status' THEN tlcom.meta_value ELSE 0 END) order_status,
 						MAX(CASE WHEN tlcom.meta_key = '_shipping_type' THEN tlcom.meta_value ELSE 0 END) shipping_type,
-					    MAX(CASE WHEN tlcom.meta_key = '_order_status' THEN tlcom.meta_value ELSE 0 END) order_status,
 					    MAX(CASE WHEN tlcom.meta_key = '_shipping_status' THEN tlcom.meta_value ELSE 0 END) shipping_status,
 						TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when tlcom.meta_key = 'shipping' then tlcom.meta_value else 0 end),';',2),':',-1)) AS courier,
 						TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when tlcom.meta_key = 'shipping' then tlcom.meta_value else 0 end),';',4),':',-1)) AS service,
@@ -551,8 +550,8 @@ class AJAX {
 		}
 
 		$order_id = sanitize_key( $_POST['order_id'] );
+		$action   = sanitize_text_field( $_POST['action_type'] );
 
-		$action = sanitize_text_field( $_POST['action_type'] );
 		if ( $action === 'pending' ) {
 			if ( has_action( 'lokuswp/admin/order/action' ) ) {
 				do_action( 'lokuswp/admin/order/action', $order_id );

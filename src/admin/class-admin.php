@@ -118,7 +118,6 @@ class Admin {
 		// Datatable
 		wp_register_script( 'datatables', LWC_URL . 'src/includes/libraries/js/datatables/datatables.min.js', array( 'jquery' ), $this->version, false );
 		wp_register_script( 'datatables-buttons', LWC_URL . 'src/includes/libraries/js/datatables/datatables.buttons.min.js', array( 'jquery' ), $this->version, false );
-		wp_register_script( 'datatables-select', LWC_URL . 'src/includes/libraries/js/datatables/datatables.select.min.js', array( 'jquery' ), $this->version, false );
 		wp_register_script( 'datatables-buttons-excel', LWC_URL . 'src/includes/libraries/js/datatables/jszip.min.js', array( 'jquery' ), $this->version, false );
 		wp_register_script( 'datatables-buttons-html5', LWC_URL . 'src/includes/libraries/js/datatables/buttons.html5.min.js', array( 'jquery' ), $this->version, false );
 
@@ -153,7 +152,6 @@ class Admin {
 						'jquery',
 						'datatables',
 						'datatables-buttons',
-						'datatables-select',
 						'datatables-buttons-excel',
 						'datatables-buttons-html5'
 					),
