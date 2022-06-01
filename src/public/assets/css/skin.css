@@ -38,6 +38,19 @@ td.product-item-detail strike {
     padding: 0 8px;
 }
 
+.lwc-pre-order-badge {
+    position: absolute;
+    padding: 4px 8px;
+    background: #ddd;
+    bottom: 14px;
+    left: 6px;
+    background: var(--lokuswp-secondary-color);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 3px;
+}
+
 /* Single */
 .lwp-product h2 {
     color: #282828;

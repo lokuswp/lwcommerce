@@ -210,35 +210,35 @@ $categories = [
 </section>
 
 <script>
-    const apiRajaOngkir = '<?php echo get_rest_url() . 'lwcommerce/v1/rajaongkir'; ?>';
-    const stateId = document.querySelector('#form-state').value;
-
-    // Get City based on Province
-    document.querySelector('#form-state').addEventListener('change', function () {
-        let stateId = this.value;
-        let option = document.createElement('option');
-        option.innerHTML = '<?php _e( "Getting Data", "lwcommerce" ); ?>...';
-        let city = document.querySelector('#form-city');
-        city.innerHTML = '';
-        city.appendChild(option); // Cleaning the city select
-
-        fetch(`${apiRajaOngkir}/city?province=${stateId}`)
-            .then(res => res.json())
-            .then(result => {
-                if (result.status === 'success') {
-                    console.log(result)
-                    result.data.forEach(city => {
-                        let option = document.createElement('option');
-                        option.value = city.city_id;
-                        option.innerHTML = city.type + ' ' + city.city_name;
-                        document.querySelector('#form-city').appendChild(option);
-                    });
-                    document.querySelector('#form-city option:first-child').remove();
-                } else {
-                    console.log(data.message);
-                }
-            });
-    });
+    //const apiRajaOngkir = '<?php //echo get_rest_url() . 'lwcommerce/v1/rajaongkir'; ?>//';
+    //const stateId = document.querySelector('#form-state').value;
+    //
+    //// Get City based on Province
+    //document.querySelector('#form-state').addEventListener('change', function () {
+    //    let stateId = this.value;
+    //    let option = document.createElement('option');
+    //    option.innerHTML = '<?php //_e( "Getting Data", "lwcommerce" ); ?>//...';
+    //    let city = document.querySelector('#form-city');
+    //    city.innerHTML = '';
+    //    city.appendChild(option); // Cleaning the city select
+    //
+    //    fetch(`${apiRajaOngkir}/city?province=${stateId}`)
+    //        .then(res => res.json())
+    //        .then(result => {
+    //            if (result.status === 'success') {
+    //                console.log(result)
+    //                result.data.forEach(city => {
+    //                    let option = document.createElement('option');
+    //                    option.value = city.city_id;
+    //                    option.innerHTML = city.type + ' ' + city.city_name;
+    //                    document.querySelector('#form-city').appendChild(option);
+    //                });
+    //                document.querySelector('#form-city option:first-child').remove();
+    //            } else {
+    //                console.log(data.message);
+    //            }
+    //        });
+    //});
 
 
     // const lat = document.querySelector('input[name="latitude"]').value;

@@ -32,9 +32,17 @@ if ( isset( $_GET["tab"] ) ) {
 /**
  * Default Admin Tabs
  */
-//Tabs::add( 'lwcommerce', 'extensions', __( 'Extensions', 'lwcommerce' ), function () {
-//	require_once 'tabs/extensions.php';
-//} );
+Tabs::add( 'lwcommerce', 'notification', __( 'Notification', 'lwcommerce' ), function () {
+	require_once 'tabs/notification.php';
+} );
+
+Tabs::add( 'lwcommerce', 'shipping', __( 'Shipping', 'lwcommerce' ), function () {
+	require_once 'tabs/shipping.php';
+} );
+
+Tabs::add( 'lwcommerce', 'extensions', __( 'Extensions', 'lwcommerce' ), function () {
+	require_once 'tabs/extensions.php';
+} );
 ?>
     <style>
         .notice {

@@ -87,12 +87,12 @@ function lwc_transaction_logic( $transaction ) {
 	 */
 
 	// TODO 2.0.0 :: Support Multiple Transaction
-	if ( ! empty( $trx_id ) ) {
+	if ( ! empty( $trx_id ) && in_array( 'product', $post_types_in_cart ) ) {
 		$transaction['transaction_id'] = abs( $trx_id );
-	}
 
-	// Order Meta
-	lwc_update_order_meta( $trx_id, "_order_id", $trx_id );
+		// Order Meta
+		lwc_update_order_meta( $trx_id, "_order_id", $trx_id );
+	}
 
 	return $transaction;
 }

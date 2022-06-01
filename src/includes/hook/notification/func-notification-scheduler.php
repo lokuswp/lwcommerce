@@ -33,14 +33,15 @@
  * @source Hook Source lokuswp/src/includes/module/notification/channels/class-notification-email.php | prepare_data() | on line 79
  */
 add_filter( "lokuswp/notification/email/data", "lwc_notification_email_data", 10, 2 );
-function lwc_notification_email_data( $notification, $trx_id ) {
+function lwc_notification_email_data( $data, $trx_id ) {
+	$cart_uuid          = $data['cart_uuid'];
+	$post_types_in_cart = lwp_get_post_types_in_cart( 'post', $cart_uuid ); // [ 'product', 'program' ]
 
-	$notification['status'] = lwc_get_order_meta( $trx_id, '_order_status', true );
-	$notification['path']   = LWC_PATH . 'src/templates/emails/';
-	$notification['name'] = lwc_get_settings( 'store', 'name' );
-	$notification['logo_url'] = 'https://lokuswp.id/wp-content/uploads/2021/12/lokago.png';
-	// $notification->status = "shipped";
+	if ( in_array( 'product', $post_types_in_cart ) ) {
+		$data['brand_name'] = lwp_get_settings( 'lwcommerce', 'store', 'name' );
+		$data['brand_logo'] = lwp_get_settings( 'lwcommerce', 'store', 'logo' );
+	}
 
-	return $notification;
+	return $data;
 }
 

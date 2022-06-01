@@ -2,21 +2,24 @@
 /**
  * Transaction Status
  */
-add_action( "lokuswp/post-checkout/status", "lwp_after_checkout_status", 10, 1 );
-function lwp_after_checkout_status( $trx_uuid ) {
-//    $trx_id = lwp_get_transaction_by_uuid( $trx_uuid )['transaction_id'];
+add_action( "lokuswp/post-checkout/status", "lwc_post_transaction_field", 10, 1 );
+function lwc_post_transaction_field( $trx_uuid ) {
+	$cart_uuid = isset( lwp_get_transaction_by_uuid( $trx_uuid )['cart_uuid'] ) ?? null;
 
-	?>
-    <div class="row mb-2" style="margin-top:12px;">
-        <div class="col-xs-6"><?php _e( "Order Number", "lwcommerce" ); ?></div>
-        <div id="lwc-order-id" class="col-xs-6 txt-right"><strong>#{{order_id}}</strong></div>
-    </div>
+	$product_types_in_cart = lwp_get_post_types_in_cart( 'product', $cart_uuid );
+	if ( in_array( 'product', $product_types_in_cart ) ) :
+		?>
+        <div class="row mb-2" style="margin-top:12px;">
+            <div class="col-xs-6"><?php _e( "Order Number", "lwcommerce" ); ?></div>
+            <div id="lwc-order-id" class="col-xs-6 txt-right"><strong>#{{order_id}}</strong></div>
+        </div>
 
-    <div class="row mb-2">
-        <div class="col-xs-6"><?php _e( "Order Status", "lwcommerce" ); ?></div>
-        <div id="lwc-order-status" class="col-xs-6 txt-right">{{order_status_text}}</div>
-    </div>
+        <div class="row mb-2">
+            <div class="col-xs-6"><?php _e( "Order Status", "lwcommerce" ); ?></div>
+            <div id="lwc-order-status" class="col-xs-6 txt-right">{{order_status_text}}</div>
+        </div>
 	<?php
+	endif;
 }
 
 /**
@@ -149,4 +152,9 @@ function lwc_transaction_response( $response, $trx_id ) {
 	$response['order_id']          = lwc_get_order_meta( $trx_id, "_order_id", true );
 
 	return $response;
+}
+
+add_action( "lokuswp/transaction/save", "lwc_create_transaction", 10, 2 );
+function lwc_create_transaction( $trx_id, $trx_data ) {
+	//lwp_set_error( "lwc_create_transaction", __( "Transaction Failed", "lokuswp-xendit" ) );
 }
