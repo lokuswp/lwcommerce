@@ -167,19 +167,26 @@ class Metabox_Product {
 		$unit_price  = get_post_meta( $post->ID, '_unit_price', true ) == null ? null : lwp_currency_format( false, lwc_get_unit_price( $post->ID ) );
 		$price_promo = get_post_meta( $post->ID, '_price_promo', true ) == null ? null : lwp_currency_format( false, lwc_get_price_promo( $post->ID ) );
 
-		$stock_type = get_post_meta( $post->ID, '_stock_type', true ) == null ? null : esc_attr( get_post_meta( $post->ID, '_stock_type', true ) );
 		$sku_code   = get_post_meta( $post->ID, '_sku_code', true ) == null ? null : esc_attr( get_post_meta( $post->ID, '_sku_code', true ) );
 		$stock      = get_post_meta( $post->ID, '_stock', true ) == null ? null : abs( get_post_meta( $post->ID, '_stock', true ) );
 		$stock_unit = get_post_meta( $post->ID, '_stock_unit', true ) == null ? null : esc_attr( get_post_meta( $post->ID, '_stock_unit', true ) );
 
+		$stock_type = get_post_meta( $post->ID, '_stock_type', true ) == null ? null : esc_attr( get_post_meta( $post->ID, '_stock_type', true ) );
+
+		$manufacture_time      = get_post_meta( $post->ID, '_manufacture_time', true ) == null ? null : esc_attr( get_post_meta( $post->ID, '_manufacture_time', true ) );
+		$manufacture_time_unit = get_post_meta( $post->ID, '_manufacture_time_unit', true ) == null ? null : esc_attr( get_post_meta( $post->ID, '_manufacture_time_unit', true ) );
+
+
 		$product_data_args = [
-			'post_id'     => $post->ID,
-			'unit_price'  => $unit_price,
-			'price_promo' => $price_promo,
-			'stock_type'  => $stock_type,
-			'sku_code'    => $sku_code,
-			'stock'       => $stock,
-			'stock_unit'  => $stock_unit,
+			'post_id'               => $post->ID,
+			'unit_price'            => $unit_price,
+			'price_promo'           => $price_promo,
+			'stock_type'            => $stock_type,
+			'sku_code'              => $sku_code,
+			'stock'                 => $stock,
+			'stock_unit'            => $stock_unit,
+			'manufacture_time'      => $manufacture_time,
+			'manufacture_time_unit' => $manufacture_time_unit,
 		];
 
 		$metabox_data = __DIR__ . '/metabox/product-data.php';
@@ -245,6 +252,10 @@ class Metabox_Product {
 		update_post_meta( $post_id, '_stock', empty( $_POST['_stock'] ) ? 0 : abs( $_POST['_stock'] ) );
 		update_post_meta( $post_id, '_stock_unit', empty( $_POST['_stock_unit'] ) ? "pcs" : sanitize_text_field( $_POST['_stock_unit'] ) );
 
+		update_post_meta( $post_id, '_stock_type', empty( $_POST['_stock_type'] ) ? "ready" : sanitize_text_field( $_POST['_stock_type'] ) );
+		update_post_meta( $post_id, '_manufacture_time', empty( $_POST['_manufacture_time'] ) ? "0" : sanitize_text_field( $_POST['_manufacture_time'] ) );
+		update_post_meta( $post_id, '_manufacture_time_unit', empty( $_POST['_manufacture_time_unit'] ) ? "minutes" : sanitize_text_field( $_POST['_manufacture_time_unit'] ) );
+
 		// Product Type
 		update_post_meta( $post_id, '_product_type', empty( $_POST['_product_type'] ) ? "physical" : sanitize_text_field( $_POST['_product_type'] ) );
 
@@ -259,7 +270,7 @@ class Metabox_Product {
 		update_post_meta( $post_id, '_height', empty( $_POST['_height'] ) ? 0 : abs( $_POST['_height'] ) );
 		update_post_meta( $post_id, '_volume', abs( $_POST['_length'] ) * abs( $_POST['_width'] ) * abs( $_POST['_height'] ) );
 
-        // Do Action
-        do_action( 'lwcommerce/product/data/save', $post_id, $_POST );
+		// Do Action
+		do_action( 'lwcommerce/product/data/save', $post_id, $_POST );
 	}
 }

@@ -311,7 +311,7 @@ class Admin {
 	 * @return void
 	 */
 	public function admin_menu_callback() {
-		include_once LWC_PATH . 'src/admin/settings/tab.php';
+		include_once LWC_PATH . 'src/admin/settings/index.php';
 	}
 
 	/**

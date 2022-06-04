@@ -60,7 +60,7 @@ $categories = [
             </div>
             <div class="col-9 col-sm-12">
                 <img style="width:75px;" src="<?php echo $logo; ?>"/>
-                <input class="form-input lwp-hidden" type="text" name="logo">
+                <input class="form-input " style="display: none" type="text" name="logo">
                 <input type="button" value="<?php _e( 'Choose Image', 'lwcommerce' ); ?>"
                        class="lokuswp-admin-upload btn col-12">
             </div>
