@@ -1,29 +1,37 @@
 <?php
 /**
- * Transaction Status
+ * Display Order Number and Status
+ * in Post Checkout
+ *
+ * @since 0.1.0
  */
 add_action( "lokuswp/post-checkout/status", "lwc_post_transaction_field", 10, 1 );
 function lwc_post_transaction_field( $trx_uuid ) {
-	$cart_uuid = isset( lwp_get_transaction_by_uuid( $trx_uuid )['cart_uuid'] ) ?? null;
+	$cart_uuid             = isset( lwp_get_transaction_by_uuid( $trx_uuid )['cart_uuid'] ) ? lwp_get_transaction_by_uuid( $trx_uuid )['cart_uuid'] : null;
 
-	$product_types_in_cart = lwp_get_post_types_in_cart( 'product', $cart_uuid );
-	if ( in_array( 'product', $product_types_in_cart ) ) :
-		?>
-        <div class="row mb-2" style="margin-top:12px;">
-            <div class="col-xs-6"><?php _e( "Order Number", "lwcommerce" ); ?></div>
-            <div id="lwc-order-id" class="col-xs-6 txt-right"><strong>#{{order_id}}</strong></div>
-        </div>
+    if( $cart_uuid ){
+	    $product_types_in_cart = lwp_get_post_types_in_cart( 'post', $cart_uuid );
 
-        <div class="row mb-2">
-            <div class="col-xs-6"><?php _e( "Order Status", "lwcommerce" ); ?></div>
-            <div id="lwc-order-status" class="col-xs-6 txt-right">{{order_status_text}}</div>
-        </div>
-	<?php
-	endif;
+	    if ( in_array( 'product', $product_types_in_cart ) ) :
+		    ?>
+            <div class="row mb-2" style="margin-top:12px;">
+                <div class="col-xs-6"><?php _e( "Order Number", "lwcommerce" ); ?></div>
+                <div id="lwc-order-id" class="col-xs-6 txt-right"><strong>#{{order_id}}</strong></div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-xs-6"><?php _e( "Order Status", "lwcommerce" ); ?></div>
+                <div id="lwc-order-status" class="col-xs-6 txt-right">{{order_status_text}}</div>
+            </div>
+	    <?php
+	    endif;
+    }
+
 }
 
 /**
- * Download Section
+ * Display Download Section
+ * in Post Checkout
  *
  * @since 0.1.0
  */

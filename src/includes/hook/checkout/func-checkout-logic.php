@@ -17,6 +17,7 @@ function lwc_transaction_logic( $transaction ) {
 
 	$subtotal = lwc_get_subtotal( $cart_uuid );
 
+
 	/**
 	 * 🔁 Business Logic :: Checkout Free Digital Product
 	 * Post_Types : Product
@@ -85,6 +86,27 @@ function lwc_transaction_logic( $transaction ) {
 	 * Shipping : JNE
 	 * Total : > 1
 	 */
+	if ( isset( $product_types_in_cart[0] ) &&
+	     in_array( 'product', $post_types_in_cart ) &&
+	     $product_types_in_cart[0] == "physical" &&
+	     ! in_array( 'digital', $product_types_in_cart ) && // Not Physical
+	     $subtotal > 0 ) {
+
+		// Create Transaction
+		$trx_id = ( new LWP_Transaction() )
+			->set_cart( $cart_uuid )
+			->set_user_fields( $transaction['user_fields'] )
+			->set_payment( $transaction['payment_id'] )
+			->set_extras( $transaction['extras'] )
+			->create();
+
+		// Set Order Status : Pending
+		Order::set_status( $trx_id, "pending" );
+
+		// Set Shipping Status
+		lwc_update_order_meta( $trx_id, "_shipping_type", "physical" );
+		lwc_update_order_meta( $trx_id, "_shipping_status", "pending" );
+	}
 
 	// TODO 2.0.0 :: Support Multiple Transaction
 	if ( ! empty( $trx_id ) && in_array( 'product', $post_types_in_cart ) ) {

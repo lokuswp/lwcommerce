@@ -42,6 +42,8 @@ function lwc_notification_email_data( $data, $trx_id ) {
 		$data['brand_logo'] = lwp_get_settings( 'lwcommerce', 'store', 'logo' );
 	}
 
+	ray( $data );
+
 	return $data;
 }
 

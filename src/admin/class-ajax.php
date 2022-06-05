@@ -79,7 +79,7 @@ class AJAX {
 		}
 
 		// Merge Exist Settings
-		$settings = get_option( 'lwcommerce_store' );
+		$settings = lwp_get_option( 'lwcommerce_store' );
 		if ( empty( $settings ) ) {
 			$merge = $sanitize;
 		} else {
@@ -87,8 +87,8 @@ class AJAX {
 		}
 
 		// Update New Settings
-		update_option( 'lwcommerce_store', $merge );
-		update_option( 'lwcommerce_was_installed', true );
+		lwp_update_option( 'lwcommerce_store', $merge );
+		lwp_update_option( 'lwcommerce_was_installed', true );
 		echo 'action_success';
 
 		wp_die();

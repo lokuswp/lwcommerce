@@ -1,6 +1,6 @@
 <?php
-$name = lwc_get_settings( 'store', 'name' );
-$logo = lwc_get_settings( 'store', 'logo', 'esc_url', LWC_URL . 'src/admin/assets/images/lwcommerce.png' );
+$name = lwp_get_settings( 'lwcommerce', 'store', 'name' );
+$logo = lwp_get_settings( 'lwcommerce', 'store', 'logo', 'esc_url', LWC_URL . 'src/admin/assets/images/lwcommerce.png' );
 $desc = lwc_get_settings( 'store', 'description' );
 
 $email    = lwc_get_settings( 'store', 'email' );
@@ -34,7 +34,7 @@ $categories = [
 
 <style>
     #settings .form-input,
-    #settings .btn{
+    #settings .btn {
         max-width: 500px;
         display: block;
     }
@@ -136,35 +136,41 @@ $categories = [
         </div>
 
         <!-- State -->
-<!--        <div class="form-group hidden">-->
-<!--            <div class="col-3 col-sm-12">-->
-<!--                <label class="form-label" for="state">--><?php //_e( 'State', 'lwcommerce' ); ?><!--</label>-->
-<!--            </div>-->
-<!--            <div class="col-9 col-sm-12">-->
-<!--                <select class="form-select" name="state" id="form-state">-->
-<!--                    <option value="--><?//= $state_selected ?? '' ?><!--">--><?php //_e( 'Choose your state', 'lwcommerce' ); ?><!--</option>-->
-<!--					--><?php //foreach ( $states as $key => $state ) : ?>
-<!--                        <option value="--><?php //echo $state->province_id; ?><!--" --><?php //echo ( $state->province_id == $state_selected ) ? 'selected' : ''; ?><?php //echo $state->province; ?><!--</option>-->
-<!--					--><?php //endforeach; ?>
-<!--                </select>-->
-<!--            </div>-->
-<!--        </div>-->
+        <!--        <div class="form-group hidden">-->
+        <!--            <div class="col-3 col-sm-12">-->
+        <!--                <label class="form-label" for="state">-->
+		<?php //_e( 'State', 'lwcommerce' ); ?><!--</label>-->
+        <!--            </div>-->
+        <!--            <div class="col-9 col-sm-12">-->
+        <!--                <select class="form-select" name="state" id="form-state">-->
+        <!--                    <option value="--><? //= $state_selected ?? '' ?><!--">-->
+		<?php //_e( 'Choose your state', 'lwcommerce' ); ?><!--</option>-->
+        <!--					--><?php //foreach ( $states as $key => $state ) : ?>
+        <!--                        <option value="--><?php //echo $state->province_id; ?><!--" -->
+		<?php //echo ( $state->province_id == $state_selected ) ? 'selected' : ''; ?><?php //echo $state->province; ?><!--</option>-->
+        <!--					--><?php //endforeach; ?>
+        <!--                </select>-->
+        <!--            </div>-->
+        <!--        </div>-->
 
         <!-- District -->
-<!--        <div class="form-group hidden">-->
-<!--            <div class="col-3 col-sm-12">-->
-<!--                <label class="form-label" for="city">--><?php //_e( 'City', 'lwcommerce' ); ?><!--</label>-->
-<!--            </div>-->
-<!--
-<!--            <div class="col-9 col-sm-12">-->
-<!--                <select class="form-select" name="city" id="form-city">-->
-<!--                    <option value="--><?//= $city_selected ?? '' ?><!--">--><?php //_e( 'Choose your city', 'lwcommerce' ); ?><!--</option>-->
-<!--					--><?php //foreach ( $cities as $key => $city ) : ?>
-<!--                        <option value="--><?php //echo $city->city_id; ?><!--" --><?php //echo ( $city->city_id == $city_selected ) ? 'selected' : ''; ?><?php //echo $city->type . ' ' . $city->city_name; ?><!--</option>-->
-<!--					--><?php //endforeach; ?>
-<!--                </select>-->
-<!--            </div>-->
-<!--        </div>-->
+        <!--        <div class="form-group hidden">-->
+        <!--            <div class="col-3 col-sm-12">-->
+        <!--                <label class="form-label" for="city">-->
+		<?php //_e( 'City', 'lwcommerce' ); ?><!--</label>-->
+        <!--            </div>-->
+        <!--
+		<!--            <div class="col-9 col-sm-12">-->
+        <!--                <select class="form-select" name="city" id="form-city">-->
+        <!--                    <option value="--><? //= $city_selected ?? '' ?><!--">-->
+		<?php //_e( 'Choose your city', 'lwcommerce' ); ?><!--</option>-->
+        <!--					--><?php //foreach ( $cities as $key => $city ) : ?>
+        <!--                        <option value="--><?php //echo $city->city_id; ?><!--" -->
+		<?php //echo ( $city->city_id == $city_selected ) ? 'selected' : ''; ?><?php //echo $city->type . ' ' . $city->city_name; ?><!--</option>-->
+        <!--					--><?php //endforeach; ?>
+        <!--                </select>-->
+        <!--            </div>-->
+        <!--        </div>-->
 
         <!-- Address -->
         <div class="form-group">

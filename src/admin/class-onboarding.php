@@ -325,7 +325,7 @@ class Onboarding {
 	 * @since    1.0.0
 	 */
 	public function onboarding_page() {
-		require_once LWC_PATH . 'src/admin/settings/onboarding/onboarding.php';
+		require_once LWC_PATH . 'src/admin/onboarding/onboarding.php';
 	}
 
 	/**
