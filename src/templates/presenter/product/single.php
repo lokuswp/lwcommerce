@@ -46,26 +46,6 @@ lwp_set_meta_counter( "_product_view", get_the_ID() );
             "availability": "https://schema.org/InStock"
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </script>
 
 <div class="lwcommerce lwp-container">

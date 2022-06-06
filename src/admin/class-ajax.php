@@ -88,7 +88,7 @@ class AJAX {
 
 		// Update New Settings
 		lwp_update_option( 'lwcommerce_store', $merge );
-		lwp_update_option( 'lwcommerce_was_installed', true );
+		update_option( 'lwcommerce_was_installed', true );
 		echo 'action_success';
 
 		wp_die();
