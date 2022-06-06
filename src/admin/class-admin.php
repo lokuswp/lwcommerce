@@ -62,13 +62,19 @@ class Admin {
 	 * @return void
 	 */
 	public function admin_init() {
+
 		Tabs::add( 'lwcommerce', 'settings', __( 'Settings', 'lwcommerce' ), function () {
 			require_once 'settings/tabs/settings.php';
 		} );
 
-//		Tabs::add( 'lwcommerce', 'shipping', __( 'Shipping', 'lwcommerce' ), function () {
-//			require_once 'settings/tabs/shipping.php';
-//		} );
+		Tabs::add( 'lwcommerce', 'notification', __( 'Notification', 'lwcommerce' ), function () {
+			require_once 'settings/tabs/notification.php';
+		} );
+
+		Tabs::add( 'lwcommerce', 'shipping', __( 'Shipping', 'lwcommerce' ), function () {
+			require_once 'settings/tabs/shipping.php';
+		} );
+
 	}
 
 	/**
@@ -207,7 +213,7 @@ class Admin {
 			$this->slug,
 			[ $this, 'admin_menu_callback' ],
 			LWC_URL . 'src/admin/assets/images/lwcommerce.png',
-			2
+			3
 		);
 
 		// Remove Duplicate Menu Page -> Sub Menu
@@ -223,17 +229,6 @@ class Admin {
 			'',
 			0
 		);
-
-
-//		add_submenu_page(
-//			$this->slug,
-//			__( 'Shipping', 'lwcommerce' ),
-//			__( 'Shipping', 'lwcommerce' ),
-//			'manage_options',
-//			'admin.php?page=lwcommerce&tab=shipping',
-//			'',
-//			1
-//		);
 
 		$backbone = (array) apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
 		if ( ! in_array( 'lwcommerce/lwcommerce.php', $backbone ) ) {
@@ -294,8 +289,14 @@ class Admin {
 
 		// Add Shortcode List to wp-admin > lwcommerce > settings > apperance
 		Shortcode_Lists::add_shortcode_list( "lwcommerce", $this->slug, $this->name, array(
-			[ 'shortcode' => '[lwcommerce_product_listing]', 'description' => __( "Display Product Listing", 'lwcommerce' ) ],
-			[ 'shortcode' => '[lwcommerce_order_history]', 'description' => __( "Display Order History", 'lwcommerce' ) ],
+			[
+				'shortcode'   => '[lwcommerce_product_listing]',
+				'description' => __( "Display Product Listing", 'lwcommerce' )
+			],
+			[
+				'shortcode'   => '[lwcommerce_order_history]',
+				'description' => __( "Display Order History", 'lwcommerce' )
+			],
 		) );
 
 		// // Add Switch Options to wp-admin > lwcommerce > Appearence
@@ -322,7 +323,7 @@ class Admin {
 	 * @return void
 	 */
 	public function admin_menu_callback() {
-		include_once LWC_PATH . 'src/admin/settings/tab.php';
+		include_once LWC_PATH . 'src/admin/settings/index.php';
 	}
 
 	/**

@@ -26,7 +26,7 @@
 
     // =================== Store Settings =================== //
     $(document).on("click", "#lwc-setting-store-save", function (e) {
-        console.log($("#settings form").serialize())
+
         e.preventDefault();
         $(this).addClass('loading');
         const that = this;

@@ -43,3 +43,7 @@ li#toplevel_page_lwcommerce .wp-menu-image img {
     margin-top: 0;
     margin-bottom: 0;
 }
+
+.input-group .input-group-addon{
+    height: 36px;
+}

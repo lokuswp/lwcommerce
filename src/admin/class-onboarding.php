@@ -124,11 +124,8 @@ class Onboarding {
 	}
 
 	private function set_appearance() {
-//		lsdd_set_settings( 'appearance', 'theme_color', '#fe5301' );
-//		lsdd_set_settings( 'appearance', 'unique_code', 'on' );
-//		lsdd_set_settings( 'appearance', 'popup_notification', 'on' );
-//		lsdd_set_settings( 'appearance', 'custom_nominal', 'on' );
-//		lsdd_set_settings( 'appearance', 'realtime_confirmation', 'on' );
+//		lwp_set_settings( 'lwcommerce, 'appearance', 'theme_color', '#fe5301' );
+//		lwp_set_settings( 'lwcommerce, 'appearance', 'unique_code', 'on' );
 	}
 
 	private function create_order() {
@@ -140,7 +137,7 @@ class Onboarding {
 
 	public function download_backbone() {
 
-		$server = "https://dev.digitalcraft.id/api/v1/product/plugin/update/lokuswp";
+		$server = "https://digitalcraft.id/api/v1/product/plugin/update/lokuswp";
 		$remote = wp_remote_get( $server,
 			array(
 				'timeout' => 30,
@@ -328,7 +325,7 @@ class Onboarding {
 	 * @since    1.0.0
 	 */
 	public function onboarding_page() {
-		require_once LWC_PATH . 'src/admin/settings/onboarding.php';
+		require_once LWC_PATH . 'src/admin/onboarding/onboarding.php';
 	}
 
 	/**

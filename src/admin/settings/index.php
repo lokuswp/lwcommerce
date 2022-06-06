@@ -27,14 +27,10 @@ if ( isset( $_GET["tab"] ) ) {
 // if ($_GET["page"] == "lwcommerce" ) {
 //     require_once 'onboarding/onboarding.php';
 // }else{
+Tabs::add( 'lwcommerce', 'addons', __( 'Addons', 'lwcommerce' ), function () {
+	require_once 'settings/tabs/extensions.php';
+} );
 
-
-/**
- * Default Admin Tabs
- */
-//Tabs::add( 'lwcommerce', 'extensions', __( 'Extensions', 'lwcommerce' ), function () {
-//	require_once 'tabs/extensions.php';
-//} );
 ?>
     <style>
         .notice {

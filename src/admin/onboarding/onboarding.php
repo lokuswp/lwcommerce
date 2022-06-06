@@ -150,12 +150,12 @@ require_once LWC_PATH . 'src/includes/helper/func-getter.php';
                     </div>
                 </div>
                 <div class="tile-content">
-                    <div class="tile-title">Paypal</div>
-                    <small class="tile-subtitle text-gray">Payment Gateway · Premium · 22 Apr 2022</small>
+                    <div class="tile-title">Fonnte</div>
+                    <small class="tile-subtitle text-gray">Whatsapp Gateway · Free</small>
                 </div>
                 <div class="tile-action">
                     <button class="btn btn-link" disabled>
-                        <i class="icon icon-time"></i> Soon
+                        <i class="icon icon-time"></i> Download
                     </button>
                 </div>
             </div>

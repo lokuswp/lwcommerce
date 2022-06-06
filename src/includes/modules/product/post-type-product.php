@@ -144,8 +144,9 @@ class Post_Type_Product {
 			'title' => __( 'Title' ),
 			'price' => __( 'Price', 'lwcommerce' ),
 			'stock' => __( 'Stock', 'lwcommerce' ),
+			'type'  => __( 'Type', 'lwcommerce' ),
 			'id'    => __( 'ID' ),
-			'date'  => $columns['date'],
+//			'date_publish'  => __( 'Date' ),
 		);
 
 		return $columns;
@@ -165,9 +166,13 @@ class Post_Type_Product {
 			echo get_the_post_thumbnail( $post_id, array( 39, 39 ) );
 		}
 
-		// Type ID
+		if ( 'type' === $column ) {
+			$product_type = get_post_meta( $post_id, '_product_type', true ) ?? esc_attr( get_post_meta( $post->ID, '_product_type', true ) );
+            echo '<div style="background: #ddd;border-radius:100px;text-align: center;padding: 4px 8px;">'. ucfirst($product_type) .'</div>';
+		}
+
 		if ( 'id' === $column ) {
-			echo '<input style="width:50px;text-align:center;" value="' . get_the_ID() . '"/>';
+			echo '<input style="width:50px;text-align:center;border: 1px solid #ddd;border-radius:12px;" value="' . get_the_ID() . '"/>';
 		}
 
 
@@ -195,12 +200,17 @@ class Post_Type_Product {
         <style>
             .column-image,
             .column-id {
-                width: 4%;
+                width: 5%;
+            }
+
+            .column-type,
+            .column-date_publish{
+                width: 8%;
             }
 
             .column-price,
             .column-stock {
-                width: 13%;
+                width: 12%;
             }
 
             .column-price small {

@@ -6,12 +6,14 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     return false
 })
 
-describe('Buy Free Product (Digital) via Bank Transfer', () => {
+describe('Free Digital Product Checkout via Bank Transfer', () => {
 
     beforeEach(() => {
         Cypress.Cookies.defaults({
             preserve: /lokuswp_/,
         })
+
+
     })
 
     it('add free product to cart', function () {
@@ -27,7 +29,7 @@ describe('Buy Free Product (Digital) via Bank Transfer', () => {
 
     });
 
-    it.only('add and sub quantity in cart', function () {
+    it('add and sub quantity in cart', function () {
 
         // Visit Product Cart
         cy.visit(baseUrl + '/cart');
@@ -46,60 +48,49 @@ describe('Buy Free Product (Digital) via Bank Transfer', () => {
 
     });
 
-    it('checkout - fill form data', function () {
+    it('Checkout', function () {
 
         // Visit Checkout Page
         cy.visit(baseUrl + '/checkout');
 
         // Fill Customer Data
         cy.get('#lokuswp-form > .top > .checkout-form > .lwp-form-group > #name').type('Test')
-        cy.get('#lokuswp-form > .top > .checkout-form > .lwp-form-group > #phone').type('08272784187841')
+        cy.get('#lokuswp-form > .top > .checkout-form > .lwp-form-group > #phone').type('08561655028')
         cy.get('#lokuswp-form > .top > .checkout-form > .lwp-inline-form > #email').type('test@gmail.com')
 
-        // Klik Tombol Selanjutnya
-        // cy.get('[data-cy="verify-form"]').click()
+        // Continue to Payment
+        cy.get('#lokuswp-verify-form').click()
 
-        // Cek :: Pindah ke Halaman Pengiriman
+        // Assert :: Shipping Tab Active
 
-        // Klik Tombol Selanjutnya
+        // Continue to Payment
         // cy.get('[data-cy="verify-shipping"]').click()
 
-        // Cek :: Pindah ke Halaman Pembayaran
+        // Assert :: Payment Tab Active
+        cy.get('#lokuswp-checkout > .transaction-tabs > .swiper-container > #tab-nav > .swiper-slide-next').should('have.class', 'swiper-slide-thumb-active')
 
-        // Pilih Metode Pembayaran Transfer Bank
-        // cy.get('.form-group:first() .item-radio > label').click()
+        // Choose Bank Transfer
+        cy.get(':nth-child(1) > .item-radio > label').click()
 
-        // Buat Pesanan
-        // cy.get('[data-cy="make-a-checkout"]').click();
+        // Create Order
+        cy.get('#lokuswp-checkout-commit').click()
     });
 
+    it('Post Checkout', function () {
 
-    it('checkout -  choose shipping', function () {
+        // have thankyou screen
+        cy.get('.message').should('contain', 'Pesanan anda telah sampai')
 
+        // have status section
+        cy.get('#transaction-status > .row > .col-xs-6 > #trx-status-refresh > span').should("contain", "Lunas")
+
+        // have download file section
     });
 
-    it('checkout - choose payment method', function () {
+    it('Email Notification', function () {
+        // system was sending notification email to user : completed
 
-    });
-
-    it('after-checkout - have thank you screen', function () {
-
-    });
-
-    it('after-checkout - have order status section', function () {
-
-    });
-
-    it('after-checkout - have download file section', function () {
-
-    });
-
-    it('system-check - system was sending notification email to user : completed', function () {
-
-    });
-
-    it('system-check - system was sending notification email to admin : completed', function () {
-
+        // system was sending notification email to admin : completed
     });
 
 })
