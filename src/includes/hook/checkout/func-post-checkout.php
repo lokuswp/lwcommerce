@@ -128,7 +128,7 @@ function lwc_transaction_response( $response, $trx_id ) {
 			$title       = __( "Order Cancelled", "lwcommerce" );
 			$description = __( "Please be patient", "lwcommerce" );
 			break;
-		case 'shipping':
+		case 'shipped':
 			$title       = __( "Order Shipped", "lwcommerce" );
 			$description = __( "Please be patient", "lwcommerce" );
 			break;

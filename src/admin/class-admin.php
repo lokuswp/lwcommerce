@@ -62,13 +62,19 @@ class Admin {
 	 * @return void
 	 */
 	public function admin_init() {
+
 		Tabs::add( 'lwcommerce', 'settings', __( 'Settings', 'lwcommerce' ), function () {
 			require_once 'settings/tabs/settings.php';
 		} );
 
-//		Tabs::add( 'lwcommerce', 'shipping', __( 'Shipping', 'lwcommerce' ), function () {
-//			require_once 'settings/tabs/shipping.php';
-//		} );
+		Tabs::add( 'lwcommerce', 'notification', __( 'Notification', 'lwcommerce' ), function () {
+			require_once 'settings/tabs/notification.php';
+		} );
+
+		Tabs::add( 'lwcommerce', 'shipping', __( 'Shipping', 'lwcommerce' ), function () {
+			require_once 'settings/tabs/shipping.php';
+		} );
+
 	}
 
 	/**
@@ -283,8 +289,14 @@ class Admin {
 
 		// Add Shortcode List to wp-admin > lwcommerce > settings > apperance
 		Shortcode_Lists::add_shortcode_list( "lwcommerce", $this->slug, $this->name, array(
-			[ 'shortcode' => '[lwcommerce_product_listing]', 'description' => __( "Display Product Listing", 'lwcommerce' ) ],
-			[ 'shortcode' => '[lwcommerce_order_history]', 'description' => __( "Display Order History", 'lwcommerce' ) ],
+			[
+				'shortcode'   => '[lwcommerce_product_listing]',
+				'description' => __( "Display Product Listing", 'lwcommerce' )
+			],
+			[
+				'shortcode'   => '[lwcommerce_order_history]',
+				'description' => __( "Display Order History", 'lwcommerce' )
+			],
 		) );
 
 		// // Add Switch Options to wp-admin > lwcommerce > Appearence
