@@ -17,7 +17,6 @@ class Plugin {
 
 		// Shortcodes
 		new Shortcodes\Product_Listing();
-		new Shortcodes\Order_History();
 		new Shortcodes\Cart_Icon();
 
 		// Products

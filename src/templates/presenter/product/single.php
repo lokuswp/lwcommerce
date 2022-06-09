@@ -6,47 +6,47 @@ lwp_set_meta_counter( "_product_view", get_the_ID() );
 ?>
 
 <!-- Google Rich Snippet -->
-<script type="application/ld+json">
-    {
-        "@context": "https://schema.org/",
-        "@type": "Product",
-        "name": "<?php the_title(); ?>",
-        "image": ['<?= get_the_post_thumbnail_url(); ?>'],
-        "description": <?php the_content(); ?>,
-        "sku": "0374984678",
-        "mpn": "738930",
-        "brand": {
-            "@type": "lokuswp",
-            "name": "LokusWP"
-        },
-        "review": {
-            "@type": "Review",
-            "reviewRating": {
-                "@type": "Rating",
-                "ratingValue": "4",
-                "bestRating": "5"
-            },
-            "author": {
-                "@type": "Person",
-                "name": "Lasida Azis"
-            }
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.7",
-            "reviewCount": "1455"
-        },
-        "offers": {
-            "@type": "Offer",
-            "url": "<?= get_permalink(); ?>",
-            "priceCurrency": "IDR",
-            "price": "500,000",
-            "priceValidUntil": "2021-11-20",
-            "itemCondition": "https://schema.org/NewCondition",
-            "availability": "https://schema.org/InStock"
-        }
-    }
-</script>
+<!--<script type="application/ld+json">-->
+<!--    {-->
+<!--        "@context": "https://schema.org/",-->
+<!--        "@type": "Product",-->
+<!--        "name": "--><?php //the_title(); ?><!--",-->
+<!--        "image": ['--><?//= get_the_post_thumbnail_url(); ?><!--'],-->
+<!--        "description": --><?php //the_content(); ?><!--,-->
+<!--        "sku": "0374984678",-->
+<!--        "mpn": "738930",-->
+<!--        "brand": {-->
+<!--            "@type": "lokuswp",-->
+<!--            "name": "LokusWP"-->
+<!--        },-->
+<!--        "review": {-->
+<!--            "@type": "Review",-->
+<!--            "reviewRating": {-->
+<!--                "@type": "Rating",-->
+<!--                "ratingValue": "4",-->
+<!--                "bestRating": "5"-->
+<!--            },-->
+<!--            "author": {-->
+<!--                "@type": "Person",-->
+<!--                "name": "Lasida Azis"-->
+<!--            }-->
+<!--        },-->
+<!--        "aggregateRating": {-->
+<!--            "@type": "AggregateRating",-->
+<!--            "ratingValue": "4.7",-->
+<!--            "reviewCount": "1455"-->
+<!--        },-->
+<!--        "offers": {-->
+<!--            "@type": "Offer",-->
+<!--            "url": "--><?//= get_permalink(); ?><!--",-->
+<!--            "priceCurrency": "IDR",-->
+<!--            "price": "500,000",-->
+<!--            "priceValidUntil": "2021-11-20",-->
+<!--            "itemCondition": "https://schema.org/NewCondition",-->
+<!--            "availability": "https://schema.org/InStock"-->
+<!--        }-->
+<!--    }-->
+<!--</script>-->
 
 <div class="lwcommerce lwp-container">
 	<?php require_once LWC_PATH . 'src/templates/component/navigation.php'; ?>

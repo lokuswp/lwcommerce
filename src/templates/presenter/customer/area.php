@@ -2,11 +2,11 @@
 
 /**
  * Template :: Transaction
- * 
+ *
  * Displaying Transaction Interface for User
  * Allow to Extendable
  * This is template just hanger for attach transaction component
- * 
+ *
  * @since 0.5 - BETA
  */
 
@@ -14,7 +14,7 @@
 
 <section id="lokuswp-transaction">
 
-    <input type="hidden" id="transaction-nonce" value="<?php echo wp_create_nonce('lokuwp-transaction-nonce'); ?>" />
+    <input type="hidden" id="transaction-nonce" value="<?php echo wp_create_nonce( 'lokuwp-transaction-nonce' ); ?>"/>
 
     <!-- Transaction Tabs -->
     <div class="transaction-tabs">
@@ -23,12 +23,12 @@
         <div class="swiper-container swiper-tabs-nav">
             <div class="swiper-wrapper">
 
-                <?php 
-                /**
-                 * Hanger for Hooking Header Tab
-                 */
-                do_action("lwcommerce/customer/tab/header"); 
-                ?>
+				<?php
+				/**
+				 * Hanger for Hooking Header Tab
+				 */
+				do_action( "lwcommerce/customer/tab/header" );
+				?>
 
             </div>
         </div>
@@ -37,12 +37,12 @@
         <div class="swiper-container swiper-tabs-content">
             <div class="swiper-wrapper">
 
-                <?php 
-                /**
-                 * Hanger for Hooking Content Tab 
-                 */
-                do_action("lwcommerce/customer/tab/content"); 
-                ?>
+				<?php
+				/**
+				 * Hanger for Hooking Content Tab
+				 */
+				do_action( "lwcommerce/customer/tab/content" );
+				?>
 
             </div>
         </div>
@@ -52,7 +52,7 @@
 </section>
 
 <style>
-    .hidden{
+    .hidden {
         display: none !important;
     }
 </style>
@@ -65,7 +65,7 @@
     var swiperTabsContent = null;
     var swiperTabsNav = null;
 
-    jQuery(window).on("load", function() {
+    jQuery(window).on("load", function () {
 
         swiperTabsNav = new Swiper('.swiper-tabs-nav', {
             spaceBetween: 0,
