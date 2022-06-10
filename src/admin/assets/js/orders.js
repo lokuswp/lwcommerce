@@ -166,8 +166,8 @@
                                             </div>
                                             <div class="lwc-flex-column">
                                                 ${data.shipping_type === 'digital' ?
-                                `<span class="lwc-text-bold">Kurir</span>
-                                                    <span>-</span>`
+                                `<!--<span class="lwc-text-bold">Kurir</span>-->
+<!--<span>-</span>-->`
                                 :
                                 `<span class="lwc-text-bold">Kurir</span>
                                                     ${data.courier ? `-`
@@ -246,7 +246,7 @@
                                         </button>
                                     </div>
                                     <div class="lwc-flex lwc-justify-content-space-between">
-                                        <span class="lwc-text-bold">Status: ${data.shipping_status === '0' ? '{{Shipping Status}}' : data.shipping_status}</span>
+                                        <span class="lwc-text-bold"></span>
                                         <span class="lwc-text-bold">${data.country === 'ID' ? 'Indonesia' : ''}</span>
                                     </div>
                                 </div>

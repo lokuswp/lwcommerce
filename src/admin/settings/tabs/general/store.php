@@ -1,7 +1,7 @@
 <?php
 $name = lwp_get_settings( 'lwcommerce', 'store', 'name' );
 $logo = lwp_get_settings( 'lwcommerce', 'store', 'logo', 'esc_url', LWC_URL . 'src/admin/assets/images/lwcommerce.png' );
-$desc = lwc_get_settings( 'store', 'description' );
+$desc = lwp_get_settings( 'lwcommerce', 'store', 'description' );
 
 $email    = lwc_get_settings( 'store', 'email' );
 $whatsapp = lwc_get_settings( 'store', 'whatsapp' );

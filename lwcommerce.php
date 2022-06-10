@@ -3,7 +3,7 @@
 /**
  * @wordpress-plugin
  *
- * Plugin Name:       LWCommerce (beta)
+ * Plugin Name:       LWCommerce ~ BETA
  * Plugin URI:        https://lokuswp.id/plugin/lwcommerce
  * Description:       Local First eCommerce WordPress
  * Version:           0.0.4-alpha

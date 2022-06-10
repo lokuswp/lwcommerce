@@ -8,15 +8,16 @@ use stdClass;
 
 class Updater {
 
+	protected $plugin_file = LWC_BASE; /* ---CHANGE THIS--- */
 	protected string $plugin_slug = 'lwcommerce'; /* ---CHANGE THIS--- */
-	protected string $plugin_file = LWC_BASE; /* ---CHANGE THIS--- */
 	protected string $plugin_host = 'https://api.github.com/repos/lokuswp/lwcommerce/releases/latest'; /* ---CHANGE THIS--- */
 	protected string $plugin_version = LWC_VERSION; /* ---CHANGE THIS--- */
 
 	public function __construct() {
 		global $pagenow;
 
-		add_filter( 'plugin_row_meta', [ $this, 'plugin_row' ], 10, 3 );
+		add_filter( 'network_admin_plugin_action_links', [ $this, 'plugin_row' ], 10, 4 );
+		add_filter( 'plugin_action_links', [ $this, 'plugin_row' ], 10, 4 );
 		add_action( 'in_plugin_update_message-' . $this->plugin_slug . '/' . $this->plugin_slug . '.php', [
 			$this,
 			'plugin_update_message'
@@ -214,11 +215,11 @@ class Updater {
 		printf( lwp_transient_timeout( $this->plugin_slug . '_update' ) );
 	}
 
-	public function plugin_row( $links, $plugin_file ) {
-		if ( strpos( $plugin_file, basename( $this->plugin_file ) ) ) {
-			$links[] = '<a id="' . $this->plugin_slug . '" href="' . admin_url( 'plugins.php?manual-check=' . $this->plugin_slug ) . '">' . __( 'Check Update Manually', 'lwcommerce' ) . '</a>';
+	public function plugin_row( $links_array, $plugin_file_name, $plugin_data, $status ) {
+		if ( strpos( $plugin_file_name, basename( $this->plugin_file ) ) ) {
+			$links_array[] = '<a id="' . $this->plugin_slug . '" href="' . admin_url( 'plugins.php?manual-check=' . $this->plugin_slug ) . '">' . __( 'Check Update', 'lokuswp' ) . '</a>';
 		}
 
-		return $links;
+		return $links_array;
 	}
 }

@@ -71,9 +71,9 @@ class Admin {
 			require_once 'settings/tabs/notification.php';
 		} );
 
-		Tabs::add( 'lwcommerce', 'shipping', __( 'Shipping', 'lwcommerce' ), function () {
-			require_once 'settings/tabs/shipping.php';
-		} );
+//		Tabs::add( 'lwcommerce', 'shipping', __( 'Shipping', 'lwcommerce' ), function () {
+//			require_once 'settings/tabs/shipping.php';
+//		} );
 
 	}
 

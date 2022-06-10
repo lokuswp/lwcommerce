@@ -46,18 +46,18 @@ class Plugin {
 		require_once LWC_PATH . 'src/includes/modules/order/class-order.php';
 
 		// Shipping Module
-		require_once LWC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
-		require_once LWC_PATH . 'src/includes/modules/shipping/class-manager.php';
+//		require_once LWC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
+//		require_once LWC_PATH . 'src/includes/modules/shipping/class-manager.php';
 //		require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-shipping-processing.php';
 
 		// API
-		require_once LWC_PATH . 'src/includes/modules/shipping/api/class-rajaongkir-api.php';
-		require_once LWC_PATH . 'src/includes/modules/shipping/api/class-get-services.php';
+//		require_once LWC_PATH . 'src/includes/modules/shipping/api/class-rajaongkir-api.php';
+//		require_once LWC_PATH . 'src/includes/modules/shipping/api/class-get-services.php';
 
 		// Shipping
 		// require_once LWC_PATH . 'src/includes/modules/shipping/carriers/class-email-smtp.php';
-		require_once LWC_PATH . 'src/includes/modules/shipping/carriers/class-rajaongkir-jne.php';
-		require_once LWC_PATH . 'src/includes/modules/shipping/carriers/class-free-shipping.php';
+//		require_once LWC_PATH . 'src/includes/modules/shipping/carriers/class-rajaongkir-jne.php';
+//		require_once LWC_PATH . 'src/includes/modules/shipping/carriers/class-free-shipping.php';
 
 		// Plugins Loaded
 		add_action( 'plugins_loaded', [ $this, 'global_loaded' ] );
