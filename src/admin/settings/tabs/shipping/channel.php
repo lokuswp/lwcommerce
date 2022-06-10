@@ -22,12 +22,8 @@ class Shipping_Carrier {
 		if ( ! class_exists( 'LokusWP\Commerce\Shipping\Manager' ) ) {
 			return false;
 		}
-
-
-
 		$carriers = Shipping\Manager::registered();
-
-
+        
 		if ( $carriers ) : ?>
 
             <ul class="methods" id="draggable">
@@ -55,7 +51,8 @@ class Shipping_Carrier {
                             </div>
 
                             <!-- Status -->
-                            <div class="column col-3 lwcommerce-shipping-status" style="display: flex; justify-content: center">
+                            <div class="column col-3 lwcommerce-shipping-status"
+                                 style="display: flex; justify-content: center">
                                 <div class="form-group">
 
                                     <label class="form-switch">

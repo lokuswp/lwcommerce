@@ -81,12 +81,15 @@ class Frontend {
 	public function enqueue_scripts() {
 		// Load Theme JS
 		wp_enqueue_script( $this->slug, plugins_url( '/src/public/assets/js/public.js', LWC_BASE ), array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->slug . '-shipping', plugins_url( '/src/public/assets/js/shipping.js', LWC_BASE ), array( 'jquery' ), $this->version, false );
+
 	}
 
 	/**
 	 * Deferring Script for better Performance
 	 *
 	 * @link https://wpshout.com/defer-parsing-javascript-wordpress/
+	 *
 	 * @param $tag
 	 * @param $handle
 	 * @param $src

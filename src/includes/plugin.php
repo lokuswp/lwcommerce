@@ -38,7 +38,7 @@ class Plugin {
 		require_once LWC_PATH . 'src/includes/hook/cart/func-cart-processing.php';
 		require_once LWC_PATH . 'src/includes/hook/checkout/func-checkout-tab.php';
 		require_once LWC_PATH . 'src/includes/hook/checkout/func-checkout-logic.php';
-		require_once LWC_PATH . 'src/includes/hook/checkout/func-post-checkout.php';
+
 		require_once LWC_PATH . 'src/includes/hook/notification/func-notification-scheduler.php';
 		require_once LWC_PATH . 'src/includes/hook/order/func-order-create.php';
 
@@ -46,17 +46,18 @@ class Plugin {
 		require_once LWC_PATH . 'src/includes/modules/order/class-order.php';
 
 		// Shipping Module
-		// require_once LWC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
-		// require_once LWC_PATH . 'src/includes/modules/shipping/class-manager.php';
-		// require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-shipping-processing.php';
+		require_once LWC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
+		require_once LWC_PATH . 'src/includes/modules/shipping/class-manager.php';
+//		require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-shipping-processing.php';
 
 		// API
-		// require_once LWC_PATH . 'src/includes/modules/shipping/api/class-rajaongkir-api.php';
-		// require_once LWC_PATH . 'src/includes/modules/shipping/api/class-get-shipping-list.php';
+		require_once LWC_PATH . 'src/includes/modules/shipping/api/class-rajaongkir-api.php';
+		require_once LWC_PATH . 'src/includes/modules/shipping/api/class-get-services.php';
 
 		// Shipping
 		// require_once LWC_PATH . 'src/includes/modules/shipping/carriers/class-email-smtp.php';
-		// require_once LWC_PATH . 'src/includes/modules/shipping/carriers/class-jne-rajaongkir.php';
+		require_once LWC_PATH . 'src/includes/modules/shipping/carriers/class-rajaongkir-jne.php';
+		require_once LWC_PATH . 'src/includes/modules/shipping/carriers/class-free-shipping.php';
 
 		// Plugins Loaded
 		add_action( 'plugins_loaded', [ $this, 'global_loaded' ] );
@@ -92,7 +93,7 @@ class Plugin {
 		if ( is_admin() ) {
 			require_once LWC_PATH . 'src/includes/modules/order/class-followup-whatsapp.php';
 		}
-
+		require_once LWC_PATH . 'src/includes/hook/checkout/func-post-checkout.php';
 		// require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-shipping-processing.php';
 		// require_once LWC_PATH . 'src/includes/modules/order/methods/class-order-processing.php';
 	}

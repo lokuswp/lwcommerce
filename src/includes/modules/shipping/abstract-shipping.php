@@ -74,19 +74,23 @@ abstract class Gateway {
 	public string $category;
 
 	/**
+	 * @param $config
+	 *
 	 * @return void
 	 */
-	public function init_data(): void {
-		$data                   = array();
-		$data['id']             = $this->id;
-		$data['name']           = $this->name;
-		$data['logo_url']       = $this->logo_url;
-		$data['description']    = $this->description;
-		$data['category']       = $this->category;
-		$data['zones']          = $this->zones;
-		$data['services']       = $this->services;
-		$data['data']           = [];
+	public function init_data( $config ): void {
+		$data                = array();
+		$data['id']          = $this->id;
+		$data['name']        = $this->name;
+		$data['logo_url']    = $this->logo_url;
+		$data['description'] = $this->description;
+		$data['category']    = $this->category;
+		$data['zones']       = $this->zones;
+//		$data['services']       = $this->services;
+		$data['data']           = "";
 		$data['shipping_class'] = get_class( $this );
+
+		$data = array_merge( $data, $config );
 
 		// Saving Channel Data to DB
 		$shipping_id = 'shipping-' . $this->id;
@@ -161,5 +165,5 @@ abstract class Gateway {
 
 	abstract public function notification_html( object $transaction );
 
-	abstract public function calc_cost( $package );
+	abstract public function get_cost( $services, $shipping_obj, $destination );
 }

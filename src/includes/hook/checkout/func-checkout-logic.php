@@ -17,7 +17,6 @@ function lwc_transaction_logic( $transaction ) {
 
 	$subtotal = lwc_get_subtotal( $cart_uuid );
 
-
 	/**
 	 * 🔁 Business Logic :: Checkout Free Digital Product
 	 * Post_Types : Product
@@ -39,8 +38,9 @@ function lwc_transaction_logic( $transaction ) {
 			->set_paid() // Status : Completed
 			->create();
 
+
 		// Hook for Digital Products
-		do_action( "lwcommerce/logic/product/digital", $trx_id );
+		// do_action( "lwcommerce/logic/product/digital", $trx_id );
 
 		// Set Notification Shipping
 		lwc_update_order_meta( $trx_id, "_shipping_type", "digital" );

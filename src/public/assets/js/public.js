@@ -41,48 +41,6 @@
         }));
     });
 
-    /**
-     * On User Change Cites in Shipping Section
-     * Getting Package Based on Selected Cities
-     */
-    // $(document).on('change', '#lwcommerce-shipping #cities', function (e) {
-    //
-    //     let destination = $('#cities').find(":selected").val();
-    //     // Request to REST API
-    //     jQuery.ajax({
-    //         url: lokuswp.rest_url + "lwcommerce/v1/shipping/active?destination=" + destination,
-    //         type: 'GET',
-    //         success: function (response) {
-    //
-    //             // Formatting Struct and Data
-    //             let shippingStruct = jQuery('#struct-shipping-services').html();
-    //
-    //             let rawData = {};
-    //             rawData = response;
-    //
-    //             rawData.currencyFormat = function () {
-    //                 return function (val, render) {
-    //                     return lokusWPCurrencyFormat(true, render(val));
-    //                 };
-    //             }
-    //
-    //             let shippingData = {
-    //                 'shippingChannel': rawData
-    //             };
-    //
-    //             // Rendering with Mustache
-    //             jQuery("#lwcommerce-shipping-services").html(Mustache.to_html(shippingStruct, shippingData));
-    //
-    //             // Saving to Local with Cache
-    //             // lokusCookie.set("lokuswp_shipping_list", JSON.stringify(shippingData), 1); // 1 Day Expired
-    //         },
-    //         error: function (data) {
-    //             $(document).snackbar('Tidak dapat mengambil data dari server, Silahkan Coba Lagi');
-    //             console.log(data);
-    //         }
-    //     });
-    //
-    // });
     //
     // /**
     //  * User Click or change Shipping Channel

@@ -27,9 +27,9 @@ if ( isset( $_GET["tab"] ) ) {
 // if ($_GET["page"] == "lwcommerce" ) {
 //     require_once 'onboarding/onboarding.php';
 // }else{
-Tabs::add( 'lwcommerce', 'addons', __( 'Addons', 'lwcommerce' ), function () {
-	require_once 'settings/tabs/extensions.php';
-} );
+//Tabs::add( 'lwcommerce', 'addons', __( 'Addons', 'lwcommerce' ), function () {
+//	require_once 'settings/tabs/addons.php';
+//} );
 
 ?>
     <style>
@@ -82,7 +82,7 @@ Tabs::add( 'lwcommerce', 'addons', __( 'Addons', 'lwcommerce' ), function () {
 
 					// Request not Available on List -> Call License Section
 					if ( ! array_key_exists( $tabs_query, (array) $tab_lists ) && $tabs_query != 'app' ) {
-						require_once 'tabs/extensions.php';
+						//require_once 'tabs/addons.php';
 					}
 
 					foreach ( (array) $tab_lists as $key => $item ) {
@@ -92,12 +92,12 @@ Tabs::add( 'lwcommerce', 'addons', __( 'Addons', 'lwcommerce' ), function () {
 							if ( has_action( "lwcommerce/admin/tabs/{$key}" ) ) {
 								do_action( "lwcommerce/admin/tabs/{$key}" );
 							}
-						} else if ( $tabs_query == 'app' ) {
-							require_once 'tabs/app.php';
+						} else if ( $tabs_query == 'addons' ) {
+							// 'tabs/addons.php';
 						}
 					}
 				} else if ( $tabs_query == 'app' ) {
-					require_once 'tabs/app.php';
+					//	require_once 'tabs/addons.php';
 				}
 			} else { //Fallback
 				require_once 'tabs/settings.php';
