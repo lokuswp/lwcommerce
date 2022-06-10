@@ -52,7 +52,7 @@ function lwc_set_downloads_in_checkout( $trx_uuid ) {
                     <strong>{{product_attachment_version}}</strong>
                 </td>
                 <td class="txt-right" style="width: 50px">
-                    <a href="{{product_attachment_url}}"
+                    <a href="{{product_attachment_url}}" target="_blank"
                        class="lokus-btn btn-primary btn-block">
 						<?php _e( "Download", "lwcommerce" ); ?>
                     </a>
@@ -157,7 +157,7 @@ function lwc_transaction_response( $response, $trx_id ) {
 
 add_filter( "lokuswp/rest/transaction/response", "lwc_download_response", 10, 2 );
 function lwc_download_response( $response, $trx_id ) {
-    
+
 	$trx        = lwp_get_transaction( $trx_id );
 	$trx_status = $trx['status'];
 	$cart_uuid  = $trx['cart_uuid'];

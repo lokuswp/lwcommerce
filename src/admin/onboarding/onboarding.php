@@ -116,27 +116,6 @@ require_once LWC_PATH . 'src/includes/helper/func-getter.php';
                 <p class="empty-subtitle"><?php _e( "You may need this extension for add new ability", "lwcommerce" ); ?></p>
             </div>
 
-            <div class="tile tile-centered">
-                <div class="tile-icon">
-                    <div class="example-tile-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                             class="feather feather-credit-card">
-                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-                            <line x1="1" y1="10" x2="23" y2="10"></line>
-                        </svg>
-                    </div>
-                </div>
-                <div class="tile-content">
-                    <div class="tile-title">OY Indonesia - E Wallet</div>
-                    <small class="tile-subtitle text-gray">Payment Gateway · Free · 04 Apr 2022</small>
-                </div>
-                <div class="tile-action">
-                    <button class="btn btn-link" disabled>
-                        <i class="icon icon-time"></i> Soon
-                    </button>
-                </div>
-            </div>
 
             <div class="tile tile-centered">
                 <div class="tile-icon">
@@ -165,8 +144,8 @@ require_once LWC_PATH . 'src/includes/helper/func-getter.php';
                    class="btn btn-primary step-to-complete">
 					<?php _e( "Add New Product", "lwcommerce" ); ?>
                 </a>
-                <a href="https://panduan.lokuswp.com/" class="btn">
-					<?php _e( "Read Guide", "lwcommerce" ); ?>
+                <a href="<?php echo get_site_url() . '/products/'; ?>" class="btn">
+					<?php _e( "See Product Listing", "lwcommerce" ); ?>
                 </a>
             </div>
 

@@ -1,7 +1,14 @@
 <?php
-$name = lwp_get_settings( 'lwcommerce', 'store', 'name' );
-$logo = lwp_get_settings( 'lwcommerce', 'store', 'logo', 'esc_url', LWC_URL . 'src/admin/assets/images/lwcommerce.png' );
-$desc = lwp_get_settings( 'lwcommerce', 'store', 'description' );
+/*****************************************
+ * Free Shipping
+ * Shipping Method for Free Shipping without condition
+ *
+ * @since 0.1.0
+ *****************************************
+ */
+$name = lwc_get_settings( 'store', 'name' );
+$logo = lwc_get_settings( 'store', 'logo', 'esc_url', LWC_URL . 'src/admin/assets/images/lwcommerce.png' );
+$desc = lwc_get_settings( 'store', 'description' );
 
 $email    = lwc_get_settings( 'store', 'email' );
 $whatsapp = lwc_get_settings( 'store', 'whatsapp' );

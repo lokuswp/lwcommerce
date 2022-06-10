@@ -238,7 +238,7 @@ class Admin {
 				__( 'Be a Pro', 'lwcommerce' ),
 				__( 'Be a Pro', 'lwcommerce' ),
 				'manage_options',
-				'admin.php?page=lwcommerce&tab=extensions',
+				'admin.php?page=lokuswp&tab=marketplace',
 				'',
 				9999
 			);
@@ -248,7 +248,7 @@ class Admin {
 				__( 'Get More Extensions', 'lwcommerce' ),
 				__( 'Get More Extensions', 'lwcommerce' ),
 				'manage_options',
-				'admin.php?page=lwcommerce&tab=extensions',
+				'admin.php?page=lokuswp&tab=marketplace',
 				'',
 				9999
 			);
@@ -292,11 +292,7 @@ class Admin {
 			[
 				'shortcode'   => '[lwcommerce_product_listing]',
 				'description' => __( "Display Product Listing", 'lwcommerce' )
-			],
-			[
-				'shortcode'   => '[lwcommerce_order_history]',
-				'description' => __( "Display Order History", 'lwcommerce' )
-			],
+			]
 		) );
 
 		// // Add Switch Options to wp-admin > lwcommerce > Appearence

@@ -35,11 +35,11 @@
 add_filter( "lokuswp/notification/email/data", "lwc_notification_email_data", 10, 2 );
 function lwc_notification_email_data( $data, $trx_id ) {
 	$cart_uuid          = $data['cart_uuid'];
-	$post_types_in_cart = lwp_get_post_types_in_cart( 'post', $cart_uuid ); // [ 'product', 'program' ]
+	$post_types_in_cart = lwp_get_post_types_in_cart( 'post', $cart_uuid, 'on-transaction' ); // [ 'product', 'program' ]
 
 	if ( in_array( 'product', $post_types_in_cart ) ) {
-		$data['brand_name'] = lwp_get_settings( 'lwcommerce', 'store', 'name' );
-		$data['brand_logo'] = lwp_get_settings( 'lwcommerce', 'store', 'logo' );
+		$data['brand_name'] = lwc_get_settings( 'store', 'name' );
+		$data['brand_logo'] = lwc_get_settings( 'store', 'logo', 'esc_url', LWC_URL . 'src/admin/assets/images/lwcommerce.png' );
 	}
 
 	return $data;

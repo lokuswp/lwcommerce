@@ -11,7 +11,7 @@ lwp_set_meta_counter( "_product_view", get_the_ID() );
 <!--        "@context": "https://schema.org/",-->
 <!--        "@type": "Product",-->
 <!--        "name": "--><?php //the_title(); ?><!--",-->
-<!--        "image": ['--><?//= get_the_post_thumbnail_url(); ?><!--'],-->
+<!--        "image": ['--><? //= get_the_post_thumbnail_url(); ?><!--'],-->
 <!--        "description": --><?php //the_content(); ?><!--,-->
 <!--        "sku": "0374984678",-->
 <!--        "mpn": "738930",-->
@@ -38,7 +38,7 @@ lwp_set_meta_counter( "_product_view", get_the_ID() );
 <!--        },-->
 <!--        "offers": {-->
 <!--            "@type": "Offer",-->
-<!--            "url": "--><?//= get_permalink(); ?><!--",-->
+<!--            "url": "--><? //= get_permalink(); ?><!--",-->
 <!--            "priceCurrency": "IDR",-->
 <!--            "price": "500,000",-->
 <!--            "priceValidUntil": "2021-11-20",-->
@@ -58,13 +58,10 @@ lwp_set_meta_counter( "_product_view", get_the_ID() );
             </a>
         </div>
         <div class="col-xs-12 col-sm-12 row no-gutter">
-            <div class="col-xs-7 col-sm-8">
-                <h2 class="product-title"><?php the_title(); ?></h2>
-                <div class="product-price">
-					<?php echo lwc_get_price_html(); ?>
-                </div>
+            <h2 class="product-title"><?php the_title(); ?></h2>
+            <div class="product-price">
+				<?php echo lwc_get_price_html(); ?>
             </div>
-
         </div>
         <div class="col-xs-12 col-sm-12 row no-gutter">
 			<?php do_action( 'lokuswp/product/variant' ); ?>

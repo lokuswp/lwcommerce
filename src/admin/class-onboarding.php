@@ -83,56 +83,39 @@ class Onboarding {
 
 		// Create Page
 		Helper::generate_post( "page", __( "Product Listing", "lwcommerce" ), "products", "[lwcommerce_product_listing]" );
-		Helper::generate_post( "page", __( "Order History", "lwcommerce" ), "history", "[lwcommerce_order_history]" );
 
 		$this->create_product();
-
 		//Helper::set_translation("lwcommerce", LWC_STRING_TEXT, 'id_ID');
 	}
 
 	private function create_product() {
 
-		// Create Free Product
-		$digital_free = Helper::generate_post( "product", __( 'LWCommerce - Digital Product Free', 'lwcommerce' ), "lwcommerce", "WordPress Ecommerce Plugin" );
+		// Create Free Productcol-xs-7 col-sm-8
+		$digital_free = Helper::generate_post( "product", __( 'Plugin WordPress Gratis - LWCommerce', 'lwcommerce' ), "lokuswp-lwcommerce-free", "WordPress Ecommerce Plugin" );
+		update_post_meta( $digital_free, "_product_type", "digital" );
 		update_post_meta( $digital_free, "_unit_price", 0 );
 		update_post_meta( $digital_free, "_stock", 9999 );
-		update_post_meta( $digital_free, "_product_type", "digital" );
-
-		$thumbnail = LWC_URL . 'src/admin/assets/images/lwcommerce.jpg';
-		Helper::set_featured_image( $thumbnail, $digital_free );
+		$thumbnail = LWC_URL . 'src/admin/assets/images/product/free-plugin.jpg';
+		if ( $digital_free ) {
+			Helper::set_featured_image( $thumbnail, $digital_free );
+		}
 
 		// Create Paid Product
-		$digital_paid = Helper::generate_post( "product", __( 'LWDonation - Paid Digital Products', 'lwcommerce' ), "lwdonation", "WordPress Donation Plugin" );
-		update_post_meta( $digital_paid, "_unit_price", 580000 );
-		update_post_meta( $digital_paid, "_stock", 1000 );
-		update_post_meta( $digital_paid, "_product_type", "digital" );
+		$digital_premium = Helper::generate_post( "product", __( 'Plugin WordPress Premium - LWDonation', 'lwcommerce' ), "lokuswp-lwdonation-premium", "WordPress Donation Plugin" );
+		update_post_meta( $digital_premium, "_product_type", "digital" );
+		update_post_meta( $digital_premium, "_unit_price", 580000 );
+		update_post_meta( $digital_premium, "_stock", 1000 );
+		update_post_meta( $digital_premium, "_stock_unit", __( "License", "lwcommerce" ) );
+		$thumbnail = LWC_URL . 'src/admin/assets/images/product/premium-plugin.jpg';
+		if ( $digital_premium ) {
+			Helper::set_featured_image( $thumbnail, $digital_premium );
+		}
 
-		$thumbnail = LWC_URL . 'src/admin/assets/images/lwdonation.jpg';
-		Helper::set_featured_image( $thumbnail, $digital_paid );
-
-		// Create Paid Product Physical
-		$phsyical_paid = Helper::generate_post( "product", __( 'Tshirt LokusWP - Paid Physical Products', 'lwcommerce' ), "tshirt-lokuswp", "Tshirt with LokusWP Design" );
-		update_post_meta( $phsyical_paid, "_unit_price", 120000 );
-		update_post_meta( $phsyical_paid, "_stock", 10 );
-		update_post_meta( $phsyical_paid, "_product_type", "physical" );
-
-		$thumbnail = LWC_URL . 'src/admin/assets/images/lwdonation.jpg';
-		Helper::set_featured_image( $thumbnail, $phsyical_paid );
-
-		// Setup Permalink Post Name
-		Helper::set_postname();
 	}
 
 	private function set_appearance() {
 //		lwp_set_settings( 'lwcommerce, 'appearance', 'theme_color', '#fe5301' );
 //		lwp_set_settings( 'lwcommerce, 'appearance', 'unique_code', 'on' );
-	}
-
-	private function create_order() {
-		// Create Order LWCommerce for Free
-		// Create Order LWDonation Paid
-
-
 	}
 
 	public function download_backbone() {
@@ -158,7 +141,6 @@ class Onboarding {
 
 		// Check Plugin Exist
 		if ( ! file_exists( WP_PLUGIN_DIR . "/lokuswp/lokuswp.php" ) && isset( $result->download_url ) ) {
-
 			// Downloading Plugin
 			if ( ! $this->lwc_download_plugin( $result->download_url, "lokuswp" ) ) {
 				echo "ajax_failed";
@@ -290,7 +272,6 @@ class Onboarding {
 				'ajax_url'   => admin_url( 'admin-ajax.php' ),
 				'ajax_nonce' => wp_create_nonce( 'lwc_admin_nonce' ),
 				'plugin_url' => LWC_URL,
-				//'translation' => $this->js_translation(),
 			) );
 		}
 
@@ -300,12 +281,6 @@ class Onboarding {
 		}
 
 	}
-
-//	public function js_translation() {
-//		return array(
-//			'delete_report' => __( 'Are you sure you want to delete this item ?', 'lwcommerce' ),
-//		);
-//	}
 
 	public function admin_menu(): void {
 		add_menu_page(

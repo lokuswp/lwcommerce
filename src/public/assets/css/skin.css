@@ -81,12 +81,13 @@ td.product-item-detail strike {
 }
 
 .lwc-product-item .product-name {
-    margin-top:4px;
+    margin-top: 4px;
     color: #1d1f1a;
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 4px;
     text-align: left;
+    line-height: 22px;
 }
 
 /* Product Price */
@@ -129,6 +130,7 @@ td.product-item-detail strike {
 
 
 /* Single Product  */
-.single-product .product-title{
+.single-product .product-title {
     padding: 8px 12px 0 0;
+    width: 100%;
 }

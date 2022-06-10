@@ -12,7 +12,7 @@
  */
 function lwc_get_settings( string $option = 'general_settings', string $item, string $validator = 'esc_attr', string $fallback = null ) {
 
-	$settings = get_option( 'lwcommerce_' . $option );
+	$settings = lwp_get_option( 'lwcommerce_' . $option );
 
 	// Vuln :: Function Injection -> calL_user_funct
 	$whitelist = [ 'esc_attr', 'esc_url', 'esc_html', 'abs', 'intval', 'floatval', 'absint', 'array' ];

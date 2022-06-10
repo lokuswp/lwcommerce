@@ -77,19 +77,20 @@ class Post_Type_Product {
 			)
 		);
 
-		// $this->flush();
+		$this->flush();
 	}
 
 	protected function flush() {
-		// if (get_option('lwcommerce_permalink_flush')) {
-		//     // Force and Flush
-		//     global $wp_rewrite;
-		//     $wp_rewrite->set_permalink_structure('/%postname%/');
-		//     update_option("rewrite_rules", false);
-		//     $wp_rewrite->flush_rules(true);
+		if ( ! get_option( 'lwcommerce_product_flush' ) ) {
+			// Force and Flush
+			global $wp_rewrite;
+			$wp_rewrite->set_permalink_structure( '/%postname%/' );
+			$wp_rewrite->flush_rules();
+			update_option( "rewrite_rules", false );
+			flush_rewrite_rules( false );
 
-		//     delete_option('lwcommerce_permalink_flush');
-		// }
+			add_option( 'lwcommerce_product_flush', true );
+		}
 	}
 
 
@@ -168,7 +169,7 @@ class Post_Type_Product {
 
 		if ( 'type' === $column ) {
 			$product_type = get_post_meta( $post_id, '_product_type', true ) ?? esc_attr( get_post_meta( $post->ID, '_product_type', true ) );
-            echo '<div style="background: #ddd;border-radius:100px;text-align: center;padding: 4px 8px;">'. ucfirst($product_type) .'</div>';
+			echo '<div style="background: #ddd;border-radius:100px;text-align: center;padding: 4px 8px;">' . ucfirst( $product_type ) . '</div>';
 		}
 
 		if ( 'id' === $column ) {
@@ -204,7 +205,7 @@ class Post_Type_Product {
             }
 
             .column-type,
-            .column-date_publish{
+            .column-date_publish {
                 width: 8%;
             }
 
