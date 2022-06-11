@@ -70,20 +70,7 @@
                         d.orderFilter = $('#orders-filter-value').val();
                     },
                     complete: function (jqXHR) {
-
                         $('.lwc-overlay-table').hide();
-                        if (jqXHR.responseJSON.searchQuery.length > 0) {
-                            $('.viewing-search').text(jqXHR.responseJSON.searchQuery);
-                            $('.viewing-date-filter').text(ucfirst(jqXHR.responseJSON.dateFilter));
-                            $('.viewing-order-filter').text(ucfirst(jqXHR.responseJSON.ordersFilter));
-                            $('.currently-filtering').show();
-                        } else {
-                            if (jqXHR.responseJSON.dateFilter !== 'all' || jqXHR.responseJSON.ordersFilter !== 'all') {
-                                $('.viewing-date-filter').text(ucfirst(jqXHR.responseJSON.dateFilter));
-                                $('.viewing-order-filter').text(ucfirst(jqXHR.responseJSON.ordersFilter));
-                                $('.currently-filtering').show();
-                            }
-                        }
                     }
                 },
                 columns: [{
@@ -132,7 +119,6 @@
                                                         <div class="lwc-flex-column">
                                                             <span class="lwc-text-bold">${item.post_title}</span>
                                                             <span class="lwc-text-bold">${item.quantity} x ${item.price_promo !== null ? `<del class="del">${item.price}</del> ${item.price_promo}` : item.price}</span>
-                                                            <span class="lwc-text-secondary">${item.note ?? '"'}${item.note.length > 20 ? item.note.slice(0, 20) + '...' : item.note}${item.note ?? '"'}</span>
                                                             ${data.product.length > 1 ? `<a style="color: #0EBA29; margin-top: 10px" class="lwc-hover more-product">Lihat ${data.product.length - 1} Produk Lainya...</a>` : ``}
                                                         </div>
                                                     </div>

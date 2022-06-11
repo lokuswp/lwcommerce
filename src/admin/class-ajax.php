@@ -288,9 +288,27 @@ class AJAX {
 		$total_records         = $total_fetched_records[0]->count;
 
 		// Total Records Search
-		$total_table_records_search   = "SELECT count(*) as count FROM $table_transaction $sql_where";
+		$total_table_records_search   = "SELECT tt.transaction_id, tt.total, tt.status, tt.note, tt.created_at, tt.payment_id, tt.updated_at, tt.currency, tt.country, tt.status, tt.total as raw_total,
+											MAX(CASE WHEN ttm.meta_key = '_user_field_name' THEN ttm.meta_value ELSE 0 END) name,
+											MAX(CASE WHEN ttm.meta_key = '_user_field_phone' THEN ttm.meta_value ELSE 0 END) phone,
+											MAX(CASE WHEN ttm.meta_key = '_user_field_email' THEN ttm.meta_value ELSE 0 END) email,
+					                        MAX(CASE WHEN ttm.meta_key = '_user_field_address' THEN ttm.meta_value ELSE 0 END) address,
+					                        MAX(CASE WHEN ttm.meta_key = '_extras_coupon' THEN ttm.meta_value ELSE 0 END) coupon,
+											MAX(CASE WHEN tlcom.meta_key = '_billing_invoice' THEN tlcom.meta_value ELSE 0 END) invoice,
+											MAX(CASE WHEN tlcom.meta_key = '_order_status' THEN tlcom.meta_value ELSE 0 END) order_status,
+											MAX(CASE WHEN tlcom.meta_key = '_shipping_type' THEN tlcom.meta_value ELSE 0 END) shipping_type,
+										    MAX(CASE WHEN tlcom.meta_key = '_shipping_status' THEN tlcom.meta_value ELSE 0 END) shipping_status,
+											TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when tlcom.meta_key = 'shipping' then tlcom.meta_value else 0 end),';',2),':',-1)) AS courier,
+											TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when tlcom.meta_key = 'shipping' then tlcom.meta_value else 0 end),';',4),':',-1)) AS service,
+											TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when tlcom.meta_key = 'shipping' then tlcom.meta_value else 0 end),';',6),':',-1)) AS destination
+										FROM $table_transaction AS tt
+										JOIN $table_transaction_meta AS ttm 
+										ON tt.transaction_id=ttm.transaction_id
+										LEFT JOIN $table_lwcommerce_order_meta AS tlcom
+										ON tt.transaction_id=tlcom.lwcommerce_order_id
+										GROUP BY tt.transaction_id $sql_where";
 		$total_fetched_records_search = $wpdb->get_results( $total_table_records_search, OBJECT );
-		$total_records_search         = $total_fetched_records_search[0]->count;
+		$total_records_search         = count( $total_fetched_records_search );
 
 		// Query
 		$total_results = $wpdb->get_results(
@@ -313,7 +331,7 @@ class AJAX {
 					LEFT JOIN $table_lwcommerce_order_meta AS tlcom
 					ON tt.transaction_id=tlcom.lwcommerce_order_id
 					GROUP BY tt.transaction_id $sql_where
-					ORDER BY $column $order 
+					ORDER BY tt.created_at DESC 
 					LIMIT $offset, $length"
 		);
 
