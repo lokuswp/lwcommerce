@@ -2,20 +2,12 @@
 
 namespace LokusWP\Commerce\Modules;
 
+use Mustache_Engine;
+
 class WhatsApp {
 
-	protected string $template_followup = 'Halo *{{buyer_name}}*
-Kami ingin mengingatkan terkait pesanan Anda
-Yang masih belum diselesaikan
-
-Detail Pesanan *#{{order_id}}* :
-{{order_detail}}
-
-*Pembayaran* :
+	protected string $template_followup = '
 {{payment_detail}}
-
-Terimakasih
-{{store_name}}
 ';
 
 	public function __construct() {
@@ -107,13 +99,9 @@ Terimakasih
 		$payment_detail_template = $data->payment_detail_template;
 		$data_payment            = $payment_data->data;
 
-		$payment_detail_template = str_replace( "{{bank_name}}", $payment_data->name, $payment_detail_template );
-		$payment_detail_template = str_replace( "{{#code}}", $data_payment['bank_swift_code'], $payment_detail_template );
-		$payment_detail_template = str_replace( "{{code}}", $data_payment['bank_code'], $payment_detail_template );
-		$payment_detail_template = str_replace( "{{/code}}", '', $payment_detail_template );
-		$payment_detail_template = str_replace( "{{account_number}}", $data_payment['bank_account_number'], $payment_detail_template );
-		$payment_detail_template = str_replace( "{{account_owner}}", $data_payment['bank_account_owner'], $payment_detail_template );
-		$payment_detail_template = str_replace( "{{instruction}}", $payment_data->instruction, $payment_detail_template );
+		$m = new Mustache_Engine;
+
+		$payment_detail_template = str_replace( "{{payment_detail}}", $m->render( $payment_detail_template, $payment_data ), $this->template_followup );
 
 		return $payment_detail_template;
 	}

@@ -22,7 +22,7 @@ class Reports {
 	private function table() {
 		?>
         <div class="lwc-container-filter">
-            <button class="lwc-btn-filter" type="button">
+            <button class="lwc-btn-filter" type="button" style="display: none !important;">
                 Filter
                 <svg xmlns="http://www.w3.org/2000/svg" class="lwc-search-icon filter-up" style="color: #5c5c5c" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
