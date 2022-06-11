@@ -133,9 +133,11 @@ require_once LWC_PATH . 'src/includes/helper/func-getter.php';
                     <small class="tile-subtitle text-gray">Whatsapp Gateway · Free</small>
                 </div>
                 <div class="tile-action">
-                    <button class="btn btn-link" disabled>
-                        <i class="icon icon-time"></i> Download
-                    </button>
+                    <a class="btn btn-link"
+                       href="<?php echo get_admin_url() . 'admin.php?page=lokuswp&tab=marketplace'; ?>">
+                        <i class="icon icon-time"></i>
+						<?php _e( "Install", "lwcommerce" ); ?>
+                    </a>
                 </div>
             </div>
 
