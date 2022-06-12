@@ -58,12 +58,6 @@ class LWCommerce_Boot {
 		// Only Run On-boarding Screen, Not Entire System
 		include_once LWC_PATH . 'src/admin/class-onboarding.php';
 		Onboarding::register( array( 'slug' => 'lwcommerce', 'name' => 'LWCommerce', 'version' => LWC_VERSION ) );
-
-		// Create Table :: Orders
-		require LWC_PATH . 'src/includes/modules/database/class-db-orders.php';
-		$db_orders_meta = new DB_LWCommerce_Order_Meta();
-		$db_orders_meta->create_table();
-
 	}
 
 	/**

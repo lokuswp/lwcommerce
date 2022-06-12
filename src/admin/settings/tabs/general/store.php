@@ -6,21 +6,21 @@
  * @since 0.1.0
  *****************************************
  */
-$name = lwc_get_settings( 'store', 'name' );
-$logo = lwc_get_settings( 'store', 'logo', 'esc_url', LWC_URL . 'src/admin/assets/images/lwcommerce.png' );
-$desc = lwc_get_settings( 'store', 'description' );
+$name = lwp_get_settings( 'lwcommerce', 'store', 'name' );
+$logo = lwp_get_settings( 'lwcommerce', 'store', 'logo', 'esc_url', LWC_URL . 'src/admin/assets/images/lwcommerce.png' );
+$desc = lwp_get_settings( 'lwcommerce', 'store', 'description' );
 
-$email    = lwc_get_settings( 'store', 'email' );
-$whatsapp = lwc_get_settings( 'store', 'whatsapp' );
+$email    = lwp_get_settings( 'lwcommerce', 'store', 'email' );
+$whatsapp = lwp_get_settings( 'lwcommerce', 'store', 'whatsapp' );
 
-$address           = lwc_get_settings( 'store', 'address' );
-$country_selected  = lwc_get_settings( 'store', 'country' );
-$state_selected    = lwc_get_settings( 'store', 'state', 'intval' );
-$city_selected     = lwc_get_settings( 'store', 'city', 'intval' );
-$district_selected = lwc_get_settings( 'store', 'district', 'intval' );
+$address           = lwp_get_settings( 'lwcommerce', 'store', 'address' );
+$country_selected  = lwp_get_settings( 'lwcommerce', 'store', 'country' );
+$state_selected    = lwp_get_settings( 'lwcommerce', 'store', 'state', 'intval' );
+$city_selected     = lwp_get_settings( 'lwcommerce', 'store', 'city', 'intval' );
+$district_selected = lwp_get_settings( 'lwcommerce', 'store', 'district', 'intval' );
 
-$latitude  = lwc_get_settings( 'store', 'latitude', 'floatval' );
-$longitude = lwc_get_settings( 'store', 'longitude', 'floatval' );
+$latitude  = lwp_get_settings( 'lwcommerce', 'store', 'latitude', 'floatval' );
+$longitude = lwp_get_settings( 'lwcommerce', 'store', 'longitude', 'floatval' );
 
 $categories = [
 	'digital'     => __( 'Digital Goods', "lwcommerce" ),

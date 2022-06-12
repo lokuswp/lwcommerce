@@ -2,7 +2,9 @@
 
 namespace LokusWP\Commerce;
 
+use LSD\Migration\DB_LWCommerce_Order_Meta;
 use LokusWP\WordPress\Helper;
+use PHPMailer\PHPMailer\Exception;
 
 if ( ! defined( 'WPTEST' ) ) {
 	defined( 'ABSPATH' ) or die( "Direct access to files is prohibited" );
@@ -52,6 +54,7 @@ class Onboarding {
 		add_action( 'admin_enqueue_scripts', [ $admin, 'enqueue_scripts' ] );
 
 		add_action( 'wp_ajax_lwcommerce_download_backbone', [ $admin, 'download_backbone' ] );
+		add_action( 'wp_ajax_lwcommerce_onboarding_store_screen', [ $admin, 'get_store_screen' ] );
 		add_action( 'wp_ajax_lwcommerce_auto_setup', [ $admin, 'auto_setup' ] );
 	}
 
@@ -71,12 +74,11 @@ class Onboarding {
 		require_once LWC_PATH . 'src/admin/class-ajax.php';
 	}
 
+
 	/**
 	 * Auto Setup LWCommerce
+	 * - Create : Example Page : Product Listing
 	 * - Create : Example Product
-	 * - Create : Example Order
-	 * - Create : Example Page : StoreFront
-	 * - Create : Example Page : History
 	 */
 	public function auto_setup() {
 		require_once LOKUSWP_PATH . 'src/includes/helper/class-wp-helper.php';
@@ -84,7 +86,9 @@ class Onboarding {
 		// Create Page
 		Helper::generate_post( "page", __( "Product Listing", "lwcommerce" ), "products", "[lwcommerce_product_listing]" );
 
+		// Create Product
 		$this->create_product();
+
 		//Helper::set_translation("lwcommerce", LWC_STRING_TEXT, 'id_ID');
 	}
 
@@ -118,6 +122,15 @@ class Onboarding {
 //		lwp_set_settings( 'lwcommerce, 'appearance', 'unique_code', 'on' );
 	}
 
+
+	/*****************************************
+	 * Downloading LokusWP Backbone
+	 * The Latest Version from Repository
+	 *
+	 * @return string
+	 * @since 0.1.0
+	 ***************************************
+	 */
 	public function download_backbone() {
 
 		$server = "https://digitalcraft.id/api/v1/product/plugin/update/lokuswp";
@@ -130,95 +143,136 @@ class Onboarding {
 			)
 		);
 
-		// Run Setup Wizard
-		$this->auto_setup();
-
 		// Checking Error
-		if ( ! is_wp_error( $remote ) ) {
-			$remote = json_decode( $remote['body'] );
-			$result = $remote->data;
+		if ( is_wp_error( $remote ) ) {
+			return $remote->get_error_message();
 		}
 
-		// Check Plugin Exist
+		$remote = json_decode( $remote['body'] );
+		$result = $remote->data;
+
+		// Only Download when Remote have Download URL and Plugin not Exist in folder
 		if ( ! file_exists( WP_PLUGIN_DIR . "/lokuswp/lokuswp.php" ) && isset( $result->download_url ) ) {
+
 			// Downloading Plugin
-			if ( ! $this->lwc_download_plugin( $result->download_url, "lokuswp" ) ) {
-				echo "ajax_failed";
+			$download_plugin = $this->download_plugin( $result->download_url, "lokuswp" );
+			if ( is_wp_error( $download_plugin ) ) {
+				echo $download_plugin->get_error_code();
+			} else {
+				echo "success_download_dependency";
+			}
+		}else{
+			echo "success_download_dependency";
+		}
+
+		wp_die();
+	}
+
+	/*****************************************
+	 * Download File via URL
+	 * Using WordPress Function to Download and Unzipping File
+	 *
+	 * @param string $download_url
+	 * @param string $plugin_slug
+	 *
+	 * @return bool| \WP_Error
+	 * @since 0.1.0
+	 ****************************************
+	 */
+	public function download_plugin( string $download_url, string $plugin_slug ) {
+
+		if ( ! file_exists( WP_PLUGIN_DIR . "/$plugin_slug/$plugin_slug.php" ) ) {
+
+			// Defined WP File System
+			WP_Filesystem();
+
+			// Try Downloading File form url
+			// Loop :: Network Failed Proof
+			$download = false;
+			$count    = 0;
+			$tmp_file = false;
+			while ( ! $download ) {
+				try {
+					$tmp_file = download_url( $download_url );
+					//ray( $tmp_file )->red();
+					if ( ! ( is_wp_error( $tmp_file ) ) ) {
+						// Copy From Temp to wp-content/plugins/ and rename to  plugin-name.zip
+						copy( $tmp_file, WP_PLUGIN_DIR . '/' . $plugin_slug . '.zip' );
+						unlink( $tmp_file ); // Delete Temp File
+
+						// Unzip File in wp-content/plugins/plugin-name.zip to folder plugin-name/
+						$unzip = unzip_file( WP_PLUGIN_DIR . '/' . $plugin_slug . '.zip', WP_PLUGIN_DIR );
+						if ( is_wp_error( $unzip ) ) {
+							return $unzip->get_error_message();
+						}
+
+						// Delete downloaded file
+						unlink( WP_PLUGIN_DIR . '/' . $plugin_slug . '.zip' ); // Delete zip file
+						if ( file_exists( WP_PLUGIN_DIR . '/' . $plugin_slug . '.zip' ) ) {
+							return new \WP_Error( "failed_delete_zip", "Can't delete the file, because the file doesn't exist or can't be found." );
+						}
+
+						$download = true;
+					}
+
+					$count ++;
+
+					//ray( $count )->red();
+				} catch ( \Exception $e ) {
+					//ray( $e )->red();
+					sleep( 10 );
+					continue;
+					//return $e->get_error_message();
+				}
+			}
+
+		} else { // Plugin Exist
+
+			// Check Plugin Active Status
+			if ( ! is_plugin_active( "$plugin_slug/$plugin_slug.php" ) ) {
+				$activated = activate_plugin( WP_PLUGIN_DIR . "/$plugin_slug/$plugin_slug.php", '', false, true );
+				if ( is_wp_error( $activated ) ) {
+					return new \WP_Error( "failed_activate_plugin", "Plugin activation failed! Please activate manual the plugin." );
+				} else {
+					// Create Table :: Orders
+					require LWC_PATH . 'src/includes/modules/database/class-db-orders.php';
+					$db_orders_meta = new DB_LWCommerce_Order_Meta();
+					$db_orders_meta->create_table();
+
+					// Run Setup Wizard
+					$this->auto_setup();
+
+					return true; // Plugin activated successfully
+				}
+			} else {
+				return true; // Plugin was activated
 			}
 		}
-		echo "ajax_success";
+	}
+
+	public function get_store_screen() {
+
+		ob_start();
+		require LWC_PATH . 'src/admin/settings/tabs/general/store.php';
+		$html = ob_get_clean();
+
+
+		echo json_encode( array(
+			"code"     => "success_get_store_screen",
+			"template" => $html
+		) );
 
 		wp_die();
 	}
 
 
-	/**
-	 * Download File using wp function download_url
-	 * Copy temp to Plugin Dir -> Unzip -> Clean File
+	/*****************************************
+	 * First Admin Loaded
+	 * Auto Redirect to Onboarding LWCommerce
 	 *
-	 * @param string $download_url
-	 * @param string $plugin_slug
-	 *
-	 * @return string
-	 * @throws Exception
-	 */
-	function lwc_download_plugin( string $download_url, string $plugin_slug ): string {
-
-		if ( ! file_exists( WP_PLUGIN_DIR . "/$plugin_slug/$plugin_slug.php" ) ) {
-
-			// For unzipping file
-			WP_Filesystem();
-
-			// Download the file
-			$tmp_file = download_url( $download_url );
-
-			// If error storing temporarily, unlink
-			if ( is_wp_error( $tmp_file ) ) {
-				throw new Exception( "Download failed!" );
-			}
-
-			// Copy From Temp to Plugin Dir
-			copy( $tmp_file, WP_PLUGIN_DIR . '/' . $plugin_slug . '.zip' );
-
-			// Remove Temp File
-			unlink( $tmp_file );
-
-			// Unzip
-			$unzip = unzip_file( WP_PLUGIN_DIR . '/' . $plugin_slug . '.zip', WP_PLUGIN_DIR );
-
-			// If error storing temporarily, unlink
-			if ( is_wp_error( $unzip ) ) {
-				throw new Exception( "Unzip failed!" );
-			}
-
-			// Check if plugin active or not
-			if ( is_plugin_active( "$plugin_slug/$plugin_slug.php" ) ) {
-				throw new Exception( "Plugin already activated!" );
-			}
-
-			// Remove File
-			unlink( WP_PLUGIN_DIR . '/' . $plugin_slug . '.zip' );
-
-			// Delete downloaded file
-			if ( file_exists( WP_PLUGIN_DIR . '/' . $plugin_slug . '.zip' ) ) {
-				throw new Exception( "Can't delete the file, because the file doesn't exist or can't be found." );
-			}
-		}
-
-		// Activate plugin
-		$result = activate_plugin( WP_PLUGIN_DIR . "/$plugin_slug/$plugin_slug.php", '', false, true );
-
-		if ( is_wp_error( $result ) ) {
-			throw new Exception( $result->errors['no_plugin_header'][0] ?? 'Plugin activation failed! Please activate manual the plugin.' );
-		}
-
-		return true;
-	}
-
-	/**
-	 * Register Admin Functionality
-	 *
-	 * @since    0.5.0
+	 * @return void
+	 * @since 0.1.0
+	 ***************************************
 	 */
 	public function admin_init() {
 
@@ -229,6 +283,18 @@ class Onboarding {
 			exit;
 		}
 
+	}
+
+	public function admin_menu(): void {
+		add_menu_page(
+			$this->name,
+			$this->name,
+			'manage_options',
+			$this->slug,
+			[ $this, 'onboarding_page' ],
+			LWC_URL . 'src/admin/assets/svg/onboard.svg',
+			2
+		);
 	}
 
 	/**
@@ -282,17 +348,6 @@ class Onboarding {
 
 	}
 
-	public function admin_menu(): void {
-		add_menu_page(
-			$this->name,
-			$this->name,
-			'manage_options',
-			$this->slug,
-			[ $this, 'onboarding_page' ],
-			LWC_URL . 'src/admin/assets/svg/onboard.svg',
-			2
-		);
-	}
 
 	/**
 	 * Onboarding Page
@@ -302,6 +357,7 @@ class Onboarding {
 	public function onboarding_page() {
 		require_once LWC_PATH . 'src/admin/onboarding/onboarding.php';
 	}
+
 
 	/**
 	 * Cloning is forbidden.

@@ -1,19 +1,17 @@
 <?php
-/**
- * Screen :: Onboarding
+
+/*****************************************
+ * Template Screen :: Onboarding
+ * Display UI Onboarding to User
  *
  * @since 0.1.0
+ ***************************************
  */
-
 // Check User Logged In
 if ( ! is_user_logged_in() ) {
 	wp_redirect( get_site_url() );
 	exit;
 }
-
-// Require Function
-require_once LWC_PATH . 'src/includes/helper/func-helper.php';
-require_once LWC_PATH . 'src/includes/helper/func-getter.php';
 ?>
 
 <style>
@@ -68,8 +66,8 @@ require_once LWC_PATH . 'src/includes/helper/func-getter.php';
                 <!--<a href="#" class="btn btn-link">Guide</a>-->
             </section>
         </header>
-
         <br><br>
+
         <ul class="step">
             <li class="step-item">
                 <a href="#" class="tooltip"
@@ -84,7 +82,6 @@ require_once LWC_PATH . 'src/includes/helper/func-getter.php';
                    data-tooltip="<?php _e( "Integration", "lwcommerce" ); ?>"><?php _e( "Integration", "lwcommerce" ); ?></a>
             </li>
         </ul>
-
         <br>
 
         <div id="dependency-step">
@@ -98,26 +95,22 @@ require_once LWC_PATH . 'src/includes/helper/func-getter.php';
 
                 <p class="empty-title h5"><?php _e( "Downloading LokusWP Backbone...", "lwcommerce" ); ?></p>
                 <p class="empty-subtitle"><?php _e( "Please wait a moment until this process is complete", "lwcommerce" ); ?></p>
-
             </div>
         </div>
 
         <div id="store-step" class="hidden">
-            <div class="column col-12 col-sm-12 px-0">
-				<?php require_once LWC_PATH . 'src/admin/settings/tabs/general/store.php'; ?>
+            <div class="column col-12 col-sm-12 px-0" id="manage-store">
                 <button class="btn w-120 step-to-integration hidden"><?php _e( 'Continue', 'lwcommerce' ); ?></button>
             </div>
         </div>
 
         <div id="integration-step" class="hidden">
-
             <div class="empty">
                 <p class="empty-title h5"><?php _e( "Integration", "lwcommerce" ); ?></p>
-                <p class="empty-subtitle"><?php _e( "You may need this extension for add new ability", "lwcommerce" ); ?></p>
+                <p class="empty-subtitle"><?php _e( "You may need this addon for add new ability", "lwcommerce" ); ?></p>
             </div>
 
-
-            <div class="tile tile-centered">
+            <div id="dripsender" class="tile tile-centered">
                 <div class="tile-icon">
                     <div class="example-tile-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
@@ -129,8 +122,32 @@ require_once LWC_PATH . 'src/includes/helper/func-getter.php';
                     </div>
                 </div>
                 <div class="tile-content">
-                    <div class="tile-title">Fonnte</div>
-                    <small class="tile-subtitle text-gray">Whatsapp Gateway · Free</small>
+                    <div class="tile-title">Whatsapp Notification - DripSender</div>
+                    <small class="tile-subtitle text-gray">Whatsapp Gateway</small>
+                </div>
+                <div class="tile-action">
+                    <a class="btn btn-link"
+                       href="<?php echo get_admin_url() . 'admin.php?page=lokuswp&tab=marketplace'; ?>">
+                        <i class="icon icon-time"></i>
+						<?php _e( "Install", "lwcommerce" ); ?>
+                    </a>
+                </div>
+            </div>
+
+            <div id="fonnte" class="tile tile-centered">
+                <div class="tile-icon">
+                    <div class="example-tile-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-credit-card">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                            <line x1="1" y1="10" x2="23" y2="10"></line>
+                        </svg>
+                    </div>
+                </div>
+                <div class="tile-content">
+                    <div class="tile-title">Whatsapp Notification - Fonnte</div>
+                    <small class="tile-subtitle text-gray">Whatsapp Gateway</small>
                 </div>
                 <div class="tile-action">
                     <a class="btn btn-link"
