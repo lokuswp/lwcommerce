@@ -83,7 +83,8 @@
                                     <span class="lwc-text-bold lwc-mr-10">#${data.transaction_id}</span>
                                     <span class="lwc-text-bold lwc-mr-10">${convertDate(data.created_at)}</span>
                                 </div>
-                                <div>
+                                <div style="display: flex; align-items: center; gap: .5rem;">
+                                    <img src="${data.payment_url}" alt="payment logo" width="70px"/>
                                     <span style="font-weight: bold; padding: 0 .4rem 0 .4rem">
                                         Status:
                                         <span style="
@@ -96,11 +97,13 @@
                                         </span>
                                     </span>
                                     ${data.shipping_type === 'digital' ? `
-                                        <button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}">
-                                                ${data.order_status === 'pending' ? 'Sudah Dibayar' : ''}
-                                                ${data.order_status === 'shipped' ? 'Completed' : ''}
-                                                ${data.order_status === 'completed' ? 'Refunded' : ''} 
-                                        </button>
+                                        ${data.order_status === 'refunded' ? '' : `
+                                            <button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}">
+                                                    ${data.order_status === 'pending' ? 'Sudah Dibayar' : ''}
+                                                    ${data.order_status === 'shipped' ? 'Completed' : ''}
+                                                    ${data.order_status === 'completed' ? 'Refunded' : ''} 
+                                            </button>
+                                        `}
                                     ` : ''}
                                     <button class="btn btn-error delete-action" data-id="${data.transaction_id}">
                                         Delete

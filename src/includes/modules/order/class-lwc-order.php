@@ -89,6 +89,10 @@ class LWC_Order {
 					$product->price_promo = get_post_meta( $product->ID, '_price_promo', true ) ? lwp_currency_format( true,
 						get_post_meta( $product->ID, '_price_promo', true ) ) : null;
 				}
+
+				//==================== Payment Logo ====================//
+				$payment            = (object) lwp_get_option( "payment-{$value->payment_id}" );
+				$value->payment_url = $payment->logo_url;
 			}
 
 			$data['ordersFilter'] = $datatable->get_request_field()->base['orderFilter'];
