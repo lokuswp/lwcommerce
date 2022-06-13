@@ -53,6 +53,7 @@ class LWC_Order {
 			->join( 'lokuswp_transactionmeta AS ttm', 'tt.transaction_id = ttm.transaction_id' )
 			->join( 'lwcommerce_ordermeta AS tlcom', 'tt.transaction_id = tlcom.lwcommerce_order_id' )
 			->group_by( 'tt.transaction_id' )
+			->order_by( 'tt.created_at', 'DESC' )
 			->get();
 
 		if ( is_wp_error( $data ) ) {
