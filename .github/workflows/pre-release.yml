@@ -4,7 +4,7 @@ on:
     types: [ published ]
 jobs:
   build:
-    if: "!github.event.release.prerelease"
+    if: "github.event.release.prerelease"
     name: Pre Release
     runs-on: ubuntu-latest
     steps:
