@@ -35,5 +35,48 @@ defined( 'LWC_URL' ) or define( 'LWC_URL', plugin_dir_url( __FILE__ ) );
 defined( 'LWC_STORAGE' ) or define( 'LWC_STORAGE', wp_get_upload_dir()['basedir'] . '/lwcommerce' );
 defined( 'LWC_TEXT_VERSION' ) or define( 'LWC_TEXT_VERSION', '0.0.1' ); // String Version
 
-// Autoload
-require_once dirname( __DIR__ ) . '/lwcommerce/src/autoload.php';
+/**
+ *-----------------------*
+ * Minimum Requirement System
+ * PHP : 7.4
+ * WordPress : 5.9
+ *
+ * @since 0.1.0
+ *-----------------------*
+ **/
+if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
+	add_action( 'admin_notices', 'lwc_fail_php_version' );
+} elseif ( ! version_compare( get_bloginfo( 'version' ), '5.8', '>=' ) ) {
+	add_action( 'admin_notices', 'lwc_fail_wp_version' );
+} else {
+	// Come On, Let's Goo !!! 🦾
+	require_once dirname( __DIR__ ) . '/lwcommerce/src/autoload.php';
+}
+
+/**
+ * Admin notice for minimum PHP version.
+ * Warning when the site doesn't have the minimum required PHP version.
+ *
+ * @return void
+ * @since 0.1.0
+ */
+function lwc_fail_php_version() {
+	/* translators: %s: PHP version */
+	$message      = sprintf( esc_html__( 'This plugin run but not working. LWCommerce required version of PHP %s', 'lokuswp' ), '7.4' );
+	$html_message = sprintf( '<div class="error">%s</div>', wpautop( $message ) );
+	echo wp_kses_post( $html_message );
+}
+
+/**
+ * Admin notice for minimum WordPress version.
+ * Warning when the site doesn't have the minimum required WordPress version.
+ *
+ * @return void
+ * @since 0.1.0
+ */
+function lwc_fail_wp_version() {
+	/* translators: %s: WordPress version */
+	$message      = sprintf( esc_html__( 'This plugin run but not working. LWCommerce required version of WordPress %s+', 'lokuswp' ), '5.8' );
+	$html_message = sprintf( '<div class="error">%s</div>', wpautop( $message ) );
+	echo wp_kses_post( $html_message );
+}
