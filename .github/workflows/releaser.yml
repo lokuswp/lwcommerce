@@ -4,7 +4,7 @@ on:
     types: [ published ]
 jobs:
   build:
-    name: Pre Release
+    name: Production Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
