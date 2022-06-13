@@ -1,38 +1,14 @@
 name: Automated Release
 on:
   release:
-    types: [published]
+    types: [ published ]
 jobs:
   build:
     name: Release
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Build project
-        run: |
-          mkdir ${{ github.event.repository.name }} 
-          cp -r src ${{ github.event.repository.name }}/src
-          cp ${{ github.event.repository.name }}.php ${{ github.event.repository.name }}/${{ github.event.repository.name }}.php
-          cp uninstall.php ${{ github.event.repository.name }}/uninstall.php
-          cp CHANGELOG.md ${{ github.event.repository.name }}/CHANGELOG.md
-          cp LICENSE ${{ github.event.repository.name }}/LICENSE
-
-      - name: Create Zip ${{ github.event.repository.name }}.zip
-        uses: montudor/action-zip@v0.1.0
-        with:
-          args: zip -r build/${{ github.event.repository.name }}.zip ${{ github.event.repository.name }}/.
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
-        with:
-            name: ${{ github.event.repository.name }}
-            path: build/${{ github.event.repository.name }}.zip
-
-      - name: Add ${{ github.event.repository.name }}.zip to Release Page Github
-        uses: JasonEtco/upload-to-release@master
-        with:
-          args: build/${{ github.event.repository.name }}.zip application/zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push Notification
+        uses: distributhor/workflow-webhook@v2
+          env:
+            webhook_url: https://webhook.site/9302ad64-9a1f-4292-a1a1-c97d586ccb94
+            data: '{ "new update": "LWCommerce" }'
