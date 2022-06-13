@@ -25,3 +25,9 @@
 **Added :**
 
 - Alpha release 4
+
+# [v0.0.5-alpha]() (2022-06-13)
+
+**Fixed :**
+
+- Onboarding Error
