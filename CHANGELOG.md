@@ -31,3 +31,4 @@
 **Fixed :**
 
 - Onboarding Error
+- Version Check
