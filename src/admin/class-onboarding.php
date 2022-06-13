@@ -4,7 +4,6 @@ namespace LokusWP\Commerce;
 
 use LSD\Migration\DB_LWCommerce_Order_Meta;
 use LokusWP\WordPress\Helper;
-use PHPMailer\PHPMailer\Exception;
 
 if ( ! defined( 'WPTEST' ) ) {
 	defined( 'ABSPATH' ) or die( "Direct access to files is prohibited" );
@@ -47,7 +46,7 @@ class Onboarding {
 	public static function register( array $plugin ) {
 		$admin = new self( $plugin['slug'], $plugin['name'], $plugin['version'] );
 
-		add_action( 'admin_init', [ $admin, 'admin_init' ], 1 );
+		add_action( 'admin_init', [ $admin, 'admin_init' ], 0 );
 		add_action( 'admin_menu', [ $admin, 'admin_menu' ] );
 
 		add_action( 'admin_enqueue_scripts', [ $admin, 'enqueue_styles' ] );
@@ -81,7 +80,12 @@ class Onboarding {
 	 * - Create : Example Product
 	 */
 	public function auto_setup() {
+		require LWC_PATH . 'src/includes/modules/database/class-db-orders.php';
 		require_once LOKUSWP_PATH . 'src/includes/helper/class-wp-helper.php';
+
+		// Create Table :: Orders
+		$db_orders_meta = new DB_LWCommerce_Order_Meta();
+		$db_orders_meta->create_table();
 
 		// Create Page
 		Helper::generate_post( "page", __( "Product Listing", "lwcommerce" ), "products", "[lwcommerce_product_listing]" );
@@ -159,13 +163,31 @@ class Onboarding {
 			if ( is_wp_error( $download_plugin ) ) {
 				echo $download_plugin->get_error_code();
 			} else {
+				// Run Setup Wizard
+				$this->activate_plugin( "lokuswp" );
 				echo "success_download_dependency";
 			}
-		}else{
+		} else {
+			// Run Setup Wizard
+			$this->activate_plugin( "lokuswp" );
 			echo "success_download_dependency";
 		}
 
 		wp_die();
+	}
+
+	public function activate_plugin( $plugin_slug ) {
+
+		if ( ! is_plugin_active( "$plugin_slug/$plugin_slug.php" ) ) {
+			$activated = activate_plugin( WP_PLUGIN_DIR . "/$plugin_slug/$plugin_slug.php", '', false, true );
+			if ( is_wp_error( $activated ) ) {
+				return new \WP_Error( "failed_activate_plugin", "Plugin activation failed! Please activate manual the plugin." );
+			} else {
+				return true; // Plugin was activated
+			}
+		} else {
+			return true; // Plugin was activated
+		}
 	}
 
 	/*****************************************
@@ -193,7 +215,7 @@ class Onboarding {
 			$tmp_file = false;
 			while ( ! $download ) {
 				try {
-					$tmp_file = download_url( $download_url );
+					$tmp_file = download_url( $download_url, 30 );
 					//ray( $tmp_file )->red();
 					if ( ! ( is_wp_error( $tmp_file ) ) ) {
 						// Copy From Temp to wp-content/plugins/ and rename to  plugin-name.zip
@@ -216,11 +238,9 @@ class Onboarding {
 					}
 
 					$count ++;
-
-					//ray( $count )->red();
+					sleep( 10 );
 				} catch ( \Exception $e ) {
 					//ray( $e )->red();
-					sleep( 10 );
 					continue;
 					//return $e->get_error_message();
 				}
@@ -229,24 +249,8 @@ class Onboarding {
 		} else { // Plugin Exist
 
 			// Check Plugin Active Status
-			if ( ! is_plugin_active( "$plugin_slug/$plugin_slug.php" ) ) {
-				$activated = activate_plugin( WP_PLUGIN_DIR . "/$plugin_slug/$plugin_slug.php", '', false, true );
-				if ( is_wp_error( $activated ) ) {
-					return new \WP_Error( "failed_activate_plugin", "Plugin activation failed! Please activate manual the plugin." );
-				} else {
-					// Create Table :: Orders
-					require LWC_PATH . 'src/includes/modules/database/class-db-orders.php';
-					$db_orders_meta = new DB_LWCommerce_Order_Meta();
-					$db_orders_meta->create_table();
+			$this->activate_plugin( $plugin_slug );
 
-					// Run Setup Wizard
-					$this->auto_setup();
-
-					return true; // Plugin activated successfully
-				}
-			} else {
-				return true; // Plugin was activated
-			}
 		}
 	}
 
@@ -256,6 +260,7 @@ class Onboarding {
 		require LWC_PATH . 'src/admin/settings/tabs/general/store.php';
 		$html = ob_get_clean();
 
+		$this->auto_setup();
 
 		echo json_encode( array(
 			"code"     => "success_get_store_screen",
@@ -334,10 +339,11 @@ class Onboarding {
 			), $this->version, false );
 
 			wp_localize_script( 'admin-onboarding', 'lwc_admin', array(
-				'admin_url'  => get_admin_url(),
-				'ajax_url'   => admin_url( 'admin-ajax.php' ),
-				'ajax_nonce' => wp_create_nonce( 'lwc_admin_nonce' ),
-				'plugin_url' => LWC_URL,
+				'admin_url'    => get_admin_url(),
+				'ajax_url'     => admin_url( 'admin-ajax.php' ),
+				'ajax_nonce'   => wp_create_nonce( 'lwc_admin_nonce' ),
+				'plugin_url'   => LWC_URL,
+				'plugin_exist' => file_exists( WP_PLUGIN_DIR . "/lokuswp/lokuswp.php" ),
 			) );
 		}
 

@@ -26,7 +26,7 @@
                     alert('Failed to get store screen');
                 }
             },
-        }).fail(() => alert('Please check your internet connection!'));
+        }).fail(() => location.reload());
 
     }
 
@@ -38,25 +38,22 @@
          * @since 0.1.0
          ***************************************
          */
-        // lwc_get_onboarding_store_screen();
-        $.ajax({
-            url: lwc_admin.ajax_url,
-            method: 'POST',
-            data: {
-                action: 'lwcommerce_download_backbone',
-                security: lwc_admin.ajax_nonce,
-            },
-            success: (res) => {
-                if (res == "success_download_dependency") {
-
-                    // Calling Store Screen
-                    lwc_get_onboarding_store_screen();
-                } else {
-                    alert('Please check your internet connection!')
-                }
-            },
-        }).fail(() => alert('Please check your internet connection!'));
-
+        console.log(lwc_admin.plugin_exist);
+        if (lwc_admin.plugin_exist == "") {
+            $.ajax({
+                url: lwc_admin.ajax_url,
+                method: 'POST',
+                data: {
+                    action: 'lwcommerce_download_backbone',
+                    security: lwc_admin.ajax_nonce,
+                },
+                success: (res) => {
+                    location.reload();
+                },
+            }).fail(() => location.reload());
+        } else {
+            lwc_get_onboarding_store_screen();
+        }
 
         // Store Verification Filing
         $('.step-to-integration').on('click', function () {
