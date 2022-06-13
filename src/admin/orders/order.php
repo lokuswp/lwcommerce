@@ -42,6 +42,7 @@ class Reports {
                     </svg>
                 </button>
             </div>
+            <button class="btn" id="export-order">Export</button>
         </div>
 
         <div class="lwc-card-body lwc-card-shadow lwc-dropdown-filter lwc-card-shadow-blue lwc-relative">

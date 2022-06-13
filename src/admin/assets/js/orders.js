@@ -464,5 +464,32 @@
                 })
             }
         })
+
+        // export order to csv
+        $(document).on('click', '#export-order', function () {
+            $.ajax({
+                url: lwc_orders.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'lwc_export_order',
+                    security: lwc_orders.ajax_nonce,
+                },
+                success: response => {
+                    if (!response.success) {
+                        alert(response.data);
+                        return;
+                    }
+
+                    // Make <a> element for download lwdonation.csv using tag download
+                    let urllink = document.createElement("a");
+                    urllink.download = `lwcommerce.csv`;
+                    urllink.href = response.data;
+                    urllink.click();
+                    console.log('success export');
+                }
+            })
+        })
+
+
     });
 })(jQuery)

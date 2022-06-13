@@ -2,6 +2,13 @@
 
 namespace LokusWP\Commerce\Admin;
 
+require_once LWC_PATH . 'src/includes/modules/order/class-datatable-order.php';
+require_once LWC_PATH . 'src/includes/modules/order/class-lwc-order.php';
+
+use LokusWP\Commerce\Modules\Order\Datatable_Order;
+use LokusWP\Commerce\Modules\Order\LWC_Order;
+
+
 class AJAX {
 	public function __construct() {
 		add_action( 'wp_ajax_lwc_store_settings_save', [ $this, 'store_settings_save' ] );
@@ -20,6 +27,7 @@ class AJAX {
 		add_action( 'wp_ajax_lwc_update_resi', [ $this, 'update_resi' ] );
 		add_action( 'wp_ajax_lwc_order_action', [ $this, 'order_action' ] );
 		add_action( 'wp_ajax_lwc_delete_order', [ $this, 'delete_order' ] );
+		add_action( 'wp_ajax_lwc_export_order', [ $this, 'export_order' ] );
 
 		// Follow-Up WhatsApp
 		add_action( 'wp_ajax_lwc_follow_up_whatsapp', [ $this, 'follow_up_whatsapp' ] );
@@ -190,197 +198,9 @@ class AJAX {
 			wp_send_json_error( 'Invalid security token sent.' );
 		}
 
-		global $wpdb;
+		$order = LWC_Order::get_order( new Datatable_Order() );
 
-		// Table name
-		$table_cart                  = $wpdb->prefix . "lokuswp_carts";
-		$table_transaction           = $wpdb->prefix . "lokuswp_transactions";
-		$table_transaction_meta      = $wpdb->prefix . "lokuswp_transactionmeta";
-		$table_lwcommerce_order_meta = $wpdb->prefix . "lwcommerce_ordermeta";
-		$table_post                  = $wpdb->prefix . "posts";
-
-		// Request
-		$request = $_GET;
-
-		$date_filter  = $request['dateFilter'];
-		$order_filter = $request['orderFilter'];
-
-		// Columns
-		$columns = array(
-			0 => 'transaction_id',
-			1 => 'name',
-			2 => 'phone',
-			3 => 'email',
-			4 => 'order_status',
-			5 => 'shipping_type',
-			6 => 'shipping_status',
-			7 => 'service',
-			8 => 'status',
-			9 => 'raw_total',
-		);
-
-		// Datatable Filters
-		$column = $columns[ $request['order'][0]['column'] ];
-		$offset = $request['start'];
-		$length = $request['length'];
-		$length = $length == '-1' ? '18446744073709551615' : $length;
-		$order  = $request['order'][0]['dir'];
-
-		// Query variable
-		$sql_where = "";
-
-		// Search all columns
-		if ( ! empty( $request['search']['value'] ) ) {
-
-			$sql_where .= "HAVING ";
-
-			foreach ( $columns as $column ) {
-
-				$sql_where .= $column . " LIKE '%" . sanitize_text_field( $request['search']['value'] ) . "%' OR ";
-			}
-
-			$sql_where = substr( $sql_where, 0, - 3 );
-		}
-
-
-		if ( $order_filter !== 'all' ) {
-			$sql_where .= ( ! empty( $sql_where ) ) ? " AND " : "HAVING ";
-
-			$arrStatusPayment = [ 'unpaid', 'paid', 'cancelled' ];
-			$arrStatusOrder   = [ 'pending', 'processing', 'shipping', 'completed' ];
-
-			if ( in_array( $order_filter, $arrStatusPayment ) && ! in_array( $order_filter, $arrStatusOrder ) ) {
-				$sql_where .= "status = '" . sanitize_text_field( $order_filter ) . "'";
-			} elseif ( in_array( $order_filter, $arrStatusOrder ) && ! in_array( $order_filter, $arrStatusPayment ) ) {
-				$sql_where .= "status_processing = '" . sanitize_text_field( $order_filter ) . "'";
-			}
-		}
-
-		// Date filter
-		if ( $date_filter !== 'all' ) {
-			$sql_where .= ( ! empty( $sql_where ) ) ? " AND " : "HAVING ";
-
-			$range = explode( '/', $date_filter );
-
-			if ( count( $range ) === 2 ) {
-				$sql_where .= "DATE(created_at) BETWEEN '" . sanitize_text_field( $range[0] ) . "' AND '" . sanitize_text_field( $range[1] ) . "' ";
-			}
-
-			switch ( $date_filter ) {
-				case 'today':
-					$sql_where .= "DATE(created_at) = CURDATE() ";
-					break;
-				case 'yesterday':
-					$sql_where .= "DATE(created_at) = SUBDATE(CURDATE(), 1) ";
-					break;
-				case 'last 7 day':
-					$sql_where .= "DATE(created_at) >= NOW() + INTERVAL -7 DAY AND DATE(created_at) <  NOW() + INTERVAL  0 DAY ";
-					break;
-				case 'this month':
-					$sql_where .= "MONTH(created_at) = MONTH(NOW()) ";
-					break;
-			}
-		}
-
-		// Total Records in the datatable
-		$total_table_records   = "SELECT count(*) as count FROM {$table_transaction}";
-		$total_fetched_records = $wpdb->get_results( $total_table_records, OBJECT );
-		$total_records         = $total_fetched_records[0]->count;
-
-		// Total Records Search
-		$total_table_records_search   = "SELECT tt.transaction_id, tt.total, tt.status, tt.note, tt.created_at, tt.payment_id, tt.updated_at, tt.currency, tt.country, tt.status, tt.total as raw_total,
-											MAX(CASE WHEN ttm.meta_key = '_user_field_name' THEN ttm.meta_value ELSE 0 END) name,
-											MAX(CASE WHEN ttm.meta_key = '_user_field_phone' THEN ttm.meta_value ELSE 0 END) phone,
-											MAX(CASE WHEN ttm.meta_key = '_user_field_email' THEN ttm.meta_value ELSE 0 END) email,
-					                        MAX(CASE WHEN ttm.meta_key = '_user_field_address' THEN ttm.meta_value ELSE 0 END) address,
-					                        MAX(CASE WHEN ttm.meta_key = '_extras_coupon' THEN ttm.meta_value ELSE 0 END) coupon,
-											MAX(CASE WHEN tlcom.meta_key = '_billing_invoice' THEN tlcom.meta_value ELSE 0 END) invoice,
-											MAX(CASE WHEN tlcom.meta_key = '_order_status' THEN tlcom.meta_value ELSE 0 END) order_status,
-											MAX(CASE WHEN tlcom.meta_key = '_shipping_type' THEN tlcom.meta_value ELSE 0 END) shipping_type,
-										    MAX(CASE WHEN tlcom.meta_key = '_shipping_status' THEN tlcom.meta_value ELSE 0 END) shipping_status,
-											TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when tlcom.meta_key = 'shipping' then tlcom.meta_value else 0 end),';',2),':',-1)) AS courier,
-											TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when tlcom.meta_key = 'shipping' then tlcom.meta_value else 0 end),';',4),':',-1)) AS service,
-											TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when tlcom.meta_key = 'shipping' then tlcom.meta_value else 0 end),';',6),':',-1)) AS destination
-										FROM $table_transaction AS tt
-										JOIN $table_transaction_meta AS ttm 
-										ON tt.transaction_id=ttm.transaction_id
-										LEFT JOIN $table_lwcommerce_order_meta AS tlcom
-										ON tt.transaction_id=tlcom.lwcommerce_order_id
-										GROUP BY tt.transaction_id $sql_where";
-		$total_fetched_records_search = $wpdb->get_results( $total_table_records_search, OBJECT );
-		$total_records_search         = count( $total_fetched_records_search );
-
-		// Query
-		$total_results = $wpdb->get_results(
-			"SELECT tt.transaction_id, tt.total, tt.status, tt.note, tt.created_at, tt.payment_id, tt.updated_at, tt.currency, tt.country, tt.status, tt.total as raw_total,
-						MAX(CASE WHEN ttm.meta_key = '_user_field_name' THEN ttm.meta_value ELSE 0 END) name,
-						MAX(CASE WHEN ttm.meta_key = '_user_field_phone' THEN ttm.meta_value ELSE 0 END) phone,
-						MAX(CASE WHEN ttm.meta_key = '_user_field_email' THEN ttm.meta_value ELSE 0 END) email,
-       					MAX(CASE WHEN ttm.meta_key = '_user_field_address' THEN ttm.meta_value ELSE 0 END) address,
-       					MAX(CASE WHEN ttm.meta_key = '_extras_coupon' THEN ttm.meta_value ELSE 0 END) coupon,
-						MAX(CASE WHEN tlcom.meta_key = '_billing_invoice' THEN tlcom.meta_value ELSE 0 END) invoice,
-						MAX(CASE WHEN tlcom.meta_key = '_order_status' THEN tlcom.meta_value ELSE 0 END) order_status,
-						MAX(CASE WHEN tlcom.meta_key = '_shipping_type' THEN tlcom.meta_value ELSE 0 END) shipping_type,
-					    MAX(CASE WHEN tlcom.meta_key = '_shipping_status' THEN tlcom.meta_value ELSE 0 END) shipping_status,
-						TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when tlcom.meta_key = 'shipping' then tlcom.meta_value else 0 end),';',2),':',-1)) AS courier,
-						TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when tlcom.meta_key = 'shipping' then tlcom.meta_value else 0 end),';',4),':',-1)) AS service,
-						TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when tlcom.meta_key = 'shipping' then tlcom.meta_value else 0 end),';',6),':',-1)) AS destination
-					FROM $table_transaction AS tt
-					JOIN $table_transaction_meta AS ttm 
-					ON tt.transaction_id=ttm.transaction_id
-					LEFT JOIN $table_lwcommerce_order_meta AS tlcom
-					ON tt.transaction_id=tlcom.lwcommerce_order_id
-					GROUP BY tt.transaction_id $sql_where
-					ORDER BY tt.created_at DESC 
-					LIMIT $offset, $length"
-		);
-
-		if ( ! empty( $total_results ) ) {
-
-			$data = $total_results;
-
-			foreach ( $total_results as $key => $row ) {
-
-				//==================== Total ====================//
-				$data[ $key ]->total = lwp_currency_format( true, abs( $row->total ) );
-
-				//==================== product ====================//
-				$data[ $key ]->product = $wpdb->get_results(
-					"select jj.ID, jj.post_title, jj.quantity , jj.note
-							from $table_transaction as tr
-    						join (
-								select tp.ID, tp.post_title, tc.cart_uuid, tc.quantity, tc.note from $table_cart as tc
-								join $table_post as tp on tc.post_id=tp.ID
-							) as jj
-							on tr.cart_uuid=jj.cart_uuid where transaction_id='$row->transaction_id'"
-				);
-
-				//==================== add image & price to product ====================//
-				foreach ( $data[ $key ]->product as $index => $value ) {
-					$data[ $key ]->product[ $index ]->image       = get_the_post_thumbnail_url( $value->ID, 'thumbnail' );
-					$data[ $key ]->product[ $index ]->price       = lwp_currency_format( true, get_post_meta( $value->ID, '_unit_price', true ) );
-					$data[ $key ]->product[ $index ]->price_promo = get_post_meta( $value->ID, '_price_promo', true ) ? lwp_currency_format( true,
-						get_post_meta( $value->ID, '_price_promo', true ) ) : null;
-				}
-			}
-
-			$json_data = array(
-				"draw"            => intval( $request['draw'] ),
-				"recordsTotal"    => intval( $total_records ),
-				"recordsFiltered" => intval( $total_records_search ),
-				"data"            => $data,
-				"searchQuery"     => $request['search']['value'] ?? null,
-				"ordersFilter"    => $order_filter,
-				"dateFilter"      => $date_filter,
-			);
-		} else {
-			$json_data = array(
-				"data" => array()
-			);
-		}
-		echo json_encode( $json_data );
-
-		wp_die();
+		wp_send_json( $order );
 	}
 
 	public function process_order() {
@@ -607,28 +427,34 @@ class AJAX {
 			wp_send_json_error( 'Invalid security token sent.' );
 		}
 
-		$order_id = sanitize_key( $_POST['order_id'] );
+		$order = LWC_Order::delete_order( sanitize_key( $_POST['order_id'] ) );
 
-		// delete transaction and the meta
-		global $wpdb;
-
-		$table_transaction     = $wpdb->prefix . 'lokuswp_transactions';
-		$table_transactionmeta = $wpdb->prefix . 'lokuswp_transactionmeta';
-		$table_lwc_ordermeta   = $wpdb->prefix . 'lwcommerce_ordermeta';
-
-		$wpdb->query( 'START TRANSACTION' );
-
-		$transaction      = $wpdb->query( $wpdb->prepare( "DELETE FROM $table_transaction WHERE transaction_id = %d", $order_id ) );
-		$transaction_meta = $wpdb->query( $wpdb->prepare( "DELETE FROM $table_transactionmeta WHERE transaction_id = %d", $order_id ) );
-		$order_meta       = $wpdb->query( $wpdb->prepare( "DELETE FROM $table_lwc_ordermeta WHERE lwcommerce_order_id = %d", $order_id ) );
-
-		if ( $transaction && $transaction_meta && $order_meta ) {
-			$wpdb->query( 'COMMIT' );
+		if ( $order ) {
 			wp_send_json_success( 'success' );
-		} else {
-			$wpdb->query( 'ROLLBACK' );
-			wp_send_json_error( 'error' );
 		}
+
+		wp_send_json_error( 'error' );
+	}
+
+	public function export_order() {
+		if ( ! check_ajax_referer( 'lwc_admin_nonce', 'security' ) ) {
+			wp_send_json_error( 'Invalid security token sent.' );
+		}
+
+		$combined_data = LWC_Order::get_data_for_export();
+
+		// get header
+		$header = array_keys( $combined_data[0] );
+
+		$target_dir = wp_upload_dir()['basedir'] . '/lwcommerce.csv';
+
+		$make_csv = LWC_Order::make_csv( $header, $target_dir, $combined_data );
+
+		if ( is_wp_error( $make_csv ) ) {
+			wp_send_json_error( $make_csv->get_error_message() );
+		}
+
+		wp_send_json_success( wp_upload_dir()['baseurl'] . '/lwcommerce.csv' );
 	}
 }
 
