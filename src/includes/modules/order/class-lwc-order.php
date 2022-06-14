@@ -131,12 +131,14 @@ class LWC_Order {
 		global $wpdb;
 		$table_transactions = $wpdb->prefix . "lokuswp_transactions";
 		$table_meta         = $wpdb->prefix . "lokuswp_transactionmeta";
+		$table_meta_order   = $wpdb->prefix . "lwcommerce_ordermeta";
 		$table_cart         = $wpdb->prefix . "lokuswp_carts";
 		$table_post         = $wpdb->prefix . "posts";
 
 		// get data
-		$table_transaction = $wpdb->get_results( "SELECT transaction_id, status, currency, country FROM $table_transactions", ARRAY_A );
+		$table_transaction = $wpdb->get_results( "SELECT transaction_id, status as payment_status, currency, country, payment_id FROM $table_transactions", ARRAY_A );
 		$table_meta        = $wpdb->get_results( "SELECT * FROM $table_meta", ARRAY_A );
+		$table_meta_order  = $wpdb->get_results( "SELECT * FROM $table_meta_order", ARRAY_A );
 
 		// merge data transaction with meta
 		foreach ( $table_transaction as $key => $value ) {
@@ -145,6 +147,13 @@ class LWC_Order {
 					$table_transaction[ $key ][ $value_meta['meta_key'] ] = $value_meta['meta_value'];
 				}
 			}
+			foreach ( $table_meta_order as $value_meta ) {
+				if ( $value['transaction_id'] === $value_meta['lwcommerce_order_id'] ) {
+					$table_transaction[ $key ][ $value_meta['meta_key'] ] = $value_meta['meta_value'];
+				}
+			}
+
+
 			$transaction_id = $value['transaction_id'];
 
 			$products = $wpdb->get_results( "select tc.quantity, tp.post_title from $table_transactions as tt join $table_cart as tc on tc.cart_uuid=tt.cart_uuid join $table_post as tp on tc.post_id=tp.ID where tt.transaction_id=$transaction_id",
@@ -165,13 +174,19 @@ class LWC_Order {
 			unset( $table_transaction[ $key ]['cart_uuid'] );
 			unset( $table_transaction[ $key ]['_snapshot_extras'] );
 			unset( $table_transaction[ $key ]['_snapshot_items'] );
+			unset( $table_transaction[ $key ]['_billing_invoice'] );
+			unset( $table_transaction[ $key ]['_shipping_type'] );
+			unset( $table_transaction[ $key ]['_shipping_status'] );
+			unset( $table_transaction[ $key ]['_order_id'] );
 
-			$table_transaction[ $key ]['name']  = $table_transaction[ $key ]['_user_field_name'];
-			$table_transaction[ $key ]['phone'] = $table_transaction[ $key ]['_user_field_phone'];
-			$table_transaction[ $key ]['email'] = $table_transaction[ $key ]['_user_field_email'];
+			$table_transaction[ $key ]['name']         = $table_transaction[ $key ]['_user_field_name'];
+			$table_transaction[ $key ]['phone']        = $table_transaction[ $key ]['_user_field_phone'];
+			$table_transaction[ $key ]['email']        = $table_transaction[ $key ]['_user_field_email'];
+			$table_transaction[ $key ]['order_status'] = $table_transaction[ $key ]['_order_status'];
 			unset( $table_transaction[ $key ]['_user_field_name'] );
 			unset( $table_transaction[ $key ]['_user_field_phone'] );
 			unset( $table_transaction[ $key ]['_user_field_email'] );
+			unset( $table_transaction[ $key ]['_order_status'] );
 		}
 
 		return $table_transaction;
