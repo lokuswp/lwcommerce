@@ -22,17 +22,17 @@ jobs:
       - name: Create Zip ${{ github.event.repository.name }}.zip
         uses: montudor/action-zip@v0.1.0
         with:
-          args: zip -r build/${{ github.event.repository.name }}.zip ${{ github.event.repository.name }}/.
+          args: zip -r ${{ github.event.repository.name }}.zip ${{ github.event.repository.name }}/.
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
           name: ${{ github.event.repository.name }}
-          path: build/${{ github.event.repository.name }}.zip
+          path: ${{ github.event.repository.name }}.zip
 
       - name: Add ${{ github.event.repository.name }}.zip to Release Page Github
         uses: JasonEtco/upload-to-release@master
         with:
-          args: build/${{ github.event.repository.name }}.zip application/zip
+          args: ${{ github.event.repository.name }}.zip application/zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
