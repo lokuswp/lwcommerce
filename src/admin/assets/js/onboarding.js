@@ -99,4 +99,44 @@
         });
     });
 
+    /**
+     * ⚡ Admin Upload Handler
+     * Dsiplay Popup Media WordPress in Administrator
+     *
+     * Indonesia
+     * Menampilkan Popup Pilihan Gambar / Media WordPress
+     *
+     * @scope Global
+     * @since 0.5.0
+     */
+    var file_frame;
+    var attachment;
+    $(document).on("click", ".lokuswp-admin-upload", function (event) {
+
+        event.preventDefault();
+        var that = this;
+        var frame = file_frame;
+        if (frame) {
+            frame.open();
+            return;
+        }
+
+        frame = wp.media.frames.frame = wp.media({
+            // title: 'Upload Image',
+            // 	button: {
+            // 	text: 'Choose Image'
+            // },
+            multiple: false
+        });
+
+        frame.on('select', function () {
+            attachment = frame.state().get('selection').first().toJSON();
+            $(that).prev().prev().attr('src', attachment.url);
+            $(that).prev().attr('value', attachment.url);
+        });
+
+        frame.open();
+
+    });
+
 })(jQuery)

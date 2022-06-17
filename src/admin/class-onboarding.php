@@ -197,53 +197,56 @@ class Onboarding {
 	 * @param string $download_url
 	 * @param string $plugin_slug
 	 *
-	 * @return bool| \WP_Error
+	 * @return Exception
 	 * @since 0.1.0
 	 ****************************************
 	 */
 	public function download_plugin( string $download_url, string $plugin_slug ) {
 
+		// Download URL
 		if ( ! file_exists( WP_PLUGIN_DIR . "/$plugin_slug/$plugin_slug.php" ) ) {
 
 			// Defined WP File System
 			WP_Filesystem();
 
-			// Try Downloading File form url
-			// Loop :: Network Failed Proof
-			$download = false;
-			$count    = 0;
-			$tmp_file = false;
-			while ( ! $download ) {
-				try {
-					$tmp_file = download_url( $download_url, 30 );
-					//ray( $tmp_file )->red();
-					if ( ! ( is_wp_error( $tmp_file ) ) ) {
-						// Copy From Temp to wp-content/plugins/ and rename to  plugin-name.zip
-						copy( $tmp_file, WP_PLUGIN_DIR . '/' . $plugin_slug . '.zip' );
-						unlink( $tmp_file ); // Delete Temp File
-
-						// Unzip File in wp-content/plugins/plugin-name.zip to folder plugin-name/
-						$unzip = unzip_file( WP_PLUGIN_DIR . '/' . $plugin_slug . '.zip', WP_PLUGIN_DIR );
-						if ( is_wp_error( $unzip ) ) {
-							return $unzip->get_error_message();
-						}
-
-						// Delete downloaded file
-						unlink( WP_PLUGIN_DIR . '/' . $plugin_slug . '.zip' ); // Delete zip file
-						if ( file_exists( WP_PLUGIN_DIR . '/' . $plugin_slug . '.zip' ) ) {
-							return new \WP_Error( "failed_delete_zip", "Can't delete the file, because the file doesn't exist or can't be found." );
-						}
-
-						$download = true;
-					}
-
-					$count ++;
-					sleep( 10 );
-				} catch ( \Exception $e ) {
-					//ray( $e )->red();
-					continue;
-					//return $e->get_error_message();
+			// Try Downloading File form url, Network Failed Test : Passed
+			try {
+				$tmp_file = download_url( $download_url, 300 );
+				if ( is_wp_error( $tmp_file ) ) {
+					throw new Exception( 'Could download file file' );
 				}
+
+				//ray( $plugin_slug );
+
+				if ( ! copy( $tmp_file, WP_PLUGIN_DIR . '/' . $plugin_slug . '.zip' ) ) {
+					throw new Exception( 'Could not copy file' );
+				};
+				unlink( $tmp_file ); // Delete Temp File
+
+				// Unzip File in wp-content/plugins/plugin-name.zip to folder plugin-name/
+				$unzip = unzip_file( WP_PLUGIN_DIR . '/' . $plugin_slug . '.zip', WP_PLUGIN_DIR );
+				if ( is_wp_error( $unzip ) ) {
+					throw new Exception( "Failed to Unzip File" );
+				}
+
+				// Delete downloaded file
+				unlink( WP_PLUGIN_DIR . '/' . $plugin_slug . '.zip' ); // Delete zip file
+				if ( file_exists( WP_PLUGIN_DIR . '/' . $plugin_slug . '.zip' ) ) {
+					return new Exception( "Can't delete the file, because the file doesn't exist or can't be found." );
+				}
+
+				// Rename Folder based on slug
+				$directories = scandir( WP_PLUGIN_DIR );
+				foreach ( $directories as $directory ) {
+					if ( strpos( $directory, $plugin_slug ) !== false ) {
+						if ( ! rename( WP_PLUGIN_DIR . "/" . $directory, WP_PLUGIN_DIR . "/" . $plugin_slug ) ) {
+							return new Exception( "Can't rename file" );
+						}
+					}
+				}
+
+			} catch ( \Exception $e ) {
+				die ( 'File did downloade: ' . $e->getMessage() );
 			}
 
 		} else { // Plugin Exist
