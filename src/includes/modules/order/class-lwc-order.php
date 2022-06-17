@@ -95,8 +95,11 @@ class LWC_Order {
 				$value->payment_url = $payment->logo_url;
 			}
 
-			$data['ordersFilter'] = $datatable->get_request_field()->base['orderFilter'];
-			$data['dateFilter']   = $datatable->get_request_field()->base['dateFilter'];
+			if ( isset( $datatable->get_request_field()->base ) ) {
+				$data['ordersFilter'] = $datatable->get_request_field()->base['orderFilter'];
+				$data['dateFilter']   = $datatable->get_request_field()->base['dateFilter'];
+			}
+
 		}
 
 		return $data;

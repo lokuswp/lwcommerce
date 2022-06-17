@@ -36,7 +36,7 @@
                             </label>
                             <div class="form-group-body has-tooltip">
                                 <input id="lokuswp-price-normal" name="_unit_price" type="text"
-                                       class="form-control full" placeholder="100.000"
+                                       class="form-control full currency-format" placeholder="100.000"
                                        value="<?= $args['unit_price'] ?>">
                                 <a href="#" class="info-popup-toggler tooltip" toggle="tooltip" data-placement="top"
                                    title="Silahkan cek di [https://google.com](Google)"></a>
@@ -49,7 +49,7 @@
                             </label>
                             <div class="form-group-body has-tooltip">
                                 <input id="lokuswp-price-promo" name="_price_promo" type="text"
-                                       class="form-control full" placeholder="50.000"
+                                       class="form-control full currency-format" placeholder="50.000"
                                        value="<?= $args['price_promo'] ?>">
                                 <a href="#" class="info-popup-toggler tooltip" toggle="tooltip" data-placement="top"
                                    title="Silahkan cek di [https://google.com](Google)"></a>

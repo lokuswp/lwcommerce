@@ -2,11 +2,9 @@
 
 namespace LokusWP\Commerce\Admin;
 
-require_once LWC_PATH . 'src/includes/modules/order/class-datatable-order.php';
-require_once LWC_PATH . 'src/includes/modules/order/class-lwc-order.php';
-
 use LokusWP\Commerce\Modules\Order\Datatable_Order;
 use LokusWP\Commerce\Modules\Order\LWC_Order;
+use LokusWP\Commerce\Order;
 
 
 class AJAX {
@@ -394,13 +392,17 @@ class AJAX {
 			if ( has_action( 'lokuswp/admin/order/action' ) ) {
 				do_action( 'lokuswp/admin/order/action', $order_id );
 			}
-			lwc_update_order_meta( $order_id, '_order_status', 'shipped' );
+			Order::set_status( $order_id, 'processing' );
+		}
+		if ( $action === 'processing' ) {
+			Order::set_status( $order_id, 'shipped' );
 		}
 		if ( $action === 'shipped' ) {
-			lwc_update_order_meta( $order_id, '_order_status', 'completed' );
+			Order::set_status( $order_id, 'completed' );
 		}
 		if ( $action === 'completed' ) {
-			lwc_update_order_meta( $order_id, '_order_status', 'refunded' );
+//			Order::set_status( $order_id, 'completed' );
+//			lwc_update_order_meta( $order_id, '_order_status', 'refunded' );
 		}
 
 		wp_send_json_success( 'success' );
@@ -414,7 +416,7 @@ class AJAX {
 		$data_order = $_POST['data_order'];
 		$phone      = lwp_sanitize_phone( sanitize_text_field( $_POST['phone_number'] ), $data_order['country'] );
 
-		$template = apply_filters( 'lokuswp/order/followup/template', $data_order );
+		$template = apply_filters( 'lwcommerce/order/followup/template', $data_order );
 		wp_send_json( [
 			'status'  => 'success',
 			'message' => urlencode( $template ),

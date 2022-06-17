@@ -13,13 +13,13 @@ class Order {
 		$status_list['pending']    = 'pending';
 		$status_list['processing'] = 'processing';
 		$status_list['cancelled']  = 'cancelled';
-		$status_list['shipping']   = 'shipping';
+		$status_list['shipped']    = 'shipped';
 		$status_list['completed']  = 'completed';
 
 		if ( isset( $status_list[ $status ] ) ) {
 			$status = $status_list[ $status ];
 
-			// Set Order Status
+			// Update Order Status
 			lwc_update_order_meta( $trx_id, "_order_status", $status );
 
 			// Set Notification

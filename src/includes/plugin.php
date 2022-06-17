@@ -38,12 +38,8 @@ class Plugin {
 		require_once LWC_PATH . 'src/includes/hook/cart/func-cart-processing.php';
 		require_once LWC_PATH . 'src/includes/hook/checkout/func-checkout-tab.php';
 		require_once LWC_PATH . 'src/includes/hook/checkout/func-checkout-logic.php';
-
-		require_once LWC_PATH . 'src/includes/hook/notification/func-notification-scheduler.php';
 		require_once LWC_PATH . 'src/includes/hook/order/func-order-create.php';
-
-		// Order
-		require_once LWC_PATH . 'src/includes/modules/order/class-order.php';
+		require_once LWC_PATH . 'src/includes/hook/notification/func-notification-scheduler.php';
 
 		// Shipping Module
 //		require_once LWC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
@@ -59,6 +55,10 @@ class Plugin {
 //		require_once LWC_PATH . 'src/includes/modules/shipping/carriers/class-rajaongkir-jne.php';
 //		require_once LWC_PATH . 'src/includes/modules/shipping/carriers/class-free-shipping.php';
 
+		// Order
+		require_once LWC_PATH . 'src/includes/modules/order/class-order.php';
+		require_once LWC_PATH . 'src/includes/modules/order/class-lwc-order.php';
+
 		// Plugins Loaded
 		add_action( 'plugins_loaded', [ $this, 'global_loaded' ] );
 
@@ -72,6 +72,10 @@ class Plugin {
 		if ( is_admin() ) {
 			require_once LWC_PATH . 'src/admin/class-admin.php';
 			Admin::register( $lwcommerce );
+
+			// Order
+			require_once LWC_PATH . 'src/includes/modules/order/class-datatable-order.php';
+
 		} else {
 			require_once LWC_PATH . 'src/public/class-public.php';
 			Frontend::register( $lwcommerce );
