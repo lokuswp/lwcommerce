@@ -32,11 +32,17 @@
 
 - Onboarding Error
 - Version Check
+- 
+# [v0.0.6-alpha]() (2022-06-15)
 
-# [v0.0.6-alpha]() (2022-06-18)
+**Fixed :**
+
+- Auto Release
+
+# [v0.0.7-alpha]() (2022-06-18)
 
 **Fixed :**
 
 - Onboarding Error
-- Follow Up Whatsapp
+- Follow Up Whatsapp in Order
 - Currency Format in Product
