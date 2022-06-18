@@ -146,7 +146,7 @@ function lwc_transaction_response( $response, $trx_id ) {
 	$response['nav_history_url'] = get_permalink( lwp_get_ID_by_shortcode( "lwcommerce_order_history" ) );
 
 	$response['btn_text'] = __( "Manual Confirmation", "lwcommerce" );
-	$response['btn_url']  = lwp_get_settings( 'settings', 'confirmation_link', 'esc_url' );
+	$response['btn_url']  = lwp_get_settings( 'lokuswp', 'settings', 'confirmation_link', 'esc_url' );
 
 	$response['order_status']      = $order_status;
 	$response['order_status_text'] = lwp_get_transaction_status_text( $order_status );
