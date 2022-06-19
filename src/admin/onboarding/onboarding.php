@@ -59,13 +59,14 @@ if ( ! is_user_logged_in() ) {
             </section>
             <section class="navbar-center">
                 <img src="<?php echo LWC_URL . '/src/admin/assets/images/lwcommerce.png' ?>" alt="lwcommerce"
-                     width="60">
+                     width="60" style="display: block">
             </section>
             <section class="navbar-section">
                 <!--<a href="#" class="btn btn-link">Community</a>-->
                 <!--<a href="#" class="btn btn-link">Guide</a>-->
             </section>
         </header>
+        <h3 style="display: block;text-align: center;font-size: 20px;margin-top: 14px;font-weight: 600;">Setup LWCommerce</h3>
         <br><br>
 
         <ul class="step">

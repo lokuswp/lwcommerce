@@ -6,7 +6,7 @@
  * Plugin Name:       LWCommerce ~ BETA
  * Plugin URI:        https://lokuswp.id/plugin/lwcommerce
  * Description:       Local First eCommerce WordPress
- * Version:           0.0.5-alpha
+ * Version:           0.0.7-alpha
  * Author:            LokusWP
  * Author URI:        https://lokuswp.id/
  * License:           GPL-3.0+
@@ -28,7 +28,7 @@ if ( ! defined( 'WPTEST' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  * Define Constant
  */
-defined( 'LWC_VERSION' ) or define( 'LWC_VERSION', '0.0.5' );
+defined( 'LWC_VERSION' ) or define( 'LWC_VERSION', '0.0.7' );
 defined( 'LWC_BASE' ) or define( 'LWC_BASE', plugin_basename( __FILE__ ) );
 defined( 'LWC_PATH' ) or define( 'LWC_PATH', plugin_dir_path( __FILE__ ) );
 defined( 'LWC_URL' ) or define( 'LWC_URL', plugin_dir_url( __FILE__ ) );

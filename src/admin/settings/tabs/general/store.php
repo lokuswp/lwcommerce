@@ -80,7 +80,7 @@ $categories = [
             </div>
             <div class="col-9 col-sm-12">
                 <input type="text" class="form-input" name="description"
-                       placeholder="<?php _e( "The best online shop ever", "lwcommerce" ); ?>"
+                       placeholder="<?php _e( "Local first online shop", "lwcommerce" ); ?>"
                        value="<?php echo $desc; ?>"/>
             </div>
         </div>
@@ -120,7 +120,7 @@ $categories = [
                 <label class="form-label" for="whatsapp"><?php _e( 'Whatsapp', 'lwcommerce' ); ?></label>
             </div>
             <div class="col-9 col-sm-12">
-                <input type="number" class="form-input" name="whatsapp" placeholder="08126876418"
+                <input type="number" class="form-input" name="whatsapp" placeholder="081335592022"
                        value="<?php echo $whatsapp; ?>"/>
             </div>
         </div>
@@ -175,7 +175,7 @@ $categories = [
                 <label class="form-label" for="address"><?php _e( 'Address', 'lwcommerce' ); ?></label>
             </div>
             <div class="col-9 col-sm-12">
-                <textarea class="form-input" name="address" placeholder="Jl.Jendral Sudirman no 40. 15560"
+                <textarea class="form-input" name="address" placeholder="Jl.Jendral Sudirman"
                           rows="3"><?php echo $address; ?></textarea>
             </div>
         </div>
