@@ -93,15 +93,15 @@
                 <div class="item-radio">
                     <input type="radio"
                            name="shipping_channel"
-                           id="{{service_id}}"
-                           title="{{short_name}}"
+                           id="{{id}}"
+                           title="{{name}}"
                            service="{{service}}"
                            cost="{{cost}}">
-                    <label for="{{service_id}}}">
-                        <img src="{{logo_url}}" alt="{{short_name}}">
+                    <label for="{{id}}}">
+                        <img src="{{logoURL}}" alt="{{name}}">
                         <h6>{{name}} - {{service}}</h6>
                         <p>{{#currencyFormat}}{{cost}}{{/currencyFormat}}</p>
-                        <p>{{#eta}}{{eta}}{{/eta}}</p>
+                        <p>{{#description}}{{description}}{{/description}}</p>
                     </label>
                 </div>
             </div>

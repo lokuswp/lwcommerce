@@ -78,10 +78,11 @@
     $(document).on('change', '#lwcommerce-shipping #cities', function (e) {
 
         let destination = $('#cities').find(":selected").val();
+        let cart_uuid = lokusCookie.get("lokuswp_cart_session");
 
         // Request to REST API
         jQuery.ajax({
-            url: lokuswp.rest_url + "lwcommerce/v1/shipping/services?destination=" + destination,
+            url: lokuswp.rest_url + "lwcommerce/v1/shipping/services?destination=" + destination + "&cart_uuid=" + cart_uuid,
             type: 'GET',
             success: function (response) {
 

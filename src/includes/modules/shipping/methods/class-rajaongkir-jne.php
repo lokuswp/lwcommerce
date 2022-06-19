@@ -29,11 +29,13 @@ class RajaOngkir_JNE extends Shipping\Gateway {
 
 	public function __construct() {
 		$config['services'] = [
-			'REG' => 'on',
-			'OKE' => 'on',
-			'YES' => 'on'
+			'reg' => 'on',
+			'oke' => 'on',
+			'yes' => 'on'
 		];
 		$this->init_data( $config );
+
+		add_filter( "lwcommerce/shipping/services", [ $this, "get_service" ], 10, 3 );
 	}
 
 	public function admin_manage( $shipping_id ) {
@@ -45,47 +47,33 @@ class RajaOngkir_JNE extends Shipping\Gateway {
 	public function notification_html( object $transaction ) {
 	}
 
-	public function get_cost( $services, $shipping_obj, $destination ) {
+	public function get_service( $services, $shipping_data, $service_allowed ) {
 
-		// Populate Shipping Package
-//		foreach ( $shipping_data['services'] as $service_id => $value ) {
-//////					if ( $value === 'off' ) {
-//////						unset ( $shipping_obj->services[ $service ] );
-//////					}
-//////
-//////					$shipping_obj->service     = $service;
-//////					$shipping_obj->destination = $destination;
-//////					$shipping_obj->weight      = $weight;
-//////
-////////					preg_match( "/\(([^\)]*)\)/", $shipping_obj->name, $short_name );
-//////					$name = preg_replace( '/\((.*?)\)/', '', $shipping_obj->name );
-//////
-//////					// Get string between two strings.
-//
-//
-//		}
+		$origin      = lwp_get_settings( 'lwcommerce', 'store', 'city', 'intval' );
+		$weight      = $shipping_data->weight;
+		$destination = $shipping_data->destination;
 
-		$services[ $shipping_obj->id ] = [
-			'id'         => $shipping_obj->id,
-			'name'       => $shipping_obj->name,
-			'short_name' => $shipping_obj->name,
-			'service'    => "REG",
-			'service_id' => strtolower( $shipping_obj->id . '-' . "REG" ),
-			'logo_url'   => $shipping_obj->logo_url,
-			'currency'   => 'IDR',
-			'cost'       => 500,
-			'eta'        => "1-2 days",
-		];
+		$fetch_services = lwcommerce_rajaongkir_cost_calculation( $origin, $destination, $weight, 'JNE' );
+
+
+		if ( isset( $fetch_services->status ) && $fetch_services->status->code == 200 ) {
+			$service_data = $fetch_services->results[0]->costs;
+
+			foreach ( $service_data as $service ) {
+				if ( in_array( strtoupper( $service->service ), $service_allowed ) ) {
+					$services[] = [
+						'id'          => "jne-" . strtolower( $service->service ),
+						'logoURL'     => $shipping_data->logo_url,
+						'name'        => $shipping_data->name,
+						'service'     => $service->service,
+						'cost'        => $service->cost[0]->value,
+						'description' => $service->cost[0]->etd . ' ' . __( "Hari" ),
+					];
+				}
+			}
+		}
 
 		return $services;
-//
-//		$destination = $service[0];
-//		$weight      = $service[1];
-//
-//		$cost = lwcommerce_rajaongkir_cost_calculation( 501, $destination, 200, 'jne' );
-//		ray( $cost );
-//
-//		return $cost['costs'];
 	}
 
 }
@@ -93,6 +81,11 @@ class RajaOngkir_JNE extends Shipping\Gateway {
 Shipping\Manager::register( new RajaOngkir_JNE() );
 
 function lwcommerce_rajaongkir_cost_calculation( $origin, $destination, $weight, $courier ) {
+
+	// Transient is for Snapshot
+
+	// Get Transient
+
 	$header = [
 		'content-type' => 'application/json',
 		'key'          => '80aa49704fc30a939124a831882dea72',
@@ -102,7 +95,7 @@ function lwcommerce_rajaongkir_cost_calculation( $origin, $destination, $weight,
 		'origin'      => abs( $origin ),
 		'destination' => abs( $destination ),
 		'weight'      => abs( $weight ),
-		'courier'     => sanitize_key( $courier ),
+		'courier'     => strtolower( sanitize_key( $courier ) ),
 	];
 
 	$options = [
@@ -113,7 +106,7 @@ function lwcommerce_rajaongkir_cost_calculation( $origin, $destination, $weight,
 	$request  = wp_remote_post( 'https://api.rajaongkir.com/starter/cost', $options );
 	$response = json_decode( wp_remote_retrieve_body( $request ) );
 
-	$result['costs'] = $response->rajaongkir->results[0]->costs;
+	// Save to Transient
 
-	return $result;
+	return $response->rajaongkir;
 }

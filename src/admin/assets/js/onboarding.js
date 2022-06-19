@@ -38,7 +38,6 @@
          * @since 0.1.0
          ***************************************
          */
-        console.log(lwc_admin.plugin_exist);
         if (lwc_admin.plugin_exist == "") {
             $.ajax({
                 url: lwc_admin.ajax_url,
@@ -69,34 +68,6 @@
 
         });
 
-    });
-
-    /*****************************************
-     * Saving Store Data
-     * When user Fill Store Data, Hit AJAX
-     *
-     * @since 0.1.0
-     ***************************************
-     */
-    $(document).on("click", "#lwc-setting-store-save", function (e) {
-        e.preventDefault();
-        $(this).addClass('loading');
-        const that = this;
-
-        $.post(lwc_admin.ajax_url, {
-            action: 'lwc_store_settings_save',
-            settings: $("#settings form").serialize(),
-            security: lwc_admin.ajax_nonce,
-        }, function (response) {
-            if (response.trim() === 'action_success') {
-                $(that).removeClass('loading');
-                $('.step-to-integration').removeClass('hidden');
-            } else {
-                location.reload();
-            }
-        }).fail(function () {
-            alert('Please check your internet connection');
-        });
     });
 
 })(jQuery)

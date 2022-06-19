@@ -165,5 +165,5 @@ abstract class Gateway {
 
 	abstract public function notification_html( object $transaction );
 
-	abstract public function get_cost( $services, $shipping_obj, $destination );
+	abstract public function get_service( $services, $shipping_data, $service_allowed );
 }

@@ -29,11 +29,11 @@ class Free_Shipping extends Shipping\Gateway {
 
 	public function __construct() {
 		$config['services'] = [
-			'REG' => 'on',
+			'regular' => 'on',
 		];
 		$this->init_data( $config );
 
-		add_filter( "lwcommerce/shipping/services/{$this->id}", [ $this, "get_cost" ], 10, 3 );
+		add_filter( "lwcommerce/shipping/services", [ $this, "get_service" ], 10, 3 );
 	}
 
 	public function admin_manage( $shipping_id ) {
@@ -46,19 +46,18 @@ class Free_Shipping extends Shipping\Gateway {
 	public function notification_html( object $transaction ) {
 	}
 
-	public function get_cost( $services, $shipping_obj, $destination ) {
+	public function get_service( $services, $shipping_data, $service_allowed ) {
 
-		$services[ $shipping_obj->id ] = [
-			'id'         => $shipping_obj->id,
-			'name'       => $shipping_obj->name,
-			'short_name' => $shipping_obj->name,
-			'service'    => "REG",
-			'service_id' => strtolower( $shipping_obj->id . '-' . "REG" ),
-			'logo_url'   => $shipping_obj->logo_url,
-			'currency'   => 'IDR',
-			'cost'       => 0,
-			'eta'        => "1-2 days",
-		];
+//		if ( $shipping_data->id == $this->id ) {
+			$services[] = [
+				'id'          => "free-shipping",
+				'logoURL'     => $this->logo_url,
+				'name'        => $this->name,
+				'service'     => "Regular",
+				'cost'        => 0,
+				'description' => "Gratis Diantar Kerumah",
+			];
+//		}
 
 		return $services;
 	}

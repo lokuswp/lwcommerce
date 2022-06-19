@@ -24,7 +24,8 @@ class GET_Services {
 	}
 
 	public function lists( $request ) {
-		$destination = sanitize_text_field( $request->get_params()['destination'] );
+		$destination = abs( $request->get_params()['destination'] );
+		$cart_uuid   = sanitize_key( $request->get_params()['cart_uuid'] );
 
 		if ( ! $destination ) {
 			return new \WP_Error( 'shipping_destination_empty', 'Destination is required', [ 'status' => 400 ] );
@@ -38,31 +39,48 @@ class GET_Services {
 
 		$services = [];
 
+		// Loop : Shipping Method
 		foreach ( $shipping_active_list as $shipping_id => $shipping_status ) {
 
-//			if ( $shipping_status == "on" ) {
+			if ( $shipping_status == "on" ) { // When Shipping Method is Active
 
-			$shipping_data  = (object) lwp_get_option( "shipping-" . $shipping_id );
-			$shipping_class = esc_attr( $shipping_data->shipping_class );
+				// Getting Shipping Method Data and Instance
+				$shipping_data = (object) lwp_get_option( "shipping-" . $shipping_id );
 
-			// Error Handling
-			if ( ! class_exists( $shipping_class ) ) {
-				return new \WP_Error( 'shipping_class_not_exist', 'Shipping class on but not exist', [ 'status' => 500 ] );
-			}
+				// White List Shipping Service
+				$service_allowed = [];
+				if ( isset( $shipping_data->services ) && ! empty( $shipping_data->services ) ) {
+					foreach ( $shipping_data->services as $key => $value ) {
+						if ( $value == "on" ) {
+							$service_allowed[] = strtoupper( $key );
+						}
+					}
+				}
 
-			// Get Shipping Package
-			$shipping_obj = new $shipping_class();
+				// Calculate Weight Total;
+				$weight = 0;
+				if ( $cart_uuid ) {
+					$cart_data = lwp_get_cart_by( "cart_uuid", $cart_uuid );
+					if ( is_wp_error( $cart_data ) ) {
+						return lwp_set_response( "error", 500, "Failed Processing Cart Data" );
+					}
 
+					foreach ( $cart_data as $cart_item ) {
+						$weight += abs( get_post_meta( $cart_item->post_id, '_weight', true ) );
+					};
+				}
 
-			if ( $shipping_obj->category === 'send-to-buyer' ) {
-				// Request Cost
-				$services[] = $shipping_obj->get_cost( $services, $shipping_obj, $destination );
+				$shipping_data->destination = $destination;
+				$shipping_data->weight      = $weight;
 
-				//$services[] = apply_filters( "lwcommerce/shipping/services", [], $shipping_obj, $destination );
+				$services[] = apply_filters( "lwcommerce/shipping/services", [], $shipping_data, $service_allowed );
 			}
 		}
 
-		return lwp_set_response( "rest", "shipping_services", "Successfully getting shipping services", true, $services );
+		// Remove Parent Array
+		$services = array_values( $services[0] );
+
+		return lwp_set_response( "rest", "get_shipping_services", "Successfully getting shipping services", true, $services );
 	}
 }
 

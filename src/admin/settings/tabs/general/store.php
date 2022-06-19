@@ -13,11 +13,11 @@ $desc = lwp_get_settings( 'lwcommerce', 'store', 'description' );
 $email    = lwp_get_settings( 'lwcommerce', 'store', 'email' );
 $whatsapp = lwp_get_settings( 'lwcommerce', 'store', 'whatsapp' );
 
-$address           = lwp_get_settings( 'lwcommerce', 'store', 'address' );
-$country_selected  = lwp_get_settings( 'lwcommerce', 'store', 'country' );
-$state_selected    = lwp_get_settings( 'lwcommerce', 'store', 'state', 'intval' );
-$city_selected     = lwp_get_settings( 'lwcommerce', 'store', 'city', 'intval' );
-$district_selected = lwp_get_settings( 'lwcommerce', 'store', 'district', 'intval' );
+$address          = lwp_get_settings( 'lwcommerce', 'store', 'address' );
+$country_selected = lwp_get_settings( 'lwcommerce', 'store', 'country' );
+$state_selected   = lwp_get_settings( 'lwcommerce', 'store', 'state', 'intval' );
+$city_selected    = lwp_get_settings( 'lwcommerce', 'store', 'city', 'intval' );
+//$district_selected = lwp_get_settings( 'lwcommerce', 'store', 'district', 'intval' );
 
 $latitude  = lwp_get_settings( 'lwcommerce', 'store', 'latitude', 'floatval' );
 $longitude = lwp_get_settings( 'lwcommerce', 'store', 'longitude', 'floatval' );
@@ -143,41 +143,31 @@ $categories = [
         </div>
 
         <!-- State -->
-        <!--        <div class="form-group hidden">-->
-        <!--            <div class="col-3 col-sm-12">-->
-        <!--                <label class="form-label" for="state">-->
-		<?php //_e( 'State', 'lwcommerce' ); ?><!--</label>-->
-        <!--            </div>-->
-        <!--            <div class="col-9 col-sm-12">-->
-        <!--                <select class="form-select" name="state" id="form-state">-->
-        <!--                    <option value="--><? //= $state_selected ?? '' ?><!--">-->
-		<?php //_e( 'Choose your state', 'lwcommerce' ); ?><!--</option>-->
-        <!--					--><?php //foreach ( $states as $key => $state ) : ?>
-        <!--                        <option value="--><?php //echo $state->province_id; ?><!--" -->
-		<?php //echo ( $state->province_id == $state_selected ) ? 'selected' : ''; ?><?php //echo $state->province; ?><!--</option>-->
-        <!--					--><?php //endforeach; ?>
-        <!--                </select>-->
-        <!--            </div>-->
-        <!--        </div>-->
+        <div class="form-group hidden">
+            <div class="col-3 col-sm-12">
+                <label class="form-label" for="states">
+					<?php _e( 'State', 'lwcommerce' ); ?></label>
+            </div>
+            <div class="col-9 col-sm-12">
+                <select class="form-select" name="state" id="states">
+                    <option value=""><?php _e( 'Choose your state', 'lwcommerce' ); ?></option>
+                </select>
+            </div>
+        </div>
 
         <!-- District -->
-        <!--        <div class="form-group hidden">-->
-        <!--            <div class="col-3 col-sm-12">-->
-        <!--                <label class="form-label" for="city">-->
-		<?php //_e( 'City', 'lwcommerce' ); ?><!--</label>-->
-        <!--            </div>-->
-        <!--
-		<!--            <div class="col-9 col-sm-12">-->
-        <!--                <select class="form-select" name="city" id="form-city">-->
-        <!--                    <option value="--><? //= $city_selected ?? '' ?><!--">-->
-		<?php //_e( 'Choose your city', 'lwcommerce' ); ?><!--</option>-->
-        <!--					--><?php //foreach ( $cities as $key => $city ) : ?>
-        <!--                        <option value="--><?php //echo $city->city_id; ?><!--" -->
-		<?php //echo ( $city->city_id == $city_selected ) ? 'selected' : ''; ?><?php //echo $city->type . ' ' . $city->city_name; ?><!--</option>-->
-        <!--					--><?php //endforeach; ?>
-        <!--                </select>-->
-        <!--            </div>-->
-        <!--        </div>-->
+        <div class="form-group hidden">
+            <div class="col-3 col-sm-12">
+                <label class="form-label" for="city">
+					<?php _e( 'City', 'lwcommerce' ); ?></label>
+            </div>
+
+            <div class="col-9 col-sm-12">
+                <select class="form-select" name="city" id="cities">
+                    <option><?php _e( 'Choose your city', 'lwcommerce' ); ?></option>
+                </select>
+            </div>
+        </div>
 
         <!-- Address -->
         <div class="form-group">
@@ -191,7 +181,7 @@ $categories = [
         </div>
 
         <!-- Coordinate -->
-        <!-- <div class="form-group lwp-hidden">
+        <div class="form-group">
             <div class="col-3 col-sm-12">
                 <label class="form-label" for="coordinate">
 					<?php _e( 'Coordinate', 'lwcommerce' ); ?></label>
@@ -204,16 +194,16 @@ $categories = [
                 <input type="number" class="form-input" name="longitude" placeholder="126.128635"
                        value="<?php echo $longitude; ?>"/>
             </div>
-            <div class="col-2" style="margin-left: 1rem">
-                <button class="btn get-coordinat">Get Coordinate</button>
+            <div class="col-2" style="margin-left: 0.2rem">
+                <button class="btn get-coordinate">📍</button>
             </div>
-        </div> -->
+        </div>
 
         <!-- form checkbox control -->
         <!-- <div class="form-group">
           <label class="form-checkbox">
             <input type="checkbox">
-            <i class="form-icon"></i> <?php //_e( 'I agree to contribute organization data for better experience and mapping store.' ) ?> what we collect. show @4.2.0
+            <i class="form-icon"></i> <?php //_e( 'I agree to contribute organization data for better experience and mapping store.' ) ?> what we collect.
           </label>
         </div> -->
 
@@ -223,63 +213,103 @@ $categories = [
 </section>
 
 <script>
-    //const apiRajaOngkir = '<?php //echo get_rest_url() . 'lwcommerce/v1/rajaongkir'; ?>//';
-    //const stateId = document.querySelector('#form-state').value;
-    //
-    //// Get City based on Province
-    //document.querySelector('#form-state').addEventListener('change', function () {
-    //    let stateId = this.value;
-    //    let option = document.createElement('option');
-    //    option.innerHTML = '<?php //_e( "Getting Data", "lwcommerce" ); ?>//...';
-    //    let city = document.querySelector('#form-city');
-    //    city.innerHTML = '';
-    //    city.appendChild(option); // Cleaning the city select
-    //
-    //    fetch(`${apiRajaOngkir}/city?province=${stateId}`)
-    //        .then(res => res.json())
-    //        .then(result => {
-    //            if (result.status === 'success') {
-    //                console.log(result)
-    //                result.data.forEach(city => {
-    //                    let option = document.createElement('option');
-    //                    option.value = city.city_id;
-    //                    option.innerHTML = city.type + ' ' + city.city_name;
-    //                    document.querySelector('#form-city').appendChild(option);
-    //                });
-    //                document.querySelector('#form-city option:first-child').remove();
-    //            } else {
-    //                console.log(data.message);
-    //            }
-    //        });
-    //});
+    // On Ready
+    document.addEventListener("DOMContentLoaded", function () {
 
+        window.addEventListener('load', function() {
+            if (!lat && !lon) {
+                getLocation();
+            }
+        })
 
-    // const lat = document.querySelector('input[name="latitude"]').value;
-    // const lon = document.querySelector('input[name="longitude"]').value;
-    //
-    // const showPosition = (position) => {
-    //     const lat = position.coords.latitude;
-    //     const lon = position.coords.longitude;
-    //     document.querySelector('input[name="latitude"]').value = lat;
-    //     document.querySelector('input[name="longitude"]').value = lon;
-    // }
-    //
-    // const getLocation = () => {
-    //     if (navigator.geolocation) {
-    //         navigator.geolocation.getCurrentPosition(showPosition);
-    //     } else {
-    //         alert('Geolocation is not supported by this browser.');
-    //     }
-    // }
-    //
-    // window.addEventListener('load', function() {
-    //     if (!lat && !lon) {
-    //         getLocation();
-    //     }
-    // })
-    //
-    // document.querySelector('.get-coordinate').addEventListener('click', function(e) {
-    //     e.preventDefault();
-    //     getLocation();
-    // });
+        document.querySelector('.get-coordinate').addEventListener('click', function(e) {
+            e.preventDefault();
+            getLocation();
+        });
+
+        /*****************************************
+         * Get Provinces List
+         * Request Provinces List from RajaOngkir API
+         *
+         * @since 0.1.0
+         *****************************************
+         */
+        jQuery.ajax({
+            url: lwc_admin.rest_url + "lwcommerce/v1/rajaongkir/province", type: 'GET', success: function (response) {
+
+                if (response.data) {
+                    for (var i = 0; i < response.data.length; i++) {
+                        var ele = document.createElement("option");
+                        ele.value = response.data[i].province_id;
+                        ele.innerHTML = response.data[i].province;
+                        document.getElementById("states").appendChild(ele);
+                    }
+
+                    var el = document.getElementById("states");
+                    el.options[0].remove();
+                    el.value = "<?php echo $state_selected; ?>";
+                    jQuery('#states').trigger('change');
+                }
+
+            }, error: function (data) {
+                console.log("Cannot Getting Data From Server");
+            }
+        });
+
+    });
+
+    /*****************************************
+     * User Change State in Shipping Section
+     * Getting Cities Based on Selected State
+     *
+     * @since 0.1.0
+     *****************************************
+     */
+    jQuery(document).on('change', '#settings #states', function (e) {
+        let state = jQuery(this).find(":selected").val();
+
+        jQuery.ajax({
+            url: lwc_admin.rest_url + "lwcommerce/v1/rajaongkir/city?province=" + state,
+            type: 'GET',
+            success: function (response) {
+
+                if (response.data) {
+                    jQuery('#cities').empty();
+                    for (var i = 0; i < response.data.length; i++) {
+                        var ele = document.createElement("option");
+                        ele.value = response.data[i].city_id;
+                        ele.innerHTML = response.data[i].type + ' ' + response.data[i].city_name;
+                        document.getElementById("cities").appendChild(ele);
+                    }
+
+                    var el = document.getElementById("cities");
+                    el.options[0].remove();
+                    el.value = "<?php echo $city_selected; ?>";
+                }
+
+            },
+            error: function (data) {
+                console.log("Cannot Getting Data From Server");
+            }
+        });
+
+    });
+
+    const lat = document.querySelector('input[name="latitude"]').value;
+    const lon = document.querySelector('input[name="longitude"]').value;
+
+    const showPosition = (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        document.querySelector('input[name="latitude"]').value = lat;
+        document.querySelector('input[name="longitude"]').value = lon;
+    }
+
+    const getLocation = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            alert('Geolocation is not supported by this browser.');
+        }
+    }
 </script>

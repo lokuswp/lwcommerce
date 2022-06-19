@@ -71,9 +71,9 @@ class Admin {
 			require_once 'settings/tabs/notification.php';
 		} );
 
-//		Tabs::add( 'lwcommerce', 'shipping', __( 'Shipping', 'lwcommerce' ), function () {
-//			require_once 'settings/tabs/shipping.php';
-//		} );
+		Tabs::add( 'lwcommerce', 'shipping', __( 'Shipping [Beta]', 'lwcommerce' ), function () {
+			require_once 'settings/tabs/shipping.php';
+		} );
 
 	}
 
@@ -140,6 +140,7 @@ class Admin {
 					'wp-color-picker'
 				), $this->version, false );
 				wp_localize_script( 'admin-setting', 'lwc_admin', array(
+					'rest_url'    => get_rest_url(),
 					'ajax_url'    => admin_url( 'admin-ajax.php' ),
 					'ajax_nonce'  => wp_create_nonce( 'lwc_admin_nonce' ),
 					'plugin_url'  => LWC_URL,
@@ -175,7 +176,7 @@ class Admin {
 
 			}
 
-			// Enquene Media For Administrator Only
+			// Enqueue Media For Administrator Only
 			if ( current_user_can( 'manage_options' ) ) {
 				wp_enqueue_media();
 			}
@@ -295,7 +296,7 @@ class Admin {
 			]
 		) );
 
-		// // Add Switch Options to wp-admin > lwcommerce > Appearence
+		// // Add Switch Options to wp-admin > lwcommerce > Appearance
 		// require_once LWC_PATH . 'backend/admin/class-switch-options.php';
 		// Admin\Switch_Options::addOptions( $this->slug, $this->name, array(
 		//     'lsdc_unique_code' => ['name' => __('Kode Unik', 'lwcommerce'), 'desc' => __('Matikan/Hidupkan Kode Unik', 'lwcommerce'), 'override' => false],
