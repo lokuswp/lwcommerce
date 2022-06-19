@@ -181,23 +181,23 @@ $categories = [
         </div>
 
         <!-- Coordinate -->
-        <div class="form-group">
-            <div class="col-3 col-sm-12">
-                <label class="form-label" for="coordinate">
-					<?php _e( 'Coordinate', 'lwcommerce' ); ?></label>
-            </div>
-            <div class="col-2" style="margin-right: 0.2rem">
-                <input type="number" class="form-input" name="latitude" placeholder="-6.123671823"
-                       value="<?php echo $latitude; ?>"/>
-            </div>
-            <div class="col-2" style="margin-left: 0.2rem">
-                <input type="number" class="form-input" name="longitude" placeholder="126.128635"
-                       value="<?php echo $longitude; ?>"/>
-            </div>
-            <div class="col-2" style="margin-left: 0.2rem">
-                <button class="btn get-coordinate">📍</button>
-            </div>
-        </div>
+        <!--        <div class="form-group">-->
+        <!--            <div class="col-3 col-sm-12">-->
+        <!--                <label class="form-label" for="coordinate">-->
+        <!--					--><?php //_e( 'Coordinate', 'lwcommerce' ); ?><!--</label>-->
+        <!--            </div>-->
+        <!--            <div class="col-2" style="margin-right: 0.2rem">-->
+        <!--                <input type="number" class="form-input" name="latitude" placeholder="-6.123671823"-->
+        <!--                       value="--><?php //echo $latitude; ?><!--"/>-->
+        <!--            </div>-->
+        <!--            <div class="col-2" style="margin-left: 0.2rem">-->
+        <!--                <input type="number" class="form-input" name="longitude" placeholder="126.128635"-->
+        <!--                       value="--><?php //echo $longitude; ?><!--"/>-->
+        <!--            </div>-->
+        <!--            <div class="col-2" style="margin-left: 0.2rem">-->
+        <!--                <button class="btn get-coordinate">📍</button>-->
+        <!--            </div>-->
+        <!--        </div>-->
 
         <!-- form checkbox control -->
         <!-- <div class="form-group">
@@ -216,16 +216,16 @@ $categories = [
     // On Ready
     document.addEventListener("DOMContentLoaded", function () {
 
-        window.addEventListener('load', function() {
-            if (!lat && !lon) {
-                getLocation();
-            }
-        })
-
-        document.querySelector('.get-coordinate').addEventListener('click', function(e) {
-            e.preventDefault();
-            getLocation();
-        });
+        // window.addEventListener('load', function() {
+        //     if (!lat && !lon) {
+        //         getLocation();
+        //     }
+        // })
+        //
+        // document.querySelector('.get-coordinate').addEventListener('click', function(e) {
+        //     e.preventDefault();
+        //     getLocation();
+        // });
 
         /*****************************************
          * Get Provinces List
@@ -245,10 +245,8 @@ $categories = [
                         document.getElementById("states").appendChild(ele);
                     }
 
-                    var el = document.getElementById("states");
-                    el.options[0].remove();
-                    el.value = "<?php echo $state_selected; ?>";
-                    jQuery('#states').trigger('change');
+                    $("#states").find('option').get(0).remove();
+                    $("#states").val("<?php echo $state_selected; ?>").change();
                 }
 
             }, error: function (data) {
@@ -282,9 +280,8 @@ $categories = [
                         document.getElementById("cities").appendChild(ele);
                     }
 
-                    var el = document.getElementById("cities");
-                    el.options[0].remove();
-                    el.value = "<?php echo $city_selected; ?>";
+                    $("#cities").find('option').get(0).remove();
+                    $("#cities").val("<?php echo $state_selected; ?>")
                 }
 
             },

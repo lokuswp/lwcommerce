@@ -46,3 +46,14 @@
 - Onboarding Error
 - Follow Up Whatsapp in Order
 - Currency Format in Product
+
+# [v0.0.8-alpha]() (2022-06-19)
+
+**Added :**
+
+- Shipping Method JNE by RajaOngkir
+- Whatsapp Notification for Order
+
+**Fixed :**
+- Onboarding Image not Replace
+- Manual Confirmation
