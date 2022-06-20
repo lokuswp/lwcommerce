@@ -15,6 +15,10 @@ function lwc_transaction_logic( $transaction ) {
 	$post_types_in_cart    = lwp_get_post_types_in_cart( 'post', $cart_uuid ); // [ 'product', 'program' ]
 	$product_types_in_cart = lwp_get_post_types_in_cart( 'product', $cart_uuid ); // [ 'digital', 'physical' ]
 
+	$is_product = array_filter( $post_types_in_cart, function ( $post_type ) {
+		return strpos( $post_type, 'product' ) !== false;
+	} ); // filter if has product post type
+
 	$subtotal = lwc_get_subtotal( $cart_uuid );
 
 	/**
@@ -24,7 +28,7 @@ function lwc_transaction_logic( $transaction ) {
 	 * Subtotal : 0 ( Free )
 	 */
 	if ( isset( $product_types_in_cart[0] ) &&
-	     in_array( 'product', $post_types_in_cart ) &&
+	     ! empty( $is_product ) &&
 	     $product_types_in_cart[0] == "digital" &&
 	     ! in_array( 'physical', $product_types_in_cart ) && // Not Physical
 	     $subtotal == 0 ) {
@@ -37,7 +41,6 @@ function lwc_transaction_logic( $transaction ) {
 			->set_extras( $transaction['extras'] )
 			->set_paid() // Status : Completed
 			->create();
-
 
 		// Hook for Digital Products
 		// do_action( "lwcommerce/logic/product/digital", $trx_id );
@@ -56,10 +59,11 @@ function lwc_transaction_logic( $transaction ) {
 	 * Subtotal : > 1
 	 */
 	if ( isset( $product_types_in_cart[0] ) &&
-	     in_array( 'product', $post_types_in_cart ) &&
+	     ! empty( $is_product ) &&
 	     $product_types_in_cart[0] == "digital" &&
 	     ! in_array( 'physical', $product_types_in_cart ) && // Not Physical
 	     $subtotal > 0 ) {
+
 
 		// Create Transaction
 		$trx_id = ( new LWP_Transaction() )
@@ -69,6 +73,7 @@ function lwc_transaction_logic( $transaction ) {
 			->set_extras( $transaction['extras'] )
 			->create();
 
+
 		// Set Order Status : Pending
 		Order::set_status( $trx_id, "pending" );
 
@@ -76,6 +81,7 @@ function lwc_transaction_logic( $transaction ) {
 		lwc_update_order_meta( $trx_id, "_shipping_type", "digital" );
 		lwc_update_order_meta( $trx_id, "_shipping_status", "-" );
 	}
+
 
 	// 🔁 Business Logic :: Checkout Free and Paid Product Digital
 
@@ -87,7 +93,7 @@ function lwc_transaction_logic( $transaction ) {
 	 * Total : > 1
 	 */
 	if ( isset( $product_types_in_cart[0] ) &&
-	     in_array( 'product', $post_types_in_cart ) &&
+	     ! empty( $is_product ) &&
 	     $product_types_in_cart[0] == "physical" &&
 	     ! in_array( 'digital', $product_types_in_cart ) && // Not Physical
 	     $subtotal > 0 ) {
@@ -109,7 +115,7 @@ function lwc_transaction_logic( $transaction ) {
 	}
 
 	// TODO 2.0.0 :: Support Multiple Transaction
-	if ( ! empty( $trx_id ) && in_array( 'product', $post_types_in_cart ) ) {
+	if ( ! empty( $trx_id ) && ! empty( $is_product ) ) {
 		$transaction['transaction_id'] = abs( $trx_id );
 
 		// Order Meta
