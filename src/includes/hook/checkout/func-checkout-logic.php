@@ -73,7 +73,6 @@ function lwc_transaction_logic( $transaction ) {
 			->set_extras( $transaction['extras'] )
 			->create();
 
-
 		// Set Order Status : Pending
 		Order::set_status( $trx_id, "pending" );
 
@@ -105,7 +104,7 @@ function lwc_transaction_logic( $transaction ) {
 			->set_payment( $transaction['payment_id'] )
 			->set_extras( $transaction['extras'] )
 			->create();
-
+		
 		// Set Order Status : Pending
 		Order::set_status( $trx_id, "pending" );
 
@@ -144,7 +143,7 @@ function lwc_transaction_status_text( $statuses ) {
 add_filter( "lokuswp/item/price", "lwc_set_item_price", 10, 4 );
 function lwc_set_item_price( $price, $post_id, $currency, $payment_id ) {
 
-	if ( get_post_type( $post_id ) == 'product' && $currency == "IDR" ) {
+	if ( ( get_post_type( $post_id ) === 'product' || get_post_type( $post_id ) === 'product_variant' ) && $currency == "IDR" ) {
 		$price = lwc_get_price( $post_id, $currency );
 	}
 
