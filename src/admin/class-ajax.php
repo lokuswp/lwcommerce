@@ -413,6 +413,7 @@ class AJAX {
 				}
 				Order::set_status( $order_id, 'completed' );
 				lwc_update_order_meta( $order_id, '_order_status', 'completed' );
+				lwp_transaction_update_column( $order_id, 'status', 'paid' );
 			}
 		}
 
