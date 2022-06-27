@@ -107,6 +107,7 @@
                                     ` : `${data.order_status === 'refunded' ? '' : `
                                             <button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}">
                                                     ${data.order_status === 'pending' ? 'Sudah Dibayar' : ''}
+                                                    ${data.order_status === 'processing' ? 'Shipped' : ''}
                                                     ${data.order_status === 'shipped' ? 'Completed' : ''}
                                                     ${data.order_status === 'completed' ? 'Refunded' : ''} 
                                             </button>
