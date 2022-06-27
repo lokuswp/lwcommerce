@@ -399,8 +399,8 @@
         // One tap order action
         $(document).on('click', '.order-action', function () {
             const that = $(this);
-            // $(this).addClass('loading');
-            // $(this).attr('disabled', true);
+            $(this).addClass('loading');
+            $(this).attr('disabled', true);
             const action = $(this).attr('data-status');
             const orderId = $(this).attr('data-id');
             const shipping = $(this).attr('data-shipping');
@@ -416,8 +416,8 @@
                 },
                 success: data => {
                     console.log(data);
-                    // that.removeClass('loading');
-                    // tableOrders.draw();
+                    that.removeClass('loading');
+                    tableOrders.draw();
                 }
             })
         })
