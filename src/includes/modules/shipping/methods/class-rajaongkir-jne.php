@@ -18,7 +18,7 @@ class RajaOngkir_JNE extends Shipping\Gateway {
 
 	public string $name = "JNE";
 	public string $description = "Kirim Barang dengan JNE";
-	public string $logo_url = LWC_URL . 'src/admin/assets/images/jne.png';
+	public string $logo_url = LWC_URL . 'src/admin/assets/images/jne.jpg';
 
 	public array $docs_url = [ 'id' => '', 'en' => '' ];
 
@@ -35,7 +35,10 @@ class RajaOngkir_JNE extends Shipping\Gateway {
 		];
 		$this->init_data( $config );
 
+
 		add_filter( "lwcommerce/shipping/services", [ $this, "get_service" ], 10, 3 );
+
+
 	}
 
 	public function admin_manage( $shipping_id ) {
@@ -49,26 +52,27 @@ class RajaOngkir_JNE extends Shipping\Gateway {
 
 	public function get_service( $services, $shipping_data, $service_allowed ) {
 
-		$origin      = lwp_get_settings( 'lwcommerce', 'store', 'city', 'intval' );
-		$weight      = $shipping_data->weight;
-		$destination = $shipping_data->destination;
+		if ( $this->get_status() == "on" ) {
+			$origin      = lwp_get_settings( 'lwcommerce', 'store', 'city', 'intval' );
+			$weight      = $shipping_data->weight;
+			$destination = $shipping_data->destination;
 
-		$fetch_services = lwcommerce_rajaongkir_cost_calculation( $origin, $destination, $weight, 'JNE' );
+			$fetch_services = lwcommerce_rajaongkir_cost_calculation( $origin, $destination, $weight, 'JNE' );
 
+			if ( isset( $fetch_services->status ) && $fetch_services->status->code == 200 ) {
+				$service_data = $fetch_services->results[0]->costs;
 
-		if ( isset( $fetch_services->status ) && $fetch_services->status->code == 200 ) {
-			$service_data = $fetch_services->results[0]->costs;
-
-			foreach ( $service_data as $service ) {
-				if ( in_array( strtoupper( $service->service ), $service_allowed ) ) {
-					$services[] = [
-						'id'          => "jne-" . strtolower( $service->service ),
-						'logoURL'     => $shipping_data->logo_url,
-						'name'        => $shipping_data->name,
-						'service'     => $service->service,
-						'cost'        => $service->cost[0]->value,
-						'description' => $service->cost[0]->etd . ' ' . __( "Hari" ),
-					];
+				foreach ( $service_data as $service ) {
+					if ( in_array( strtoupper( $service->service ), $service_allowed ) ) {
+						$services[] = [
+							'id'          => "jne-" . strtolower( $service->service ),
+							'logoURL'     => $shipping_data->logo_url,
+							'name'        => $shipping_data->name,
+							'service'     => $service->service,
+							'cost'        => $service->cost[0]->value,
+							'description' => $service->cost[0]->etd . ' ' . __( "Hari" ),
+						];
+					}
 				}
 			}
 		}

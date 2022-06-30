@@ -14,12 +14,13 @@
         jQuery.ajax({
             url: lokuswp.rest_url + "lwcommerce/v1/rajaongkir/province", type: 'GET', success: function (response) {
 
-                if (response.data) {
+                var states = document.getElementById("states");
+                if (response.data && typeof (states) != 'undefined' && states != null) {
                     for (var i = 0; i < response.data.length; i++) {
                         var ele = document.createElement("option");
                         ele.value = response.data[i].province_id;
                         ele.innerHTML = response.data[i].province;
-                        document.getElementById("states").appendChild(ele);
+                        states.appendChild(ele);
                     }
                     // $(this).find('#states').get(0).remove();
                 }

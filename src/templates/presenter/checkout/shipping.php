@@ -88,7 +88,7 @@
 <script id="struct-shipping-services" type="x-template">
     <div class="row">
         {{#shippingServices}}
-        <div class="col-xs-12 col-sm-6 swiper-no-swiping gutter mb-2">
+        <div class="col-xs-12 col-sm-12 swiper-no-swiping gutter">
             <div class="lwp-form-group">
                 <div class="item-radio">
                     <input type="radio"
@@ -98,10 +98,20 @@
                            service="{{service}}"
                            cost="{{cost}}">
                     <label for="{{id}}}">
-                        <img src="{{logoURL}}" alt="{{name}}">
-                        <h6>{{name}} - {{service}}</h6>
-                        <p>{{#currencyFormat}}{{cost}}{{/currencyFormat}}</p>
-                        <p>{{#description}}{{description}}{{/description}}</p>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="img" style="padding-right: 12px;height: 50px;">
+                                    <img src="{{logoURL}}" alt="{{name}}">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <h6 style="margin-bottom:-2px">{{name}} - {{service}}</h6>
+                                <p>{{#description}}{{description}}{{/description}}</p>
+                            </div>
+                            <div class="col-sm-3" style="text-align: center">
+                                <p style="padding:8px">{{#currencyFormat}}{{cost}}{{/currencyFormat}}</p>
+                            </div>
+                        </div>
                     </label>
                 </div>
             </div>

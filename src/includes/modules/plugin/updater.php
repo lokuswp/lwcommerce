@@ -18,10 +18,7 @@ class Updater {
 
 		add_filter( 'network_admin_plugin_action_links', [ $this, 'plugin_row' ], 10, 4 );
 		add_filter( 'plugin_action_links', [ $this, 'plugin_row' ], 10, 4 );
-		add_action( 'in_plugin_update_message-' . $this->plugin_slug . '/' . $this->plugin_slug . '.php', [
-			$this,
-			'plugin_update_message'
-		], 10, 2 );
+		add_action( 'in_plugin_update_message-' . $this->plugin_slug . '/' . $this->plugin_slug . '.php', [$this,'plugin_update_message'], 10, 2 );
 		add_filter( 'plugins_api', array( $this, 'plugin_info' ), 9999, 3 );
 		add_action( 'upgrader_process_complete', array( $this, 'plugin_destroy_update' ), 10, 2 );
 

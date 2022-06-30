@@ -13,19 +13,19 @@ if ( ! defined( 'WPTEST' ) ) {
  * @since 0.1.0
  *****************************************
  */
-class Free_Shipping extends Shipping\Gateway {
-	public string $id = 'free-shipping';
+class Take_Away extends Shipping\Gateway {
+	public string $id = 'takeaway';
 
-	public string $name = "Free Shipping";
-	public string $description = "Diantar Gratis ke Tempat Anda";
-	public string $logo_url = LWC_URL . 'src/admin/assets/images/takeaway.png';
+	public string $name = "Take Away";
+	public string $description = "Pesanan Dibawa Pulang";
+	public string $logo_url = LWC_URL . 'src/admin/assets/images/takeaway.jpg';
 
-	public array $docs_url = [ 'id' => '', 'en' => '' ];
+	public array $docs_url = [ 'id_ID' => '', 'en_US' => '' ];
 
 	// Controlling Property
 	public array $country = [ 'ID' ];
 	public array $zones = [ 'local' ];
-	public string $category = "";
+	public string $category = "send-to-buyer";
 
 	public function __construct() {
 		$config['services'] = [
@@ -50,12 +50,12 @@ class Free_Shipping extends Shipping\Gateway {
 
 //		if ( $shipping_data->id == $this->id ) {
 		$services[] = [
-			'id'          => "free-shipping",
+			'id'          => $this->id,
 			'logoURL'     => $this->logo_url,
 			'name'        => $this->name,
 			'service'     => "Regular",
 			'cost'        => 0,
-			'description' => "Gratis Diantar Kerumah",
+			'description' => "Pesanan Dibawa Pulang",
 		];
 
 //		}
@@ -65,4 +65,4 @@ class Free_Shipping extends Shipping\Gateway {
 
 }
 
-Shipping\Manager::register( new Free_Shipping() );
+Shipping\Manager::register( new Take_Away() );
