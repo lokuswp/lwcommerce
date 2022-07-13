@@ -44,6 +44,7 @@ class Order {
 
 		// Update Paid_at Column
 		lwp_transaction_update_column( $trx_id, "paid_at", lwp_current_date() );
+		lwp_transaction_update_column( $trx_id, "status", 'paid' );
 
 	}
 
