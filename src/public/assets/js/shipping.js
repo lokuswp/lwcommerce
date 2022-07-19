@@ -138,7 +138,10 @@
 
         // Ser Extras
         lwpCheckout.setExtra("shipping", "Biaya Pengiriman", title + " - " + service, cost, "+", "fixed", "subtotal");
-
+        lwpCheckout.setExtraField("shipping", {
+            "service": service,
+        });
+        lwpRender.trxExtras().trxTotal();
         // Render Summary
         lwpRender.trxExtras().trxTotal();
     });

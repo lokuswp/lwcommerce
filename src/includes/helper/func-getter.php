@@ -2,10 +2,10 @@
 /**
  * Get Dynamic Settings based on param
  *
- * @param string $option
- * @param string $item
- * @param string $validator
- * @param string|null $fallback
+ * @param  string  $option
+ * @param  string  $item
+ * @param  string  $validator
+ * @param  string|null  $fallback
  *
  * @return mixed
  * @since 4.0.0
@@ -38,14 +38,15 @@ function lwc_get_settings( string $option = 'general_settings', string $item, st
 /**
  * Get Shipping Cost RajaOngkir
  *
- * @param string $shipping_id
- * @param string $service
- * @param string $destination
+ * @param  string  $shipping_id
+ * @param  string  $service
+ * @param  string  $destination
+ * @param  string  $weight
  *
  * @return false|mixed
  * @since 0.1.0
  */
-function lwc_get_cost_rajaongkir( string $shipping_id, string $service, string $destination, string $weight ) {
+function lwc_get_cost_rajaongkir( string $shipping_id, string $service, string $destination, string $weight ): mixed {
 	$origin           = lwc_get_settings( 'store', 'district', 'intval' );
 	$destination_cost = get_transient( $shipping_id . '_cost' );
 
@@ -55,7 +56,7 @@ function lwc_get_cost_rajaongkir( string $shipping_id, string $service, string $
 		return $cost;
 	}
 
-	$apikey = lwc_get_settings( 'shipping', 'apikey' ) ?? '';
+	$apikey = lwc_get_settings( 'shipping', 'apikey' ) ?? '80aa49704fc30a939124a831882dea72';
 
 	$header = [
 		'content-type' => 'application/json',
@@ -63,10 +64,10 @@ function lwc_get_cost_rajaongkir( string $shipping_id, string $service, string $
 	];
 
 	$body = [
-		'origin'      => $origin,
-		'destination' => $destination,
-		'weight'      => $weight,
-		'courier'     => $shipping_id,
+		'origin'      => abs( $origin ),
+		'destination' => abs( $destination ),
+		'weight'      => abs( $weight ),
+		'courier'     => strtolower( sanitize_key( $shipping_id ) ),
 	];
 
 	$options = [
