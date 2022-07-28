@@ -41,32 +41,5 @@
         }));
     });
 
-    //
-    // /**
-    //  * User Click or change Shipping Channel
-    //  */
-    // $(document).on('change', 'input[name="shipping_channel"]', function (e) {
-    //     e.preventDefault();
-    //     console.log("User Choose or Change Shipping Channel");
-    //
-    //     let title = $(this).attr("title");
-    //     let service = $(this).attr('service');
-    //     let cost = $(this).attr('cost');
-    //
-    //     lokusTransaction.setExtra("shipping", "Biaya Pengiriman", title + ' ' + service, cost);
-    //
-    //     // Render Summary
-    //     lokusTransaction.renderExtras();
-    // });
-    //
-    // /**
-    //  * Event when user click complete order
-    //  */
-    // $(document).on('click', '#lwc-verify-shipping', function (e) {
-    //     e.preventDefault();
-    //
-    //     //Shipping Checking
-    //     swiperTabsContent.slideTo(2);
-    // });
 
 })(jQuery);

@@ -146,6 +146,25 @@
         lwpRender.trxExtras().trxTotal();
     });
 
+
+    /*****************************************
+     * User Choose Shipping Service
+     * Adding Shipping Cost to Summary
+     *
+     * @since 0.1.0
+     *****************************************
+     */
+     $(document).on('change', 'input[name="shipping_type"]', function (e) {
+        e.preventDefault();
+        console.log("User Choose or Change Shipping Type");
+
+        let id = $(this).attr("id");
+        
+        if( id == "shipping" ){
+            $("#address-field").css("display", "flex");
+        }
+    });
+
     /*****************************************
      * When User Click on Continue Button
      * Verify Shipping Section is Valid

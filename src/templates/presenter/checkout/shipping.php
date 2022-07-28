@@ -29,9 +29,64 @@
 
 		<?php if ( $physical_shipping ) : ?>
 
+            <!-- Shipping Type -->
+            <div class="row" id="shipping-type">
+                <div class="col-xs-12 col-sm-12 swiper-no-swiping gutter">
+                    <div class="lwp-form-group">
+                        <div class="item-radio">
+                            <input type="radio"
+                                name="shipping_type"
+                                id="takeaway"
+                                title="takeaway"
+                                service="reguler"
+                                cost="0" checked>
+                            <label for="takeaway">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="img" style="padding-right: 12px;height: 50px;">
+                                            <img src="<?= LWC_URL . 'src/admin/assets/images/takeaway.jpg' ?>" alt="takeaway">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h6 style="margin-bottom:-2px">Take Away</h6>
+                                        <p>Ambil Pesanan di Kasir</p>
+                                    </div>
+                                    <div class="col-sm-3" style="text-align: center">
+                                        <p style="padding:8px">Gratis</p>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 swiper-no-swiping gutter">
+                    <div class="lwp-form-group">
+                        <div class="item-radio">
+                            <input type="radio"
+                                name="shipping_type"
+                                id="shipping">
+                            <label for="shipping">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="img" style="padding-right: 12px;height: 50px;">
+                                            <img src="<?= LWC_URL . 'src/public/assets/images/shipping.jpg' ?>" alt="takeaway">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h6 style="margin-bottom:-2px">Pengiriman</h6>
+                                        <p>Pesanan di Kirim oleh Kurir</p>
+                                    </div>
+                        
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <input type="hidden" id="user-address">
 
-            <div class="row">
+            <div class="row" id="address-field">
 
                 <!-- State -->
                 <div class="col-xs-12 col-sm-6 gutter">
@@ -83,6 +138,14 @@
     </div>
 
 </div>
+
+<style>
+    #address-field{
+        display: none;
+    }
+
+    
+</style>
 
 <!-- Template Shipping -->
 <script id="struct-shipping-services" type="x-template">
