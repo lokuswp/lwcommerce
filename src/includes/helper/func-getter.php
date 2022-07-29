@@ -38,19 +38,20 @@ function lwc_get_settings( string $option = 'general_settings', string $item, st
 /**
  * Get Shipping Cost RajaOngkir
  *
- * @param  string  $shipping_id
- * @param  string  $service
+ * @param  string  $shipping_name
  * @param  string  $destination
  * @param  string  $weight
+ *
+ * @param  string  $service
  *
  * @return false|mixed
  * @since 0.1.0
  */
-function lwc_get_cost_rajaongkir( string $shipping_id, string $service, string $destination, string $weight ): mixed {
+function lwc_get_cost_rajaongkir( string $shipping_name, string $destination, string $weight, string $service ) {
 	$origin           = lwc_get_settings( 'store', 'district', 'intval' );
-	$destination_cost = get_transient( $shipping_id . '_cost' );
+	$destination_cost = get_transient( $shipping_name . '_cost' );
 
-	$cost = $destination_cost["{$origin}_to_{$destination}_with_{$service}"] ?? false;
+	$cost = $destination_cost["{$origin}_to_{$destination}_with_{$service}_weight_{$weight}"] ?? false;
 
 	if ( $cost ) {
 		return $cost;
@@ -67,7 +68,7 @@ function lwc_get_cost_rajaongkir( string $shipping_id, string $service, string $
 		'origin'      => abs( $origin ),
 		'destination' => abs( $destination ),
 		'weight'      => abs( $weight ),
-		'courier'     => strtolower( sanitize_key( $shipping_id ) ),
+		'courier'     => strtolower( sanitize_key( $shipping_name ) ),
 	];
 
 	$options = [
@@ -75,21 +76,30 @@ function lwc_get_cost_rajaongkir( string $shipping_id, string $service, string $
 		'headers' => $header,
 	];
 
-	$request  = wp_remote_post( 'https://api.rajaongkir.com/starter/cost', $options );
+	$request = wp_remote_post( 'https://api.rajaongkir.com/starter/cost', $options );
+
+	if ( is_wp_error( $request ) ) {
+		return false;
+	}
+
 	$response = json_decode( wp_remote_retrieve_body( $request ) );
 	$costs    = $response->rajaongkir->results[0]->costs;
 	$index    = array_search( $service, array_column( $costs, 'service' ) );
+
+	if ( $index === false ) {
+		return false;
+	}
 
 	$cost            = $costs[ $index ]->cost[0]->value;
 	$estimation_date = $costs[ $index ]->cost[0]->etd;
 
 	// Push new destination to cache
-	$destination_cost["{$origin}_to_{$destination}_with_{$service}"] = [
+	$destination_cost["{$origin}_to_{$destination}_with_{$service}_weight_{$weight}"] = [
 		'cost' => $cost,
 		'etd'  => $estimation_date,
 	];
 
-	set_transient( $shipping_id . '_cost', $destination_cost, WEEK_IN_SECONDS );
+	set_transient( $shipping_name . '_cost', $destination_cost, WEEK_IN_SECONDS );
 
 	if ( $cost ) {
 		return [

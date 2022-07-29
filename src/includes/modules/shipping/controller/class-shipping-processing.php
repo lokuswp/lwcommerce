@@ -9,27 +9,21 @@ if ( ! defined( 'WPTEST' ) ) {
 class Shipping_Processing {
 
 	public function __construct() {
-		add_filter( 'lwcommerce/shipping/gateway/jne', [ $this, 'shipping_processing' ], 10, 2 );
-		add_filter( 'lwcommerce/shipping/gateway/pos', [ $this, 'shipping_processing' ], 10, 2 );
+		add_filter( 'lokuswp/transaction/extras/data/shipping', [ $this, 'processing' ], 10, 1 );
 	}
 
-	public function shipping_processing( $shipping, $transaction ) {
-		$shipping_id = $shipping['courier'];
-		$service     = $shipping['service'];
-		$destination = $shipping['destination'];
-		$weight      = $shipping['weight'] ?? '1';
+	public function processing( $shipping ) {
+		$shipping_cost = lwc_get_cost_rajaongkir( $shipping['courier'], $shipping['destination'], $shipping['weight'], $shipping['service'] );
 
-		$cost = lwc_get_cost_rajaongkir( $shipping_id, $service, $destination, $weight );
-
-		if ( ! $cost ) {
-			return 'shipping not found';
-		}
-
-		$total                        = $transaction['total'] + $cost['cost'];
-		$transaction['total']         = $total;
-		$transaction['shipping_cost'] = $cost['cost'];
-
-		return $transaction;
+		lwp_add_transaction_extras(
+			"shipping",
+			$shipping['courier'] . ' ' . $shipping['service'],
+			__( "Shipping costs", "lwcommerce-pro" ),
+			$shipping_cost['cost'],
+			"+",
+			"fixed",
+			"subtotal"
+		);
 	}
 }
 

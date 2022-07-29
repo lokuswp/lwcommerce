@@ -52,27 +52,21 @@ class RajaOngkir_JNE extends Shipping\Gateway {
 
 	public function get_service( $services, $shipping_data, $service_allowed ) {
 
-		if ( $this->get_status() == "on" ) {
-			$origin      = lwp_get_settings( 'lwcommerce', 'store', 'city', 'intval' );
+		if ( $this->get_status() == "on" || $this->get_status() == "1" ) {
 			$weight      = $shipping_data->weight;
 			$destination = $shipping_data->destination;
 
-			$fetch_services = lwcommerce_rajaongkir_cost_calculation( $origin, $destination, $weight, 'JNE' );
-
-			if ( isset( $fetch_services->status ) && $fetch_services->status->code == 200 ) {
-				$service_data = $fetch_services->results[0]->costs;
-
-				foreach ( $service_data as $service ) {
-					if ( in_array( strtoupper( $service->service ), $service_allowed ) ) {
-						$services[] = [
-							'id'          => "jne-" . strtolower( $service->service ),
-							'logoURL'     => $shipping_data->logo_url,
-							'name'        => $shipping_data->name,
-							'service'     => $service->service,
-							'cost'        => $service->cost[0]->value,
-							'description' => $service->cost[0]->etd . ' ' . __( "Hari" ),
-						];
-					}
+			foreach ( $service_allowed as $service ) {
+				$service_data = lwc_get_cost_rajaongkir( strtolower( $this->name ), $destination, $weight, $service );
+				if ( $service_data ) {
+					$services[] = [
+						'id'          => "jne-" . strtolower( $service ),
+						'logoURL'     => $shipping_data->logo_url,
+						'name'        => $shipping_data->name,
+						'service'     => $service,
+						'cost'        => $service_data['cost'],
+						'description' => $service_data['etd'] . ' ' . __( "Hari" ),
+					];
 				}
 			}
 		}

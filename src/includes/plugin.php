@@ -44,7 +44,7 @@ class Plugin {
 		// Shipping Module
 		require_once LWC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
 		require_once LWC_PATH . 'src/includes/modules/shipping/class-manager.php';
-//		require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-shipping-processing.php';
+		require_once LWC_PATH . 'src/includes/modules/shipping/controller/class-shipping-processing.php';
 
 		// API
 		require_once LWC_PATH . 'src/includes/modules/shipping/api/class-rajaongkir-api.php';
@@ -97,7 +97,6 @@ class Plugin {
 			require_once LWC_PATH . 'src/includes/modules/order/class-followup-whatsapp.php';
 		}
 		require_once LWC_PATH . 'src/includes/hook/checkout/func-post-checkout.php';
-		// require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-shipping-processing.php';
 		// require_once LWC_PATH . 'src/includes/modules/order/methods/class-order-processing.php';
 	}
 

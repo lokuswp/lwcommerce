@@ -140,6 +140,9 @@
         lwpCheckout.setExtra("shipping", "Biaya Pengiriman", title + " - " + service, cost, "+", "fixed", "subtotal");
         lwpCheckout.setExtraField("shipping", {
             "service": service,
+            "courier": title,
+            "destination": $('#cities').find(":selected").val(),
+            "weight": 20,
         });
         lwpRender.trxExtras().trxTotal();
         // Render Summary
@@ -154,13 +157,13 @@
      * @since 0.1.0
      *****************************************
      */
-     $(document).on('change', 'input[name="shipping_type"]', function (e) {
+    $(document).on('change', 'input[name="shipping_type"]', function (e) {
         e.preventDefault();
         console.log("User Choose or Change Shipping Type");
 
         let id = $(this).attr("id");
-        
-        if( id == "shipping" ){
+
+        if (id == "shipping") {
             $("#address-field").css("display", "flex");
         }
     });
