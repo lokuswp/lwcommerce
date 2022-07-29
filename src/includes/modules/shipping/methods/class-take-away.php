@@ -47,19 +47,6 @@ class Take_Away extends Shipping\Gateway {
 	}
 
 	public function get_service( $services, $shipping_data, $service_allowed ) {
-
-//		if ( $shipping_data->id == $this->id ) {
-		$services[] = [
-			'id'          => $this->id,
-			'logoURL'     => $this->logo_url,
-			'name'        => $this->name,
-			'service'     => "Regular",
-			'cost'        => 0,
-			'description' => "Pesanan Dibawa Pulang",
-		];
-
-//		}
-
 		return $services;
 	}
 

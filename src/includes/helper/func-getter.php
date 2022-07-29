@@ -48,7 +48,7 @@ function lwc_get_settings( string $option = 'general_settings', string $item, st
  * @since 0.1.0
  */
 function lwc_get_cost_rajaongkir( string $shipping_name, string $destination, string $weight, string $service ) {
-	$origin           = lwc_get_settings( 'store', 'district', 'intval' );
+	$origin           = lwc_get_settings( 'store', 'city', 'intval' );
 	$destination_cost = get_transient( $shipping_name . '_cost' );
 
 	$cost = $destination_cost["{$origin}_to_{$destination}_with_{$service}_weight_{$weight}"] ?? false;
