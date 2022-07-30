@@ -25,6 +25,15 @@
                     // $(this).find('#states').get(0).remove();
                 }
 
+                // Set Extras fot take away
+                lwpCheckout.setExtra("shipping", "Biaya Pengiriman", 'take-away', 0, "+", "fixed", "subtotal");
+                lwpCheckout.setExtraField("shipping", {
+                    "service": 'take-away',
+                });
+
+                // Render Summary
+                lwpRender.trxExtras().trxTotal();
+
             }, error: function (data) {
                 $(document).snackbar('Tidak dapat mengambil data dari server, Silahkan Coba Lagi');
                 console.log(data);
@@ -166,6 +175,7 @@
         if (id == "shipping") {
             $("#address-field").css("display", "flex");
         }
+
     });
 
     /*****************************************

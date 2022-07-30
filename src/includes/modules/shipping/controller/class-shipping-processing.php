@@ -13,6 +13,21 @@ class Shipping_Processing {
 	}
 
 	public function processing( $shipping ) {
+
+		if ( ! isset( $shipping['courier'] ) && ! isset( $shipping['destination'] ) && ! isset( $shipping['weight'] ) ) {
+			lwp_add_transaction_extras(
+				"shipping",
+				'take-away',
+				__( "Shipping costs", "lwcommerce" ),
+				0,
+				"+",
+				"fixed",
+				"subtotal"
+			);
+
+			return;
+		}
+
 		$shipping_cost = lwc_get_cost_rajaongkir( $shipping['courier'], $shipping['destination'], $shipping['weight'], $shipping['service'] );
 
 		lwp_add_transaction_extras(
