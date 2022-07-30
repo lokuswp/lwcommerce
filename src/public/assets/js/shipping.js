@@ -29,6 +29,9 @@
                 lwpCheckout.setExtra("shipping", "Biaya Pengiriman", 'take-away', 0, "+", "fixed", "subtotal");
                 lwpCheckout.setExtraField("shipping", {
                     "service": 'take-away',
+                    "courier": 'Take Away',
+                    "destination": '-',
+                    "weight": '0',
                 });
 
                 // Render Summary

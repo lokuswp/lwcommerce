@@ -69,6 +69,9 @@
                         d.dateFilter = $('#date-filter-value').val();
                         d.orderFilter = $('#orders-filter-value').val();
                     },
+                    // success: d => {
+                    //     console.log(d);
+                    // },
                     complete: function (jqXHR) {
                         $('.lwc-overlay-table').hide();
                     }
@@ -162,8 +165,7 @@
                                             </div>
                                             <div class="lwc-flex-column">
                                                 ${data.shipping_type === 'digital' ?
-                                `<!--<span class="lwc-text-bold">Kurir</span>-->
-<!--<span>-</span>-->`
+                                ``
                                 :
                                 `<span class="lwc-text-bold">Kurir</span>
                                                     ${data.courier ? `-`
@@ -197,8 +199,8 @@
                                                             <span>-</span>`
                                 :
                                 `<span class="lwc-text-bold">Kurir</span>
-                                                    ${data.courier ?
-                                    `-`
+                                                    ${data.courier == 0 ?
+                                    '-'
                                     :
                                     `<span>${data.courier.toUpperCase()} ${data.service.toUpperCase()}</span>
                                                         <span style="margin-top: 10px" class="lwc-text-bold">Nomor Resi</span>

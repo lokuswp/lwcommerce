@@ -14,7 +14,7 @@ class Shipping_Processing {
 
 	public function processing( $shipping ) {
 
-		if ( ! isset( $shipping['courier'] ) && ! isset( $shipping['destination'] ) && ! isset( $shipping['weight'] ) ) {
+		if ( $shipping['service'] === 'take-away' ) {
 			lwp_add_transaction_extras(
 				"shipping",
 				'take-away',
