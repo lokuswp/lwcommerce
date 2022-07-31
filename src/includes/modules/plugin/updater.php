@@ -185,7 +185,7 @@ class Updater {
 			$res->slug        = $this->plugin_slug;
 			$res->plugin      = $this->plugin_slug . '/' . $this->plugin_slug . '.php';
 			$res->new_version = $remote_version;
-			$res->tested      = '5.0';
+			$res->tested      = '6.0';
 			if ( isset( $assets->browser_download_url ) ) {
 				$res->package = $assets->browser_download_url;
 			}

@@ -1,48 +1,55 @@
-(function ($) {
+(function($) {
     'use strict'
 
     // On Ready
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
 
-        /*****************************************
-         * Get Provinces List
-         * Request Provinces List from RajaOngkir API
-         *
-         * @since 0.1.0
-         *****************************************
-         */
-        jQuery.ajax({
-            url: lokuswp.rest_url + "lwcommerce/v1/rajaongkir/province", type: 'GET', success: function (response) {
+        let urlCurrent = window.location.pathname.split('/');
 
-                var states = document.getElementById("states");
-                if (response.data && typeof (states) != 'undefined' && states != null) {
-                    for (var i = 0; i < response.data.length; i++) {
-                        var ele = document.createElement("option");
-                        ele.value = response.data[i].province_id;
-                        ele.innerHTML = response.data[i].province;
-                        states.appendChild(ele);
+        if (urlCurrent[2] != 'trx') {
+            /*****************************************
+             * Get Provinces List
+             * Request Provinces List from RajaOngkir API
+             *
+             * @since 0.1.0
+             *****************************************
+             */
+            jQuery.ajax({
+                url: lokuswp.rest_url + "lwcommerce/v1/rajaongkir/province",
+                type: 'GET',
+                success: function(response) {
+
+                    var states = document.getElementById("states");
+                    if (response.data && typeof(states) != 'undefined' && states != null) {
+                        for (var i = 0; i < response.data.length; i++) {
+                            var ele = document.createElement("option");
+                            ele.value = response.data[i].province_id;
+                            ele.innerHTML = response.data[i].province;
+                            states.appendChild(ele);
+                        }
+                        // $(this).find('#states').get(0).remove();
                     }
-                    // $(this).find('#states').get(0).remove();
+
+                    // Set Extras fot take away
+                    lwpCheckout.setExtra("shipping", "Biaya Pengiriman", 'take-away', 0, "+", "fixed", "subtotal");
+                    lwpCheckout.setExtraField("shipping", {
+                        "service": 'take-away',
+                        "courier": 'Take Away',
+                        "destination": '-',
+                        "weight": '0',
+                    });
+
+                    // Render Summary
+                    lwpRender.trxExtras().trxTotal();
+
+                },
+                error: function(data) {
+                    $(document).snackbar('Tidak dapat mengambil data dari server, Silahkan Coba Lagi');
+                    console.log(data);
                 }
+            });
 
-                // Set Extras fot take away
-                lwpCheckout.setExtra("shipping", "Biaya Pengiriman", 'take-away', 0, "+", "fixed", "subtotal");
-                lwpCheckout.setExtraField("shipping", {
-                    "service": 'take-away',
-                    "courier": 'Take Away',
-                    "destination": '-',
-                    "weight": '0',
-                });
-
-                // Render Summary
-                lwpRender.trxExtras().trxTotal();
-
-            }, error: function (data) {
-                $(document).snackbar('Tidak dapat mengambil data dari server, Silahkan Coba Lagi');
-                console.log(data);
-            }
-        });
-
+        }
     });
 
     /*****************************************
@@ -52,13 +59,13 @@
      * @since 0.1.0
      *****************************************
      */
-    $(document).on('change', '#lwcommerce-shipping #states', function (e) {
+    $(document).on('change', '#lwcommerce-shipping #states', function(e) {
         let state = $(this).find(":selected").val();
 
         jQuery.ajax({
             url: lokuswp.rest_url + "lwcommerce/v1/rajaongkir/city?province=" + state,
             type: 'GET',
-            success: function (response) {
+            success: function(response) {
 
                 if (response.data) {
                     $('#cities').empty();
@@ -72,7 +79,7 @@
                 }
 
             },
-            error: function (data) {
+            error: function(data) {
                 $(document).snackbar('Tidak dapat mengambil data dari server, Silahkan Coba Lagi');
                 console.log(data);
             }
@@ -88,7 +95,7 @@
      * @since 0.1.0
      *****************************************
      */
-    $(document).on('change', '#lwcommerce-shipping #cities', function (e) {
+    $(document).on('change', '#lwcommerce-shipping #cities', function(e) {
 
         let destination = $('#cities').find(":selected").val();
         let cart_uuid = lokusCookie.get("lokuswp_cart_session");
@@ -97,7 +104,7 @@
         jQuery.ajax({
             url: lokuswp.rest_url + "lwcommerce/v1/shipping/services?destination=" + destination + "&cart_uuid=" + cart_uuid,
             type: 'GET',
-            success: function (response) {
+            success: function(response) {
 
                 if (response.success) {
                     // Formatting Struct and Data
@@ -111,8 +118,8 @@
                     };
 
                     // Formatting Currency
-                    shippingData.currencyFormat = function () {
-                        return function (val, render) {
+                    shippingData.currencyFormat = function() {
+                        return function(val, render) {
                             return lwpCurrencyFormat(true, render(val));
                         };
                     }
@@ -125,7 +132,7 @@
                 }
 
             },
-            error: function (data) {
+            error: function(data) {
                 $(document).snackbar('Tidak dapat mengambil data dari server, Silahkan Coba Lagi');
                 console.log(data);
             }
@@ -140,7 +147,7 @@
      * @since 0.1.0
      *****************************************
      */
-    $(document).on('change', 'input[name="shipping_channel"]', function (e) {
+    $(document).on('change', 'input[name="shipping_channel"]', function(e) {
         e.preventDefault();
         console.log("User Choose or Change Shipping Channel");
 
@@ -156,7 +163,7 @@
             "destination": $('#cities').find(":selected").val(),
             "weight": 20,
         });
-        lwpRender.trxExtras().trxTotal();
+
         // Render Summary
         lwpRender.trxExtras().trxTotal();
     });
@@ -169,7 +176,7 @@
      * @since 0.1.0
      *****************************************
      */
-    $(document).on('change', 'input[name="shipping_type"]', function (e) {
+    $(document).on('change', 'input[name="shipping_type"]', function(e) {
         e.preventDefault();
         console.log("User Choose or Change Shipping Type");
 
@@ -177,6 +184,9 @@
 
         if (id == "shipping") {
             $("#address-field").css("display", "flex");
+        } else {
+            $("#address-field, #lwcommerce-shipping-services").css("display", "none");
+            lwpRender.trxExtras().trxTotal();
         }
 
     });
@@ -188,7 +198,7 @@
      * @since 0.1.0
      *****************************************
      */
-    $(document).on('click', '#lwc-verify-shipping', function (e) {
+    $(document).on('click', '#lwc-verify-shipping', function(e) {
         e.preventDefault();
 
         //Shipping Checking

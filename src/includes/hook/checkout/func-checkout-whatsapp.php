@@ -39,7 +39,9 @@ ID Pesanan : *#{{order_id}}*
 {{payment}}
 
 Tolong segera diproses ya min,
-Berikut ini bukti pembayarannya';
+{{order_link}}
+
+ini bukti pembayarannya';
     
     $checkout_template  = lwp_get_settings( 'lwcommerce', 'general', 'checkout_template' );
     $checkout_template = empty( $checkout_template ) ? $default_template : $checkout_template;
@@ -48,9 +50,13 @@ Berikut ini bukti pembayarannya';
     $checkout_template = str_replace( "{{order_id}}", lwc_get_order_meta( $trx_id, "_order_id", true ), $checkout_template );
     $checkout_template = str_replace( "{{payment}}", lwp_get_notification_block_payment_text( $locale, $transaction ), $checkout_template );
     $checkout_template = str_replace( "{{summary}}", lwp_get_notification_block_summary_text( $locale, $transaction->cart_uuid, $transaction->total ), $checkout_template );
+    $checkout_template = str_replace( "{{order_link}}",  get_permalink( lwp_get_settings( "lokuswp", 'settings', 'checkout_page' ) ) . 'trx/' . $transaction->transaction_uuid, $checkout_template );
 
-    $response['checkout_whatsapp'] = urlencode($checkout_template);
-    $response['checkout_whatsapp_option'] = lwp_get_settings( "lwcommerce", "appearance", "checkout_whatsapp");
-    $response['admin_whatsapp'] = lwp_sanitize_phone(lwp_get_settings( 'lwcommerce', 'store', 'whatsapp' ));
+
+    if( lwp_get_settings( "lwcommerce", "appearance", "checkout_whatsapp") == "on" ){
+        $response['checkout_whatsapp'] = urlencode($checkout_template);
+        $response['admin_whatsapp'] = lwp_sanitize_phone(lwp_get_settings( 'lwcommerce', 'store', 'whatsapp' ));
+    }
+
     return $response;
 }

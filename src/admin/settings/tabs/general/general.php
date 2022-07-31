@@ -8,7 +8,7 @@
  */
 
 $default_template = 'Hi, Saya sudah pesan
-ID : *#{{order_id}}*
+ID Pesanan : *#{{order_id}}*
 
 *Detail Pesanan*
 {{summary}}
@@ -17,7 +17,9 @@ ID : *#{{order_id}}*
 {{payment}}
 
 Tolong segera diproses ya min,
-Berikut ini bukti pembayarannya';
+{{order_link}}
+
+ini bukti pembayarannya';
 $checkout_template  = lwp_get_settings( 'lwcommerce', 'general', 'checkout_template' );
 $checkout_template = empty( $checkout_template ) ? $default_template : $checkout_template;
 ?>
