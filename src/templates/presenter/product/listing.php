@@ -14,7 +14,7 @@
 
 	while ( $loop->have_posts() ) : $loop->the_post();
 		?>
-        <div class="lwc-product-item col-xs-6 col-sm-6 gutter">
+        <div class="lwc-product-item col-xs-6 col-sm-6 col-md-3 gutter">
             <div class="product-image">
 				<?php do_action( "lwcommerce/product/listing/before_image", get_the_ID() ); ?>
                 <a href="<?php echo get_permalink(); ?>">

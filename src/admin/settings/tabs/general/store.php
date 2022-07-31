@@ -245,8 +245,8 @@ $categories = [
                         document.getElementById("states").appendChild(ele);
                     }
 
-                    $("#states").find('option').get(0).remove();
-                    $("#states").val("<?php echo $state_selected; ?>").change();
+                    jQuery("#states").find('option').get(0).remove();
+                    jQuery("#states").val("<?php echo $state_selected; ?>").change();
                 }
 
             }, error: function (data) {
@@ -280,8 +280,8 @@ $categories = [
                         document.getElementById("cities").appendChild(ele);
                     }
 
-                    $("#cities").find('option').get(0).remove();
-                    $("#cities").val("<?php echo $state_selected; ?>")
+                    jQuery("#cities").find('option').get(0).remove();
+                    jQuery("#cities").val("<?php echo $city_selected; ?>")
                 }
 
             },
@@ -292,21 +292,21 @@ $categories = [
 
     });
 
-    const lat = document.querySelector('input[name="latitude"]').value;
-    const lon = document.querySelector('input[name="longitude"]').value;
+    // const lat = document.querySelector('input[name="latitude"]').value;
+    // const lon = document.querySelector('input[name="longitude"]').value;
 
-    const showPosition = (position) => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-        document.querySelector('input[name="latitude"]').value = lat;
-        document.querySelector('input[name="longitude"]').value = lon;
-    }
+    // const showPosition = (position) => {
+    //     const lat = position.coords.latitude;
+    //     const lon = position.coords.longitude;
+    //     document.querySelector('input[name="latitude"]').value = lat;
+    //     document.querySelector('input[name="longitude"]').value = lon;
+    // }
 
-    const getLocation = () => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-        } else {
-            alert('Geolocation is not supported by this browser.');
-        }
-    }
+    // const getLocation = () => {
+    //     if (navigator.geolocation) {
+    //         navigator.geolocation.getCurrentPosition(showPosition);
+    //     } else {
+    //         alert('Geolocation is not supported by this browser.');
+    //     }
+    // }
 </script>

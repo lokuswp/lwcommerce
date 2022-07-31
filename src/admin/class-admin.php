@@ -4,6 +4,7 @@ namespace LokusWP\Commerce;
 
 use LokusWP\Admin\Tabs;
 use LokusWP\Admin\Shortcode_Lists;
+use LokusWP\Admin\Switch_Options;
 
 if ( ! defined( 'WPTEST' ) ) {
 	defined( 'ABSPATH' ) or die( "Direct access to files is prohibited" );
@@ -71,7 +72,7 @@ class Admin {
 			require_once 'settings/tabs/notification.php';
 		} );
 
-		Tabs::add( 'lwcommerce', 'shipping', __( 'Shipping 🧪 (BETA)', 'lwcommerce' ), function () {
+		Tabs::add( 'lwcommerce', 'shipping', __( 'Shipping', 'lwcommerce' ), function () {
 			require_once 'settings/tabs/shipping.php';
 		} );
 
@@ -296,11 +297,14 @@ class Admin {
 			]
 		) );
 
-		// // Add Switch Options to wp-admin > lwcommerce > Appearance
-		// require_once LWC_PATH . 'backend/admin/class-switch-options.php';
-		// Admin\Switch_Options::addOptions( $this->slug, $this->name, array(
-		//     'lsdc_unique_code' => ['name' => __('Kode Unik', 'lwcommerce'), 'desc' => __('Matikan/Hidupkan Kode Unik', 'lwcommerce'), 'override' => false],
-		// ));
+		// Add Switch Options to wp-admin > lwcommerce > Appearance
+		Switch_Options::add_options( "lwcommerce", $this->slug, $this->name, array(
+			'checkout_whatsapp' => [
+				'name'     => __( 'Checkout via Whatsapp', 'lwcommerce' ),
+				'desc'     => __( 'Disable/Enable Opening Whatsapp when Checkout', 'lwcommerce' ),
+				'override' => false
+			]
+		) );
 	}
 
 

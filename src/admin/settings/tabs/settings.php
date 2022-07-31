@@ -19,6 +19,10 @@ use LokusWP\Admin\Tabs;
 	    require_once LWC_PATH . 'src/admin/settings/tabs/general/appearance.php';
     });
 
+    Tabs::add_nested("lwcommerce", "settings", "general", __("General", "lwcommerce"), function () {
+	    require_once LWC_PATH . 'src/admin/settings/tabs/general/general.php';
+    });
+
     Tabs::list_nested_render("lwcommerce", "settings");
     ?>
 </section>

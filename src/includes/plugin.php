@@ -38,6 +38,7 @@ class Plugin {
 		require_once LWC_PATH . 'src/includes/hook/cart/func-cart-processing.php';
 		require_once LWC_PATH . 'src/includes/hook/checkout/func-checkout-tab.php';
 		require_once LWC_PATH . 'src/includes/hook/checkout/func-checkout-logic.php';
+		require_once LWC_PATH . 'src/includes/hook/checkout/func-checkout-whatsapp.php';
 		require_once LWC_PATH . 'src/includes/hook/order/func-order-create.php';
 		require_once LWC_PATH . 'src/includes/hook/notification/func-notification-scheduler.php';
 
