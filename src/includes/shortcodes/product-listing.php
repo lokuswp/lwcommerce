@@ -11,6 +11,7 @@ class Product_Listing {
 	public function render( $atts ) {
 		extract( shortcode_atts( array(
 			'product_ids' => false,
+			'mode' => 'desktop'
 		), $atts ) );
 
 		wp_enqueue_style( "lokuswp-grid" );

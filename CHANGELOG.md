@@ -1,5 +1,7 @@
 # Changelog
 
-# [v0.1.0]() (2022-07-01)
+# [v0.1.0]() (2022-08-01)
 
-- Checkout to Whatsapp
+- Checkout via Whatsapp
+- Update Dummy Product
+- Color Theme

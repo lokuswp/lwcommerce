@@ -50,6 +50,7 @@ Berikut ini bukti pembayarannya';
     $checkout_template = str_replace( "{{summary}}", lwp_get_notification_block_summary_text( $locale, $transaction->cart_uuid, $transaction->total ), $checkout_template );
 
     $response['checkout_whatsapp'] = urlencode($checkout_template);
+    $response['checkout_whatsapp_option'] = lwp_get_settings( "lwcommerce", "appearance", "checkout_whatsapp");
     $response['admin_whatsapp'] = lwp_sanitize_phone(lwp_get_settings( 'lwcommerce', 'store', 'whatsapp' ));
     return $response;
 }

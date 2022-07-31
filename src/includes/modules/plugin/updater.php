@@ -209,7 +209,6 @@ class Updater {
 		if ( empty( $data['package'] ) ) {
 			printf( __( 'Please download in %s Member Area %s to update', 'lwcommerce' ), '<a href="https://member.lokuswp.id/" target="_blank">', '</a>' );
 		}
-		printf( lwp_transient_timeout( $this->plugin_slug . '_update' ) );
 	}
 
 	public function plugin_row( $links_array, $plugin_file_name, $plugin_data, $status ) {

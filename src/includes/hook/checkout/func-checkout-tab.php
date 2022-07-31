@@ -8,7 +8,7 @@
 add_action( "lokuswp/transaction/tab/header", function ( $cart_uuid ) {
 
 	?>
-    <div id="shipping-tab" class="swiper-slide">
+    <div id="shipping-tab" class="swiper-slide" style=" display: none;">
 		<?php _e( 'Shipping', 'lwcommerce' ); ?>
     </div>
 	<?php

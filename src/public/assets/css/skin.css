@@ -9,9 +9,7 @@
 
 .lwc-listing .product-name {
     font-size: 16px;
-
 }
-
 
 .lwc-listing .product-price span {
     flex-grow: 1;
@@ -28,7 +26,6 @@
 .product-action button {
     font-weight: 600;
 }
-
 
 td.product-item-detail strike {
     margin-left: 6px;
@@ -51,7 +48,9 @@ td.product-item-detail strike {
     border-radius: 3px;
 }
 
+
 /* Single */
+
 .lwp-product h2 {
     color: #282828;
     font-weight: 600;
@@ -64,10 +63,12 @@ td.product-item-detail strike {
 
 
 /* Product Skin */
+
 .product-image img {
     border: 1px solid #E5E8EB;
     border-radius: 3%;
 }
+
 
 /* Product Listing */
 
@@ -90,11 +91,12 @@ td.product-item-detail strike {
     line-height: 22px;
 }
 
+
 /* Product Price */
 
 .product-price {
     display: flex;
-    padding: 4px 0;
+    padding: 0;
 }
 
 .product-price small {
@@ -109,7 +111,9 @@ td.product-item-detail strike {
     color: var(--lokuswp-secondary-color);
 }
 
+
 /* Cart Icon */
+
 .cart-icon {
     position: relative;
     text-decoration: none;
@@ -130,6 +134,7 @@ td.product-item-detail strike {
 
 
 /* Single Product  */
+
 .single-product .product-title {
     padding: 8px 12px 0 0;
     width: 100%;

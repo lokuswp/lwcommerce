@@ -1,4 +1,4 @@
-<div class="lwc-listing row lwp-mobile-width">
+<div class="lwc-listing row <?= $mode == 'mobile' ? 'lwp-mobile-width' : '' ?>">
 
 	<?php
 	$args = array(
@@ -12,9 +12,10 @@
 
 	$loop = new WP_Query( $args );
 
+
 	while ( $loop->have_posts() ) : $loop->the_post();
 		?>
-        <div class="lwc-product-item col-xs-6 col-sm-6 col-md-3 gutter">
+        <div class="lwc-product-item col-xs-6 col-sm-6  <?= $mode == 'mobile' ? '' : 'col-md-3' ?> gutter">
             <div class="product-image">
 				<?php do_action( "lwcommerce/product/listing/before_image", get_the_ID() ); ?>
                 <a href="<?php echo get_permalink(); ?>">
@@ -45,6 +46,7 @@
 	?>
 
     <style>
+  
         .product-image {
             position: relative;
         }
