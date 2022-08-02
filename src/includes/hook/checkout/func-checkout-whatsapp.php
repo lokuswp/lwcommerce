@@ -46,10 +46,11 @@ ini bukti pembayarannya';
     $checkout_template  = lwp_get_settings( 'lwcommerce', 'general', 'checkout_template' );
     $checkout_template = empty( $checkout_template ) ? $default_template : $checkout_template;
 
-    $locale = 'id_ID';
+    $total  = lwp_currency_format( true, $transaction->total, $transaction->currency );
+
     $checkout_template = str_replace( "{{order_id}}", lwc_get_order_meta( $trx_id, "_order_id", true ), $checkout_template );
-    $checkout_template = str_replace( "{{payment}}", lwp_get_notification_block_payment_text( $locale, $transaction ), $checkout_template );
-    $checkout_template = str_replace( "{{summary}}", lwp_get_notification_block_summary_text( $locale, $transaction->cart_uuid, $transaction->total ), $checkout_template );
+    $checkout_template = str_replace( "{{payment}}", lwp_get_notification_block_payment_text( $transaction->currency, $transaction ), $checkout_template );
+    $checkout_template = str_replace( "{{summary}}", lwp_get_notification_block_summary_text( $transaction->currency, $transaction->cart_uuid, $total ), $checkout_template );
     $checkout_template = str_replace( "{{order_link}}",  get_permalink( lwp_get_settings( "lokuswp", 'settings', 'checkout_page' ) ) . 'trx/' . $transaction->transaction_uuid, $checkout_template );
 
 
