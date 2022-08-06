@@ -24,7 +24,7 @@ class Order {
 
 			// Set Notification
 			if ( $notification ) {
-				\as_schedule_single_action( strtotime( '+3 seconds' ), 'lokuswp_notification', array( $trx_id . '-' . $status ), "lwcommerce" );
+				\as_schedule_single_action( strtotime( '+1 seconds' ), 'lokuswp_notification', array( $trx_id . '-' . $status ), "lwcommerce" );
 			}
 
 			// Another Action for Order Status

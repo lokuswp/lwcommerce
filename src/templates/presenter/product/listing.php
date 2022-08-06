@@ -80,3 +80,5 @@
     </style>
 
 </div>
+
+<?php require_once LWC_PATH . 'src/templates/presenter/checkout/bottom-cart-panel.php'; ?>

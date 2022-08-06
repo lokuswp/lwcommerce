@@ -81,6 +81,8 @@ lwp_set_meta_counter( "_product_view", get_the_ID() );
     </div>
 </div>
 
+<?php require_once LWC_PATH . 'src/templates/presenter/checkout/bottom-cart-panel.php'; ?>
+
 <style>
     .lwp-container {
         max-width: 480px;

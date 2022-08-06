@@ -13,7 +13,7 @@
         let productPrice = $(this).attr("price");
 
         // Add to Cart
-        lokusCart.addProduct(productID, 1);
+        lokusCart.addProduct(productID, 1, productPrice);
 
         // Read Quantity
         let elInputQty = $(this).closest(".product-action").find("input");
@@ -22,6 +22,8 @@
         // Show Qty Stepper
         $(this).hide();
         $(this).closest('.product-action').find('.lokuswp-stepper').removeClass('lwp-hidden');
+        
+        lwpRenderCart();
 
         // Hook for Event Trigger
         let product = {
