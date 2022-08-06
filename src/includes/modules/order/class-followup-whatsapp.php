@@ -83,8 +83,6 @@ Terimakasih
 	 */
 	public function templating( $order_data ) {
 
-		ray( $order_data );
-
 		$locale = lwp_get_locale_by_country( $order_data->country ); // id_ID
 
 		// Change order data to object
