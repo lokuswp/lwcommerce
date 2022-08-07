@@ -185,7 +185,8 @@
                             `<div class="lwc-grid-item lwc-justify-content-space-between">
                                             <div class="lwc-flex-column">
                                                 <span class="lwc-text-bold">Pengiriman Physical</span>
-                                                <span style="margin-top: 10px">${data.address.address ?? ''}</span>
+                                                <span style="margin-top: 10px">Alamat: </span>
+                                                <span>${isNaN(data.address) ? data.address : '-'}</span>
                                                 <div class="lwc-flex">
                                                     <span>${data.address.district ?? ''}</span>
                                                     <span>&nbsp;&nbsp;&nbsp;${data.address.postal_code ?? ''}</span>

@@ -36,7 +36,6 @@ class LWC_Order {
 			"MAX(CASE WHEN ttm.meta_key = '_user_field_name' THEN ttm.meta_value ELSE 0 END) name",
 			"MAX(CASE WHEN ttm.meta_key = '_user_field_phone' THEN ttm.meta_value ELSE 0 END) phone",
 			"MAX(CASE WHEN ttm.meta_key = '_user_field_email' THEN ttm.meta_value ELSE 0 END) email",
-			"MAX(CASE WHEN ttm.meta_key = '_user_field_address' THEN ttm.meta_value ELSE 0 END) address",
 			"MAX(CASE WHEN ttm.meta_key = '_extras_coupon' THEN ttm.meta_value ELSE 0 END) coupon",
 			"MAX(CASE WHEN tlcom.meta_key = '_billing_invoice' THEN tlcom.meta_value ELSE 0 END) invoice",
 			"MAX(CASE WHEN tlcom.meta_key = '_order_status' THEN tlcom.meta_value ELSE 0 END) order_status",
@@ -44,7 +43,8 @@ class LWC_Order {
 			"MAX(CASE WHEN tlcom.meta_key = '_shipping_status' THEN tlcom.meta_value ELSE 0 END) shipping_status",
 			"TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when ttm.meta_key = '_extras_shipping' then ttm.meta_value else 0 end),';',2),':',-1)) AS service",
 			"TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when ttm.meta_key = '_extras_shipping' then ttm.meta_value else 0 end),';',4),':',-1)) AS courier",
-			"TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when ttm.meta_key = '_extras_shipping' then ttm.meta_value else 0 end),';',6),':',-1)) AS destination"
+			"TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when ttm.meta_key = '_extras_shipping' then ttm.meta_value else 0 end),';',6),':',-1)) AS destination",
+			"TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when ttm.meta_key = '_extras_shipping' then ttm.meta_value else 0 end),';',8),':',-1)) AS address"
 		];
 
 		$data = $datatable
