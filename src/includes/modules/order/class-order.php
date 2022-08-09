@@ -32,7 +32,6 @@ class Order {
 				case 'pending':
 					break;
 				case 'processing':
-					break;
 				case 'completed':
 					self::set_completed( $trx_id );
 					break;
