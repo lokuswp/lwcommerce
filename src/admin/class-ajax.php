@@ -391,9 +391,6 @@ class AJAX {
 
 		if ( $shipping_type !== 'digital' ) {
 			if ( $action === 'pending' ) {
-				if ( has_action( 'lokuswp/admin/order/action' ) ) {
-					do_action( 'lokuswp/admin/order/action', $order_id );
-				}
 				Order::set_status( $order_id, 'processing' );
 			}
 			if ( $action === 'processing' ) {
