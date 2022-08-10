@@ -25,7 +25,6 @@
         left: 0;
         width: 100%;
         display: none;
-        z-index: 9999;
     }
 
     #lwcommerce-bottom-cart-panel{

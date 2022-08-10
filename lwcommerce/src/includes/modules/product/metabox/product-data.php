@@ -56,31 +56,6 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-6">
-                            <label for="lokuswp-btn-cart-link"><?php _e( "Button Cart Link", 'lwcommerce' ); ?>
-                                <span class="description text-muted">(<?php _e( "optional", 'lwcommerce' ); ?>)</span>
-                            </label>
-                            <div class="form-group-body has-tooltip">
-                                <input id="lokuswp-btn-cart-link" name="_btn_cart_link" type="text"
-                                       class="form-control full" placeholder="https://example.com"
-                                       value="<?= $args['_btn_cart_link'] ?>">
-                            </div>
-                            <small>Jika diisi, produk tidak akan dapat dimasukan ke keranjang</small>
-                        </div>
-
-                        <div class="form-group col-6">
-                            <label for="lokuswp-btn-cart-text"><?php _e( "Button Cart Text", 'lwcommerce' ); ?>
-                                <span class="description text-muted">(<?php _e( "optional", 'lwcommerce' ); ?>)</span>
-                            </label>
-                            <div class="form-group-body has-tooltip">
-                                <input id="lokuswp-btn-cart-text" name="_btn_cart_text" type="text"
-                                       class="form-control full" placeholder="Add To Cart"
-                                       value="<?= $args['_btn_cart_text'] ?>">
-                                <a href="#" class="info-popup-toggler tooltip" toggle="tooltip" data-placement="top"
-                                   title="Silahkan cek di [https://google.com](Google)"></a>
-                            </div>
-                        </div>
-
 						<?php do_action( "lwcommerce/product/data/price/after", $args ); ?>
 
                     </div>

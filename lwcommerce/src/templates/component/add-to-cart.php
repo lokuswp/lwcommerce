@@ -1,15 +1,5 @@
-<?php
-
-$btn_cart_link  = get_post_meta( get_the_ID(), '_btn_cart_link', true ) == null ? null : esc_attr(get_post_meta( get_the_ID(), '_btn_cart_link', true ));
-$btn_cart_text = get_post_meta( get_the_ID(), '_btn_cart_text', true ) == null ? __( 'Add to Cart', 'lwcommerce' ) : esc_attr( get_post_meta( get_the_ID(), '_btn_cart_text', true ) );
-
-?>
-
 <div class="product-action">
-    <?php if( $btn_cart_link ) : ?>
-        <a href="<?= $btn_cart_link ?>" target="_blank" class="lokus-btn btn-primary btn-block"><?= $btn_cart_text ?></a>
-    <?php else : ?>
-    <button class="lokus-btn btn-primary btn-block lwc-add-to-cart" product-id="<?php echo get_the_ID(); ?>" price="<?= lwc_get_price( get_the_ID() )?>"><?= $btn_cart_text ?></button>
+    <button class="lokus-btn btn-primary btn-block lwc-add-to-cart" product-id="<?php echo get_the_ID(); ?>" price="<?= lwc_get_price( get_the_ID() )?>"><?php _e( "Add to Cart", "lwcommerce" ); ?></button>
     <div class="lokuswp-stepper lwp-hidden" product-id="<?php echo get_the_ID(); ?>">
         <button type="button" class="minus" data-qty-action="minus">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus">
@@ -24,15 +14,9 @@ $btn_cart_text = get_post_meta( get_the_ID(), '_btn_cart_text', true ) == null ?
             </svg>
         </button>
     </div>
-    <?php endif; ?>
 </div>
 
 <style>
-
-    button.lokus-btn{
-        font-weight: normal;
-    }
-
     .lwp-hidden{
         display: none;
     }

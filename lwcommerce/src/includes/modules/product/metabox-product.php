@@ -167,9 +167,6 @@ class Metabox_Product {
 		$unit_price  = get_post_meta( $post->ID, '_unit_price', true ) == null ? null : lwp_currency_format( false, lwc_get_unit_price( $post->ID ) );
 		$price_promo = get_post_meta( $post->ID, '_price_promo', true ) == null ? null : lwp_currency_format( false, lwc_get_price_promo( $post->ID ) );
 
-        $btn_cart_link  = get_post_meta( $post->ID, '_btn_cart_link', true ) == null ? null : esc_attr(get_post_meta( $post->ID, '_btn_cart_link', true ));
-        $btn_cart_text = get_post_meta( $post->ID, '_btn_cart_text', true ) == null ? __( 'Add to Cart', 'lwcommerce' ) : esc_attr( get_post_meta( $post->ID, '_btn_cart_text', true ) );
-
 		$sku_code   = get_post_meta( $post->ID, '_sku_code', true ) == null ? null : esc_attr( get_post_meta( $post->ID, '_sku_code', true ) );
 		$stock      = get_post_meta( $post->ID, '_stock', true ) == null ? null : abs( get_post_meta( $post->ID, '_stock', true ) );
 		$stock_unit = get_post_meta( $post->ID, '_stock_unit', true ) == null ? null : esc_attr( get_post_meta( $post->ID, '_stock_unit', true ) );
@@ -184,8 +181,6 @@ class Metabox_Product {
 			'post_id'               => $post->ID,
 			'unit_price'            => $unit_price,
 			'price_promo'           => $price_promo,
-            '_btn_cart_link'        => $btn_cart_link,
-            '_btn_cart_text'        => $btn_cart_text,
 			'stock_type'            => $stock_type,
 			'sku_code'              => $sku_code,
 			'stock'                 => $stock,
@@ -251,9 +246,6 @@ class Metabox_Product {
 		// Pricing
 		update_post_meta( $post_id, '_unit_price', empty( $_POST['_unit_price'] ) ? 0 : lwp_currency_to_number( $_POST['_unit_price'] ) );
 		update_post_meta( $post_id, '_price_promo', empty( $_POST['_price_promo'] ) ? null : lwp_currency_to_number( $_POST['_price_promo'] ) );
-
-        update_post_meta( $post_id, '_btn_cart_text', empty( $_POST['_btn_cart_text'] ) ? 0 : sanitize_text_field( $_POST['_btn_cart_text'] ) );
-        update_post_meta( $post_id, '_btn_cart_link', empty( $_POST['_btn_cart_link'] ) ? null : sanitize_text_field( $_POST['_btn_cart_link'] ) );
 
 		// Stock
 		update_post_meta( $post_id, '_sku_code', empty( $_POST['_sku_code'] ) ? null : sanitize_text_field( $_POST['_sku_code'] ) );
