@@ -3,3 +3,4 @@ node_modules/*
 tests/e2e/node_modules/*
 .idea/*
 lwcommerce.zip
+lwcommerce/*
