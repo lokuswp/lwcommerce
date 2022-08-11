@@ -71,23 +71,15 @@ class LWC_Order {
 				//==================== Total ====================//
 				$value->total = lwp_currency_format( true, abs( $value->total ) );
 
-				//==================== product ====================//
-				$value->product = $wpdb->get_results(
-					"select jj.ID, jj.post_title, jj.quantity , jj.note
-							from $table_transaction as tr
-    						join (
-								select tp.ID, tp.post_title, tc.cart_uuid, tc.quantity, tc.note from $table_cart as tc
-								join $table_post as tp on tc.post_id=tp.ID
-							) as jj
-							on tr.cart_uuid=jj.cart_uuid where transaction_id='$value->transaction_id'"
-				);
+				$value->product = json_decode( lwp_get_transaction_meta( $value->transaction_id, "_snapshot_items" ) );
 
 				//==================== add image & price to product ====================//
 				foreach ( $value->product as $product ) {
-					$product->image       = get_the_post_thumbnail_url( $product->ID, 'thumbnail' );
-					$product->price       = lwp_currency_format( true, get_post_meta( $product->ID, '_unit_price', true ) );
-					$product->price_promo = get_post_meta( $product->ID, '_price_promo', true ) ? lwp_currency_format( true,
-						get_post_meta( $product->ID, '_price_promo', true ) ) : null;
+					$product->image       = get_the_post_thumbnail_url( $product->post_id, 'thumbnail' );
+					$product->price       = lwp_currency_format( true, get_post_meta( $product->post_id, '_unit_price', true ) );
+					$product->price_promo = get_post_meta( $product->post_id, '_price_promo', true ) ? lwp_currency_format( true,
+						get_post_meta( $product->post_id, '_price_promo', true ) ) : null;
+					$product->post_title  = get_the_title( $product->post_id );
 				}
 
 				//==================== Payment Logo ====================//
