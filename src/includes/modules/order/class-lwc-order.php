@@ -61,11 +61,6 @@ class LWC_Order {
 		}
 
 		if ( ! empty( $data ) ) {
-			global $wpdb;
-
-			$table_transaction = $wpdb->prefix . 'lokuswp_transactions';
-			$table_post        = $wpdb->prefix . 'posts';
-			$table_cart        = $wpdb->prefix . 'lokuswp_carts';
 
 			foreach ( $data['data'] as $value ) {
 				//==================== Total ====================//
