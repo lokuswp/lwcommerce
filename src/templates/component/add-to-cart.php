@@ -1,7 +1,7 @@
 <?php
 
 $btn_cart_link  = get_post_meta( get_the_ID(), '_btn_cart_link', true ) == null ? null : esc_attr(get_post_meta( get_the_ID(), '_btn_cart_link', true ));
-$btn_cart_text = get_post_meta( get_the_ID(), '_btn_cart_text', true ) == null ? __( 'Add to Cart', 'lwcommerce' ) : esc_attr( get_post_meta( get_the_ID(), '_btn_cart_text', true ) );
+$btn_cart_text = empty(get_post_meta( get_the_ID(), '_btn_cart_text', true )) ? __( 'Add to Cart', 'lwcommerce' ) : esc_attr( get_post_meta( get_the_ID(), '_btn_cart_text', true ) );
 
 ?>
 

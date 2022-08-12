@@ -43,7 +43,7 @@ class Admin {
 		$admin = new self( $plugin['slug'], $plugin['name'], $plugin['version'] );
 
 		add_action( 'admin_init', [ $admin, 'admin_init' ], 1 );
-		add_action( 'admin_menu', [ $admin, 'register_admin_menu' ] );
+		add_action( 'admin_menu', [ $admin, 'register_admin_menu' ], 1  );
 		add_action( 'admin_enqueue_scripts', [ $admin, 'enqueue_styles' ] );
 		add_action( 'admin_enqueue_scripts', [ $admin, 'enqueue_scripts' ] );
 	}
@@ -247,8 +247,8 @@ class Admin {
 		} else {
 			add_submenu_page(
 				$this->slug,
-				__( 'Get More Extensions', 'lwcommerce' ),
-				__( 'Get More Extensions', 'lwcommerce' ),
+				__( 'Get More Addon', 'lwcommerce' ),
+				__( 'Get More Addon', 'lwcommerce' ),
 				'manage_options',
 				'admin.php?page=lokuswp&tab=marketplace',
 				'',
