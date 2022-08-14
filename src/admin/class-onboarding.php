@@ -98,7 +98,7 @@ class Onboarding {
 
 	private function create_product() {
 
-		// Create Free Productcol-xs-7 col-sm-8
+		// Digital - Free Product
 		$digital_free = Helper::generate_post( "product", __( 'Plugin WordPress Gratis - LWCommerce', 'lwcommerce' ), "lokuswp-lwcommerce-free", "WordPress Ecommerce Plugin" );
 		update_post_meta( $digital_free, "_product_type", "digital" );
 		update_post_meta( $digital_free, "_unit_price", 0 );
@@ -108,7 +108,7 @@ class Onboarding {
 			Helper::set_featured_image( $thumbnail, $digital_free );
 		}
 
-		// Create Paid Product
+		// Digital - Paid Product
 		$digital_premium = Helper::generate_post( "product", __( 'Plugin WordPress Premium - LWDonation', 'lwcommerce' ), "lokuswp-lwdonation-premium", "WordPress Donation Plugin" );
 		update_post_meta( $digital_premium, "_product_type", "digital" );
 		update_post_meta( $digital_premium, "_unit_price", 580000 );
@@ -118,6 +118,17 @@ class Onboarding {
 		if ( $digital_premium ) {
 			Helper::set_featured_image( $thumbnail, $digital_premium );
 		}
+
+        // Physical - Paid Product
+        $digital_premium = Helper::generate_post( "product", __( 'Plugin WordPress Premium - LWDonation', 'lwcommerce' ), "lokuswp-lwdonation-premium", "WordPress Donation Plugin" );
+        update_post_meta( $digital_premium, "_product_type", "digital" );
+        update_post_meta( $digital_premium, "_unit_price", 580000 );
+        update_post_meta( $digital_premium, "_stock", 1000 );
+        update_post_meta( $digital_premium, "_stock_unit", __( "License", "lwcommerce" ) );
+        $thumbnail = LWC_URL . 'src/admin/assets/images/product/premium-plugin.jpg';
+        if ( $digital_premium ) {
+            Helper::set_featured_image( $thumbnail, $digital_premium );
+        }
 
 	}
 

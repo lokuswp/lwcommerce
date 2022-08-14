@@ -43,7 +43,7 @@
                             <label for="takeaway">
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <div class="img" style="padding-right: 12px;height: 50px;">
+                                        <div class="img" style="padding-right: 8px;height: 50px;">
                                             <img src="<?= LWC_URL . 'src/admin/assets/images/takeaway.jpg' ?>" alt="takeaway">
                                         </div>
                                     </div>
@@ -51,8 +51,8 @@
                                         <h6 style="margin-bottom:-2px">Take Away</h6>
                                         <p>Ambil Pesanan di Kasir</p>
                                     </div>
-                                    <div class="col-sm-3" style="text-align: center">
-                                        <p style="padding:8px">Gratis</p>
+                                    <div class="col-sm-3" style="text-align: center;position: absolute;right: 12px;top: 4px;">
+                                        <p style="padding:8px 0;font-size: 14px;font-weight: 600;color: var(--lokuswp-accent-color);">Gratis</p>
                                     </div>
                                 </div>
                             </label>

@@ -6,37 +6,8 @@ use Mustache_Engine;
 
 class FollowUp_Whatsapp {
 
-	protected string $template_followup = 'Hi *{{name}}*
-
-Kami ingin mengingatkan terkait pesanan Anda
-Yang masih belum diselesaikan
-ID Pesanan : *#{{order_id}}*
-
-*Detail Pesanan* :
-{{summary}}
-
-*Pembayaran* :
-{{payment}}
-
-_Jika ada yang ingin ditanyakan,_
-_silahkan balas pesan ini_
-
-Terimakasih
-*{{brand_name}}*
-';
-
 	public function __construct() {
-		$this->setup();
-
 		add_filter( 'lwcommerce/order/followup/template', [ $this, 'templating' ], 10, 1 );
-	}
-
-	public function setup() {
-		/* Empty Settings -> Set Default Data */
-		$settings = lwp_get_option( 'order_whatsapp_followup' );
-		if ( empty( $settings ) ) {
-			lwp_update_option( 'order_whatsapp_followup', json_encode( $this->template_followup ) );
-		}
 	}
 
 	/**
@@ -73,7 +44,28 @@ Terimakasih
 
 	public function prepare_template() {
 
-		$template = json_decode( lwp_get_option( 'order_whatsapp_followup' ), true );
+        $default_followup_template = 'Hi *{{name}}*
+
+Kami ingin mengingatkan terkait pesanan Anda
+Yang masih belum diselesaikan
+ID Pesanan : *#{{order_id}}*
+
+*Detail Pesanan* :
+{{summary}}
+
+*Pembayaran* :
+{{payment}}
+
+_Jika ada yang ingin ditanyakan,_
+_silahkan balas pesan ini_
+
+Terimakasih
+*{{brand_name}}*
+';
+        $whatsapp_followup_template  = lwp_get_settings( 'lwcommerce', 'general', 'followup_template' );
+        $whatsapp_followup_template = empty( $checkout_template ) ? $default_followup_template : $whatsapp_followup_template;
+
+		$template = $whatsapp_followup_template;
 
 		return $template;
 	}

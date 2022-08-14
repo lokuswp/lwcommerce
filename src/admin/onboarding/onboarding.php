@@ -80,7 +80,7 @@ if ( ! is_user_logged_in() ) {
             </li>
             <li class="step-item active">
                 <a href="#" class="tooltip"
-                   data-tooltip="<?php _e( "Integration", "lwcommerce" ); ?>"><?php _e( "Integration", "lwcommerce" ); ?></a>
+                   data-tooltip="<?php _e( "Guide", "lwcommerce" ); ?>"><?php _e( "Guide", "lwcommerce" ); ?></a>
             </li>
         </ul>
         <br>
@@ -107,57 +107,59 @@ if ( ! is_user_logged_in() ) {
 
         <div id="integration-step" class="hidden">
             <div class="empty">
-                <p class="empty-title h5"><?php _e( "Integration", "lwcommerce" ); ?></p>
-                <p class="empty-subtitle"><?php _e( "You may need this addon for add new ability", "lwcommerce" ); ?></p>
+                <p class="empty-title h5"><?php _e( "Guide", "lwcommerce" ); ?></p>
+                <p class="empty-subtitle"><?php _e( "See the Video for Guideance Setup LWCommerce", "lwcommerce" ); ?></p>
             </div>
 
-            <div id="dripsender" class="tile tile-centered">
-                <div class="tile-icon">
-                    <div class="example-tile-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                             class="feather feather-credit-card">
-                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-                            <line x1="1" y1="10" x2="23" y2="10"></line>
-                        </svg>
-                    </div>
-                </div>
-                <div class="tile-content">
-                    <div class="tile-title">Whatsapp Notification - DripSender</div>
-                    <small class="tile-subtitle text-gray">Whatsapp Gateway</small>
-                </div>
-                <div class="tile-action">
-                    <a class="btn btn-link"
-                       href="<?php echo get_admin_url() . 'admin.php?page=lokuswp&tab=marketplace'; ?>">
-                        <i class="icon icon-time"></i>
-						<?php _e( "Install", "lwcommerce" ); ?>
-                    </a>
-                </div>
-            </div>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/xvvs5zTUXlw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-            <div id="fonnte" class="tile tile-centered">
-                <div class="tile-icon">
-                    <div class="example-tile-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                             class="feather feather-credit-card">
-                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-                            <line x1="1" y1="10" x2="23" y2="10"></line>
-                        </svg>
-                    </div>
-                </div>
-                <div class="tile-content">
-                    <div class="tile-title">Whatsapp Notification - Fonnte</div>
-                    <small class="tile-subtitle text-gray">Whatsapp Gateway</small>
-                </div>
-                <div class="tile-action">
-                    <a class="btn btn-link"
-                       href="<?php echo get_admin_url() . 'admin.php?page=lokuswp&tab=marketplace'; ?>">
-                        <i class="icon icon-time"></i>
-						<?php _e( "Install", "lwcommerce" ); ?>
-                    </a>
-                </div>
-            </div>
+<!--            <div id="dripsender" class="tile tile-centered">-->
+<!--                <div class="tile-icon">-->
+<!--                    <div class="example-tile-icon">-->
+<!--                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"-->
+<!--                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"-->
+<!--                             class="feather feather-credit-card">-->
+<!--                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>-->
+<!--                            <line x1="1" y1="10" x2="23" y2="10"></line>-->
+<!--                        </svg>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="tile-content">-->
+<!--                    <div class="tile-title">Whatsapp Notification - DripSender</div>-->
+<!--                    <small class="tile-subtitle text-gray">Whatsapp Gateway</small>-->
+<!--                </div>-->
+<!--                <div class="tile-action">-->
+<!--                    <a class="btn btn-link"-->
+<!--                       href="--><?php //echo get_admin_url() . 'admin.php?page=lokuswp&tab=marketplace'; ?><!--">-->
+<!--                        <i class="icon icon-time"></i>-->
+<!--						--><?php //_e( "Install", "lwcommerce" ); ?>
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!---->
+<!--            <div id="fonnte" class="tile tile-centered">-->
+<!--                <div class="tile-icon">-->
+<!--                    <div class="example-tile-icon">-->
+<!--                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"-->
+<!--                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"-->
+<!--                             class="feather feather-credit-card">-->
+<!--                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>-->
+<!--                            <line x1="1" y1="10" x2="23" y2="10"></line>-->
+<!--                        </svg>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="tile-content">-->
+<!--                    <div class="tile-title">Whatsapp Notification - Fonnte</div>-->
+<!--                    <small class="tile-subtitle text-gray">Whatsapp Gateway</small>-->
+<!--                </div>-->
+<!--                <div class="tile-action">-->
+<!--                    <a class="btn btn-link"-->
+<!--                       href="--><?php //echo get_admin_url() . 'admin.php?page=lokuswp&tab=marketplace'; ?><!--">-->
+<!--                        <i class="icon icon-time"></i>-->
+<!--						--><?php //_e( "Install", "lwcommerce" ); ?>
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </div>-->
 
             <div class="center">
                 <a href="<?php echo get_admin_url() . 'post-new.php?post_type=product'; ?>"

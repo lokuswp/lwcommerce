@@ -5,8 +5,9 @@
     document.addEventListener("DOMContentLoaded", function () {
 
         let urlCurrent = window.location.pathname.split('/');
+        var states = document.getElementById("states");
 
-        if (urlCurrent[2] != 'trx') {
+        if (urlCurrent[2] != 'trx' && states.length ) {
             /*****************************************
              * Get Provinces List
              * Request Provinces List from RajaOngkir API
@@ -19,7 +20,6 @@
                 type: 'GET',
                 success: function (response) {
 
-                    var states = document.getElementById("states");
                     if (response.data && typeof (states) != 'undefined' && states != null) {
                         for (var i = 0; i < response.data.length; i++) {
                             var ele = document.createElement("option");

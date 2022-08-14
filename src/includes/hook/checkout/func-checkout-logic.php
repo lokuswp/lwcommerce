@@ -91,6 +91,7 @@ function lwc_transaction_logic( $transaction ) {
 	 * Shipping : JNE
 	 * Total : > 1
 	 */
+
 	if ( isset( $product_types_in_cart[0] ) &&
 	     ! empty( $is_product ) &&
 	     $product_types_in_cart[0] == "physical" &&
@@ -162,4 +163,3 @@ function lokuswp_paypal_set_item_price( $price, $post_id, $currency, $payment_id
 
 	return $price;
 }
-
