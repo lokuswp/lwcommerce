@@ -71,7 +71,7 @@ class LWC_Order {
 				//==================== add image & price to product ====================//
 				foreach ( $value->product as $product ) {
 					$product->image       = get_the_post_thumbnail_url( $product->post_id, 'thumbnail' );
-					$product->price       = lwp_currency_format( true,  $product->price );
+					$product->price       = lwp_currency_format( true, $product->price );
 					$product->price_promo = get_post_meta( $product->post_id, '_price_promo', true ) ? lwp_currency_format( true,
 						get_post_meta( $product->post_id, '_price_promo', true ) ) : null;
 					$product->post_title  = get_the_title( $product->post_id );
@@ -80,6 +80,15 @@ class LWC_Order {
 				//==================== Payment Logo ====================//
 				$payment            = (object) lwp_get_option( "payment-{$value->payment_id}" );
 				$value->payment_url = $payment->logo_url;
+
+				//==================== Is refund requested? ====================//
+				$value->is_refund = empty( lwc_get_order_meta( $value->transaction_id, '_extras_refund' ) )
+					? false
+					: lwc_get_order_meta( $value->transaction_id, '_extras_refund' );
+
+				if ( $value->is_refund && $value->is_refund['amount'] !== 0 ) {
+					$value->is_refund['amount'] = lwp_currency_format( true, $value->is_refund['amount'] );
+				}
 			}
 
 			if ( isset( $datatable->get_request_field()->base ) ) {

@@ -1,15 +1,6 @@
 (function ($) {
     'use strict';
 
-    // Check date if it over 1 hour
-    function checkDate(date) {
-        const now = new Date();
-        const dateTime = new Date(date);
-        const diff = now.getTime() - dateTime.getTime();
-        const diffHours = Math.floor(diff / (1000 * 60 * 60));
-        return diffHours > 1;
-    }
-
     const ucfirst = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1)
     }
@@ -144,8 +135,8 @@
                                             <div class="lwc-flex-column">
                                                 <span>Kupon:</span>
                                                 <span>${data.coupon !== '0' ? data.coupon : '-'}</span>
-                                            </div>` : ``
-                        }
+                                            </div>
+                                        ` : ``}
                                     </div>
                                     <div class="lwc-grid-item">
                                         <div class="lwc-flex-column">
@@ -243,6 +234,33 @@
                                                 <span>Follow Up</span>
                                             </div>
                                         </button>
+                                        ${lwc_orders.is_pro ? `
+                                        ${data.is_refund ? `
+                                        ${data.is_refund.status === 'requested' ? `
+                                        <button class="btn btn-error lwc-mr-40 lwc-btn-refund" data-action="processing" data-id="${data.transaction_id}">
+                                            <div class="lwc-flex">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="lwc-search-icon lwc-mr-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                                </svg>
+                                                <span>Refund Requested</span>
+                                            </div>
+                                        </button>
+                                        ` : ``}
+                                        ${data.is_refund.status === 'processing' ? `
+                                        <button class="btn btn-primary lwc-mr-40 lwc-btn-refund" data-action="completed" data-id="${data.transaction_id}">
+                                            <div class="lwc-flex">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="lwc-search-icon lwc-mr-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                                </svg>
+                                                <span>Refund Selesai</span>
+                                            </div>
+                                        </button>
+                                        ` : ``}
+                                        ${data.is_refund.status === 'completed' ? `
+                                        <p class="lwc-text-bold">Jumlah yang direfund: ${data.is_refund.amount}</p>
+                                        ` : ``}
+                                        ` : ``}
+                                        ` : ``}
                                     </div>
                                     <div class="lwc-flex lwc-justify-content-space-between">
                                         <span class="lwc-text-bold"></span>
@@ -255,6 +273,8 @@
                     }
                 }],
             })
+
+        window.tableOrders = tableOrders;
 
         tableOrders.on('processing.dt', function (e, settings, processing) {
             $('.lwc-overlay-table').show();
@@ -504,7 +524,5 @@
                 }
             })
         })
-
-
     });
 })(jQuery)
