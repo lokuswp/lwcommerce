@@ -92,14 +92,21 @@ class Onboarding {
 
 		// Create Product
 		$this->create_product();
+        $this->set_appearance();
 
 		//Helper::set_translation("lwcommerce", LWC_STRING_TEXT, 'id_ID');
+
+        // Flush Permalink
+        global $wp_rewrite;
+        $wp_rewrite->set_permalink_structure( '/%postname%/' );
+        $wp_rewrite->flush_rules();
+        flush_rewrite_rules( true );
 	}
 
 	private function create_product() {
 
 		// Digital - Free Product
-		$digital_free = Helper::generate_post( "product", __( 'Plugin WordPress Gratis - LWCommerce', 'lwcommerce' ), "lokuswp-lwcommerce-free", "WordPress Ecommerce Plugin" );
+		$digital_free = Helper::generate_post( "product", __( 'Plugin LWCommerce', 'lwcommerce' ), "lokuswp-lwcommerce", "WordPress Ecommerce Plugin" );
 		update_post_meta( $digital_free, "_product_type", "digital" );
 		update_post_meta( $digital_free, "_unit_price", 0 );
 		update_post_meta( $digital_free, "_stock", 9999 );
@@ -109,7 +116,7 @@ class Onboarding {
 		}
 
 		// Digital - Paid Product
-		$digital_premium = Helper::generate_post( "product", __( 'Plugin WordPress Premium - LWDonation', 'lwcommerce' ), "lokuswp-lwdonation-premium", "WordPress Donation Plugin" );
+		$digital_premium = Helper::generate_post( "product", __( 'Plugin LWDonation', 'lwcommerce' ), "lokuswp-lwdonation", "WordPress Donation Plugin" );
 		update_post_meta( $digital_premium, "_product_type", "digital" );
 		update_post_meta( $digital_premium, "_unit_price", 580000 );
 		update_post_meta( $digital_premium, "_stock", 1000 );
@@ -119,22 +126,32 @@ class Onboarding {
 			Helper::set_featured_image( $thumbnail, $digital_premium );
 		}
 
-        // Physical - Paid Product
-        $digital_premium = Helper::generate_post( "product", __( 'Plugin WordPress Premium - LWDonation', 'lwcommerce' ), "lokuswp-lwdonation-premium", "WordPress Donation Plugin" );
-        update_post_meta( $digital_premium, "_product_type", "digital" );
-        update_post_meta( $digital_premium, "_unit_price", 580000 );
-        update_post_meta( $digital_premium, "_stock", 1000 );
-        update_post_meta( $digital_premium, "_stock_unit", __( "License", "lwcommerce" ) );
-        $thumbnail = LWC_URL . 'src/admin/assets/images/product/premium-plugin.jpg';
-        if ( $digital_premium ) {
-            Helper::set_featured_image( $thumbnail, $digital_premium );
+        // Physical - Tshirt
+        $tshirt_product = Helper::generate_post( "product", __( 'Tshirt LokusWP', 'lwcommerce' ), "lokuswp-tshirt", "Official Tshirt LokusWP" );
+        update_post_meta( $tshirt_product, "_product_type", "physical" );
+        update_post_meta( $tshirt_product, "_unit_price", 120000 );
+        update_post_meta( $tshirt_product, "_stock", 100 );
+        update_post_meta( $tshirt_product, "_stock_unit", __( "Pcs", "lwcommerce" ) );
+        $thumbnail = LWC_URL . 'src/admin/assets/images/product/tshirt.png';
+        if ( $tshirt_product ) {
+            Helper::set_featured_image( $thumbnail, $tshirt_product );
+        }
+
+        // Physical - Food
+        $food_product = Helper::generate_post( "product", __( 'Seblak Bandung', 'lwcommerce' ), "lokuswp-seblak", "Seblak Khas Bandung" );
+        update_post_meta( $food_product, "_product_type", "physical" );
+        update_post_meta( $food_product, "_unit_price", 15000 );
+        update_post_meta( $food_product, "_stock", 10 );
+        update_post_meta( $food_product, "_stock_unit", __( "Mangkok", "lwcommerce" ) );
+        $thumbnail = LWC_URL . 'src/admin/assets/images/product/seblak.jpg';
+        if ( $food_product ) {
+            Helper::set_featured_image( $thumbnail, $food_product );
         }
 
 	}
 
 	private function set_appearance() {
-//		lwp_set_settings( 'lwcommerce, 'appearance', 'theme_color', '#fe5301' );
-//		lwp_set_settings( 'lwcommerce, 'appearance', 'unique_code', 'on' );
+        lwp_get_settings( 'lwcommerce', 'appearance', 'checkout_whatsapp', 'on' );
 	}
 
 

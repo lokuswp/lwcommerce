@@ -111,7 +111,7 @@ if ( ! is_user_logged_in() ) {
                 <p class="empty-subtitle"><?php _e( "See the Video for Guideance Setup LWCommerce", "lwcommerce" ); ?></p>
             </div>
 
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/xvvs5zTUXlw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe width="660" height="390" src="https://www.youtube.com/embed/xvvs5zTUXlw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <!--            <div id="dripsender" class="tile tile-centered">-->
 <!--                <div class="tile-icon">-->
