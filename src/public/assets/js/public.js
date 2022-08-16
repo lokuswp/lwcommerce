@@ -12,9 +12,9 @@
         let productID = $(this).attr("product-id");
         let productPrice = $(this).attr("price");
 
-        if (typeof isVariantExists === "function" && typeof variantSelected === "boolean") {
-            isVariantExists(productID);
-            if (!variantSelected) return;
+        if (typeof checkVariation === "function" && typeof variantSelected === "boolean") {
+            checkVariation(productID);
+            if (!variantSelected && $(this).attr("is-variant-exists") === '1') return;
         }
 
         // Add to Cart
