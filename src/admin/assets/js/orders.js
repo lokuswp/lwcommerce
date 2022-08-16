@@ -42,6 +42,91 @@
 
     $(document).ready(function () {
 
+        const renderStatus = (data) => {
+            let html = '';
+            if (data.shipping_type === 'digital' && data.order_status !== 'refunded') {
+                html += `<button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}">
+                                ${data.order_status === 'pending' ? 'Sudah Dibayar' : ''}
+                                ${data.order_status === 'shipped' ? 'Completed' : ''}
+                                ${data.order_status === 'completed' ? 'Refunded' : ''} 
+                        </button>`;
+            } else if (data.shipping_type !== 'digital' && data.order_status !== 'refunded') {
+                html += `<button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}">
+                                ${data.order_status === 'pending' ? 'Sudah Dibayar' : ''}
+                                ${data.order_status === 'processing' ? 'Shipped' : ''}
+                                ${data.order_status === 'shipped' ? 'Completed' : ''}
+                                ${data.order_status === 'completed' ? 'Refunded' : ''} 
+                        </button>`;
+            }
+
+            return html;
+        }
+
+        const renderProduct = (data) => {
+            let html = '';
+            data.product.forEach((item, index) => {
+                html += `<div class="lwc-grid-item ${index >= 1 ? 'lwc-hidden' : ``}">
+                            <img src="${item.image || 'https://i.pinimg.com/originals/a6/e8/d6/a6e8d6c8122c34de94463e071a4c7e45.png'}" alt="gedung" width="100px" height="100px" style="margin-right: 0.5rem">
+                            <div class="lwc-flex-column">
+                                <span class="lwc-text-bold">${item.post_title}</span>
+                                <span class="lwc-text-bold">${item.quantity} x ${item.price_promo !== null ? `<del class="del">${item.price}</del> ${item.price_promo}` : item.price}</span>
+                                ${data.product.length > 1 ? `<a style="color: #0EBA29; margin-top: 10px" class="lwc-hover more-product">Lihat ${data.product.length - 1} Produk Lainya...</a>` : ``}
+                            </div>
+                        </div>`;
+            })
+            return html;
+        }
+
+        const renderCoupon = (data) => {
+            let html = '';
+            if (lwc_orders.is_pro) {
+                html += `<div class="lwc-flex-column">
+                            <span>Kupon:</span>
+                            <span>${data.coupon !== '0' ? data.coupon : '-'}</span>
+                        </div>`;
+            }
+
+            return html;
+        }
+
+        const renderShipping = (data) => {
+            let html = '';
+            if (data.shipping_type === 'digital') {
+                html += `<div class="lwc-grid-item lwc-justify-content-space-between">
+                            <div class="lwc-flex-column">
+                                <span class="lwc-text-bold">Pengiriman Digital</span>
+                                <span style="margin-top: 10px">Alamat:</span>
+                                <span>${data.email}</span>
+                                <span>${data.phone}</span>
+                        </div>`;
+            } else {
+                html += `<div class="lwc-grid-item lwc-justify-content-space-between">
+                            <div class="lwc-flex-column">
+                                <span class="lwc-text-bold">Pengiriman Physical</span>
+                                <span style="margin-top: 10px">Alamat: </span>
+                                <span>${isNaN(data.address) ? data.address : '-'}</span>
+                                <div class="lwc-flex">
+                                    <span>${data.address.district ?? ''}</span>
+                                    <span>&nbsp;&nbsp;&nbsp;${data.address.postal_code ?? ''}</span>
+                                </div>
+                                <span>${data.address.city ?? ''}</span>
+                                <span>${data.address.state ?? ''}</span>
+                            </div>
+                            <div class="lwc-flex-column">
+                                <span class="lwc-text-bold">Kurir</span>`;
+                if (data.courier == 0) {
+                    html += '-';
+                } else {
+                    html += `<span>${data.courier.toUpperCase()} ${data.service.toUpperCase()}</span>
+                             <span style="margin-top: 10px" class="lwc-text-bold">Nomor Resi</span>`;
+                }
+                html += `</div>`;
+                html += `</div>`;
+            }
+
+            return html;
+        }
+
         //=============== Datatables ===============//
         const tableOrders = $('#orders').DataTable(
             {
@@ -90,22 +175,7 @@
                                             ${ucfirst(data.order_status.toLowerCase())}
                                         </span>
                                     </span>
-                                    ${data.shipping_type === 'digital' ? `
-                                        ${data.order_status === 'refunded' ? '' : `
-                                            <button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}">
-                                                    ${data.order_status === 'pending' ? 'Sudah Dibayar' : ''}
-                                                    ${data.order_status === 'shipped' ? 'Completed' : ''}
-                                                    ${data.order_status === 'completed' ? 'Refunded' : ''} 
-                                            </button>
-                                        `}
-                                    ` : `${data.order_status === 'refunded' ? '' : `
-                                            <button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}">
-                                                    ${data.order_status === 'pending' ? 'Sudah Dibayar' : ''}
-                                                    ${data.order_status === 'processing' ? 'Shipped' : ''}
-                                                    ${data.order_status === 'shipped' ? 'Completed' : ''}
-                                                    ${data.order_status === 'completed' ? 'Refunded' : ''} 
-                                            </button>
-                                        `}`}
+                                    ${renderStatus(data)}
                                     <button class="btn btn-error delete-action" data-id="${data.transaction_id}">
                                         Delete
                                     </button>
@@ -116,27 +186,11 @@
                                     <div class="lwc-grid-item lwc-justify-content-space-between">
                                         <div class="lwc-flex-column">
                                             <span class="lwc-text-bold">Transaksi</span>
-                                            ${data.product.map((item, index) => {
-                            return `
-                                                    <div class="lwc-grid-item ${index >= 1 ? 'lwc-hidden' : ``}">
-                                                        <img src="${item.image || 'https://i.pinimg.com/originals/a6/e8/d6/a6e8d6c8122c34de94463e071a4c7e45.png'}" alt="gedung" width="100px" height="100px" style="margin-right: 0.5rem">
-                                                        <div class="lwc-flex-column">
-                                                            <span class="lwc-text-bold">${item.post_title}</span>
-                                                            <span class="lwc-text-bold">${item.quantity} x ${item.price_promo !== null ? `<del class="del">${item.price}</del> ${item.price_promo}` : item.price}</span>
-                                                            ${data.product.length > 1 ? `<a style="color: #0EBA29; margin-top: 10px" class="lwc-hover more-product">Lihat ${data.product.length - 1} Produk Lainya...</a>` : ``}
-                                                        </div>
-                                                    </div>
-                                                `;
-                        }).join(' ')}
+                                            ${renderProduct(data)}
                                             <a style="color: #0EBA29; margin-left: 5.4rem;" class="lwc-hover lwc-grid-item lwc-hidden show-less">Show Less...</a>
                                             <span class="lwc-text-bold">${data.product.length} Barang</span>
                                         </div>
-                                        ${lwc_orders.is_pro ? `
-                                            <div class="lwc-flex-column">
-                                                <span>Kupon:</span>
-                                                <span>${data.coupon !== '0' ? data.coupon : '-'}</span>
-                                            </div>
-                                        ` : ``}
+                                        ${renderCoupon(data)}
                                     </div>
                                     <div class="lwc-grid-item">
                                         <div class="lwc-flex-column">
@@ -146,66 +200,7 @@
                                             <span>Email: ${data.email}</span>
                                         </div>
                                     </div>
-                                    ${data.shipping_type === 'digital' ?
-                            `<div class="lwc-grid-item lwc-justify-content-space-between">
-                                            <div class="lwc-flex-column">
-                                                <span class="lwc-text-bold">Pengiriman Digital</span>
-                                                <span style="margin-top: 10px">Alamat:</span>
-                                                <span>${data.email}</span>
-                                                <span>${data.phone}</span>
-                                            </div>
-                                            <div class="lwc-flex-column">
-                                                ${data.shipping_type === 'digital' ?
-                                ``
-                                :
-                                `<span class="lwc-text-bold">Kurir</span>
-                                                    ${data.courier ? `-`
-                                    :
-                                    `<span>${data.courier.toUpperCase()} ${data.service.toUpperCase()}</span>
-                                                        <span style="margin-top: 10px" class="lwc-text-bold">Nomor Resi</span>
-                                                        ${data.status_processing === 'processed' ? `
-                                                            <input type="text" class="lwc-input-text" placeholder="Masukkan nomor resi" id="resi">
-                                                            <button class="lwc-btn-rounded" id="btn-resi" data-id="${data.transaction_id}">tambah</button>
-                                                        ` : data.status_processing === 'shipping' ? `` : `<span>-</span>`}
-                                                        ${data.status_processing === 'shipping' ? `<span class="lwc-hover lwc-text-underline__on-hover" style="font-weight: bold; color: #5c5c5c;">${data.no_resi}</span>` : ``}`
-                                }`
-                            }
-                                            </div>
-                                        </div>`
-                            :
-                            `<div class="lwc-grid-item lwc-justify-content-space-between">
-                                            <div class="lwc-flex-column">
-                                                <span class="lwc-text-bold">Pengiriman Physical</span>
-                                                <span style="margin-top: 10px">Alamat: </span>
-                                                <span>${isNaN(data.address) ? data.address : '-'}</span>
-                                                <div class="lwc-flex">
-                                                    <span>${data.address.district ?? ''}</span>
-                                                    <span>&nbsp;&nbsp;&nbsp;${data.address.postal_code ?? ''}</span>
-                                                </div>
-                                                <span>${data.address.city ?? ''}</span>
-                                                <span>${data.address.state ?? ''}</span>
-                                            </div>
-                                            <div class="lwc-flex-column">
-                                                ${data.shipping_type === 'digital' ?
-                                `<span class="lwc-text-bold">Kurir</span>
-                                                            <span>-</span>`
-                                :
-                                `<span class="lwc-text-bold">Kurir</span>
-                                                    ${data.courier == 0 ?
-                                    '-'
-                                    :
-                                    `<span>${data.courier.toUpperCase()} ${data.service.toUpperCase()}</span>
-                                                        <span style="margin-top: 10px" class="lwc-text-bold">Nomor Resi</span>
-                                                        ${data.status_processing === 'processed' ? `
-                                                            <input type="text" class="lwc-input-text" placeholder="Masukkan nomor resi" id="resi">
-                                                            <button class="lwc-btn-rounded" id="btn-resi" data-id="${data.transaction_id}">tambah</button>
-                                                        ` : data.status_processing === 'shipping' ? `` : `<span>-</span>`}
-                                                        ${data.status_processing === 'shipping' ? `<span class="lwc-hover lwc-text-underline__on-hover" style="font-weight: bold; color: #5c5c5c;">${data.no_resi}</span>` : ``}`
-                                }`
-                            }
-                                            </div>
-                                        </div>`
-                        }
+                                    ${renderShipping(data)}
                                 </div>
                             </div>
                             <div class="lwc-card-footer lwc-card-shadow">
