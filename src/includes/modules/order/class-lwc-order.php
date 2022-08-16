@@ -9,16 +9,17 @@ class LWC_Order {
 
 	public static function get_order( Datatable $datatable ) {
 		$columns = [
-			0 => 'transaction_id',
-			1 => 'name',
-			2 => 'phone',
-			3 => 'email',
-			4 => 'order_status',
-			5 => 'shipping_type',
-			6 => 'shipping_status',
-			7 => 'service',
-			8 => 'status',
-			9 => 'raw_total',
+			0  => 'transaction_id',
+			1  => 'name',
+			2  => 'phone',
+			3  => 'email',
+			4  => 'order_status',
+			5  => 'shipping_type',
+			6  => 'shipping_status',
+			7  => 'service',
+			8  => 'status',
+			9  => 'raw_total',
+			10 => 'no_resi'
 		];
 
 		$fields = [
