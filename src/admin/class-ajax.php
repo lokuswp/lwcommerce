@@ -171,17 +171,13 @@ class AJAX {
 			wp_send_json_error( 'Invalid security token sent.' );
 		}
 
-		$transaction_id = $_POST['transaction_id'];
-		$no_resi        = $_POST['resi'];
+		$transaction_id = absint( $_POST['transaction_id'] );
+		$no_resi        = sanitize_text_field( $_POST['resi'] );
 
 		if ( ! empty( $transaction_id ) ) {
-			$transaction_id = sanitize_text_field( $transaction_id );
-			$no_resi        = sanitize_text_field( $no_resi );
+			$resi = lwc_update_order_meta( $transaction_id, '_no_resi', $no_resi );
 
-			lwc_update_order_meta( $transaction_id, 'no_resi', $no_resi );
-			$status = lwc_update_order_meta( $transaction_id, 'status_processing', 'shipping' );
-
-			if ( $status ) {
+			if ( $resi ) {
 				wp_send_json_success( 'Successfully updated.' );
 			} else {
 				wp_send_json_error( 'Failed to update.' );

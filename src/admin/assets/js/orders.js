@@ -51,7 +51,7 @@
                                 ${data.order_status === 'completed' ? 'Refunded' : ''} 
                         </button>`;
             } else if (data.shipping_type !== 'digital' && data.order_status !== 'refunded') {
-                html += `<button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}">
+                html += `<button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}" data-resi="${data.no_resi}" data-courier="${data.courier.toLowerCase()}">
                                 ${data.order_status === 'pending' ? 'Sudah Dibayar' : ''}
                                 ${data.order_status === 'processing' ? 'Shipped' : ''}
                                 ${data.order_status === 'shipped' ? 'Completed' : ''}
@@ -91,6 +91,7 @@
 
         const renderShipping = (data) => {
             let html = '';
+            console.log(data.no_resi)
             if (data.shipping_type === 'digital') {
                 html += `<div class="lwc-grid-item lwc-justify-content-space-between">
                             <div class="lwc-flex-column">
@@ -114,11 +115,25 @@
                             </div>
                             <div class="lwc-flex-column">
                                 <span class="lwc-text-bold">Kurir</span>`;
-                if (data.courier == 0) {
+                if (!isNaN(data.courier)) {
                     html += '-';
                 } else {
                     html += `<span>${data.courier.toUpperCase()} ${data.service.toUpperCase()}</span>
                              <span style="margin-top: 10px" class="lwc-text-bold">Nomor Resi</span>`;
+                    if (data.order_status === 'processing' && data.courier.toLowerCase() !== 'take away') {
+                        if (data.no_resi == 0) {
+                            html += `<input type="text" class="lwc-input-text" placeholder="Masukkan nomor resi" id="resi">
+                                <button class="lwc-btn-rounded" id="btn-resi" data-id="${data.transaction_id}">tambah</button>`;
+                        } else {
+                            html += `<span class="lwc-hover lwc-text-underline__on-hover" style="font-weight: bold; color: #5c5c5c;">${data.no_resi}</span>`;
+                        }
+                    } else {
+                        if (data.no_resi != 0) {
+                            html += `<span class="lwc-hover lwc-text-underline__on-hover" style="font-weight: bold; color: #5c5c5c;">${data.no_resi}</span>`;
+                        } else {
+                            html += '-';
+                        }
+                    }
                 }
                 html += `</div>`;
                 html += `</div>`;
@@ -319,7 +334,7 @@
                 },
                 success: data => {
                     if (data.success) {
-                        tableOrders.ajax.reload(null, false);
+                        tableOrders.draw();
                     }
                 }
             })
@@ -421,6 +436,14 @@
             $(this).addClass('loading');
             $(this).attr('disabled', true);
             const action = $(this).attr('data-status');
+
+            if (action === 'processing' && $(this).attr('data-resi') == 0 && $(this).attr('data-courier') !== 'take away') {
+                $(this).removeClass('loading');
+                $(this).attr('disabled', false);
+                alert('Silahkan isi nomor resi terlebih dahulu');
+                return;
+            }
+
             const orderId = $(this).attr('data-id');
             const shipping = $(this).attr('data-shipping');
             $.ajax({
@@ -438,6 +461,8 @@
                     that.removeClass('loading');
                     tableOrders.draw();
                 }
+            }).fail(function (data) {
+                alert('Something went wrong. Please try again later.');
             })
         })
 
