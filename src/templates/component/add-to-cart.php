@@ -2,7 +2,11 @@
 
 $btn_cart_link     = get_post_meta( get_the_ID(), '_btn_cart_link', true ) == null ? null : esc_attr( get_post_meta( get_the_ID(), '_btn_cart_link', true ) );
 $btn_cart_text     = empty( get_post_meta( get_the_ID(), '_btn_cart_text', true ) ) ? __( 'Add to Cart', 'lwcommerce' ) : esc_attr( get_post_meta( get_the_ID(), '_btn_cart_text', true ) );
-$is_variant_exists = lwc_is_product_has_variant( get_the_ID() );
+$is_variant_exists = false;
+
+if ( function_exists( 'lwc_pro_is_product_has_variant' ) ) {
+	$is_variant_exists = lwc_pro_is_product_has_variant( get_the_ID() );
+}
 ?>
 
 <div class="product-action">

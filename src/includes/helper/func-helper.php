@@ -42,29 +42,3 @@ function lwc_whatsapp_button_html() {
     </script>
 	<?php
 }
-
-/**
- * @param $product_id
- *
- * @return bool
- */
-function lwc_is_product_has_variant( $product_id ): bool {
-	$product_id = absint( $product_id );
-
-	if ( get_post_type( $product_id ) !== 'product' ) {
-		return false;
-	}
-
-	$args = [
-		'post_type'      => 'product_variant',
-		'post_status'    => 'publish',
-		'posts_per_page' => - 1,
-		'post_parent'    => $product_id,
-	];
-
-	if ( count( get_children( $args ) ) <= 0 ) {
-		return false;
-	}
-
-	return true;
-}
