@@ -53,7 +53,7 @@ function lwc_get_cost_rajaongkir( string $shipping_name, string $destination, st
 
 	$cost = $destination_cost["{$origin}_to_{$destination}_with_{$service}_weight_{$weight}"] ?? false;
 
-	if ( $cost ) {
+	if ( ! empty( $cost['cost'] ) ) {
 		return $cost;
 	}
 
@@ -99,7 +99,7 @@ function lwc_get_cost_rajaongkir( string $shipping_name, string $destination, st
 		'etd'  => $estimation_date,
 	];
 
-	set_transient( $shipping_name . '_cost', $destination_cost, WEEK_IN_SECONDS );
+	set_transient( $shipping_name . '_cost', $destination_cost, DAY_IN_SECONDS * 3 ); // 3 day expiration
 
 	if ( $cost ) {
 		return [

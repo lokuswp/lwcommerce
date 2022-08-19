@@ -37,6 +37,11 @@ class GET_Services {
 			return new \WP_Error( 'shipping_active', 'Shipping is not active', [ 'status' => 404 ] );
 		}
 
+		$origin = lwc_get_settings( 'store', 'city', 'intval' );
+		if ( empty( $origin ) ) {
+			return new \WP_Error( 'shipping_origin_empty', 'Origin is required', [ 'status' => 404 ] );
+		}
+
 		$services = [];
 
 		// Loop : Shipping Method

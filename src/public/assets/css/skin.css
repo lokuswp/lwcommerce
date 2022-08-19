@@ -139,3 +139,53 @@ td.product-item-detail strike {
     padding: 8px 12px 0 0;
     width: 100%;
 }
+
+/*Loading*/
+
+@keyframes loading {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loading {
+    color: transparent !important;
+    min-height: .8rem;
+    pointer-events: none;
+    position: relative;
+}
+
+.loading::after {
+    animation: loading 500ms infinite linear;
+    background: transparent;
+    border: .1rem solid var(--lokuswp-secondary-color);
+    border-radius: 50%;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    content: "";
+    display: block;
+    height: .8rem;
+    left: 50%;
+    margin-left: -.4rem;
+    margin-top: -.4rem;
+    opacity: 1;
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    width: .8rem;
+    z-index: 1;
+}
+
+.loading.loading-lg {
+    min-height: 2rem;
+}
+
+.loading.loading-lg::after {
+    height: 1.6rem;
+    margin-left: -.8rem;
+    margin-top: -.8rem;
+    width: 1.6rem;
+}
