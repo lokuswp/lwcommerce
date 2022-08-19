@@ -29,9 +29,11 @@ class RajaOngkir_JNE extends Shipping\Gateway {
 
 	public function __construct() {
 		$config['services'] = [
-			'reg' => 'on',
-			'oke' => 'on',
-			'yes' => 'on'
+			'reg'    => 'on',
+			'oke'    => 'on',
+			'yes'    => 'on',
+			'ctc'    => 'on',
+			'ctcyes' => 'on'
 		];
 		$this->init_data( $config );
 
@@ -77,34 +79,3 @@ class RajaOngkir_JNE extends Shipping\Gateway {
 }
 
 Shipping\Manager::register( new RajaOngkir_JNE() );
-
-function lwcommerce_rajaongkir_cost_calculation( $origin, $destination, $weight, $courier ) {
-
-	// Transient is for Snapshot
-
-	// Get Transient
-
-	$header = [
-		'content-type' => 'application/json',
-		'key'          => '80aa49704fc30a939124a831882dea72',
-	];
-
-	$body = [
-		'origin'      => abs( $origin ),
-		'destination' => abs( $destination ),
-		'weight'      => abs( $weight ),
-		'courier'     => strtolower( sanitize_key( $courier ) ),
-	];
-
-	$options = [
-		'body'    => wp_json_encode( $body ),
-		'headers' => $header,
-	];
-
-	$request  = wp_remote_post( 'https://api.rajaongkir.com/starter/cost', $options );
-	$response = json_decode( wp_remote_retrieve_body( $request ) );
-
-	// Save to Transient
-
-	return $response->rajaongkir;
-}
