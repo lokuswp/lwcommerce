@@ -2,17 +2,7 @@
 
 $btn_cart_link     = get_post_meta( get_the_ID(), '_btn_cart_link', true ) == null ? null : esc_attr( get_post_meta( get_the_ID(), '_btn_cart_link', true ) );
 $btn_cart_text     = empty( get_post_meta( get_the_ID(), '_btn_cart_text', true ) ) ? __( 'Add to Cart', 'lwcommerce' ) : esc_attr( get_post_meta( get_the_ID(), '_btn_cart_text', true ) );
-$args              = [
-	'post_type'      => 'product_variant',
-	'post_status'    => 'publish',
-	'posts_per_page' => - 1,
-	'post_parent'    => get_the_ID(),
-];
-$is_variant_exists = false;
-if ( count( get_children( $args ) ) > 0 ) {
-	$is_variant_exists = true;
-}
-
+$is_variant_exists = lwc_is_product_has_variant( get_the_ID() );
 ?>
 
 <div class="product-action">
