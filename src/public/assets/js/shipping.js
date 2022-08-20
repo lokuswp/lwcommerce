@@ -7,7 +7,7 @@
         let urlCurrent = window.location.pathname.split('/');
         var states = document.getElementById("states");
 
-        if (urlCurrent[2] != 'trx' && states.length ) {
+        if (urlCurrent[2] != 'trx' && states.length) {
             /*****************************************
              * Get Provinces List
              * Request Provinces List from RajaOngkir API
@@ -96,16 +96,24 @@
      *****************************************
      */
     $(document).on('change', '#lwcommerce-shipping #cities', function (e) {
+        const shippingServiceElement = $('#lwcommerce-shipping-services');
+        shippingServiceElement.children().remove();
+        shippingServiceElement.addClass('loading loading-lg');
 
         let destination = $('#cities').find(":selected").val();
         let cart_uuid = lokusCookie.get("lokuswp_cart_session");
 
+
         // Request to REST API
         jQuery.ajax({
-            url: lokuswp.rest_url + "lwcommerce/v1/shipping/services?destination=" + destination + "&cart_uuid=" + cart_uuid,
-            type: 'GET',
+            url: lokuswp.ajax_wp,
+            type: 'POST',
+            data: {
+                action: 'lwcommerce_get_shipping_services',
+                destination: destination,
+                cart_uuid: cart_uuid,
+            },
             success: function (response) {
-
                 if (response.success) {
                     // Formatting Struct and Data
                     let shippingStruct = jQuery('#struct-shipping-services').html();
@@ -127,16 +135,21 @@
                     // Rendering with Mustache
                     jQuery("#lwcommerce-shipping-services").html(Mustache.to_html(shippingStruct, shippingData));
 
+                    shippingServiceElement.removeClass('loading loading-lg');
+
                     // Saving to Local with Cache
                     // lokusCookie.set("lokuswp_shipping_list", JSON.stringify(shippingData), 1); // 1 Day Expired
                 }
-
             },
             error: function (data) {
+                if (data.responseJSON.message !== "" && typeof data.responseJSON.message !== "undefined") {
+                    $(document).snackbar(data.responseJSON.message);
+                    return;
+                }
                 $(document).snackbar('Tidak dapat mengambil data dari server, Silahkan Coba Lagi');
                 console.log(data);
             }
-        });
+        })
 
     });
 

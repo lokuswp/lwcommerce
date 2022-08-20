@@ -12,6 +12,11 @@
         let productID = $(this).attr("product-id");
         let productPrice = $(this).attr("price");
 
+        if (typeof checkVariation === "function" && typeof variantSelected === "boolean") {
+            checkVariation(productID);
+            if (!variantSelected && $(this).attr("is-variant-exists") === '1') return;
+        }
+
         // Add to Cart
         lokusCart.addProduct(productID, 1, productPrice);
 
@@ -22,7 +27,7 @@
         // Show Qty Stepper
         $(this).hide();
         $(this).closest('.product-action').find('.lokuswp-stepper').removeClass('lwp-hidden');
-        
+
         lwpRenderCart();
 
         // Hook for Event Trigger

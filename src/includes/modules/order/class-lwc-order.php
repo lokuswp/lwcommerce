@@ -9,16 +9,17 @@ class LWC_Order {
 
 	public static function get_order( Datatable $datatable ) {
 		$columns = [
-			0 => 'transaction_id',
-			1 => 'name',
-			2 => 'phone',
-			3 => 'email',
-			4 => 'order_status',
-			5 => 'shipping_type',
-			6 => 'shipping_status',
-			7 => 'service',
-			8 => 'status',
-			9 => 'raw_total',
+			0  => 'transaction_id',
+			1  => 'name',
+			2  => 'phone',
+			3  => 'email',
+			4  => 'order_status',
+			5  => 'shipping_type',
+			6  => 'shipping_status',
+			7  => 'service',
+			8  => 'status',
+			9  => 'raw_total',
+			10 => 'no_resi'
 		];
 
 		$fields = [
@@ -41,6 +42,7 @@ class LWC_Order {
 			"MAX(CASE WHEN tlcom.meta_key = '_order_status' THEN tlcom.meta_value ELSE 0 END) order_status",
 			"MAX(CASE WHEN tlcom.meta_key = '_shipping_type' THEN tlcom.meta_value ELSE 0 END) shipping_type",
 			"MAX(CASE WHEN tlcom.meta_key = '_shipping_status' THEN tlcom.meta_value ELSE 0 END) shipping_status",
+			"MAX(CASE WHEN tlcom.meta_key = '_no_resi' THEN tlcom.meta_value ELSE 0 END) no_resi",
 			"TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when ttm.meta_key = '_extras_shipping' then ttm.meta_value else 0 end),';',2),':',-1)) AS service",
 			"TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when ttm.meta_key = '_extras_shipping' then ttm.meta_value else 0 end),';',4),':',-1)) AS courier",
 			"TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when ttm.meta_key = '_extras_shipping' then ttm.meta_value else 0 end),';',6),':',-1)) AS destination",
@@ -71,7 +73,7 @@ class LWC_Order {
 				//==================== add image & price to product ====================//
 				foreach ( $value->product as $product ) {
 					$product->image       = get_the_post_thumbnail_url( $product->post_id, 'thumbnail' );
-					$product->price       = lwp_currency_format( true,  $product->price );
+					$product->price       = lwp_currency_format( true, $product->price );
 					$product->price_promo = get_post_meta( $product->post_id, '_price_promo', true ) ? lwp_currency_format( true,
 						get_post_meta( $product->post_id, '_price_promo', true ) ) : null;
 					$product->post_title  = get_the_title( $product->post_id );
@@ -80,6 +82,15 @@ class LWC_Order {
 				//==================== Payment Logo ====================//
 				$payment            = (object) lwp_get_option( "payment-{$value->payment_id}" );
 				$value->payment_url = $payment->logo_url;
+
+				//==================== Is refund requested? ====================//
+				$value->is_refund = empty( lwc_get_order_meta( $value->transaction_id, '_extras_refund' ) )
+					? false
+					: lwc_get_order_meta( $value->transaction_id, '_extras_refund' );
+
+				if ( $value->is_refund && $value->is_refund['amount'] !== 0 ) {
+					$value->is_refund['amount'] = lwp_currency_format( true, $value->is_refund['amount'] );
+				}
 			}
 
 			if ( isset( $datatable->get_request_field()->base ) ) {

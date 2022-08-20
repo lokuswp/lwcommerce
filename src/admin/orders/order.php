@@ -3,24 +3,18 @@
 namespace LokusWP\Commerce;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 class Reports {
 
-	public function render() {
-//		update_option( 'lsdd_order_unread', 0 );
+    public function render() {
+        $this->table();
+        $this->modal_import();
+    }
 
-		$this->table();
-		$this->panel_editor();
-		$this->modal_import();
-		$this->modal_add_order_manual();
-
-//		$payment_method = get_option( 'lsdd_payment_settings' );
-	}
-
-	private function table() {
-		?>
+    private function table() {
+        ?>
         <div class="lwc-container-filter">
             <button class="lwc-btn-filter" type="button" style="display: none !important;">
                 Filter
@@ -455,180 +449,34 @@ class Reports {
 
         <input type="hidden" name="link-url-invoice"
                value="<?= get_site_url( null, '/wp-content/uploads/lsddonation/invoice.pdf' ) ?>">
-		<?php
-	}
+        <?php
+    }
 
-	private function panel_editor() {
-		?>
-        <div class="column col-6 col-12"
-             style="top: 30px;position: fixed;right: 0;z-index:-1;height: 97.5%;width: 400px;display:none;">
-            <div id="order_editor" class="panel" style="height: 100%;background: #fff;margin-right: -10px;">
-                <div class="panel-header text-center">
-
-                    <div class="panel-title h5 mt-10 float-left"><?php _e( 'Edit Report', 'lwcommerce' ); ?></div>
-                    <section class="panel-close float-right">
-                        <i class="icon icon-cross"></i>
-                    </section>
-                </div>
-
-                <div class="panel-body">
-                    <div class="form-group">
-                        <label class="form-label" for="nama"><?php _e( 'Name', 'lwcommerce' ); ?></label>
-                        <input class="form-input" type="text" id="name" placeholder="John Doe">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="nohp"><?php _e( 'Phone', 'lwcommerce' ); ?></label>
-                        <input class="form-input" type="text" id="phone" placeholder="08561655212">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="status"><?php _e( 'Status', 'lwcommerce' ); ?></label>
-                        <select id="status" class="select2" style="width:100%;">
-                            <option value="completed"><?php _e( 'Complete', 'lwcommerce' ); ?></option>
-                            <option value="hold"><?php _e( 'Pending', 'lwcommerce' ); ?></option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="date"><?php _e( 'Date', 'lwcommerce' ); ?></label>
-                        <input class="form-input" type="date" id="date" placeholder="12/12/2020">
-                    </div>
-                </div>
-
-                <div class="panel-footer">
-                    <button class="btn btn-primary btn-block" style="margin-bottom:15px"
-                            id="lsdd_order_update"><?php _e( 'Update', 'lwcommerce' ); ?></button>
-                </div>
-
-            </div>
-        </div>
-		<?php
-	}
-
-	private function modal_import() {
-		?>
-        <div class="modal modal-md" id="import-db">
-            <button class="modal-overlay" aria-label="Close"></button>
-            <div class="modal-container" role="document">
-                <div class="modal-header">
-                    <button class="btn btn-clear float-right modal-close" aria-label="Close"></button>
-                    <div class="modal-title h5">
-						<?php _e( 'Import', 'lwcommerce' ); ?>
-                    </div>
-                </div>
-                <div class="modal-body" style="padding-top:0;padding-bottom:25px;">
-                    <small>
-						<?php _e( 'This will replace all existing data in the database', 'lwcommerce' ); ?>
-                    </small>
-                    <div class="input-group">
-                        <input class="form-input" id="import-data" type="file" title="Choose CSV File">
-                        <button id="import-click" class="btn btn-primary"
-                                style="height: 40px;margin-top: -1px;padding:8px;" id="importcsv">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 512 512">
-                                <title>ionicons-v5-j</title>
-                                <rect x="128" y="128" width="336" height="336" rx="57" ry="57"
-                                      style="fill:none;stroke:#fff;stroke-linejoin:round;stroke-width:32px"/>
-                                <path d="M383.5,128l.5-24a56.16,56.16,0,0,0-56-56H112a64.19,64.19,0,0,0-64,64V328a56.16,56.16,0,0,0,56,56h24"
-                                      style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/>
-                                <line x1="296" y1="216" x2="296" y2="376"
-                                      style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/>
-                                <line x1="376" y1="296" x2="216" y2="296"
-                                      style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"/>
-                            </svg>
-                            <span style="margin-left: 10px;float: right;margin-top: -1px;">
-								<?php _e( 'Import', 'lwcommerce' ); ?>
-							</span>
-                        </button>
-                    </div>
-                    <small>
-						<?php _e( 'You have to adjust the import data first, export and adjust your data',
-							'lwcommerce' ); ?>
-                    </small>
-                </div>
-            </div>
-        </div>
-		<?php
-	}
-
-	private function notification_invoice_downloaded() {
-		?>
-        <style>
-            .notification-warp {
-                position: fixed;
-                top: 2.5rem;
-                left: 70rem;
-                z-index: 6;
-            }
-
-            div.notification_invoice {
-                background: #fff;
-                padding: 10px;
-                border: 0;
-                box-shadow: 0 0.25rem 1rem rgb(48 55 66 / 15%);
-            }
-
-            .badge-success {
-                white-space: nowrap;
-            }
-
-            .badge-success[data-badge]::after {
-                font-size: .7rem;
-                height: .9rem;
-                line-height: 1;
-                min-width: .9rem;
-                padding: .1rem .2rem;
-                text-align: center;
-                white-space: nowrap;
-                position: absolute;
-                top: 6px;
-                left: -5px;
-            }
-
-            .badge-success:not([data-badge])::after,
-            .badge-success[data-badge]::after {
-                background: #000;
-                background-clip: padding-box;
-                border-radius: .5rem;
-                box-shadow: 0 0 0 0.1rem #fff;
-                color: #fff;
-                content: attr(data-badge);
-                display: inline-block;
-                transform: translate(-.05rem, -.5rem);
-            }
-        </style>
-        <div class="notification-warp col-3"></div>
-		<?php
-	}
-
-	private function modal_add_order_manual() {
-		?>
-        <!-- Add order manual modal -->
-        <div class="modal" id="add-order">
+    private function modal_import() {
+        ?>
+        <div class="modal" id="modal-refund-order">
             <a href="#close" class="modal-overlay" aria-label="Close"></a>
             <div class="modal-container">
                 <div class="modal-header">
-                    <div class="columns">
-                        <div class="column modal-title h5"><?php _e( 'Add Order', 'lwcommerce' ) ?></div>
-                        <div class="column" style="text-align:right;">
-                            <label for="orders-bulk-input"><?php _e( 'Input', 'lwcommerce' ) ?></label>
-                            <input class="col-2" type="text" id="orders-bulk-input" value="1"
-                                   style="text-align:center;" maxlength="3">
-                            <label for="orders-bulk-input"><?php _e( 'data', 'lwcommerce' ) ?></label>
+                    <a href="#close" class="btn btn-clear float-right" aria-label="Close"></a>
+                    <div class="modal-title h5">Order <span></span></div>
+                </div>
+                <div class="modal-body">
+                    <div class="content">
+                        <!-- form input control -->
+                        <div class="form-group">
+                            <label class="form-label" for="refund-amount">Input Refund Amount</label>
+                            <input class="form-input" type="number" id="refund-amount" placeholder="amount">
                         </div>
                     </div>
                 </div>
-                <div class="modal-body">
-                    <div class="content" id="warper-add-order"></div>
-                </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary lsdd-order-save">Submit</button>
-                    <button type="button" class="btn btn-add-donation-close">Close</button>
+                    <button class="btn lwc-btn-refund">Submit</button>
                 </div>
             </div>
         </div>
-		<?php
-	}
+        <?php
+    }
 }
 
 

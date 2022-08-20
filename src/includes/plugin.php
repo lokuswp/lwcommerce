@@ -53,6 +53,7 @@ class Plugin {
 
 		// Shipping
 		require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-rajaongkir-jne.php';
+		require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-rajaongkir.php';
 		require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-take-away.php';
 
 		// Order
@@ -80,6 +81,8 @@ class Plugin {
 			require_once LWC_PATH . 'src/public/class-public.php';
 			Frontend::register( $lwcommerce );
 		}
+
+		require_once LWC_PATH . 'src/public/class-ajax.php';
 
 		// Register custom meta table
 		$this->register_ordermeta();
