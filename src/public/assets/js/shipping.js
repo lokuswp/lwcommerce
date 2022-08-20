@@ -106,8 +106,13 @@
 
         // Request to REST API
         jQuery.ajax({
-            url: lokuswp.rest_url + "lwcommerce/v1/shipping/services?destination=" + destination + "&cart_uuid=" + cart_uuid,
-            type: 'GET',
+            url: lokuswp.ajax_wp,
+            type: 'POST',
+            data: {
+                action: 'lwcommerce_get_shipping_services',
+                destination: destination,
+                cart_uuid: cart_uuid,
+            },
             success: function (response) {
                 if (response.success) {
                     // Formatting Struct and Data

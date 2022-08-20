@@ -2,6 +2,8 @@
 
 namespace LokusWP\Commerce;
 
+use LokusWP\Commerce\Shipping\Rajaongkir;
+
 if ( ! defined( 'WPTEST' ) ) {
 	defined( 'ABSPATH' ) or die( "Direct access to files is prohibited" );
 }
@@ -28,7 +30,16 @@ class Shipping_Processing {
 			return;
 		}
 
-		$shipping_cost = lwc_get_cost_rajaongkir( $shipping['courier'], $shipping['destination'], $shipping['weight'], $shipping['service'] );
+		$origin = lwc_get_settings( 'store', 'city', 'intval' );
+
+		$rajaongkir = Rajaongkir::get_instance();
+		$rajaongkir->set_origin( $origin );
+		$rajaongkir->set_destination( $shipping['destination'] );
+		$rajaongkir->set_weight( $shipping['weight'] );
+		$rajaongkir->set_courier( $shipping['courier'] );
+		$rajaongkir->set_service( $shipping['service'] );
+
+		$shipping_cost = $rajaongkir->get();
 
 		lwp_add_transaction_extras(
 			"shipping",

@@ -1,6 +1,7 @@
 <?php
 
 use LokusWP\Commerce\Shipping;
+use LokusWP\Commerce\Shipping\Rajaongkir;
 
 if ( ! defined( 'WPTEST' ) ) {
 	defined( 'ABSPATH' ) or die( "Direct access to files is prohibited" );
@@ -55,21 +56,28 @@ class RajaOngkir_JNE extends Shipping\Gateway {
 	public function get_service( $services, $shipping_data, $service_allowed ) {
 
 		if ( $this->get_status() == "on" || $this->get_status() == "1" ) {
-			$weight      = $shipping_data->weight;
+			$origin      = lwc_get_settings( 'store', 'city', 'intval' );
 			$destination = $shipping_data->destination;
+			$weight      = $shipping_data->weight;
 
-			foreach ( $service_allowed as $service ) {
-				$service_data = lwc_get_cost_rajaongkir( strtolower( $this->name ), $destination, $weight, $service );
-				if ( $service_data ) {
-					$services[] = [
-						'id'          => "jne-" . strtolower( $service ),
-						'logoURL'     => $shipping_data->logo_url,
-						'name'        => $shipping_data->name,
-						'service'     => $service,
-						'cost'        => $service_data['cost'],
-						'description' => $service_data['etd'] . ' ' . __( "Hari" ),
-					];
-				}
+			$rajaongkir = Rajaongkir::get_instance();
+			$rajaongkir->set_origin( $origin );
+			$rajaongkir->set_destination( $destination );
+			$rajaongkir->set_weight( $weight );
+			$rajaongkir->set_courier( strtolower( $this->name ) );
+			$rajaongkir->set_service_allowed( $service_allowed );
+
+			$service_data = $rajaongkir->get();
+
+			foreach ( $service_data as $data ) {
+				$services[] = [
+					'id'          => "jne-" . strtolower( $data['service'] ),
+					'logoURL'     => $shipping_data->logo_url,
+					'name'        => $shipping_data->name,
+					'service'     => $data['service'],
+					'cost'        => $data['cost'],
+					'description' => $data['etd'] . ' ' . __( "Hari" ),
+				];
 			}
 		}
 
