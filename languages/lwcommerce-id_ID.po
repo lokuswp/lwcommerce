@@ -1,11 +1,9 @@
-#, fuzzy
 msgid ""
 msgstr ""
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Project-Id-Version: LWCommerce\n"
 "POT-Creation-Date: 2022-08-17 10:29+0700\n"
-"PO-Revision-Date: 2022-08-17 10:29+0700\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2022-08-17 10:34+0700\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,9 +13,9 @@ msgstr ""
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: lwcommerce.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Last-Translator: \n"
+"Language: id_ID\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
@@ -25,555 +23,553 @@ msgstr ""
 #: lwcommerce.php:67
 #, php-format
 msgid "This plugin run but not working. LWCommerce required version of PHP %s"
-msgstr ""
+msgstr "Plugin ini berjalan tetapi tidak berfungsi. versi PHP yang diperlukan %s"
 
 #. translators: %s: WordPress version
 #: lwcommerce.php:81
 #, php-format
-msgid ""
-"This plugin run but not working. LWCommerce required version of WordPress %s+"
-msgstr ""
+msgid "This plugin run but not working. LWCommerce required version of WordPress %s+"
+msgstr "Plugin ini berjalan tetapi tidak berfungsi. versi yang diperlukan dari WordPress %s+"
 
 #: src/admin/class-admin.php:72 src/admin/class-admin.php:232
 #: src/admin/class-admin.php:233
 msgid "Settings"
-msgstr ""
+msgstr "Pengaturan"
 
 #: src/admin/class-admin.php:76
 msgid "Notification"
-msgstr ""
+msgstr "Notifikasi"
 
 #: src/admin/class-admin.php:80 src/admin/orders/order.php:58
 #: src/includes/hook/checkout/func-checkout-tab.php:12
 msgid "Shipping"
-msgstr ""
+msgstr "Pengiriman"
 
 #: src/admin/class-admin.php:199
 msgid "Are you sure you want to delete this item ?"
-msgstr ""
+msgstr "Yakin ingin menghapus item ini?"
 
 #: src/admin/class-admin.php:245 src/admin/class-admin.php:246
 msgid "Be a Pro"
-msgstr ""
+msgstr "Be a Pro"
 
 #: src/admin/class-admin.php:255 src/admin/class-admin.php:256
 msgid "Get More Addon"
-msgstr ""
+msgstr "Dapatkan Lebih Banyak Addon"
 
 #: src/admin/class-admin.php:266 src/admin/class-admin.php:267
 msgid "Products"
-msgstr ""
+msgstr "Produk"
 
 #: src/admin/class-admin.php:278 src/admin/class-admin.php:279
 msgid "Categories"
-msgstr ""
+msgstr "Kategori"
 
 #: src/admin/class-admin.php:288 src/admin/class-admin.php:289
 msgid "Orders"
-msgstr ""
+msgstr "Pesanan"
 
 #: src/admin/class-admin.php:301
 msgid "Display Product Listing"
-msgstr ""
+msgstr "Tampilan Daftar Produk"
 
 #: src/admin/class-admin.php:308
 msgid "Checkout via Whatsapp"
-msgstr ""
+msgstr "Checkout melalui Whatsapp"
 
 #: src/admin/class-admin.php:309
 msgid "Disable/Enable Opening Whatsapp when Checkout"
-msgstr ""
+msgstr "Nonaktifkan / Aktifkan Membuka Whatsapp saat Checkout"
 
 #: src/admin/class-admin.php:364
 msgid "LWCommerce Translation is Deprecated, Please Sync with Loco Translate"
-msgstr ""
+msgstr "File Terjemahan LWCommerce Sudah Usang, Harap Sinkronkan dengan Loco Translate"
 
 #: src/admin/class-admin.php:366
 msgid "Sync Translation"
-msgstr ""
+msgstr "Sinkronisasi"
 
 #: src/admin/class-admin.php:389 src/admin/class-onboarding.php:418
 msgid "Cloning of is forbidden"
-msgstr ""
+msgstr "Kloning dilarang"
 
 #: src/admin/class-admin.php:398 src/admin/class-onboarding.php:427
 msgid "Unserializing instances of is forbidden"
-msgstr ""
+msgstr "Contoh yang tidak diserialisasi dilarang"
 
 #: src/admin/class-onboarding.php:91
 msgid "Product Listing"
-msgstr ""
+msgstr "Daftar Produk"
 
 #: src/admin/class-onboarding.php:109
 msgid "Plugin LWCommerce"
-msgstr ""
+msgstr "Plugin LWCommerce"
 
 #: src/admin/class-onboarding.php:119
 msgid "Plugin LWDonation"
-msgstr ""
+msgstr "Plugin LWDonation"
 
 #: src/admin/class-onboarding.php:123
 msgid "License"
-msgstr ""
+msgstr "Lisensi"
 
 #: src/admin/class-onboarding.php:130
 msgid "Tshirt LokusWP"
-msgstr ""
+msgstr "Kaos LokusWP"
 
 #: src/admin/class-onboarding.php:134 src/admin/class-onboarding.php:145
 msgid "Pcs"
-msgstr ""
+msgstr "Pcs"
 
 #: src/admin/class-onboarding.php:141
 msgid "Affiliate Tshirt"
-msgstr ""
+msgstr "Afiliasi Tshirt"
 
 #: src/admin/class-onboarding.php:147
 msgid "Buy at Tokopedia"
-msgstr ""
+msgstr "Beli di Tokopedia"
 
 #: src/admin/class-onboarding.php:154
 msgid "Seblak Bandung"
-msgstr ""
+msgstr "Seblak Bandung"
 
 #: src/admin/class-onboarding.php:158
 msgid "Bowl"
-msgstr ""
+msgstr "Mangkok"
 
 #: src/admin/onboarding/onboarding.php:75
 msgid "Dependency"
-msgstr ""
+msgstr "Ketergantungan"
 
 #: src/admin/onboarding/onboarding.php:79
 #: src/admin/settings/tabs/settings.php:14
 msgid "Store"
-msgstr ""
+msgstr "Toko"
 
 #: src/admin/onboarding/onboarding.php:83
 #: src/admin/onboarding/onboarding.php:110
 msgid "Guide"
-msgstr ""
+msgstr "Pelindung"
 
 #: src/admin/onboarding/onboarding.php:97
 msgid "Downloading LokusWP Backbone..."
-msgstr ""
+msgstr "Mengunduh LokusWP Backbone..."
 
 #: src/admin/onboarding/onboarding.php:98
 msgid "Please wait a moment until this process is complete"
-msgstr ""
+msgstr "Harap tunggu sebentar hingga proses ini selesai"
 
 #: src/admin/onboarding/onboarding.php:104
 #: src/templates/presenter/checkout/shipping.php:136
 msgid "Continue"
-msgstr ""
+msgstr "Lanjutkan"
 
 #: src/admin/onboarding/onboarding.php:111
 msgid "See the Video for Guideance Setup LWCommerce"
-msgstr ""
+msgstr "Lihat Video Panduan Konfigurasi LWCommerce"
 
 #: src/admin/onboarding/onboarding.php:167
 msgid "Add New Product"
-msgstr ""
+msgstr "Tambah Produk Baru"
 
 #: src/admin/onboarding/onboarding.php:170
 msgid "See Product Listing"
-msgstr ""
+msgstr "Lihat Daftar Produk"
 
 #: src/admin/orders/order.php:53
 msgid "All Orders"
-msgstr ""
+msgstr "Semua Order"
 
 #: src/admin/orders/order.php:54
 msgid "Unpaid"
-msgstr ""
+msgstr "Belum dibayar"
 
 #: src/admin/orders/order.php:55
 msgid "Paid"
-msgstr ""
+msgstr "Dibayar"
 
 #: src/admin/orders/order.php:56
 msgid "Unprocessed"
-msgstr ""
+msgstr "Tidak Dirposes"
 
 #: src/admin/orders/order.php:57
 msgid "In Process"
-msgstr ""
+msgstr "Dalam Proses"
 
 #: src/admin/orders/order.php:91
 msgid "CURRENTLY FILTERING"
-msgstr ""
+msgstr "SAAT INI PENYARINGAN"
 
 #: src/admin/orders/order.php:105
 msgid "Donors"
-msgstr ""
+msgstr "Donatur"
 
 #: src/admin/orders/order.php:468
 msgid "Edit Report"
-msgstr ""
+msgstr "Edit Laporan"
 
 #: src/admin/orders/order.php:476 src/admin/settings/tabs/general/store.php:55
 #: src/admin/settings/tabs/shipping/channel.php:9
 msgid "Name"
-msgstr ""
+msgstr "Nama"
 
 #: src/admin/orders/order.php:481
 msgid "Phone"
-msgstr ""
+msgstr "Telepon"
 
 #: src/admin/orders/order.php:486
 #: src/admin/settings/tabs/shipping/channel.php:11
 #: src/templates/presenter/customer/dashboard.php:4
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: src/admin/orders/order.php:488
 msgid "Complete"
-msgstr ""
+msgstr "Selesai"
 
 #: src/admin/orders/order.php:489
 #: src/includes/hook/checkout/func-post-checkout.php:122
 #: src/includes/hook/checkout/func-post-checkout.php:127
 msgid "Pending"
-msgstr ""
+msgstr "Tertunda"
 
 #: src/admin/orders/order.php:494
 msgid "Date"
-msgstr ""
+msgstr "Tanggal"
 
 #: src/admin/orders/order.php:501
 msgid "Update"
-msgstr ""
+msgstr "Perbarui"
 
 #: src/admin/orders/order.php:517 src/admin/orders/order.php:540
 msgid "Import"
-msgstr ""
+msgstr "Impor"
 
 #: src/admin/orders/order.php:522
 msgid "This will replace all existing data in the database"
-msgstr ""
+msgstr "Ini akan mengganti semua data yang ada di database"
 
 #: src/admin/orders/order.php:545
 msgid "You have to adjust the import data first, export and adjust your data"
-msgstr ""
+msgstr "Anda harus menyesuaikan data impor terlebih dahulu, export terlebih dahulu, dan sesuaikan"
 
 #: src/admin/orders/order.php:612
 msgid "Add Donation"
-msgstr ""
+msgstr "Tambah Donasi"
 
 #: src/admin/orders/order.php:614
 msgid "Input"
-msgstr ""
+msgstr "Input"
 
 #: src/admin/orders/order.php:617
 msgid "data"
-msgstr ""
+msgstr "data"
 
 #: src/admin/settings/tabs/addons.php:30
 msgid "Development site won't get plugin updates automatically"
-msgstr ""
+msgstr "Situs Pengembang tidak akan terupdate secara otomatis"
 
 #: src/admin/settings/tabs/addons.php:32
 msgid "Activated"
-msgstr ""
+msgstr "Diaktifkan"
 
 #: src/admin/settings/tabs/addons.php:35
 msgid "Input your license key"
-msgstr ""
+msgstr "Memasukkan kunci lisensi Anda"
 
 #: src/admin/settings/tabs/addons.php:38
 msgid "Insert"
-msgstr ""
+msgstr "Sisipkan"
 
 #: src/admin/settings/tabs/general/appearance.php:22
 #: src/admin/settings/tabs/general/general.php:84
 #: src/admin/settings/tabs/general/store.php:211
 #: src/admin/settings/tabs/shipping/rajaongkir.php:19
 msgid "Save"
-msgstr ""
+msgstr "Simpan"
 
 #: src/admin/settings/tabs/general/appearance.php:29
 msgid "Learn Shortcode"
-msgstr ""
+msgstr "Pelajari shortcode"
 
 #: src/admin/settings/tabs/general/general.php:64
 msgid "Whatsapp Checkout Template"
-msgstr ""
+msgstr "Template WhatsApp Checkout"
 
 #: src/admin/settings/tabs/general/general.php:75
 msgid "Whatsapp Follow Up Template"
-msgstr ""
+msgstr "Template Follow Up Whatsapp"
 
 #: src/admin/settings/tabs/general/store.php:26
 msgid "Digital Goods"
-msgstr ""
+msgstr "Barang Digital"
 
 #: src/admin/settings/tabs/general/store.php:27
 msgid "Fashion, Apparel"
-msgstr ""
+msgstr "Busana, Pakaian"
 
 #: src/admin/settings/tabs/general/store.php:28
 msgid "Electronics, Computer"
-msgstr ""
+msgstr "Elektronik, Komputer"
 
 #: src/admin/settings/tabs/general/store.php:29
 msgid "Food and Drink"
-msgstr ""
+msgstr "Makanan dan Minuman"
 
 #: src/admin/settings/tabs/general/store.php:66
 msgid "Logo"
-msgstr ""
+msgstr "Logo"
 
 #: src/admin/settings/tabs/general/store.php:71
 msgid "Choose Image"
-msgstr ""
+msgstr "Pilih Gambar"
 
 #: src/admin/settings/tabs/general/store.php:79
 msgid "Description"
-msgstr ""
+msgstr "Deskripsi"
 
 #: src/admin/settings/tabs/general/store.php:83
 msgid "Local first online shop"
-msgstr ""
+msgstr "Toko Online Lokal"
 
 #: src/admin/settings/tabs/general/store.php:91
 #: src/includes/modules/product/post-type-product.php:68
 msgid "Category"
-msgstr ""
+msgstr "Kategori"
 
 #: src/admin/settings/tabs/general/store.php:104
 msgid "Store Contact"
-msgstr ""
+msgstr "Kontak Toko"
 
 #: src/admin/settings/tabs/general/store.php:109
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: src/admin/settings/tabs/general/store.php:120
 msgid "Whatsapp"
-msgstr ""
+msgstr "Whatsapp"
 
 #: src/admin/settings/tabs/general/store.php:129
 msgid "Store Location"
-msgstr ""
+msgstr "Lokasi Toko"
 
 #: src/admin/settings/tabs/general/store.php:134
 msgid "Country"
-msgstr ""
+msgstr "Negara"
 
 #: src/admin/settings/tabs/general/store.php:149
 msgid "State"
-msgstr ""
+msgstr "Negara"
 
 #: src/admin/settings/tabs/general/store.php:153
 msgid "Choose your state"
-msgstr ""
+msgstr "Pilih provinsi"
 
 #: src/admin/settings/tabs/general/store.php:162
 msgid "City"
-msgstr ""
+msgstr "Kota"
 
 #: src/admin/settings/tabs/general/store.php:167
 msgid "Choose your city"
-msgstr ""
+msgstr "Pilih kota Anda"
 
 #: src/admin/settings/tabs/general/store.php:175
 #: src/templates/presenter/checkout/shipping.php:116
 msgid "Address"
-msgstr ""
+msgstr "Alamat"
 
 #: src/admin/settings/tabs/settings.php:18
 msgid "Appearance"
-msgstr ""
+msgstr "Penampilan"
 
 #: src/admin/settings/tabs/settings.php:22
 msgid "General"
-msgstr ""
+msgstr "Umum"
 
 #: src/admin/settings/tabs/shipping.php:16
 msgid "Channel"
-msgstr ""
+msgstr "Channel"
 
 #: src/admin/settings/tabs/shipping.php:19
 #: src/admin/settings/tabs/shipping/channel.php:10
 msgid "Zone"
-msgstr ""
+msgstr "Zona"
 
 #: src/admin/settings/tabs/shipping.php:22
 msgid "RajaOngkir"
-msgstr ""
+msgstr "RajaOngkir"
 
 #: src/admin/settings/tabs/shipping/channel.php:12
 msgid "Method"
-msgstr ""
+msgstr "Metode"
 
 #: src/admin/settings/tabs/shipping/channel.php:13
 msgid "Action"
-msgstr ""
+msgstr "Tindakan"
 
 #: src/admin/settings/tabs/shipping/channel.php:61
 msgid "Active"
-msgstr ""
+msgstr "Aktif"
 
 #: src/admin/settings/tabs/shipping/channel.php:69
 msgid "Send to Buyer"
-msgstr ""
+msgstr "Kirim ke Pembeli"
 
 #: src/admin/settings/tabs/shipping/channel.php:83
 msgid "Services"
-msgstr ""
+msgstr "Layanan"
 
 #: src/admin/settings/tabs/shipping/rajaongkir.php:12
 msgid "Api Key"
-msgstr ""
+msgstr "API Key"
 
 #: src/includes/helper/func-price.php:90
 msgid "Free"
-msgstr ""
+msgstr "Gratis"
 
 #: src/includes/hook/checkout/func-checkout-logic.php:135
 msgid "Selesai"
-msgstr ""
+msgstr "Selesai"
 
 #: src/includes/hook/checkout/func-post-checkout.php:13
 msgid "Order Number"
-msgstr ""
+msgstr "Nomor Pesanan"
 
 #: src/includes/hook/checkout/func-post-checkout.php:20
 msgid "Order Status"
-msgstr ""
+msgstr "Status Pesanan"
 
 #: src/includes/hook/checkout/func-post-checkout.php:27
 msgid "Shipping Method"
-msgstr ""
+msgstr "Metode Pengiriman"
 
 #: src/includes/hook/checkout/func-post-checkout.php:34
 msgid "Shipping Status"
-msgstr ""
+msgstr "Status Pengiriman"
 
 #: src/includes/hook/checkout/func-post-checkout.php:52
 msgid "Downloads"
-msgstr ""
+msgstr "Unduhan"
 
 #: src/includes/hook/checkout/func-post-checkout.php:71
 msgid "Download"
-msgstr ""
+msgstr "Unduh"
 
 #: src/includes/hook/checkout/func-post-checkout.php:123
 #: src/includes/hook/checkout/func-post-checkout.php:128
 msgid "Deskripsi Pesanan"
-msgstr ""
+msgstr "Deskripsi Pesanan"
 
 #: src/includes/hook/checkout/func-post-checkout.php:131
 msgid "Pesanan telah Selesai"
-msgstr ""
+msgstr "Pesanan telah Selesai"
 
 #: src/includes/hook/checkout/func-post-checkout.php:132
-msgid ""
-"Pesanan anda telah sampai, jika terdapat kendala anda bisa hubungi kami."
-msgstr ""
+msgid "Pesanan anda telah sampai, jika terdapat kendala anda bisa hubungi kami."
+msgstr "Pesanan anda telah sampai, jika terdapat kendala anda bisa hubungi kami."
 
 #: src/includes/hook/checkout/func-post-checkout.php:135
 msgid "Order Cancelled"
-msgstr ""
+msgstr "Pesanan Dibatalkan"
 
 #: src/includes/hook/checkout/func-post-checkout.php:136
 #: src/includes/hook/checkout/func-post-checkout.php:140
 #: src/includes/hook/checkout/func-post-checkout.php:144
 msgid "Please be patient"
-msgstr ""
+msgstr "Harap bersabar"
 
 #: src/includes/hook/checkout/func-post-checkout.php:139
 msgid "Order Shipped"
-msgstr ""
+msgstr "Pesanan Dikirim"
 
 #: src/includes/hook/checkout/func-post-checkout.php:143
 msgid "Order Processing"
-msgstr ""
+msgstr "Pesanan Diproses"
 
 #: src/includes/hook/checkout/func-post-checkout.php:159
 msgid "Instruksi Pembayaran"
-msgstr ""
+msgstr "Instruksi Pembayaran"
 
 #: src/includes/hook/checkout/func-post-checkout.php:159
 msgid "Terimakasih"
-msgstr ""
+msgstr "Terimakasih"
 
 #: src/includes/hook/checkout/func-post-checkout.php:162
 msgid "Payment Confirmation"
-msgstr ""
+msgstr "Konfirmasi Pembayaran"
 
 #: src/includes/modules/order/class-lwc-order.php:189
 msgid "Failed creating file"
-msgstr ""
+msgstr "Gagal membuat file"
 
 #: src/includes/modules/plugin/updater.php:210
 #, php-format
 msgid "Please download in %s Member Area %s to update"
-msgstr ""
+msgstr "Silakan unduh di %s Area Anggota %s untuk memperbarui"
 
 #: src/includes/modules/plugin/updater.php:216
 msgid "Check Update"
-msgstr ""
+msgstr "Periksa Pembaruan"
 
 #: src/includes/modules/product/metabox-product.php:32
 msgid "Recommended image size: "
-msgstr ""
+msgstr "Ukuran gambar yang disarankan: "
 
 #: src/includes/modules/product/metabox-product.php:40
 #: src/includes/modules/product/metabox/product-data.php:10
 msgid "Product Data"
-msgstr ""
+msgstr "Data Produk"
 
 #: src/includes/modules/product/metabox-product.php:54
 msgid "Digital"
-msgstr ""
+msgstr "Digital"
 
 #: src/includes/modules/product/metabox-product.php:57
 msgid "Physical"
-msgstr ""
+msgstr "Fisik"
 
 #: src/includes/modules/product/metabox-product.php:66
 msgid "File"
-msgstr ""
+msgstr "Berkas"
 
 #: src/includes/modules/product/metabox-product.php:72
 msgid "Versi"
-msgstr ""
+msgstr "Versi"
 
 #: src/includes/modules/product/metabox-product.php:86
 msgid "Berat"
-msgstr ""
+msgstr "Berat"
 
 #: src/includes/modules/product/metabox-product.php:91
 msgid "Volume"
-msgstr ""
+msgstr "Volume"
 
 #: src/includes/modules/product/metabox-product.php:171
 #: src/templates/component/add-to-cart.php:4
 msgid "Add to Cart"
-msgstr ""
+msgstr "Tambahkan ke Troli"
 
 #: src/includes/modules/product/metabox/product-data.php:18
 #: src/includes/modules/product/post-type-product.php:146
 msgid "Price"
-msgstr ""
+msgstr "Harga"
 
 #: src/includes/modules/product/metabox/product-data.php:21
 #: src/includes/modules/product/post-type-product.php:147
 msgid "Stock"
-msgstr ""
+msgstr "Stok"
 
 #: src/includes/modules/product/metabox/product-data.php:33
 msgid "Normal Price"
-msgstr ""
+msgstr "Harga Normal"
 
 #: src/includes/modules/product/metabox/product-data.php:35
 msgid "required"
-msgstr ""
+msgstr "diperlukan"
 
 #: src/includes/modules/product/metabox/product-data.php:47
 msgid "Promo Price"
-msgstr ""
+msgstr "Harga Promo"
 
 #: src/includes/modules/product/metabox/product-data.php:48
 #: src/includes/modules/product/metabox/product-data.php:61
@@ -583,218 +579,218 @@ msgstr ""
 #: src/includes/modules/product/metabox/product-type.php:70
 #: src/includes/modules/product/metabox/product-type.php:83
 msgid "optional"
-msgstr ""
+msgstr "opsional"
 
 #: src/includes/modules/product/metabox/product-data.php:60
 msgid "Button Cart Link"
-msgstr ""
+msgstr "Tautan Keranjang Tombol"
 
 #: src/includes/modules/product/metabox/product-data.php:72
 msgid "Button Cart Text"
-msgstr ""
+msgstr "Teks Keranjang Tombol"
 
 #: src/includes/modules/product/metabox/product-data.php:96
 msgid "Stock Keeping Unit (SKU)"
-msgstr ""
+msgstr "Stock Keeping Unit (SKU)"
 
 #: src/includes/modules/product/metabox/product-data.php:110
 msgid "Quantity"
-msgstr ""
+msgstr "Jumlah"
 
 #: src/includes/modules/product/metabox/product-data.php:120
 #: src/includes/modules/product/metabox/product-data.php:181
 msgid "Unit"
-msgstr ""
+msgstr "Unit"
 
 #: src/includes/modules/product/metabox/product-data.php:134
 msgid "Availability"
-msgstr ""
+msgstr "Ketersediaan"
 
 #: src/includes/modules/product/metabox/product-data.php:140
 msgid "Ready Stock"
-msgstr ""
+msgstr "Stok Siap Pakai"
 
 #: src/includes/modules/product/metabox/product-data.php:141
 msgid "Pre Order"
-msgstr ""
+msgstr "Pre-order"
 
 #: src/includes/modules/product/metabox/product-data.php:167
 msgid "Waktu Pembuatan"
-msgstr ""
+msgstr "Waktu Pembuatan"
 
 #: src/includes/modules/product/metabox/product-data.php:188
 msgid "Menit"
-msgstr ""
+msgstr "Menit"
 
 #: src/includes/modules/product/metabox/product-data.php:189
 msgid "Jam"
-msgstr ""
+msgstr "Jam"
 
 #: src/includes/modules/product/metabox/product-data.php:190
 #: src/includes/modules/shipping/methods/class-rajaongkir-jne.php:68
 msgid "Hari"
-msgstr ""
+msgstr "Hari"
 
 #: src/includes/modules/product/metabox/product-type.php:4
 msgid "Product Type"
-msgstr ""
+msgstr "Tipe Produk"
 
 #: src/includes/modules/product/metabox/product-type.php:12
 msgid "Choose Product Type"
-msgstr ""
+msgstr "Pilih Tipe Produk"
 
 #: src/includes/modules/product/metabox/product-type.php:18
 msgid "Digital Product"
-msgstr ""
+msgstr "Produk Digital"
 
 #: src/includes/modules/product/metabox/product-type.php:19
 msgid "Physical Product"
-msgstr ""
+msgstr "Produk Fisik"
 
 #: src/includes/modules/product/metabox/product-type.php:36
 msgid "Product Weight"
-msgstr ""
+msgstr "Berat Produk"
 
 #: src/includes/modules/product/metabox/product-type.php:39
 msgid "in Grams"
-msgstr ""
+msgstr "dalam Gram"
 
 #: src/includes/modules/product/metabox/product-type.php:48
 msgid "Item Volume in Centimeter"
-msgstr ""
+msgstr "Volume Barang dalam Sentimeter"
 
 #: src/includes/modules/product/metabox/product-type.php:55
 msgid "Length"
-msgstr ""
+msgstr "Panjang"
 
 #: src/includes/modules/product/metabox/product-type.php:69
 msgid "Width"
-msgstr ""
+msgstr "Lebar"
 
 #: src/includes/modules/product/metabox/product-type.php:82
 msgid "Height"
-msgstr ""
+msgstr "Tinggi"
 
 #: src/includes/modules/product/metabox/product-type.php:116
 msgid "Attachment Link"
-msgstr ""
+msgstr "Tautan Lampiran"
 
 #: src/includes/modules/product/metabox/product-type.php:130
 msgid "Attachment Version"
-msgstr ""
+msgstr "Versi Lampiran"
 
 #: src/includes/modules/product/post-type-product.php:34
 msgctxt "plural"
 msgid "Products"
-msgstr ""
+msgstr "Produk"
 
 #: src/includes/modules/product/post-type-product.php:35
 msgctxt "singular"
 msgid "Product"
-msgstr ""
+msgstr "Produk"
 
 #: src/includes/modules/product/post-type-product.php:36
 msgctxt "Add Product"
 msgid "New Product"
-msgstr ""
+msgstr "Produk Baru"
 
 #: src/includes/modules/product/post-type-product.php:37
 msgid "Add Product"
-msgstr ""
+msgstr "Tambah Produk"
 
 #: src/includes/modules/product/post-type-product.php:38
 msgid "New Product"
-msgstr ""
+msgstr "Produk Baru"
 
 #: src/includes/modules/product/post-type-product.php:39
 msgid "Edit Product"
-msgstr ""
+msgstr "Edit Produk"
 
 #: src/includes/modules/product/post-type-product.php:40
 msgid "View Product"
-msgstr ""
+msgstr "Lihat Produk"
 
 #: src/includes/modules/product/post-type-product.php:41
 msgid "All Product"
-msgstr ""
+msgstr "Semua produk"
 
 #: src/includes/modules/product/post-type-product.php:42
 msgid "Find Product"
-msgstr ""
+msgstr "Temukan Produk"
 
 #: src/includes/modules/product/post-type-product.php:43
 msgid "Product not found."
-msgstr ""
+msgstr "Produk tidak ditemukan."
 
 #: src/includes/modules/product/post-type-product.php:144
 msgid "Image"
-msgstr ""
+msgstr "Gambar"
 
 #: src/includes/modules/product/post-type-product.php:145
 msgid "Title"
-msgstr ""
+msgstr "Judul"
 
 #: src/includes/modules/product/post-type-product.php:148
 msgid "Type"
-msgstr ""
+msgstr "Tipe"
 
 #: src/includes/modules/product/post-type-product.php:149
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: src/includes/modules/product/post-type-product.php:182
 msgid "Available"
-msgstr ""
+msgstr "Tersedia"
 
 #: src/includes/modules/product/post-type-product.php:188
 msgid "Out of Stock"
-msgstr ""
+msgstr "Stok Habis"
 
 #: src/includes/modules/shipping/controller/class-shipping-processing.php:21
 #: src/includes/modules/shipping/controller/class-shipping-processing.php:36
 msgid "Shipping costs"
-msgstr ""
+msgstr "Biaya pengiriman"
 
 #: src/includes/plugin.php:146 src/includes/plugin.php:158
 msgid "Something went wrong."
-msgstr ""
+msgstr "Ada yang salah."
 
 #: src/templates/presenter/checkout/bottom-cart-panel.php:5
 msgid "Cart"
-msgstr ""
+msgstr "Keranjang"
 
 #: src/templates/presenter/checkout/bottom-cart-panel.php:13
 msgid "Checkout"
-msgstr ""
+msgstr "Bayar"
 
 #: src/templates/presenter/checkout/shipping.php:96
 msgid "Choose Province"
-msgstr ""
+msgstr "Pilih Provinsi"
 
 #: src/templates/presenter/checkout/shipping.php:106
 msgid "Choose City"
-msgstr ""
+msgstr "Pilih Kota"
 
 #: src/templates/presenter/customer/purchase.php:4
 msgid "Purchased List"
-msgstr ""
+msgstr "Daftar yang Dibeli"
 
 #. Plugin Name of the plugin/theme
 msgid "LWCommerce"
-msgstr ""
+msgstr "LWCommerce"
 
 #. Plugin URI of the plugin/theme
 msgid "https://lokuswp.id/plugins/lwcommerce"
-msgstr ""
+msgstr "https://lokuswp.id/plugins/lwcommerce"
 
 #. Description of the plugin/theme
 msgid "Local First eCommerce WordPress"
-msgstr ""
+msgstr "Local First eCommerce WordPress"
 
 #. Author of the plugin/theme
 msgid "LokusWP"
-msgstr ""
+msgstr "LokusWP"
 
 #. Author URI of the plugin/theme
 msgid "https://lokuswp.id/"
-msgstr ""
+msgstr "https://lokuswp.id/"

@@ -64,6 +64,11 @@ class Admin {
 	 */
 	public function admin_init() {
 
+        // Storage Permission Notice
+        if ( file_exists( LOKUSWP_STORAGE ) ) {
+            $this->translation();
+        }
+
 		Tabs::add( 'lwcommerce', 'settings', __( 'Settings', 'lwcommerce' ), function () {
 			require_once 'settings/tabs/settings.php';
 		} );
@@ -326,6 +331,54 @@ class Admin {
 	public function admin_menu_callback() {
 		include_once LWC_PATH . 'src/admin/settings/index.php';
 	}
+
+    /**
+     * Automatic Translation Apply
+     * Copy Translation Into System
+     * Set Translation Version
+     *
+     * @return void
+     */
+    public function translation()
+    {
+
+        // Copy Translation into System
+        if ( is_admin() && !file_exists(WP_CONTENT_DIR . '/languages/plugins/lwcommerce-id_ID.mo') && file_exists(LWC_PATH . '/languages/lwcommerce-id_ID.mo')) {
+            copy(LWC_PATH . '/languages/lwcommerce-id_ID.mo', WP_CONTENT_DIR . '/languages/plugins/lwcommerce-id_ID.mo');
+        }
+
+        if ( is_admin() && !file_exists(WP_CONTENT_DIR . '/languages/plugins/lwcommerce-id_ID.po') && file_exists(LWC_PATH . '/languages/lwcommerce-id_ID.po')) {
+            copy(LWC_PATH . '/languages/lwcommerce-id_ID.po', WP_CONTENT_DIR . '/languages/plugins/lwcommerce-id_ID.po');
+
+            Logger::Info("[System] Move Translation File into System");
+            update_option('lwcommerce_text_version', LWC_TEXT_VERSION);
+        }
+
+        /** --- Deprecated Translation File --- */
+
+        // Translation Deprecated Notice
+        if(get_option( 'lwcommerce_text_version' )){
+            if ( version_compare( LWC_TEXT_VERSION, get_option( 'lwcommerce_text_version' ),
+                    '>' ) && is_plugin_active( 'loco-translate/loco.php' ) ) {
+                add_action( 'admin_notices', function () {
+                    $message      = esc_html__( 'LWCommerce Translation is Deprecated, Please Sync with Loco Translate',
+                        'lwcommerce' );
+                    $html_message = sprintf( '<div class="notice notice-info">%s <a href="?lwc-translation-sync" target="_blank">' . __( 'Sync Translation',
+                            'lwcommerce' ) . '</a></div>', wpautop( $message ) );
+                    echo wp_kses_post( $html_message );
+                } );
+            }
+        }
+
+
+        // Translation Sync Clicked -> Update Version
+        if ( isset( $_GET['lwc-translation-sync'] ) ) {
+            update_option( 'lwcommerce_text_version', LWC_TEXT_VERSION );
+            header( 'Refresh:0; url=' . get_admin_url() . 'admin.php?path=languages/plugins/lwcommerce-' . get_locale() . '.po&bundle=lwcommerce/lwcommerce.php&domain=lwcommerce&page=loco-plugin&action=file-edit' );
+            // Logger::Info( '[Update] Translation Version to v' . LWC_TEXT_VERSION );
+        }
+
+    }
 
 	/**
 	 * Cloning is forbidden.

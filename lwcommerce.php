@@ -29,11 +29,13 @@ if ( ! defined( 'WPTEST' ) ) {
  * Define Constant
  */
 defined( 'LWC_VERSION' ) or define( 'LWC_VERSION', '0.1.0' );
+defined( 'LWC_TEXT_VERSION' ) or define( 'LWC_TEXT_VERSION', '0.0.1' ); // Translation File Version
+
 defined( 'LWC_BASE' ) or define( 'LWC_BASE', plugin_basename( __FILE__ ) );
 defined( 'LWC_PATH' ) or define( 'LWC_PATH', plugin_dir_path( __FILE__ ) );
 defined( 'LWC_URL' ) or define( 'LWC_URL', plugin_dir_url( __FILE__ ) );
 defined( 'LWC_STORAGE' ) or define( 'LWC_STORAGE', wp_get_upload_dir()['basedir'] . '/lwcommerce' );
-defined( 'LWC_TEXT_VERSION' ) or define( 'LWC_TEXT_VERSION', '0.0.1' ); // String Version
+
 
 /**
  *-----------------------*

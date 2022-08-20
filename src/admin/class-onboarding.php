@@ -132,9 +132,22 @@ class Onboarding {
         update_post_meta( $tshirt_product, "_unit_price", 120000 );
         update_post_meta( $tshirt_product, "_stock", 100 );
         update_post_meta( $tshirt_product, "_stock_unit", __( "Pcs", "lwcommerce" ) );
-        $thumbnail = LWC_URL . 'src/admin/assets/images/product/tshirt.png';
+        $thumbnail = LWC_URL . 'src/admin/assets/images/product/tshirt.jpg';
         if ( $tshirt_product ) {
             Helper::set_featured_image( $thumbnail, $tshirt_product );
+        }
+
+        // Affiliate
+        $tshirt_white_product = Helper::generate_post( "product", __( 'Affiliate Tshirt', 'lwcommerce' ), "lokuswp-tshirt-affiliate", "Tshirt Afilliate to Shopee" );
+        update_post_meta( $tshirt_white_product, "_product_type", "physical" );
+        update_post_meta( $tshirt_white_product, "_unit_price", 125000 );
+        update_post_meta( $tshirt_white_product, "_stock", 10 );
+        update_post_meta( $tshirt_white_product, "_stock_unit", __( "Pcs", "lwcommerce" ) );
+        update_post_meta( $tshirt_white_product, "_btn_cart_link", 'https://www.tokopedia.com/' );
+        update_post_meta( $tshirt_white_product, "_btn_cart_text", __( "Buy at Tokopedia", "lwcommerce" ) );
+        $thumbnail = LWC_URL . 'src/admin/assets/images/product/tshirt-white.jpg';
+        if ( $tshirt_white_product ) {
+            Helper::set_featured_image( $thumbnail, $tshirt_white_product );
         }
 
         // Physical - Food
@@ -142,13 +155,13 @@ class Onboarding {
         update_post_meta( $food_product, "_product_type", "physical" );
         update_post_meta( $food_product, "_unit_price", 15000 );
         update_post_meta( $food_product, "_stock", 10 );
-        update_post_meta( $food_product, "_stock_unit", __( "Mangkok", "lwcommerce" ) );
+        update_post_meta( $food_product, "_stock_unit", __( "Bowl", "lwcommerce" ) );
         $thumbnail = LWC_URL . 'src/admin/assets/images/product/seblak.jpg';
         if ( $food_product ) {
             Helper::set_featured_image( $thumbnail, $food_product );
         }
 
-	}
+    }
 
 	private function set_appearance() {
         lwp_get_settings( 'lwcommerce', 'appearance', 'checkout_whatsapp', 'on' );

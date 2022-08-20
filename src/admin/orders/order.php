@@ -9,12 +9,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Reports {
 
 	public function render() {
-//		update_option( 'lsdd_report_unread', 0 );
+//		update_option( 'lsdd_order_unread', 0 );
 
 		$this->table();
 		$this->panel_editor();
 		$this->modal_import();
-		$this->modal_add_report_manual();
+		$this->modal_add_order_manual();
 
 //		$payment_method = get_option( 'lsdd_payment_settings' );
 	}
@@ -462,7 +462,7 @@ class Reports {
 		?>
         <div class="column col-6 col-12"
              style="top: 30px;position: fixed;right: 0;z-index:-1;height: 97.5%;width: 400px;display:none;">
-            <div id="report_editor" class="panel" style="height: 100%;background: #fff;margin-right: -10px;">
+            <div id="order_editor" class="panel" style="height: 100%;background: #fff;margin-right: -10px;">
                 <div class="panel-header text-center">
 
                     <div class="panel-title h5 mt-10 float-left"><?php _e( 'Edit Report', 'lwcommerce' ); ?></div>
@@ -498,7 +498,7 @@ class Reports {
 
                 <div class="panel-footer">
                     <button class="btn btn-primary btn-block" style="margin-bottom:15px"
-                            id="lsdd_report_update"><?php _e( 'Update', 'lwcommerce' ); ?></button>
+                            id="lsdd_order_update"><?php _e( 'Update', 'lwcommerce' ); ?></button>
                 </div>
 
             </div>
@@ -601,28 +601,28 @@ class Reports {
 		<?php
 	}
 
-	private function modal_add_report_manual() {
+	private function modal_add_order_manual() {
 		?>
-        <!-- Add report manual modal -->
-        <div class="modal" id="add-report">
+        <!-- Add order manual modal -->
+        <div class="modal" id="add-order">
             <a href="#close" class="modal-overlay" aria-label="Close"></a>
             <div class="modal-container">
                 <div class="modal-header">
                     <div class="columns">
-                        <div class="column modal-title h5"><?php _e( 'Add Donation', 'lwcommerce' ) ?></div>
+                        <div class="column modal-title h5"><?php _e( 'Add Order', 'lwcommerce' ) ?></div>
                         <div class="column" style="text-align:right;">
-                            <label for="reports-bulk-input"><?php _e( 'Input', 'lwcommerce' ) ?></label>
-                            <input class="col-2" type="text" id="reports-bulk-input" value="1"
+                            <label for="orders-bulk-input"><?php _e( 'Input', 'lwcommerce' ) ?></label>
+                            <input class="col-2" type="text" id="orders-bulk-input" value="1"
                                    style="text-align:center;" maxlength="3">
-                            <label for="reports-bulk-input"><?php _e( 'data', 'lwcommerce' ) ?></label>
+                            <label for="orders-bulk-input"><?php _e( 'data', 'lwcommerce' ) ?></label>
                         </div>
                     </div>
                 </div>
                 <div class="modal-body">
-                    <div class="content" id="warper-add-report"></div>
+                    <div class="content" id="warper-add-order"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary lsdd-report-save">Submit</button>
+                    <button type="button" class="btn btn-primary lsdd-order-save">Submit</button>
                     <button type="button" class="btn btn-add-donation-close">Close</button>
                 </div>
             </div>
