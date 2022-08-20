@@ -2,7 +2,7 @@
     <div id="lwcommerce-bottom-cart-panel">
         <div class="lwp-cart-action row">
             <div class="col-xs-8">
-                <h5 style="margin:-2px;font-size:16px;margin-top:0;"><?php _e("Cart", "lokuswp"); ?></h5>
+                <h5 style="margin:0 0 2px 0;font-size:16px;"><?php _e("Cart", "lokuswp"); ?></h5>
                 <lwp-cart-total></lwp-cart-total>
             </div>
 
@@ -21,7 +21,7 @@
 <style>
     .floating-bottom{
         position: fixed;
-        bottom: 10px;
+        bottom: 0;
         left: 0;
         width: 100%;
         display: none;
@@ -33,7 +33,7 @@
         margin: 0 auto;
         background: #fff;
         padding: 12px 16px;
-        border-radius: 8px;
+        border-radius: 8px 8px 0 0;
         border: 1px solid #E5E8EB;
     }
 

@@ -5,6 +5,7 @@ namespace LokusWP\Commerce;
 use LokusWP\Admin\Tabs;
 use LokusWP\Admin\Shortcode_Lists;
 use LokusWP\Admin\Switch_Options;
+use LokusWP\Logger;
 
 if ( ! defined( 'WPTEST' ) ) {
 	defined( 'ABSPATH' ) or die( "Direct access to files is prohibited" );
@@ -299,7 +300,15 @@ class Admin {
 			[
 				'shortcode'   => '[lwcommerce_product_listing]',
 				'description' => __( "Display Product Listing", 'lwcommerce' )
-			]
+			],
+            [
+                'shortcode'   => '[lwcommerce_product_listing mobile="true"]',
+                'description' => __( "Display Product Listing with Max Width 480px", 'lwcommerce' )
+            ],
+            [
+                'shortcode'   => '[lwcommerce_product_listing filter="category"]',
+                'description' => __( "Display Product Listing with Category Filter", 'lwcommerce' )
+            ]
 		) );
 
 		// Add Switch Options to wp-admin > lwcommerce > Appearance

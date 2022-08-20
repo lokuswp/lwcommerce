@@ -7,6 +7,8 @@
  */
 ?>
 <div id="lwcommerce-shipping" class="swiper-slide">
+
+    <h6 style="margin-bottom:12px;" class="text-primary"><?= __( "Pilih Pengiriman", "lokuswp" ); ?></h6>
     <form class="full-height">
 		<?php
 		$cart = isset( $_COOKIE['lokuswp_cart'] ) ? json_decode( stripslashes( $_COOKIE['lokuswp_cart'] ) ) : array();
@@ -48,7 +50,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <h6 style="margin-bottom:-2px">Take Away</h6>
+                                        <h6 style="margin-bottom:0;line-height:normal;">Take Away</h6>
                                         <p>Ambil Pesanan di Kasir</p>
                                     </div>
                                     <div class="col-sm-3" style="text-align: center;position: absolute;right: 12px;top: 4px;">
@@ -73,7 +75,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <h6 style="margin-bottom:-2px">Pengiriman</h6>
+                                        <h6 style="margin-bottom:0;line-height:normal;">Pengiriman</h6>
                                         <p>Pesanan di Kirim oleh Kurir</p>
                                     </div>
                         
@@ -168,7 +170,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                <h6 style="margin-bottom:-2px">{{name}} - {{service}}</h6>
+                                <h6 style="margin-bottom:0;line-height:normal;">{{name}} - {{service}}</h6>
                                 <p>{{#description}}{{description}}{{/description}}</p>
                             </div>
                             <div class="col-sm-3" style="text-align: center">

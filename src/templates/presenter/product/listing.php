@@ -1,49 +1,169 @@
-<div class="lwc-listing row <?= $mode == 'mobile' ? 'lwp-mobile-width' : '' ?>">
+<style>
 
-	<?php
-	$args = array(
-		'post_type'      => 'product',
-		'post_status'    => 'publish',
-		'posts_per_page' => - 1,
-		'orderby'        => 'date',
-		'order'          => 'ASC',
-		'cat'            => 'home',
-	);
+    h4 {
+        color: grey;
+        font-size: 24px;
+        font-weight: 400;
+    }
 
-	$loop = new WP_Query( $args );
+    #portfolio p {
+        color: grey;
+        font-size: 12px;
+        font-weight: 200;
+    }
+
+    .content {
+        width: 100%;
+        margin: 0 auto;
+        padding: 0px;
+        text-align: center;
+    }
 
 
-	while ( $loop->have_posts() ) : $loop->the_post();
-		?>
-        <div class="lwc-product-item col-xs-6 col-sm-6  <?= $mode == 'mobile' ? '' : 'col-md-3' ?> gutter">
+    .filters {
+        width: 100%;
+        text-align: left;
+    }
+
+    ul {
+        list-style: none;
+        padding: 20px 0;
+    }
+
+    li {
+        display: inline;
+        padding: .5rem 2.4rem;
+        font-size: 16px;
+        color: #636363;
+        cursor: pointer;
+        font-weight: 500;
+
+    }
+
+    li:hover {
+        color: #a6a6a6;
+    }
+
+    li.active {
+        color: #fff;
+        /*border: 1px solid #ccc;*/
+        background-color: var(--lokuswp-secondary-darker-color) !important;
+        border-radius: 6px;
+    }
+</style>
+
+
+<style>
+    .scrollmenu {
+        overflow: auto;
+        white-space: nowrap;
+        padding: 16px 6px;
+    }
+
+    .scrollmenu li {
+        display: inline-block;
+        margin-right: 6px;
+        text-align: center;
+        text-decoration: none;
+        background: #FAFAFA;
+    }
+
+
+</style>
+
+<div class="filters filter-button-group">
+    <ul class="scrollmenu">
+
+        <?php
+        // Get campaign categories
+        $categories = get_terms(array(
+            'taxonomy' => 'product_category',
+            'hide_empty' => false,
+        ));
+
+        ?>
+
+        <?php if (sizeof($categories) > 1) : ?>
+            <li class="active" data-filter="*">
+                <?php _e('All', 'lsddonation-campaign'); ?>
+            </li>
+        <?php endif ?>
+
+        <?php foreach ($categories as $term) : ?>
+            <?php if (isset($term->name)) : ?>
+                <li data-filter=".<?php echo $term->slug; ?>"><?php echo isset($term->name) ? $term->name : ""; ?></li>
+            <?php endif; ?>
+        <?php endforeach ?>
+
+    </ul>
+</div>
+
+<div class="content grid">
+
+    <?php
+    $args = array(
+        'post_type'      => 'product',
+        'post_status'    => 'publish',
+        'posts_per_page' => - 1,
+        'orderby'        => 'date',
+        'order'          => 'ASC',
+        'cat'            => 'home',
+    );
+
+    $loop = new WP_Query( $args );
+
+    while ( $loop->have_posts() ) : $loop->the_post();
+
+        $terms = get_the_terms(get_the_ID(), 'product_category');
+        $term = ($terms) ? implode(' ', wp_list_pluck($terms, 'slug')) : '';
+        ?>
+        <div class="single-content lwc-product-item col-xs-6 col-sm-6 <?= $term ?> grid-item <?=  $mobile == TRUE  ? '' : 'col-md-3' ?> gutter">
             <div class="product-image">
-				<?php do_action( "lwcommerce/product/listing/before_image", get_the_ID() ); ?>
+                <?php do_action( "lwcommerce/product/listing/before_image", get_the_ID() ); ?>
                 <a href="<?php echo get_permalink(); ?>">
                     <img src="<?php echo get_the_post_thumbnail_url( get_the_ID() ); ?>" alt="<?php the_title(); ?>">
                 </a>
 
-				<?php // Badge
-				//echo '<div class="lwc-pre-order-badge">Pre Order</div>';
-				?>
+                <?php // Badge
+                //echo '<div class="lwc-pre-order-badge">Pre Order</div>';
+                ?>
 
-				<?php do_action( "lwcommerce/product/listing/after_image", get_the_ID() ); ?>
+                <?php do_action( "lwcommerce/product/listing/after_image", get_the_ID() ); ?>
             </div>
             <a href="<?php echo get_permalink(); ?>">
                 <h3 class="product-name"><?php the_title(); ?></h3>
-				<?php do_action( "lwcommerce/product/listing/after_title", get_the_ID() ); ?>
+                <?php do_action( "lwcommerce/product/listing/after_title", get_the_ID() ); ?>
             </a>
             <div class="product-price">
-				<?php echo lwc_get_price_html( get_the_ID() ); ?>
-				<?php do_action( "lwcommerce/product/listing/after_price", get_the_ID() ); ?>
+                <?php echo lwc_get_price_html( get_the_ID() ); ?>
+                <?php do_action( "lwcommerce/product/listing/after_price", get_the_ID() ); ?>
             </div>
-			<?php lwc_add_to_cart_html(); ?>
-			<?php do_action( "lwcommerce/product/listing/after_cart_button", get_the_ID() ); ?>
+            <?php lwc_add_to_cart_html(); ?>
+            <?php do_action( "lwcommerce/product/listing/after_cart_button", get_the_ID() ); ?>
         </div>
-	<?php
-	endwhile;
+    <?php
+    endwhile;
 
-	wp_reset_postdata();
-	?>
+    wp_reset_postdata();
+    ?>
+
+
+</div>
+
+
+
+<div class="lwc-listing row <?= $mobile == TRUE ? 'lwp-mobile-width' : '' ?>">
+
+
+
+    <div class="swiper-container swiper-tabs-nav  swiper-isotope">
+        <div class="swiper-wrapper isotope-filter">
+
+
+        </div>
+    </div>
+
+
 
     <style>
   
