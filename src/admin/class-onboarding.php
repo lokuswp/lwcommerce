@@ -90,7 +90,8 @@ class Onboarding {
 		// Create Page
 		Helper::generate_post( "page", __( "Product List", "lwcommerce" ), "products", '[lwcommerce_product_listing filter="category"]' );
 
-		// Create Product
+
+        $this->create_category();
 		$this->create_product();
         $this->set_appearance();
 
@@ -103,7 +104,23 @@ class Onboarding {
         flush_rewrite_rules( true );
 	}
 
-	private function create_product() {
+    public function create_category(){
+        register_taxonomy(
+            'product_category',
+            'product',
+            array(
+                'hierarchical' => true,
+                'label'        => __( 'Category', "lwcommerce" ),
+                'query_var'    => true,
+                'public'       => true,
+                'rewrite'      => array(
+                    'slug'         => 'product-category',
+                    'with_front'   => true,
+                    'hierarchical' => true,
+                ),
+                'has_archive'  => false,
+            )
+        );
 
         wp_insert_term(
             'Plugin',
@@ -113,7 +130,6 @@ class Onboarding {
                 'slug'        => 'plugin'
             )
         );
-
         wp_insert_term(
             'Apparel',
             'product_category',
@@ -131,7 +147,9 @@ class Onboarding {
                 'slug'        => 'food'
             )
         );
+    }
 
+	private function create_product() {
 
         // Digital - Free Product
 		$digital_free_id = Helper::generate_post( "product", __( 'Plugin LWCommerce', 'lwcommerce' ), "lokuswp-lwcommerce", "WordPress Ecommerce Plugin" );
@@ -174,8 +192,8 @@ class Onboarding {
         update_post_meta( $tshirt_white_product, "_unit_price", 125000 );
         update_post_meta( $tshirt_white_product, "_stock", 10 );
         update_post_meta( $tshirt_white_product, "_stock_unit", __( "Pcs", "lwcommerce" ) );
-        update_post_meta( $tshirt_white_product, "_btn_cart_link", 'https://www.tokopedia.com/' );
-        update_post_meta( $tshirt_white_product, "_btn_cart_text", __( "Buy at Tokopedia", "lwcommerce" ) );
+        update_post_meta( $tshirt_white_product, "_btn_cart_link", 'https://tokoalus.com' );
+        update_post_meta( $tshirt_white_product, "_btn_cart_text", __( "Buy at Toko Alus", "lwcommerce" ) );
         $thumbnail = LWC_URL . 'src/admin/assets/images/product/tshirt-white.jpg';
         if ( $tshirt_white_product ) {
             Helper::set_featured_image( $thumbnail, $tshirt_white_product );

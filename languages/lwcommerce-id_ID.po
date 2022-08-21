@@ -146,8 +146,8 @@ msgid "Affiliate Tshirt"
 msgstr "Afiliasi Tshirt"
 
 #: src/admin/class-onboarding.php:178
-msgid "Buy at Tokopedia"
-msgstr "Beli di Tokopedia"
+msgid "Buy at Tokoalus"
+msgstr "Beli di Tokoalus"
 
 #: src/admin/class-onboarding.php:186
 msgid "Seblak Bandung"

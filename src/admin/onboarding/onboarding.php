@@ -106,11 +106,6 @@ if ( ! is_user_logged_in() ) {
         </div>
 
         <div id="integration-step" class="hidden">
-            <div class="empty">
-                <p class="empty-title h5"><?php _e( "Guide", "lwcommerce" ); ?></p>
-                <p class="empty-subtitle"><?php _e( "See the Video for Guideance Setup LWCommerce", "lwcommerce" ); ?></p>
-            </div>
-
             <iframe width="660" height="390" src="https://www.youtube.com/embed/xvvs5zTUXlw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <!--            <div id="dripsender" class="tile tile-centered">-->

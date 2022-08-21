@@ -2,7 +2,11 @@
 DEL lwcommerce.zip
 mkdir "lwcommerce"
 robocopy src\. lwcommerce\src\. /IS /S /XD
-robocopy languages\. lwcommerce\languages\. /IS /S /XD
+robocopy languages\. lwcommerce\languages\.
+COPY  "languages\lwcommerce.pot" "lwcommerce\languages\lwcommerce.pot"
+COPY  "languages\lwcommerce-id_ID.mo" "lwcommerce\languages\lwcommerce-id_ID.mo"
+COPY  "languages\lwcommerce-id_ID.po" "lwcommerce\languages\lwcommerce-id_ID.po"
+
 COPY  "lwcommerce.php" "lwcommerce\lwcommerce.php"
 COPY  "uninstall.php" "lwcommerce\uninstall.php"
 COPY  "CHANGELOG.md" "lwcommerce\CHANGELOG.md"

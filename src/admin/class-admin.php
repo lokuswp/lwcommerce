@@ -5,7 +5,7 @@ namespace LokusWP\Commerce;
 use LokusWP\Admin\Tabs;
 use LokusWP\Admin\Shortcode_Lists;
 use LokusWP\Admin\Switch_Options;
-use LokusWP\Logger;
+use LokusWP\WordPress\Helper;
 
 if ( ! defined( 'WPTEST' ) ) {
 	defined( 'ABSPATH' ) or die( "Direct access to files is prohibited" );
@@ -350,17 +350,8 @@ class Admin {
      */
     public function translation()
     {
-
-        // Copy Translation into System
-        if ( is_admin() && !file_exists(WP_CONTENT_DIR . '/languages/plugins/lwcommerce-id_ID.mo') && file_exists(LWC_PATH . '/languages/lwcommerce-id_ID.mo')) {
-            copy(LWC_PATH . '/languages/lwcommerce-id_ID.mo', WP_CONTENT_DIR . '/languages/plugins/lwcommerce-id_ID.mo');
-        }
-
-        if ( is_admin() && !file_exists(WP_CONTENT_DIR . '/languages/plugins/lwcommerce-id_ID.po') && file_exists(LWC_PATH . '/languages/lwcommerce-id_ID.po')) {
-            copy(LWC_PATH . '/languages/lwcommerce-id_ID.po', WP_CONTENT_DIR . '/languages/plugins/lwcommerce-id_ID.po');
-
-            Logger::Info("[System] Move Translation File into System");
-            update_option('lwcommerce_text_version', LWC_TEXT_VERSION);
+        if( class_exists( 'LokusWP\WordPress\Helper')){
+            Helper::set_translation( "lwcommerce", LWC_TEXT_VERSION , 'id_ID');
         }
 
         /** --- Deprecated Translation File --- */
@@ -384,7 +375,6 @@ class Admin {
         if ( isset( $_GET['lwc-translation-sync'] ) ) {
             update_option( 'lwcommerce_text_version', LWC_TEXT_VERSION );
             header( 'Refresh:0; url=' . get_admin_url() . 'admin.php?path=languages/plugins/lwcommerce-' . get_locale() . '.po&bundle=lwcommerce/lwcommerce.php&domain=lwcommerce&page=loco-plugin&action=file-edit' );
-            // Logger::Info( '[Update] Translation Version to v' . LWC_TEXT_VERSION );
         }
 
     }
