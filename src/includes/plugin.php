@@ -70,6 +70,9 @@ class Plugin {
 			'version' => LWC_VERSION
 		);
 
+        // Image Size
+        add_image_size( 'lwcommerce-product-thumbnail', 269, 269, true );
+
 		if ( is_admin() ) {
 			require_once LWC_PATH . 'src/admin/class-admin.php';
 			Admin::register( $lwcommerce );

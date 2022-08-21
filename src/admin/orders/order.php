@@ -44,12 +44,12 @@ class Reports {
 
                 <div>
                     <div class="lwc-flex-column lwc-gap-1">
-                        <span class="lwp-commerce-order-filter-text noselect filter-orders filter-selected" data-filter="all"><?php _e( 'All Orders', 'lokuswp-commerce' ) ?> (233)</span>
-                        <span class="lwp-commerce-order-filter-text noselect filter-orders" data-filter="unpaid"><?php _e( 'Unpaid', 'lokuswp-commerce' ) ?> (50)</span>
-                        <span class="lwp-commerce-order-filter-text noselect filter-orders" data-filter="paid"><?php _e( 'Paid', 'lokuswp-commerce' ) ?> (12)</span>
-                        <span class="lwp-commerce-order-filter-text noselect filter-orders" data-filter="unprocessed"><?php _e( 'Unprocessed', 'lokuswp-commerce' ) ?> (5)</span>
-                        <span class="lwp-commerce-order-filter-text noselect filter-orders" data-filter="processing"><?php _e( 'In Process', 'lokuswp-commerce' ) ?> (100)</span>
-                        <span class="lwp-commerce-order-filter-text noselect filter-orders" data-filter="shipping"><?php _e( 'Shipping', 'lokuswp-commerce' ) ?>(20)</span>
+                        <span class="lwp-commerce-order-filter-text noselect filter-orders filter-selected" data-filter="all"><?php _e( 'All Orders', 'lwcommerce' ) ?> (233)</span>
+                        <span class="lwp-commerce-order-filter-text noselect filter-orders" data-filter="unpaid"><?php _e( 'Unpaid', 'lwcommerce' ) ?> (50)</span>
+                        <span class="lwp-commerce-order-filter-text noselect filter-orders" data-filter="paid"><?php _e( 'Paid', 'lwcommerce' ) ?> (12)</span>
+                        <span class="lwp-commerce-order-filter-text noselect filter-orders" data-filter="unprocessed"><?php _e( 'Unprocessed', 'lwcommerce' ) ?> (5)</span>
+                        <span class="lwp-commerce-order-filter-text noselect filter-orders" data-filter="processing"><?php _e( 'In Process', 'lwcommerce' ) ?> (100)</span>
+                        <span class="lwp-commerce-order-filter-text noselect filter-orders" data-filter="shipping"><?php _e( 'Shipping', 'lwcommerce' ) ?>(20)</span>
                         <input type="hidden" id="orders-filter-value" value="all">
                     </div>
                 </div>
@@ -82,7 +82,7 @@ class Reports {
         </div>
 
         <div class="lwc-flex lwc-gap-1 currently-filtering" style="margin-left: 1.4rem; display: none">
-            <span><?php _e( 'CURRENTLY FILTERING', 'lokuswp-commerce' ) ?></span>
+            <span><?php _e( 'Filtering', 'lwcommerce' ) ?></span>
             <span class="lwc-filter-text viewing-search" style="font-weight: bold"></span> |
             <span class="lwc-filter-text viewing-order-filter" style="font-weight: bold"></span> |
             <span class="lwc-filter-text viewing-date-filter" style="font-weight: bold"></span>
@@ -96,7 +96,7 @@ class Reports {
                     <table id="orders" class="display order-column" style="position:relative;">
                         <thead>
                         <tr>
-                            <th> <?php _e( 'Donors', 'lokuswp-commerce' ) ?> </th>
+                            <th> <?php _e( 'Donors', 'lwcommerce' ) ?> </th>
                         </tr>
                         </thead>
                         <tbody>

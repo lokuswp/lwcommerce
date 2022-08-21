@@ -8,7 +8,7 @@
 ?>
 <div id="lwcommerce-shipping" class="swiper-slide">
 
-    <h6 style="margin-bottom:12px;" class="text-primary"><?= __( "Pilih Pengiriman", "lokuswp" ); ?></h6>
+    <h6 style="margin-bottom:12px;" class="text-primary"><?= __( "Choose Shipping", "lwcommerce" ); ?></h6>
     <form class="full-height">
 		<?php
 		$cart = isset( $_COOKIE['lokuswp_cart'] ) ? json_decode( stripslashes( $_COOKIE['lokuswp_cart'] ) ) : array();

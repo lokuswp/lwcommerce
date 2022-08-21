@@ -83,7 +83,7 @@
 
         ?>
 
-        <?php if (sizeof($categories) > 1) : ?>
+        <?php if (sizeof($categories) >= 1) : ?>
             <li class="active" data-filter="*">
                 <?php _e('All', 'lsddonation-campaign'); ?>
             </li>
@@ -98,7 +98,7 @@
     </ul>
 </div>
 
-<div class="content grid">
+<div class="lwc-listing row content grid">
 
     <?php
     $args = array(

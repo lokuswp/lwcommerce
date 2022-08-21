@@ -299,15 +299,15 @@ class Admin {
 		Shortcode_Lists::add_shortcode_list( "lwcommerce", $this->slug, $this->name, array(
 			[
 				'shortcode'   => '[lwcommerce_product_listing]',
-				'description' => __( "Display Product Listing", 'lwcommerce' )
+				'description' => __( "Product List View", 'lwcommerce' )
 			],
             [
                 'shortcode'   => '[lwcommerce_product_listing mobile="true"]',
-                'description' => __( "Display Product Listing with Max Width 480px", 'lwcommerce' )
+                'description' => __( "Product List Display with Mobile First version", 'lwcommerce' )
             ],
             [
                 'shortcode'   => '[lwcommerce_product_listing filter="category"]',
-                'description' => __( "Display Product Listing with Category Filter", 'lwcommerce' )
+                'description' => __( "Product List View with Category Filter", 'lwcommerce' )
             ]
 		) );
 

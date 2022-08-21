@@ -88,7 +88,7 @@ class Onboarding {
 		$db_orders_meta->create_table();
 
 		// Create Page
-		Helper::generate_post( "page", __( "Product Listing", "lwcommerce" ), "products", "[lwcommerce_product_listing]" );
+		Helper::generate_post( "page", __( "Product List", "lwcommerce" ), "products", '[lwcommerce_product_listing filter="category"]' );
 
 		// Create Product
 		$this->create_product();
@@ -105,15 +105,44 @@ class Onboarding {
 
 	private function create_product() {
 
-		// Digital - Free Product
-		$digital_free = Helper::generate_post( "product", __( 'Plugin LWCommerce', 'lwcommerce' ), "lokuswp-lwcommerce", "WordPress Ecommerce Plugin" );
-		update_post_meta( $digital_free, "_product_type", "digital" );
-		update_post_meta( $digital_free, "_unit_price", 0 );
-		update_post_meta( $digital_free, "_stock", 9999 );
+        wp_insert_term(
+            'Plugin',
+            'product_category',
+            array(
+                'description' => 'WordPress Plugin',
+                'slug'        => 'plugin'
+            )
+        );
+
+        wp_insert_term(
+            'Apparel',
+            'product_category',
+            array(
+                'description' => 'Apparel',
+                'slug'        => 'apparel'
+            )
+        );
+
+        wp_insert_term(
+            __( 'Food', 'lwcommerce' ),
+            'product_category',
+            array(
+                'description' => 'Food',
+                'slug'        => 'food'
+            )
+        );
+
+
+        // Digital - Free Product
+		$digital_free_id = Helper::generate_post( "product", __( 'Plugin LWCommerce', 'lwcommerce' ), "lokuswp-lwcommerce", "WordPress Ecommerce Plugin" );
+		update_post_meta( $digital_free_id, "_product_type", "digital" );
+		update_post_meta( $digital_free_id, "_unit_price", 0 );
+		update_post_meta( $digital_free_id, "_stock", 9999 );
 		$thumbnail = LWC_URL . 'src/admin/assets/images/product/free-plugin.jpg';
-		if ( $digital_free ) {
-			Helper::set_featured_image( $thumbnail, $digital_free );
+		if ( $digital_free_id ) {
+			Helper::set_featured_image( $thumbnail, $digital_free_id );
 		}
+        wp_set_object_terms($digital_free_id, 'plugin', 'product_category');
 
 		// Digital - Paid Product
 		$digital_premium = Helper::generate_post( "product", __( 'Plugin LWDonation', 'lwcommerce' ), "lokuswp-lwdonation", "WordPress Donation Plugin" );
@@ -125,6 +154,7 @@ class Onboarding {
 		if ( $digital_premium ) {
 			Helper::set_featured_image( $thumbnail, $digital_premium );
 		}
+        wp_set_object_terms($digital_premium, 'plugin', 'product_category');
 
         // Physical - Tshirt
         $tshirt_product = Helper::generate_post( "product", __( 'Tshirt LokusWP', 'lwcommerce' ), "lokuswp-tshirt", "Official Tshirt LokusWP" );
@@ -136,6 +166,7 @@ class Onboarding {
         if ( $tshirt_product ) {
             Helper::set_featured_image( $thumbnail, $tshirt_product );
         }
+        wp_set_object_terms($tshirt_product, 'apparel', 'product_category');
 
         // Affiliate
         $tshirt_white_product = Helper::generate_post( "product", __( 'Affiliate Tshirt', 'lwcommerce' ), "lokuswp-tshirt-affiliate", "Tshirt Afilliate to Shopee" );
@@ -149,6 +180,7 @@ class Onboarding {
         if ( $tshirt_white_product ) {
             Helper::set_featured_image( $thumbnail, $tshirt_white_product );
         }
+        wp_set_object_terms($tshirt_white_product, 'apparel', 'product_category');
 
         // Physical - Food
         $food_product = Helper::generate_post( "product", __( 'Seblak Bandung', 'lwcommerce' ), "lokuswp-seblak", "Seblak Khas Bandung" );
@@ -160,6 +192,7 @@ class Onboarding {
         if ( $food_product ) {
             Helper::set_featured_image( $thumbnail, $food_product );
         }
+        wp_set_object_terms($tshirt_white_product, 'food', 'product_category');
 
     }
 

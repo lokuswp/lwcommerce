@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: LWCommerce\n"
-"POT-Creation-Date: 2022-08-17 10:29+0700\n"
+"POT-Creation-Date: 2022-08-21 20:04+0700\n"
 "PO-Revision-Date: 2022-08-17 10:29+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -34,109 +34,121 @@ msgid ""
 "This plugin run but not working. LWCommerce required version of WordPress %s+"
 msgstr ""
 
-#: src/admin/class-admin.php:72 src/admin/class-admin.php:232
-#: src/admin/class-admin.php:233
+#: src/admin/class-admin.php:73 src/admin/class-admin.php:233
+#: src/admin/class-admin.php:234
 msgid "Settings"
 msgstr ""
 
-#: src/admin/class-admin.php:76
+#: src/admin/class-admin.php:77
 msgid "Notification"
 msgstr ""
 
-#: src/admin/class-admin.php:80 src/admin/orders/order.php:58
+#: src/admin/class-admin.php:81 src/admin/orders/order.php:52
 #: src/includes/hook/checkout/func-checkout-tab.php:12
 msgid "Shipping"
 msgstr ""
 
-#: src/admin/class-admin.php:199
+#: src/admin/class-admin.php:200
 msgid "Are you sure you want to delete this item ?"
 msgstr ""
 
-#: src/admin/class-admin.php:245 src/admin/class-admin.php:246
+#: src/admin/class-admin.php:246 src/admin/class-admin.php:247
 msgid "Be a Pro"
 msgstr ""
 
-#: src/admin/class-admin.php:255 src/admin/class-admin.php:256
+#: src/admin/class-admin.php:256 src/admin/class-admin.php:257
 msgid "Get More Addon"
 msgstr ""
 
-#: src/admin/class-admin.php:266 src/admin/class-admin.php:267
+#: src/admin/class-admin.php:267 src/admin/class-admin.php:268
 msgid "Products"
 msgstr ""
 
-#: src/admin/class-admin.php:278 src/admin/class-admin.php:279
+#: src/admin/class-admin.php:279 src/admin/class-admin.php:280
 msgid "Categories"
 msgstr ""
 
-#: src/admin/class-admin.php:288 src/admin/class-admin.php:289
+#: src/admin/class-admin.php:289 src/admin/class-admin.php:290
 msgid "Orders"
 msgstr ""
 
-#: src/admin/class-admin.php:301
-msgid "Display Product Listing"
+#: src/admin/class-admin.php:302
+msgid "Product List View"
 msgstr ""
 
-#: src/admin/class-admin.php:308
+#: src/admin/class-admin.php:306
+msgid "Product List Display with Mobile First version"
+msgstr ""
+
+#: src/admin/class-admin.php:310
+msgid "Product List View with Category Filter"
+msgstr ""
+
+#: src/admin/class-admin.php:317
 msgid "Checkout via Whatsapp"
 msgstr ""
 
-#: src/admin/class-admin.php:309
+#: src/admin/class-admin.php:318
 msgid "Disable/Enable Opening Whatsapp when Checkout"
 msgstr ""
 
-#: src/admin/class-admin.php:364
+#: src/admin/class-admin.php:373
 msgid "LWCommerce Translation is Deprecated, Please Sync with Loco Translate"
 msgstr ""
 
-#: src/admin/class-admin.php:366
+#: src/admin/class-admin.php:375
 msgid "Sync Translation"
 msgstr ""
 
-#: src/admin/class-admin.php:389 src/admin/class-onboarding.php:418
+#: src/admin/class-admin.php:398 src/admin/class-onboarding.php:451
 msgid "Cloning of is forbidden"
 msgstr ""
 
-#: src/admin/class-admin.php:398 src/admin/class-onboarding.php:427
+#: src/admin/class-admin.php:407 src/admin/class-onboarding.php:460
 msgid "Unserializing instances of is forbidden"
 msgstr ""
 
 #: src/admin/class-onboarding.php:91
-msgid "Product Listing"
+msgid "Product List"
 msgstr ""
 
-#: src/admin/class-onboarding.php:109
+#: src/admin/class-onboarding.php:127
+msgid "Food"
+msgstr ""
+
+#: src/admin/class-onboarding.php:137
 msgid "Plugin LWCommerce"
 msgstr ""
 
-#: src/admin/class-onboarding.php:119
+#: src/admin/class-onboarding.php:148
 msgid "Plugin LWDonation"
 msgstr ""
 
-#: src/admin/class-onboarding.php:123
+#: src/admin/class-onboarding.php:152
 msgid "License"
 msgstr ""
 
-#: src/admin/class-onboarding.php:130
+#: src/admin/class-onboarding.php:160
 msgid "Tshirt LokusWP"
 msgstr ""
 
-#: src/admin/class-onboarding.php:134 src/admin/class-onboarding.php:145
+#: src/admin/class-onboarding.php:164 src/admin/class-onboarding.php:176
 msgid "Pcs"
 msgstr ""
 
-#: src/admin/class-onboarding.php:141
+#: src/admin/class-onboarding.php:172
 msgid "Affiliate Tshirt"
 msgstr ""
 
-#: src/admin/class-onboarding.php:147
+#: src/admin/class-onboarding.php:178
 msgid "Buy at Tokopedia"
 msgstr ""
 
-#: src/admin/class-onboarding.php:154
+#: src/admin/class-onboarding.php:186
 msgid "Seblak Bandung"
 msgstr ""
 
-#: src/admin/class-onboarding.php:158
+#: src/admin/class-onboarding.php:190
 msgid "Bowl"
 msgstr ""
 
@@ -163,7 +175,7 @@ msgid "Please wait a moment until this process is complete"
 msgstr ""
 
 #: src/admin/onboarding/onboarding.php:104
-#: src/templates/presenter/checkout/shipping.php:136
+#: src/templates/presenter/checkout/shipping.php:138
 msgid "Continue"
 msgstr ""
 
@@ -179,93 +191,32 @@ msgstr ""
 msgid "See Product Listing"
 msgstr ""
 
-#: src/admin/orders/order.php:53
+#: src/admin/orders/order.php:47
 msgid "All Orders"
 msgstr ""
 
-#: src/admin/orders/order.php:54
+#: src/admin/orders/order.php:48
 msgid "Unpaid"
 msgstr ""
 
-#: src/admin/orders/order.php:55
+#: src/admin/orders/order.php:49
 msgid "Paid"
 msgstr ""
 
-#: src/admin/orders/order.php:56
+#: src/admin/orders/order.php:50
 msgid "Unprocessed"
 msgstr ""
 
-#: src/admin/orders/order.php:57
+#: src/admin/orders/order.php:51
 msgid "In Process"
 msgstr ""
 
-#: src/admin/orders/order.php:91
-msgid "CURRENTLY FILTERING"
+#: src/admin/orders/order.php:85
+msgid "Filtering"
 msgstr ""
 
-#: src/admin/orders/order.php:105
+#: src/admin/orders/order.php:99
 msgid "Donors"
-msgstr ""
-
-#: src/admin/orders/order.php:468
-msgid "Edit Report"
-msgstr ""
-
-#: src/admin/orders/order.php:476 src/admin/settings/tabs/general/store.php:55
-#: src/admin/settings/tabs/shipping/channel.php:9
-msgid "Name"
-msgstr ""
-
-#: src/admin/orders/order.php:481
-msgid "Phone"
-msgstr ""
-
-#: src/admin/orders/order.php:486
-#: src/admin/settings/tabs/shipping/channel.php:11
-#: src/templates/presenter/customer/dashboard.php:4
-msgid "Status"
-msgstr ""
-
-#: src/admin/orders/order.php:488
-msgid "Complete"
-msgstr ""
-
-#: src/admin/orders/order.php:489
-#: src/includes/hook/checkout/func-post-checkout.php:122
-#: src/includes/hook/checkout/func-post-checkout.php:127
-msgid "Pending"
-msgstr ""
-
-#: src/admin/orders/order.php:494
-msgid "Date"
-msgstr ""
-
-#: src/admin/orders/order.php:501
-msgid "Update"
-msgstr ""
-
-#: src/admin/orders/order.php:517 src/admin/orders/order.php:540
-msgid "Import"
-msgstr ""
-
-#: src/admin/orders/order.php:522
-msgid "This will replace all existing data in the database"
-msgstr ""
-
-#: src/admin/orders/order.php:545
-msgid "You have to adjust the import data first, export and adjust your data"
-msgstr ""
-
-#: src/admin/orders/order.php:612
-msgid "Add Donation"
-msgstr ""
-
-#: src/admin/orders/order.php:614
-msgid "Input"
-msgstr ""
-
-#: src/admin/orders/order.php:617
-msgid "data"
 msgstr ""
 
 #: src/admin/settings/tabs/addons.php:30
@@ -317,6 +268,11 @@ msgstr ""
 
 #: src/admin/settings/tabs/general/store.php:29
 msgid "Food and Drink"
+msgstr ""
+
+#: src/admin/settings/tabs/general/store.php:55
+#: src/admin/settings/tabs/shipping/channel.php:9
+msgid "Name"
 msgstr ""
 
 #: src/admin/settings/tabs/general/store.php:66
@@ -377,7 +333,7 @@ msgid "Choose your city"
 msgstr ""
 
 #: src/admin/settings/tabs/general/store.php:175
-#: src/templates/presenter/checkout/shipping.php:116
+#: src/templates/presenter/checkout/shipping.php:118
 msgid "Address"
 msgstr ""
 
@@ -400,6 +356,11 @@ msgstr ""
 
 #: src/admin/settings/tabs/shipping.php:22
 msgid "RajaOngkir"
+msgstr ""
+
+#: src/admin/settings/tabs/shipping/channel.php:11
+#: src/templates/presenter/customer/dashboard.php:4
+msgid "Status"
 msgstr ""
 
 #: src/admin/settings/tabs/shipping/channel.php:12
@@ -458,6 +419,11 @@ msgstr ""
 msgid "Download"
 msgstr ""
 
+#: src/includes/hook/checkout/func-post-checkout.php:122
+#: src/includes/hook/checkout/func-post-checkout.php:127
+msgid "Pending"
+msgstr ""
+
 #: src/includes/hook/checkout/func-post-checkout.php:123
 #: src/includes/hook/checkout/func-post-checkout.php:128
 msgid "Deskripsi Pesanan"
@@ -502,7 +468,7 @@ msgstr ""
 msgid "Payment Confirmation"
 msgstr ""
 
-#: src/includes/modules/order/class-lwc-order.php:189
+#: src/includes/modules/order/class-lwc-order.php:200
 msgid "Failed creating file"
 msgstr ""
 
@@ -631,7 +597,7 @@ msgid "Jam"
 msgstr ""
 
 #: src/includes/modules/product/metabox/product-data.php:190
-#: src/includes/modules/shipping/methods/class-rajaongkir-jne.php:68
+#: src/includes/modules/shipping/methods/class-rajaongkir-jne.php:79
 msgid "Hari"
 msgstr ""
 
@@ -750,12 +716,12 @@ msgstr ""
 msgid "Out of Stock"
 msgstr ""
 
-#: src/includes/modules/shipping/controller/class-shipping-processing.php:21
-#: src/includes/modules/shipping/controller/class-shipping-processing.php:36
+#: src/includes/modules/shipping/controller/class-shipping-processing.php:23
+#: src/includes/modules/shipping/controller/class-shipping-processing.php:47
 msgid "Shipping costs"
 msgstr ""
 
-#: src/includes/plugin.php:146 src/includes/plugin.php:158
+#: src/includes/plugin.php:152 src/includes/plugin.php:164
 msgid "Something went wrong."
 msgstr ""
 
@@ -767,16 +733,24 @@ msgstr ""
 msgid "Checkout"
 msgstr ""
 
-#: src/templates/presenter/checkout/shipping.php:96
+#: src/templates/presenter/checkout/shipping.php:11
+msgid "Choose Shipping"
+msgstr ""
+
+#: src/templates/presenter/checkout/shipping.php:98
 msgid "Choose Province"
 msgstr ""
 
-#: src/templates/presenter/checkout/shipping.php:106
+#: src/templates/presenter/checkout/shipping.php:108
 msgid "Choose City"
 msgstr ""
 
 #: src/templates/presenter/customer/purchase.php:4
 msgid "Purchased List"
+msgstr ""
+
+#: src/templates/presenter/product/listing.php:88
+msgid "All"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
