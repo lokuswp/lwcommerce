@@ -14,6 +14,7 @@ jobs:
         run: |
           mkdir ${{ github.event.repository.name }} 
           cp -r src ${{ github.event.repository.name }}/src
+          cp -r languages ${{ github.event.repository.name }}/languages
           cp ${{ github.event.repository.name }}.php ${{ github.event.repository.name }}/${{ github.event.repository.name }}.php
           cp uninstall.php ${{ github.event.repository.name }}/uninstall.php
           cp CHANGELOG.md ${{ github.event.repository.name }}/CHANGELOG.md

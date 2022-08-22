@@ -210,7 +210,7 @@ class Onboarding {
         if ( $food_product ) {
             Helper::set_featured_image( $thumbnail, $food_product );
         }
-        wp_set_object_terms($tshirt_white_product, 'food', 'product_category');
+        wp_set_object_terms($food_product, 'food', 'product_category');
 
     }
 

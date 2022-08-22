@@ -1,5 +1,6 @@
 .lwc-listing {
     padding: 8px 0;
+    margin-top: 12px;
     text-align: center;
 }
 
@@ -48,7 +49,6 @@ td.product-item-detail strike {
     border-radius: 3px;
 }
 
-
 /* Single */
 
 .lwp-product h2 {
@@ -66,7 +66,7 @@ td.product-item-detail strike {
 
 .product-image img {
     border: 1px solid #E5E8EB;
-    border-radius: 3%;
+    border-radius: 3% !important;
 }
 
 

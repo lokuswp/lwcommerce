@@ -351,7 +351,7 @@ class Admin {
     public function translation()
     {
         if( class_exists( 'LokusWP\WordPress\Helper')){
-            Helper::set_translation( "lwcommerce", LWC_TEXT_VERSION , 'id_ID');
+            Helper::set_translation( "lwcommerce", LWC_PATH,LWC_TEXT_VERSION , 'id_ID');
         }
 
         /** --- Deprecated Translation File --- */
