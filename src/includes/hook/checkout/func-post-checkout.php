@@ -183,14 +183,20 @@ function lwc_download_response( $response, $trx_id ) {
 
 	if ( $cart && $trx_status == "paid" ) {
 		$response['download_granted'] = true;
+        $product_ids = [];
 		foreach ( $cart as $item ) {
-			$response['downloads'][] = [
-				"product_title"              => html_entity_decode( get_the_title( $item->post_id ) ),
-				"product_thumbnail"          => get_the_post_thumbnail_url( $item->post_id ),
-				"product_attachment_version" => get_post_meta( $item->post_id, "_attachment_version", true ),
-				"product_attachment_url"     => get_post_meta( $item->post_id, "_attachment_link", true ),
-				"product_link"               => get_permalink( $item->post_id )
-			];
+
+            if( !in_array( $item->post_id, $product_ids ) ){ // Prevent Duplicate
+                $response['downloads'][] = [
+                    "product_title"              => html_entity_decode( get_the_title( $item->post_id ) ),
+                    "product_thumbnail"          => get_the_post_thumbnail_url( $item->post_id ),
+                    "product_attachment_version" => get_post_meta( $item->post_id, "_attachment_version", true ),
+                    "product_attachment_url"     => get_post_meta( $item->post_id, "_attachment_link", true ),
+                    "product_link"               => get_permalink( $item->post_id )
+                ];
+                $product_ids[] = $item->post_id;
+            }
+
 		}
 	}
 

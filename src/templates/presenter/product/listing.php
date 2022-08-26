@@ -58,6 +58,7 @@
         overflow: auto;
         white-space: nowrap;
         padding: 16px 6px;
+        margin: 0;
     }
 
     .scrollmenu li {
@@ -130,10 +131,15 @@
 
                 <?php do_action( "lwcommerce/product/listing/after_image", get_the_ID() ); ?>
             </div>
+
+            <?php do_action( "lwcommerce/product/listing/before_title", get_the_ID() ); ?>
+
             <a href="<?php echo get_permalink(); ?>">
                 <h3 class="product-name"><?php the_title(); ?></h3>
-                <?php do_action( "lwcommerce/product/listing/after_title", get_the_ID() ); ?>
             </a>
+
+            <?php do_action( "lwcommerce/product/listing/after_title", get_the_ID() ); ?>
+
             <div class="product-price">
                 <?php echo lwc_get_price_html( get_the_ID() ); ?>
                 <?php do_action( "lwcommerce/product/listing/after_price", get_the_ID() ); ?>
@@ -152,7 +158,7 @@
 
 
 
-<div class="lwc-listing row <?= $mobile == TRUE ? 'lwp-mobile-width' : '' ?>">
+<div class="lwc-listing row <?= $mobile == TRUE ? 'lwp-mobile-first' : '' ?>">
 
 
 
@@ -185,17 +191,21 @@
 
         /* PRO CSS */
         .lwc-product-badge {
-            position: absolute;
-            padding: 4px 8px;
-            background: #ddd;
-            top: 6px;
-            left: 6px;
-            background: var(--lokuswp-secondary-color);
-            color: #fff;
-
-            font-size: 12px;
+            padding: 4px 0;
+            text-align: left;
+            font-size: 14px;
             font-weight: 600;
             border-radius: 3px;
+            margin-bottom: -8px;
+            color: #a4afb7;
+        }
+
+        .lwc-product-badge.new{
+            color : #00d319;
+        }
+
+        .lwc-product-badge.sale{
+            color : #d30000;
         }
     </style>
 

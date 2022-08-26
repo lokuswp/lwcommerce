@@ -120,6 +120,10 @@ function lwc_transaction_logic( $transaction ) {
 
 		// Order Meta
 		lwc_update_order_meta( $trx_id, "_order_id", $trx_id );
+
+        // Add Order Counter
+        $awaiting = empty(get_option( 'lwcommerce_order_awaiting' )) ? 0 : get_option( 'lwcommerce_order_awaiting' );
+        update_option( "lwcommerce_order_awaiting", abs($awaiting) + 1 );
 	}
 
 	return $transaction;

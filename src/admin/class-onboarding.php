@@ -215,7 +215,7 @@ class Onboarding {
     }
 
 	private function set_appearance() {
-        lwp_get_settings( 'lwcommerce', 'appearance', 'checkout_whatsapp', 'on' );
+        lwp_set_settings( 'lwcommerce', 'appearance', 'checkout_whatsapp', 'on' );
 	}
 
 

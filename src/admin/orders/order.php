@@ -9,6 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Reports {
 
     public function render() {
+
+        update_option( "lwcommerce_order_awaiting", 0 );
+
         $this->table();
         $this->modal_import();
     }

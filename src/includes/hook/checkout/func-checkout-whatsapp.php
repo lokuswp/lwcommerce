@@ -8,6 +8,16 @@
 add_filter( "lokuswp/rest/transaction/response", "lwc_transaction_response_checkout_whatsapp", 10, 2 );
 function lwc_transaction_response_checkout_whatsapp( $response, $trx_id ) {
 
+    // Skip when Checkout WHatsapp Off
+    if(lwp_get_settings( 'lwcommerce', 'appearance', 'checkout_whatsapp' ) != "on" ){
+        return $response;
+    }
+
+    // When Subtotal Zero && Item Just Once, With Product Type : Digital && Quantity : 1 = Fail this Feature
+    if( abs($response['subtotal']) == 0.0 && count($response['items']) == 1 && $response['items'][0]['product_type'] == 'digital'  && $response['items'][0]['quantity'] == 1 ){
+        return $response;
+    }
+
 	// Get Transaction by ID
 	$transaction = lwp_get_transaction( $trx_id );
 
@@ -45,8 +55,6 @@ ini bukti pembayarannya';
 
 	$checkout_template = lwp_get_settings( 'lwcommerce', 'general', 'checkout_template' );
 	$checkout_template = empty( $checkout_template ) ? $default_template : $checkout_template;
-
-	$total = lwp_currency_format( true, $transaction->total, $transaction->currency );
 
 	$checkout_template = str_replace( "{{order_id}}", lwc_get_order_meta( $trx_id, "_order_id", true ), $checkout_template );
 	$checkout_template = str_replace( "{{payment}}", lwp_get_notification_block_payment_text( $transaction->currency, $transaction ), $checkout_template );

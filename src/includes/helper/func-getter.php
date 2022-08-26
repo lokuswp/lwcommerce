@@ -44,25 +44,25 @@ function lwc_get_settings( string $option = 'general_settings', string $item, st
  * @return array
  * @since 0.1.0
  */
-//function lwc_get_product_types( $cart_uuid ) {
-//	global $wpdb;
-//	$table_cart = $wpdb->prefix . 'lokuswp_carts';
-//
-//	$cart_uuid = sanitize_key( $cart_uuid );
-//	$cart      = (array) $wpdb->get_results( "SELECT * FROM $table_cart WHERE cart_uuid='$cart_uuid'" );
-//
-//	$product_types = [];
-//
-//	if ( empty( $cart ) ) {
-//		return [];
-//	}
-//
-//	foreach ( $cart as $item ) {
-//		$product_types[] = get_post_meta( $item->post_id, '_product_type', true );
-//	}
-//
-//	return array_unique( $product_types );
-//}
+function lwc_get_product_types( $cart_uuid ) {
+	global $wpdb;
+	$table_cart = $wpdb->prefix . 'lokuswp_carts';
+
+	$cart_uuid = sanitize_key( $cart_uuid );
+	$cart      = (array) $wpdb->get_results( "SELECT * FROM $table_cart WHERE cart_uuid='$cart_uuid'" );
+
+	$product_types = [];
+
+	if ( empty( $cart ) ) {
+		return [];
+	}
+
+	foreach ( $cart as $item ) {
+		$product_types[] = get_post_meta( $item->post_id, '_product_type', true );
+	}
+
+	return array_unique( $product_types );
+}
 
 /**
  * Get Subtotal of Product in Cart
