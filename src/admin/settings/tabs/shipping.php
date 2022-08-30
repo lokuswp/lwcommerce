@@ -1,4 +1,5 @@
 <?php
+
 use LokusWP\Commerce\Shipping;
 
 if ( ! defined( 'WPTEST' ) ) {
@@ -15,8 +16,8 @@ class Shipping_Admin {
                 <input type="radio" name="tab" id="tab1" checked="checked"/>
                 <label class="tab-item" for="tab1"><?php _e( "Channel", "lwcommerce" ); ?></label>
 
-                <!-- <input type="radio" name="tab" id="tab2"/>
-                <label class="tab-item" for="tab2"><?php _e( "Zone", "lwcommerce" ); ?></label> -->
+                <input type="radio" name="tab" id="tab2"/>
+                <label class="tab-item" for="tab2"><?php _e( "Integration", "lwcommerce" ); ?></label>
 
                 <!-- <input type="radio" name="tab" id="tab3"/>
                 <label class="tab-item" for="tab3"><?php _e( "RajaOngkir", "lwcommerce" ); ?></label> -->
@@ -27,7 +28,7 @@ class Shipping_Admin {
                     </div>
 
                     <div id="tab-body-2" class="tab-body">
-						<?php require_once 'shipping/zone.php'; ?>
+						<?php require_once 'shipping/integration.php'; ?>
                     </div>
 
                     <div id="tab-body-3" class="tab-body">
