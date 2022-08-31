@@ -1,6 +1,6 @@
 <?php
 
-namespace LokusWP\Commerce;
+namespace LokusWP\Commerce\Shipping\Rajaongkir;
 
 use LokusWP\Commerce\Shipping\Rajaongkir;
 
@@ -8,28 +8,12 @@ if ( ! defined( 'WPTEST' ) ) {
 	defined( 'ABSPATH' ) or die( "Direct access to files is prohibited" );
 }
 
-class Shipping_Processing {
-
+class Rajaongkir_Processing {
 	public function __construct() {
-		add_filter( 'lokuswp/transaction/extras/data/shipping', [ $this, 'processing' ], 10, 1 );
+		add_action( 'lokuswp/transaction/shipping/rajaongkir-jne', [ $this, 'processing' ], 10, 1 );
 	}
 
 	public function processing( $shipping ) {
-
-		if ( $shipping['service'] === 'take-away' ) {
-			lwp_add_transaction_extras(
-				"shipping",
-				'take-away',
-				__( "Shipping costs", "lwcommerce" ),
-				0,
-				"+",
-				"fixed",
-				"subtotal"
-			);
-
-			return;
-		}
-
 		$origin = lwc_get_settings( 'store', 'city', 'intval' );
 
 		$rajaongkir = Rajaongkir::get_instance();
@@ -53,4 +37,4 @@ class Shipping_Processing {
 	}
 }
 
-new Shipping_Processing;
+new Rajaongkir_Processing;

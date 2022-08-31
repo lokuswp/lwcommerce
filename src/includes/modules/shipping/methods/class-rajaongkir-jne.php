@@ -71,7 +71,7 @@ class RajaOngkir_JNE extends Shipping\Gateway {
 
 			foreach ( $service_data as $data ) {
 				$services[] = [
-					'id'          => "jne-" . strtolower( $data['service'] ),
+					'id'          => $this->id . '-' . strtolower( $data['service'] ),
 					'logoURL'     => $shipping_data->logo_url,
 					'name'        => $shipping_data->name,
 					'service'     => $data['service'],
