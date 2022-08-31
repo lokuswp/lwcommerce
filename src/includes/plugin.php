@@ -45,7 +45,9 @@ class Plugin {
 		// Shipping Module
 		require_once LWC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
 		require_once LWC_PATH . 'src/includes/modules/shipping/class-manager.php';
-		require_once LWC_PATH . 'src/includes/modules/shipping/controller/class-shipping-processing.php';
+		require_once LWC_PATH . 'src/includes/modules/shipping/controller/class-shipping-controller.php';
+		require_once LWC_PATH . 'src/includes/modules/shipping/controller/rajaongkir/class-shipping-processing.php';
+		require_once LWC_PATH . 'src/includes/modules/shipping/controller/takeaway/class-shipping-processing.php';
 
 		// API
 		require_once LWC_PATH . 'src/includes/modules/shipping/api/class-rajaongkir-api.php';
@@ -70,8 +72,8 @@ class Plugin {
 			'version' => LWC_VERSION
 		);
 
-        // Image Size
-        add_image_size( 'lwcommerce-product-thumbnail', 269, 269, true );
+		// Image Size
+		add_image_size( 'lwcommerce-product-thumbnail', 269, 269, true );
 
 		if ( is_admin() ) {
 			require_once LWC_PATH . 'src/admin/class-admin.php';
