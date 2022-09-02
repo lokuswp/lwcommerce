@@ -36,6 +36,8 @@ defined( 'LWC_PATH' ) or define( 'LWC_PATH', plugin_dir_path( __FILE__ ) );
 defined( 'LWC_URL' ) or define( 'LWC_URL', plugin_dir_url( __FILE__ ) );
 defined( 'LWC_STORAGE' ) or define( 'LWC_STORAGE', wp_get_upload_dir()['basedir'] . '/lwcommerce' );
 
+$lwcommerce_was_installed = get_option( "lwcommerce_was_installed" );
+$is_backbone_exist        = file_exists( WP_PLUGIN_DIR . '/lokuswp/lokuswp.php' );
 
 /**
  *-----------------------*
@@ -51,7 +53,7 @@ if ( ! version_compare( PHP_VERSION, '7.4', '>=' ) ) {
 	add_action( 'admin_notices', 'lwc_fail_php_version' );
 } elseif ( ! version_compare( get_bloginfo( 'version' ), '5.8', '>=' ) ) {
 	add_action( 'admin_notices', 'lwc_fail_wp_version' );
-} elseif ( ! version_compare( LOKUSWP_VERSION, '0.1.6', '>=' ) ) {
+} elseif ( ! version_compare( LOKUSWP_VERSION, '0.1.6', '>=' ) && $is_backbone_exist && $lwcommerce_was_installed ) {
 	add_action( 'admin_notices', 'lwc_fail_lokuswp_version' );
 } else {
 	// Come On, Let's Goo !!! 🦾
