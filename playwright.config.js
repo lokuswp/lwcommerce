@@ -42,14 +42,7 @@ const config = {
         // baseURL: 'http://localhost:3000',
 
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-        trace: 'on',
-        contextOptions: {
-            recordVideo: {
-                dir: './test-results/videos/'
-            }
-        },
-        headless: false,
-        video: 'on',
+        trace: 'on-first-retry',
     },
 
     /* Configure projects for major browsers */
@@ -63,7 +56,7 @@ const config = {
     ],
 
     /* Folder for test artifacts such as screenshots, videos, traces, etc. */
-    outputDir: './test-results/',
+    // outputDir: './test-results/',
 
     /* Run your local dev server before starting the tests */
     // webServer: {
