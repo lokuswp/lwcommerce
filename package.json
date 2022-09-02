@@ -1,0 +1,29 @@
+{
+  "name": "lwcommerce",
+  "version": "1.0.0",
+  "description": "Local First eCommerce WordPress",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "playwright-core": "^1.25.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.25.1"
+  },
+  "scripts": {
+    "test": "sh ./docker.sh && sleep 50s && npx playwright test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lokuswp/lwcommerce.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lokuswp/lwcommerce/issues"
+  },
+  "homepage": "https://github.com/lokuswp/lwcommerce#readme"
+}
