@@ -13,18 +13,14 @@ module.exports = function createTests() {
 
         await page.locator('#menu-plugins div:has-text("Plugins")').click();
         await expect(page).toHaveURL('http://localhost:8000/wp-admin/plugins.php');
-        const deactivateButton = page.locator('#deactivate-lwcommerce');
-        test.skip(await deactivateButton.isVisible(), 'Plugin already activate');
+        const btnDeactivate = page.waitForSelector('#deactivate-lwcommerce');
+        test.skip(await (await btnDeactivate).isVisible(), "Plugin already activate");
         await page.locator('#activate-lwcommerce').click();
         await expect(page).toHaveURL('http://localhost:8000/wp-admin/admin.php?page=lwcommerce');
 
-        await page.locator('[placeholder="Lokus Store"]').click();
         await page.locator('[placeholder="Lokus Store"]').fill('test');
-        await page.locator('[placeholder="Local first online shop"]').click();
         await page.locator('[placeholder="Local first online shop"]').fill('test');
-        await page.locator('[placeholder="lokuswp\\@gmail\\.com"]').click();
         await page.locator('[placeholder="lokuswp\\@gmail\\.com"]').fill('test@test.com');
-        await page.locator('textarea[name="address"]').click();
         await page.locator('textarea[name="address"]').fill('test');
         await page.locator('text=Save').click();
         const continueButton = await page.waitForSelector('text=Continue', {
