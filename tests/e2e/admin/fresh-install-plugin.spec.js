@@ -13,8 +13,8 @@ module.exports = function createTests() {
 
         await page.locator('#menu-plugins div:has-text("Plugins")').click();
         await expect(page).toHaveURL('http://localhost:8000/wp-admin/plugins.php');
-        const btnDeactivate = page.waitForSelector('#deactivate-lwcommerce');
-        test.skip(await (await btnDeactivate).isVisible(), "Plugin already activate");
+        await page.waitForTimeout(1500);
+        test.skip(await page.locator('#activate-lwcommerce').isVisible() === false, "Plugin already activate");
         await page.locator('#activate-lwcommerce').click();
         await expect(page).toHaveURL('http://localhost:8000/wp-admin/admin.php?page=lwcommerce');
 
