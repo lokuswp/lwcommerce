@@ -21,3 +21,10 @@
 - Resi Input
 - Stock : Checking
 - Translation to Indonesia
+
+# [v0.1.2]() (2022-08-28)
+**Fixing :**
+- Shipping Option
+
+**Newest :**
+- Product Archive

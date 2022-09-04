@@ -29,10 +29,22 @@
 		}
 		?>
 
-		<?php if ( $physical_shipping ) : ?>
+		<?php if ( $physical_shipping ) :
+            $shipping_carriers = lwp_get_option( 'shipping_manager' );
+            ?>
+
+            <style>
+                #address-field .form-group{
+                    display: inline-flex;
+                    width: 100%;
+                }
+            </style>
 
             <!-- Shipping Type -->
             <div class="row" id="shipping-type">
+
+
+                <?php if( $shipping_carriers['takeaway'] == "on" ) : ?>
                 <div class="col-xs-12 col-sm-12 swiper-no-swiping gutter">
                     <div class="lwp-form-group">
                         <div class="item-radio">
@@ -61,6 +73,9 @@
                         </div>
                     </div>
                 </div>
+                <?php endif; ?>
+
+                <?php if( $shipping_carriers['rajaongkir-jne'] == "on" ) : ?>
                 <div class="col-xs-12 col-sm-12 swiper-no-swiping gutter">
                     <div class="lwp-form-group">
                         <div class="item-radio">
@@ -84,6 +99,8 @@
                         </div>
                     </div>
                 </div>
+                <?php endif; ?>
+
             </div>
 
             <input type="hidden" id="user-address">

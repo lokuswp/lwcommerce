@@ -7,6 +7,11 @@
         let urlCurrent = window.location.pathname.split('/');
         var states = document.getElementById("states");
 
+        // Fallback Checking
+        if (!jQuery('input[name="shipping_type"]').is(':checked')) {
+            jQuery('input[name="shipping_type"]').first().trigger("click");
+        }
+
         if (urlCurrent[2] != 'trx' && states.length) {
             /*****************************************
              * Get Provinces List

@@ -101,7 +101,7 @@ class Post_Type_Product {
 	 */
 	public function archive() {
 		if ( is_post_type_archive( 'product' ) ) {
-			// return LWC_PATH . 'frontend/templates/storefront/listing.php';
+			 return LWC_PATH . 'src/templates/presenter/product/archive.php';
 		}
 	}
 
