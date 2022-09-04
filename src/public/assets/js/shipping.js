@@ -38,10 +38,11 @@
                     // Set Extras fot take away
                     lwpCheckout.setExtra("shipping", "Biaya Pengiriman", 'take-away', 0, "+", "fixed", "subtotal");
                     lwpCheckout.setExtraField("shipping", {
-                        "service": 'take-away',
-                        "courier": 'Take Away',
-                        "destination": '-',
-                        "weight": '0',
+                        provider: 'takeaway',
+                        service: 'ambil ditempat',
+                        courier: 'Take Away',
+                        destination: '-',
+                        weight: '0',
                     });
 
                     // Render Summary
@@ -172,15 +173,17 @@
         let title = $(this).attr("title");
         let service = $(this).attr('service');
         let cost = $(this).attr('cost');
+        let id = $(this).attr('id');
 
         // Ser Extras
         lwpCheckout.setExtra("shipping", "Biaya Pengiriman", title + " - " + service, cost, "+", "fixed", "subtotal");
         lwpCheckout.setExtraField("shipping", {
-            "service": service,
-            "courier": title,
-            "destination": $('#cities').find(":selected").val(),
-            "address": $('#shipping_address').val(),
-            "weight": 20,
+            provider: id.split('-').slice(0, -1).join('-'),
+            service: service,
+            courier: title,
+            destination: $('#cities').find(":selected").val(),
+            address: $('#shipping_address').val(),
+            weight: 20,
         });
 
         // Render Summary

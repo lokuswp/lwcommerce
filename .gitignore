@@ -4,3 +4,8 @@ tests/e2e/node_modules/*
 .idea/*
 lwcommerce.zip
 lwcommerce/*
+/test-results/
+/playwright-report/
+/playwright/.cache/
+/wordpress
+/lokuswp
