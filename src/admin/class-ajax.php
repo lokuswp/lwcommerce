@@ -514,8 +514,11 @@ class AJAX {
 				'post_content' => $get_data[1],
 				'post_status'  => 'publish',
 				'meta_input'   => [
-					'_unit_price'  => $get_data[4],
-					'_price_promo' => $get_data[5],
+					'_product_type' => $get_data[4],
+					'_unit_price'   => $get_data[5],
+					'_price_promo'  => $get_data[6],
+					'_stock'        => $get_data[7],
+					'_stock_unit'   => $get_data[8]
 				],
 			) );
 

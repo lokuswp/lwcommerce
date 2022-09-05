@@ -101,4 +101,9 @@ module.exports = function createTests() {
         await expect(page).toHaveURL(/^(http|https)?(:\/\/)?([\w-]+:+[\d-]+)?(\/)?(wp-admin)?(\/)?(post.php)?(\?post=\d+)&(action)=(edit)$/g);
         await page.locator('text=Post published. View post').click();
     })
+
+    test("Import product", async ({page}) => {
+        await page.locator('#toplevel_page_edit-post_type-product div:has-text("Products")').click();
+        await expect(page).toHaveURL('http://localhost:8000/wp-admin/edit.php?post_type=product');
+    })
 }
