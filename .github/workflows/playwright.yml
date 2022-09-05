@@ -28,16 +28,8 @@ jobs:
           token: ${{ secrets.PAT }}
           repository: lokuswp/lokuswp
           path: lokuswp
-      - name: Initialize Docker for Wordpress
-        run: |
-          chmod +x ./docker.sh
-          ./docker.sh
-        shell: bash
-      - name: Wait for container healthy
-        run: sleep 50s
-        shell: bash
-      - name: Run Playwright tests
-        run: npx playwright test
+      - name: Run the test
+        run: npm run test:e2e
       - uses: actions/upload-artifact@v2
         if: always()
         with:

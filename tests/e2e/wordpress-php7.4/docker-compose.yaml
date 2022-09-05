@@ -26,7 +26,7 @@ services:
       WORDPRESS_DB_PASSWORD: WP_DB_PASSWORD
       WORDPRESS_DB_NAME: WP_DB
     volumes:
-      - "./wordpress:/var/www/html"
+      - "./../../../wordpress:/var/www/html"
 
 volumes:
   wp-data:

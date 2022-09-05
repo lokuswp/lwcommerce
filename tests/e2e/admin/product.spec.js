@@ -5,7 +5,9 @@ module.exports = function createTests() {
     test.beforeEach(async ({page}) => {
         // Runs before each test and signs in each page.
         await page.goto('http://localhost:8000/wp-login.php?redirect_to=http%3A%2F%2Flocalhost%3A8000%2Fwp-admin%2F&reauth=1');
+        await page.locator('input[name="log"]').click();
         await page.locator('input[name="log"]').fill('test');
+        await page.locator('input[name="pwd"]').click();
         await page.locator('input[name="pwd"]').fill('test');
         await page.locator('text=Log In').click();
         await expect(page).toHaveURL('http://localhost:8000/wp-admin/');
@@ -27,7 +29,7 @@ module.exports = function createTests() {
             state: 'detached'
         });
         await page.locator('input[name="publish"]').click();
-        await expect(page).toHaveURL(/^(http|https)?(\:\/\/)?([\w-]+[\:]+[\d-]+)?(\/)?(wp-admin)?(\/)?(post.php)?(\?post=[\d]+)&(action)\=(edit)$/g);
+        await expect(page).toHaveURL(/^(http|https)?(:\/\/)?([\w-]+:+[\d-]+)?(\/)?(wp-admin)?(\/)?(post.php)?(\?post=\d+)&(action)=(edit)$/g);
         await page.locator('text=Post published. View post').click();
     })
 
@@ -47,7 +49,7 @@ module.exports = function createTests() {
             state: 'detached'
         });
         await page.locator('input[name="publish"]').click();
-        await expect(page).toHaveURL(/^(http|https)?(\:\/\/)?([\w-]+[\:]+[\d-]+)?(\/)?(wp-admin)?(\/)?(post.php)?(\?post=[\d]+)&(action)\=(edit)$/g);
+        await expect(page).toHaveURL(/^(http|https)?(:\/\/)?([\w-]+:+[\d-]+)?(\/)?(wp-admin)?(\/)?(post.php)?(\?post=\d+)&(action)=(edit)$/g);
         await page.locator('text=Post published. View post').click();
     })
 
@@ -70,7 +72,7 @@ module.exports = function createTests() {
             state: 'detached'
         });
         await page.locator('input[name="publish"]').click();
-        await expect(page).toHaveURL(/^(http|https)?(\:\/\/)?([\w-]+[\:]+[\d-]+)?(\/)?(wp-admin)?(\/)?(post.php)?(\?post=[\d]+)&(action)\=(edit)$/g);
+        await expect(page).toHaveURL(/^(http|https)?(:\/\/)?([\w-]+:+[\d-]+)?(\/)?(wp-admin)?(\/)?(post.php)?(\?post=\d+)&(action)=(edit)$/g);
         await page.locator('text=Post published. View post').click();
     })
 
@@ -96,7 +98,7 @@ module.exports = function createTests() {
             state: 'detached'
         });
         await page.locator('input[name="publish"]').click();
-        await expect(page).toHaveURL(/^(http|https)?(\:\/\/)?([\w-]+[\:]+[\d-]+)?(\/)?(wp-admin)?(\/)?(post.php)?(\?post=[\d]+)&(action)\=(edit)$/g);
+        await expect(page).toHaveURL(/^(http|https)?(:\/\/)?([\w-]+:+[\d-]+)?(\/)?(wp-admin)?(\/)?(post.php)?(\?post=\d+)&(action)=(edit)$/g);
         await page.locator('text=Post published. View post').click();
     })
 }
