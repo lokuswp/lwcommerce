@@ -1,7 +1,7 @@
 const {test, expect} = require('@playwright/test');
 
 module.exports = function createTests() {
-    test('Check is plugin lwcommerce available', async ({page}) => {
+    test('Check is plugin lwcommerce available 7.4', async ({page}) => {
         await page.goto('http://localhost:8000/wp-login.php?redirect_to=http%3A%2F%2Flocalhost%3A8000%2Fwp-admin%2F&reauth=1');
         await page.locator('input[name="log"]').click();
         await page.locator('input[name="log"]').fill('test');

@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   mysql_db:
-    container_name: mysql_container
+    container_name: mysql_container7.4
     image: mysql:5.7
     restart: always
     environment:
@@ -14,6 +14,7 @@ services:
       - wp-data:/var/lib/mysql
 
   wordpress:
+    container_name: wordpress7.4
     depends_on:
       - mysql_db
     image: wordpress:latest
@@ -26,7 +27,7 @@ services:
       WORDPRESS_DB_PASSWORD: WP_DB_PASSWORD
       WORDPRESS_DB_NAME: WP_DB
     volumes:
-      - "./wordpress:/var/www/html"
+      - "./../../../../wordpress7.4:/var/www/html"
 
 volumes:
   wp-data:

@@ -13,7 +13,8 @@
     "@playwright/test": "^1.25.1"
   },
   "scripts": {
-    "test": "sh ./docker.sh && sleep 50s && npx playwright test"
+    "test:e2e": "sh ./tests/e2e/script/e2e.sh && npx playwright test",
+    "test:clean": "sh ./tests/e2e/script/clean.sh"
   },
   "repository": {
     "type": "git",

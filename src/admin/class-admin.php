@@ -44,7 +44,7 @@ class Admin {
 		$admin = new self( $plugin['slug'], $plugin['name'], $plugin['version'] );
 
 		add_action( 'admin_init', [ $admin, 'admin_init' ], 1 );
-		add_action( 'admin_menu', [ $admin, 'register_admin_menu' ], 1  );
+		add_action( 'admin_menu', [ $admin, 'register_admin_menu' ], 1 );
 		add_action( 'admin_enqueue_scripts', [ $admin, 'enqueue_styles' ] );
 		add_action( 'admin_enqueue_scripts', [ $admin, 'enqueue_scripts' ] );
 	}
@@ -65,10 +65,10 @@ class Admin {
 	 */
 	public function admin_init() {
 
-        // Storage Permission Notice
-        if ( file_exists( LOKUSWP_STORAGE ) ) {
-            $this->translation();
-        }
+		// Storage Permission Notice
+		if ( file_exists( LOKUSWP_STORAGE ) ) {
+			$this->translation();
+		}
 
 		Tabs::add( 'lwcommerce', 'settings', __( 'Settings', 'lwcommerce' ), function () {
 			require_once 'settings/tabs/settings.php';
@@ -133,6 +133,16 @@ class Admin {
 		wp_register_script( 'datatables-buttons', LWC_URL . 'src/includes/libraries/js/datatables/datatables.buttons.min.js', array( 'jquery' ), $this->version, false );
 		wp_register_script( 'datatables-buttons-excel', LWC_URL . 'src/includes/libraries/js/datatables/jszip.min.js', array( 'jquery' ), $this->version, false );
 		wp_register_script( 'datatables-buttons-html5', LWC_URL . 'src/includes/libraries/js/datatables/buttons.html5.min.js', array( 'jquery' ), $this->version, false );
+
+		wp_register_script( 'import-product', LWC_URL . 'src/admin/assets/js/import' . $dev_js, [
+			'jquery',
+			'jquery-ui-core',
+			'jquery-ui-dialog'
+		] );
+		wp_localize_script( 'import-product', 'lwc_product', array(
+			'ajax_url'   => admin_url( 'admin-ajax.php' ),
+			'ajax_nonce' => wp_create_nonce( 'lwc_product_nonce' ),
+		) );
 
 		// Load Lib Admin Restrict only lwcommerce Page
 		if (
@@ -301,14 +311,14 @@ class Admin {
 				'shortcode'   => '[lwcommerce_product_listing]',
 				'description' => __( "Product List View", 'lwcommerce' )
 			],
-            [
-                'shortcode'   => '[lwcommerce_product_listing mobile="true"]',
-                'description' => __( "Product List Display with Mobile First version", 'lwcommerce' )
-            ],
-            [
-                'shortcode'   => '[lwcommerce_product_listing filter="category"]',
-                'description' => __( "Product List View with Category Filter", 'lwcommerce' )
-            ]
+			[
+				'shortcode'   => '[lwcommerce_product_listing mobile="true"]',
+				'description' => __( "Product List Display with Mobile First version", 'lwcommerce' )
+			],
+			[
+				'shortcode'   => '[lwcommerce_product_listing filter="category"]',
+				'description' => __( "Product List View with Category Filter", 'lwcommerce' )
+			]
 		) );
 
 		// Add Switch Options to wp-admin > lwcommerce > Appearance
@@ -341,43 +351,42 @@ class Admin {
 		include_once LWC_PATH . 'src/admin/settings/index.php';
 	}
 
-    /**
-     * Automatic Translation Apply
-     * Copy Translation Into System
-     * Set Translation Version
-     *
-     * @return void
-     */
-    public function translation()
-    {
-        if( class_exists( 'LokusWP\WordPress\Helper')){
-            Helper::set_translation( "lwcommerce", LWC_PATH,LWC_TEXT_VERSION , 'id_ID');
-        }
+	/**
+	 * Automatic Translation Apply
+	 * Copy Translation Into System
+	 * Set Translation Version
+	 *
+	 * @return void
+	 */
+	public function translation() {
+		if ( class_exists( 'LokusWP\WordPress\Helper' ) ) {
+			Helper::set_translation( "lwcommerce", LWC_PATH, LWC_TEXT_VERSION, 'id_ID' );
+		}
 
-        /** --- Deprecated Translation File --- */
+		/** --- Deprecated Translation File --- */
 
-        // Translation Deprecated Notice
-        if(get_option( 'lwcommerce_text_version' )){
-            if ( version_compare( LWC_TEXT_VERSION, get_option( 'lwcommerce_text_version' ),
-                    '>' ) && is_plugin_active( 'loco-translate/loco.php' ) ) {
-                add_action( 'admin_notices', function () {
-                    $message      = esc_html__( 'LWCommerce Translation is Deprecated, Please Sync with Loco Translate',
-                        'lwcommerce' );
-                    $html_message = sprintf( '<div class="notice notice-info">%s <a href="?lwc-translation-sync" target="_blank">' . __( 'Sync Translation',
-                            'lwcommerce' ) . '</a></div>', wpautop( $message ) );
-                    echo wp_kses_post( $html_message );
-                } );
-            }
-        }
+		// Translation Deprecated Notice
+		if ( get_option( 'lwcommerce_text_version' ) ) {
+			if ( version_compare( LWC_TEXT_VERSION, get_option( 'lwcommerce_text_version' ),
+					'>' ) && is_plugin_active( 'loco-translate/loco.php' ) ) {
+				add_action( 'admin_notices', function () {
+					$message      = esc_html__( 'LWCommerce Translation is Deprecated, Please Sync with Loco Translate',
+						'lwcommerce' );
+					$html_message = sprintf( '<div class="notice notice-info">%s <a href="?lwc-translation-sync" target="_blank">' . __( 'Sync Translation',
+							'lwcommerce' ) . '</a></div>', wpautop( $message ) );
+					echo wp_kses_post( $html_message );
+				} );
+			}
+		}
 
 
-        // Translation Sync Clicked -> Update Version
-        if ( isset( $_GET['lwc-translation-sync'] ) ) {
-            update_option( 'lwcommerce_text_version', LWC_TEXT_VERSION );
-            header( 'Refresh:0; url=' . get_admin_url() . 'admin.php?path=languages/plugins/lwcommerce-' . get_locale() . '.po&bundle=lwcommerce/lwcommerce.php&domain=lwcommerce&page=loco-plugin&action=file-edit' );
-        }
+		// Translation Sync Clicked -> Update Version
+		if ( isset( $_GET['lwc-translation-sync'] ) ) {
+			update_option( 'lwcommerce_text_version', LWC_TEXT_VERSION );
+			header( 'Refresh:0; url=' . get_admin_url() . 'admin.php?path=languages/plugins/lwcommerce-' . get_locale() . '.po&bundle=lwcommerce/lwcommerce.php&domain=lwcommerce&page=loco-plugin&action=file-edit' );
+		}
 
-    }
+	}
 
 	/**
 	 * Cloning is forbidden.
