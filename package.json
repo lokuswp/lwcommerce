@@ -13,7 +13,7 @@
     "@playwright/test": "^1.25.1"
   },
   "scripts": {
-    "test:e2e": "sh ./tests/e2e/script/e2e.sh && npx playwright test && sh ./tests/e2e/script/clean.sh"
+    "test:e2e": "sh ./tests/e2e/script/e2e.sh && npx playwright test"
   },
   "repository": {
     "type": "git",
