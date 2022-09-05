@@ -7,5 +7,6 @@ lwcommerce/*
 /test-results/
 /playwright-report/
 /playwright/.cache/
-/wordpress
+/wordpress7.3
+/wordpress7.4
 /lokuswp

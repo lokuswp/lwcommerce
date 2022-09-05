@@ -1,7 +1,12 @@
 const {test} = require('@playwright/test');
 
-test.describe(require('./setup/setup-wordpress.spec.js'));
-test.describe(require('./setup/check-plugin.spec.js'));
-test.describe(require('./admin/fresh-install-plugin.spec.js'));
-test.describe(require('./admin/product.spec.js'));
-test.describe(require('./admin/admin-setting.spec.js'));
+// PHP 7.3
+test.describe(require('./wordpress7.3/setup/setup-wordpress73.spec.js'));
+test.describe(require('./wordpress7.3/setup/check-plugin.spec.js'));
+
+// PHP 7.4
+test.describe(require('./wordpress7.4/setup/setup-wordpress74.spec.js'));
+test.describe(require('./wordpress7.4/setup/check-plugin.spec.js'));
+test.describe(require('./wordpress7.4/admin/fresh-install-plugin.spec.js'));
+test.describe(require('./wordpress7.4/admin/product.spec.js'));
+test.describe(require('./wordpress7.4/admin/admin-setting.spec.js'));
