@@ -32,6 +32,10 @@ class AJAX {
 
 		// Statistic
 		add_action( 'wp_ajax_lwc_orders_chart', [ $this, 'orders_chart' ] );
+
+		// import product
+		add_action( 'wp_ajax_lwc_import_product', [ $this, 'import_product' ] );
+
 	}
 
 	public function admin_shipping_status() {
@@ -462,6 +466,69 @@ class AJAX {
 		}
 
 		wp_send_json_success( wp_upload_dir()['baseurl'] . '/lwcommerce.csv' );
+	}
+
+	public function import_product() {
+		if ( ! check_ajax_referer( 'lwc_product_nonce', 'security' ) ) {
+			wp_send_json_error( 'Invalid security token sent.' );
+		}
+
+		$file       = $_FILES['file'];
+		$file_mimes = [
+			'application/x-csv',
+			'text/csv',
+			'application/csv',
+		];
+
+		if ( 0 < $file['error'] ) {
+			wp_send_json_error( __( 'Something went wrong.', 'lwcommerce' ) );
+		}
+
+		if ( ! in_array( $file['type'], $file_mimes ) ) {
+			wp_send_json_error( __( 'Invalid file type.', 'lwcommerce' ) );
+		}
+
+		// Open uploaded CSV file with read-only mode
+		$csvFile = fopen( $file['tmp_name'], 'r' );
+		if ( ! $csvFile ) {
+			wp_send_json_error( __( 'Failed creating file', 'lwcommerce' ) );
+		}
+
+		// get header
+		$header = fgetcsv( $csvFile );
+		if ( count( $header ) <= 1 ) {
+			$header = str_getcsv( $header[0], ';' );
+		}
+
+		// Combine data header and content CSV file
+		$counter = 0;
+		while ( $get_data = fgetcsv( $csvFile, 10000 ) ) {
+			// if something bad happens, the csv only outputs a line array containing a string.
+			if ( count( $get_data ) <= 1 ) {
+				$get_data = str_getcsv( $get_data[0], ';' );
+			}
+
+			$product_id = wp_insert_post( array(
+				'post_type'    => 'product',
+				'post_title'   => $get_data[0],
+				'post_content' => $get_data[1],
+				'post_status'  => 'publish',
+				'meta_input'   => [
+					'_unit_price'  => $get_data[4],
+					'_price_promo' => $get_data[5],
+				],
+			) );
+
+			wp_set_object_terms( $product_id, $get_data[3], 'product_category' );
+
+			if ( ! empty( $get_data[2] ) ) {
+				set_post_thumbnail( $product_id, $get_data[2] );
+			}
+
+			$counter ++;
+		}
+
+		wp_send_json_success( $counter );
 	}
 }
 

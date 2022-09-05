@@ -22,6 +22,7 @@ class Plugin {
 		// Products
 		new Modules\Product\Post_Type_Product;
 		new Modules\Product\Metabox_Product;
+		new Modules\Product\Import_Product;
 
 		// System
 		new Modules\Plugin\Updater;
