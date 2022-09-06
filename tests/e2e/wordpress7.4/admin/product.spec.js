@@ -124,7 +124,30 @@ module.exports = function createTests() {
         await expect(page.locator('#the-list tr .row-title')).toHaveCount(4);
     });
 
-    test("Import product", async ({page}) => {
+    test("Import with false file mimetype", async ({page}) => {
+        await page.locator('#toplevel_page_edit-post_type-product div:has-text("Products")').click();
+        await expect(page).toHaveURL('http://localhost:8000/wp-admin/edit.php?post_type=product');
+        await page.locator('.import').click();
+        await page.locator('#csv-upload');
+
+        async function waitForMessageAsync() {
+            return new Promise(function (resolve) {
+                page.on('dialog', async dialog => {
+                    if (/File format must be .csv/.test(dialog.message())) {
+                        await dialog.dismiss();
+                        resolve(true);
+                    }
+                });
+            });
+        }
+
+        await page.setInputFiles('#csv-upload', './tests/e2e/wordpress7.4/admin/assets/grabexpress.png');
+        await expect(await waitForMessageAsync).toBeTruthy();
+        const textUpload = page.locator('.body-dialog-import .input-file span');
+        await expect(textUpload).toHaveText(/grabexpress.png/);
+    });
+
+    test("Download Template", async ({page}) => {
         await page.locator('#toplevel_page_edit-post_type-product div:has-text("Products")').click();
         await expect(page).toHaveURL('http://localhost:8000/wp-admin/edit.php?post_type=product');
         await page.locator('.import').click();
