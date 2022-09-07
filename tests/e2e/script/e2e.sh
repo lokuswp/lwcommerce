@@ -2,7 +2,7 @@
 
 # build the plugin
 echo "Building plugin...."
-sh build.sh
+bash build.sh
 
 # clone lokuswp
 git clone https://github.com/lokuswp/lokuswp.git
