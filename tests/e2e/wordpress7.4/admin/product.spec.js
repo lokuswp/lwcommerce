@@ -105,5 +105,64 @@ module.exports = function createTests() {
     test("Import product", async ({page}) => {
         await page.locator('#toplevel_page_edit-post_type-product div:has-text("Products")').click();
         await expect(page).toHaveURL('http://localhost:8000/wp-admin/edit.php?post_type=product');
-    })
+        await page.locator('.import').click();
+        await page.locator('#csv-upload');
+        await page.setInputFiles('#csv-upload', './tests/e2e/wordpress7.4/admin/assets/template.csv');
+        const textUpload = page.locator('.body-dialog-import .input-file span');
+        await expect(textUpload).toHaveText(/template.csv/);
+
+        async function waitForMessageAsync() {
+            return new Promise(function (resolve) {
+                page.on('dialog', async dialog => {
+                    if (/Success import 22 product/.test(dialog.message())) {
+                        await dialog.dismiss();
+                        resolve(true);
+                    }
+                });
+            });
+        }
+
+        page.on('dialog', dialog => dialog.accept());
+        await Promise.all([
+            page.waitForResponse(response => response.url() === 'http://localhost:8000/wp-admin/admin-ajax.php' && response.status() === 200),
+            page.click('div[role="dialog"] button:has-text("Import")'),
+        ]);
+        await expect(await waitForMessageAsync).toBeTruthy();
+        await page.waitForNavigation();
+        await expect(page).toHaveURL('http://localhost:8000/wp-admin/edit.php?post_type=product');
+    });
+
+    test("Import with false file mimetype", async ({page}) => {
+        await page.locator('#toplevel_page_edit-post_type-product div:has-text("Products")').click();
+        await expect(page).toHaveURL('http://localhost:8000/wp-admin/edit.php?post_type=product');
+        await page.locator('.import').click();
+        await page.locator('#csv-upload');
+
+        async function waitForMessageAsync() {
+            return new Promise(function (resolve) {
+                page.on('dialog', async dialog => {
+                    if (/File format must be .csv/.test(dialog.message())) {
+                        await dialog.dismiss();
+                        resolve(true);
+                    }
+                });
+            });
+        }
+
+        await page.setInputFiles('#csv-upload', './tests/e2e/wordpress7.4/admin/assets/grabexpress.png');
+        await expect(await waitForMessageAsync).toBeTruthy();
+        const textUpload = page.locator('.body-dialog-import .input-file span');
+        await expect(textUpload).toHaveText(/grabexpress.png/);
+    });
+
+    test("Download Template", async ({page}) => {
+        await page.locator('#toplevel_page_edit-post_type-product div:has-text("Products")').click();
+        await expect(page).toHaveURL('http://localhost:8000/wp-admin/edit.php?post_type=product');
+        await page.locator('.import').click();
+        await Promise.all([
+            page.waitForEvent('popup'),
+            page.waitForEvent('download'),
+            page.locator('text=Download Template Import').click()
+        ]);
+    });
 }
