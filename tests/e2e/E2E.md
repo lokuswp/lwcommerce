@@ -25,3 +25,30 @@ npm run test:e2e
 ```
 
 **Langkah 1 dan 2 bisa kalian skip jika kalian sudah menjalankannya sekali.**
+
+## Cara membuat test
+
+Kalian bisa menulis test pada direktori `tests/e2e/wordpress{versi php}`
+Setiap test yang ditulis di sana harus di include pada file `tests/e2e/test.list.js`
+ini agar test bisa berjalan berurutan.
+
+Sebenarnya bisa menjalankan test dengan paralel. Cuman di wordpress ada step dimana saat baru pertama kali menjalankan
+wordpress harus memasuki tahap **installasi**.
+dan saat pertama kali mengaktifkan plugin **lwcommerce** harus melalui tahap **onboarding**
+
+Jika ada cara lain yang bisa dilakukan untuk tetap paralel tapi harus melalui 2 tahap itu terlebih dahulu,
+kami sangat menerima pull request dari kalian (●'◡'●).
+
+### Langkah-langkah membuat test
+
+Ada 2 cara untuk membuat test pada playwright
+
+1. dengan cara manual menulis test seperti biasa
+2. cara otomatis dengan:
+
+```shell script
+npx playwright codegen {url website anda}
+```
+
+untuk lebih lanjut apa itu code generation dengan playwright. Kalian bisa
+mengunjungi https://playwright.dev/docs/codegen-intro
