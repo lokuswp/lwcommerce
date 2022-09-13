@@ -16,7 +16,7 @@ cecho(){
 
 # build the plugin
 echo "Building plugin...."
-bash build.sh
+bash tests/e2e/script/build.sh
 
 # clone lokuswp
 git clone https://github.com/lokuswp/lokuswp.git
