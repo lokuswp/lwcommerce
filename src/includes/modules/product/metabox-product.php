@@ -276,7 +276,7 @@ class Metabox_Product {
 		update_post_meta( $post_id, '_length', empty( $_POST['_length'] ) ? 0 : abs( $_POST['_length'] ) );
 		update_post_meta( $post_id, '_width', empty( $_POST['_width'] ) ? 0 : abs( $_POST['_width'] ) );
 		update_post_meta( $post_id, '_height', empty( $_POST['_height'] ) ? 0 : abs( $_POST['_height'] ) );
-		update_post_meta( $post_id, '_volume', abs( $_POST['_length'] ) * abs( $_POST['_width'] ) * abs( $_POST['_height'] ) );
+//		update_post_meta( $post_id, '_volume', abs( $_POST['_length'] ) * abs( $_POST['_width'] ) * abs( $_POST['_height'] ) );
 
 		// Do Action
 		do_action( 'lwcommerce/product/data/save', $post_id, $_POST );

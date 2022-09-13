@@ -48,18 +48,6 @@ $categories = [
 </style>
 <section id="settings" class="form-horizontal">
     <form>
-
-        <!-- Name -->
-        <div class="form-group">
-            <div class="col-3 col-sm-12">
-                <label class="form-label" for="name"><?php _e( 'Name', 'lwcommerce' ); ?></label>
-            </div>
-            <div class="col-9 col-sm-12">
-                <input type="text" class="form-input" name="name" placeholder="Lokus Store"
-                       value="<?php echo $name; ?>"/>
-            </div>
-        </div>
-
         <!-- Logo -->
         <div class="form-group">
             <div class="col-3 col-sm-12">
@@ -70,6 +58,17 @@ $categories = [
                 <input class="form-input " style="display: none" type="text" name="logo">
                 <input type="button" value="<?php _e( 'Choose Image', 'lwcommerce' ); ?>"
                        class="lokuswp-admin-upload btn col-12">
+            </div>
+        </div>
+
+        <!-- Name -->
+        <div class="form-group">
+            <div class="col-3 col-sm-12">
+                <label class="form-label" for="name"><?php _e( 'Name', 'lwcommerce' ); ?></label>
+            </div>
+            <div class="col-9 col-sm-12">
+                <input type="text" class="form-input" name="name" placeholder="Lokus Store"
+                       value="<?php echo $name; ?>"/>
             </div>
         </div>
 
@@ -120,7 +119,7 @@ $categories = [
                 <label class="form-label" for="whatsapp"><?php _e( 'Whatsapp', 'lwcommerce' ); ?></label>
             </div>
             <div class="col-9 col-sm-12">
-                <input type="number" class="form-input" name="whatsapp" placeholder="081335592022"
+                <input type="number" class="form-input" name="whatsapp" placeholder="081238642022"
                        value="<?php echo $whatsapp; ?>"/>
             </div>
         </div>

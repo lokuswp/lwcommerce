@@ -14,7 +14,7 @@ function lwc_get_unit_price( $product_id = null ) {
 
 	$unit_price = get_post_meta( $product_id, '_unit_price', true );
 
-	return isset( $unit_price ) ? abs( $unit_price ) : 0;
+	return isset( $unit_price ) ? (int) $unit_price : 0;
 }
 
 /**
@@ -32,7 +32,7 @@ function lwc_get_price_promo( int $product_id ) {
 
 	$price_promo = get_post_meta( $product_id, '_price_promo', true );
 
-	return isset( $price_promo ) ? abs( $price_promo ) : 0;
+	return isset( $price_promo ) ? (int) $price_promo : 0;
 }
 
 /**

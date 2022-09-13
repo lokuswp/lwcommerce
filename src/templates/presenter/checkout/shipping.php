@@ -90,7 +90,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <h6 style="margin-bottom:0;line-height:normal;">Pengiriman</h6>
+                                        <h6 style="margin-bottom:0;line-height:normal;margin-top:0;">Pengiriman</h6>
                                         <p>Pesanan di Kirim oleh Kurir</p>
                                     </div>
                         
