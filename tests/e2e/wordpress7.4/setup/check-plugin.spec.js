@@ -17,7 +17,7 @@ module.exports = function createTests() {
         // Is has LWDonation plugin
         await expect(page.locator('.wp-list-table')).toHaveText(/LWCommerce/);
 
-        // Is the plugin version is 0.1.9?
-        await expect(page.locator('[data-slug="lwcommerce"]')).toHaveText(/Version 0.1.9/);
+        // Is the plugin version is 0.2.1?
+        await expect(page.locator('[data-slug="lwcommerce"]')).toHaveText(/Version 0.2.1/);
     });
 }

@@ -4,7 +4,7 @@ module.exports = function createTests() {
 
     test.beforeEach(async ({page}) => {
         // Runs before each test and signs in each page.
-        await page.goto('http://localhost:8001/wp-login.php?redirect_to=http%3A%2F%2Flocalhost%3A8001%2Fwp-admin%2F&reauth=1');
+        await page.goto('http://localhost:8001/wp-admin/');
         await page.locator('input[name="log"]').click();
         await page.locator('input[name="log"]').fill('test');
         await page.locator('input[name="pwd"]').click();
@@ -21,8 +21,8 @@ module.exports = function createTests() {
         // Is has LWDonation plugin
         await expect(page.locator('.wp-list-table')).toHaveText(/LWCommerce/);
 
-        // Is the plugin version is 0.1.9?
-        await expect(page.locator('[data-slug="lwcommerce"]')).toHaveText(/Version 0.1.9/);
+        // Is the plugin version is 0.2.1?
+        await expect(page.locator('[data-slug="lwcommerce"]')).toHaveText(/Version 0.2.1/);
     });
 
     test('Plugin must not working on php 7.3', async ({page}) => {
