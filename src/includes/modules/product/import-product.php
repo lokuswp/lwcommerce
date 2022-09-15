@@ -12,13 +12,13 @@ class Import_Product {
 	}
 
 	public function button_import( $where ) {
-		global $post;
+		global $current_screen;
 		wp_enqueue_script( 'import-product' );
 		wp_enqueue_style( 'wp-jquery-ui-dialog' );
 		if ( $where === 'bottom' ) {
 			return false;
 		}
-		if ( $post->post_type !== 'product' ) {
+		if ( $current_screen->post_type !== 'product' ) {
 			return false;
 		}
 		?>

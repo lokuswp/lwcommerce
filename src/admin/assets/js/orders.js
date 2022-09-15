@@ -91,7 +91,6 @@
 
         const renderShipping = (data) => {
             let html = '';
-            console.log(data.no_resi)
             if (data.shipping_type === 'digital') {
                 html += `<div class="lwc-grid-item lwc-justify-content-space-between">
                             <div class="lwc-flex-column">
