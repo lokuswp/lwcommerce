@@ -30,11 +30,11 @@
 		?>
 
 		<?php if ( $physical_shipping ) :
-            $shipping_carriers = lwp_get_option( 'shipping_manager' );
-            ?>
+			$shipping_carriers = lwp_get_option( 'shipping_manager' );
+			?>
 
             <style>
-                #address-field .form-group{
+                #address-field .form-group {
                     display: inline-flex;
                     width: 100%;
                 }
@@ -44,62 +44,62 @@
             <div class="row" id="shipping-type">
 
 
-                <?php if( $shipping_carriers['takeaway'] == "on" ) : ?>
-                <div class="col-xs-12 col-sm-12 swiper-no-swiping gutter">
-                    <div class="lwp-form-group">
-                        <div class="item-radio">
-                            <input type="radio"
-                                name="shipping_type"
-                                id="takeaway"
-                                title="takeaway"
-                                service="reguler"
-                                cost="0" checked>
-                            <label for="takeaway">
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <div class="img" style="padding-right: 8px;height: 50px;">
-                                            <img src="<?= LWC_URL . 'src/admin/assets/images/takeaway.jpg' ?>" alt="takeaway">
+				<?php if ( $shipping_carriers['pickup'] == "on" ) : ?>
+                    <div class="col-xs-12 col-sm-12 swiper-no-swiping gutter">
+                        <div class="lwp-form-group">
+                            <div class="item-radio">
+                                <input type="radio"
+                                       name="shipping_type"
+                                       id="pickup"
+                                       title="pickup"
+                                       service="reguler"
+                                       cost="0" checked>
+                                <label for="takeaway">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="img" style="padding-right: 8px;height: 50px;">
+                                                <img src="<?= LWC_URL . 'src/admin/assets/images/pickup.png' ?>" alt="pickup">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <h6 style="margin-bottom:0;line-height:normal;">Pickup</h6>
+                                            <p>Ambil Pesanan di Toko</p>
+                                        </div>
+                                        <div class="col-sm-3" style="text-align: center;position: absolute;right: 12px;top: 4px;">
+                                            <p style="padding:8px 0;font-size: 14px;font-weight: 600;color: var(--lokuswp-accent-color);">Gratis</p>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <h6 style="margin-bottom:0;line-height:normal;">Take Away</h6>
-                                        <p>Ambil Pesanan di Kasir</p>
-                                    </div>
-                                    <div class="col-sm-3" style="text-align: center;position: absolute;right: 12px;top: 4px;">
-                                        <p style="padding:8px 0;font-size: 14px;font-weight: 600;color: var(--lokuswp-accent-color);">Gratis</p>
-                                    </div>
-                                </div>
-                            </label>
+                                </label>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <?php endif; ?>
+				<?php endif; ?>
 
-                <?php if( $shipping_carriers['rajaongkir-jne'] == "on" ) : ?>
-                <div class="col-xs-12 col-sm-12 swiper-no-swiping gutter">
-                    <div class="lwp-form-group">
-                        <div class="item-radio">
-                            <input type="radio"
-                                name="shipping_type"
-                                id="shipping">
-                            <label for="shipping">
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <div class="img" style="padding-right: 12px;height: 50px;">
-                                            <img src="<?= LWC_URL . 'src/public/assets/images/shipping.jpg' ?>" alt="takeaway">
+				<?php if ( $shipping_carriers['rajaongkir-jne'] == "on" ) : ?>
+                    <div class="col-xs-12 col-sm-12 swiper-no-swiping gutter">
+                        <div class="lwp-form-group">
+                            <div class="item-radio">
+                                <input type="radio"
+                                       name="shipping_type"
+                                       id="shipping">
+                                <label for="shipping">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="img" style="padding-right: 12px;height: 50px;">
+                                                <img src="<?= LWC_URL . 'src/public/assets/images/shipping.jpg' ?>" alt="takeaway">
+                                            </div>
                                         </div>
+                                        <div class="col-sm-6">
+                                            <h6 style="margin-bottom:0;line-height:normal;margin-top:0;">Pengiriman</h6>
+                                            <p>Pesanan di Kirim oleh Kurir</p>
+                                        </div>
+
                                     </div>
-                                    <div class="col-sm-6">
-                                        <h6 style="margin-bottom:0;line-height:normal;margin-top:0;">Pengiriman</h6>
-                                        <p>Pesanan di Kirim oleh Kurir</p>
-                                    </div>
-                        
-                                </div>
-                            </label>
+                                </label>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <?php endif; ?>
+				<?php endif; ?>
 
             </div>
 
@@ -159,11 +159,11 @@
 </div>
 
 <style>
-    #address-field{
+    #address-field {
         display: none;
     }
 
-    
+
 </style>
 
 <!-- Template Shipping -->
