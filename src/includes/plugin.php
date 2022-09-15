@@ -57,7 +57,7 @@ class Plugin {
 		// Shipping
 		require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-rajaongkir-jne.php';
 		require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-rajaongkir.php';
-		require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-take-away.php';
+		require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-pickup.php';
 
 		// Order
 		require_once LWC_PATH . 'src/includes/modules/order/class-order.php';

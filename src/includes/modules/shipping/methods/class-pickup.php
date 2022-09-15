@@ -13,12 +13,12 @@ if ( ! defined( 'WPTEST' ) ) {
  * @since 0.1.0
  *****************************************
  */
-class Take_Away extends Shipping\Gateway {
-	public string $id = 'takeaway';
+class Pickup extends Shipping\Gateway {
+	public string $id = 'pickup';
 
-	public string $name = "Take Away";
-	public string $description = "Pesanan Dibawa Pulang";
-	public string $logo_url = LWC_URL . 'src/admin/assets/images/takeaway.jpg';
+	public string $name = "Pickup";
+	public string $description = "Pesanan Diambil sendiri";
+	public string $logo_url = LWC_URL . 'src/admin/assets/images/pickup.png';
 
 	public array $docs_url = [ 'id_ID' => '', 'en_US' => '' ];
 
@@ -52,4 +52,4 @@ class Take_Away extends Shipping\Gateway {
 
 }
 
-Shipping\Manager::register( new Take_Away() );
+Shipping\Manager::register( new Pickup() );
