@@ -8,13 +8,13 @@ if ( ! defined( 'WPTEST' ) ) {
 
 class Takeaway_Processing {
 	public function __construct() {
-		add_action( 'lokuswp/transaction/shipping/takeaway', [ $this, 'processing' ], 10, 1 );
+		add_action( 'lokuswp/transaction/shipping/pickup', [ $this, 'processing' ], 10, 1 );
 	}
 
 	public function processing( $shipping ) {
 		lwp_add_transaction_extras(
 			"shipping",
-			'take-away',
+			'pickup',
 			__( "Shipping costs", "lwcommerce" ),
 			0,
 			"+",

@@ -3,15 +3,15 @@
 namespace LokusWP\Commerce\Shipping;
 
 class Rajaongkir {
-	protected string $api_key = '80aa49704fc30a939124a831882dea72';
-	protected string $api_url = 'https://api.rajaongkir.com/starter/';
+	private string $api_key = '80aa49704fc30a939124a831882dea72';
+	private string $api_url = 'https://api.rajaongkir.com/starter/';
 
-	protected string $courier;
-	protected string $origin;
-	protected string $destination;
-	protected string $weight;
-	protected string $service;
-	protected array $service_allowed;
+	private string $courier;
+	private string $origin;
+	private string $destination;
+	private string $weight;
+	private string $service;
+	private array $service_allowed;
 
 	private static ?RajaOngkir $instance = null;
 

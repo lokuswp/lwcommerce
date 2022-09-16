@@ -38,14 +38,31 @@
                     display: inline-flex;
                     width: 100%;
                 }
+
+                #shipping-type {
+                    flex-wrap: nowrap;
+                }
+
+                .warp-hide {
+                    display: none;
+                }
+
+                .warp-show {
+                    display: flex;
+                }
+
+                .center {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
             </style>
 
             <!-- Shipping Type -->
             <div class="row" id="shipping-type">
 
-
 				<?php if ( $shipping_carriers['pickup'] == "on" ) : ?>
-                    <div class="col-xs-12 col-sm-12 swiper-no-swiping gutter">
+                    <div class="swiper-no-swiping gutter" style="width: 100%">
                         <div class="lwp-form-group">
                             <div class="item-radio">
                                 <input type="radio"
@@ -54,20 +71,10 @@
                                        title="pickup"
                                        service="reguler"
                                        cost="0" checked>
-                                <label for="takeaway">
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <div class="img" style="padding-right: 8px;height: 50px;">
-                                                <img src="<?= LWC_URL . 'src/admin/assets/images/pickup.png' ?>" alt="pickup">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <h6 style="margin-bottom:0;line-height:normal;">Pickup</h6>
-                                            <p>Ambil Pesanan di Toko</p>
-                                        </div>
-                                        <div class="col-sm-3" style="text-align: center;position: absolute;right: 12px;top: 4px;">
-                                            <p style="padding:8px 0;font-size: 14px;font-weight: 600;color: var(--lokuswp-accent-color);">Gratis</p>
-                                        </div>
+                                <label for="pickup">
+                                    <div class="row center">
+                                        <img src="<?= LWC_URL . 'src/admin/assets/images/pickup.png' ?>" alt="takeaway">
+                                        <h6>Pickup</h6>
                                     </div>
                                 </label>
                             </div>
@@ -76,24 +83,16 @@
 				<?php endif; ?>
 
 				<?php if ( $shipping_carriers['rajaongkir-jne'] == "on" ) : ?>
-                    <div class="col-xs-12 col-sm-12 swiper-no-swiping gutter">
+                    <div class="swiper-no-swiping gutter" style="width: 100%">
                         <div class="lwp-form-group">
                             <div class="item-radio">
                                 <input type="radio"
                                        name="shipping_type"
                                        id="shipping">
                                 <label for="shipping">
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <div class="img" style="padding-right: 12px;height: 50px;">
-                                                <img src="<?= LWC_URL . 'src/public/assets/images/shipping.jpg' ?>" alt="takeaway">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <h6 style="margin-bottom:0;line-height:normal;margin-top:0;">Pengiriman</h6>
-                                            <p>Pesanan di Kirim oleh Kurir</p>
-                                        </div>
-
+                                    <div class="row center">
+                                        <img src="<?= LWC_URL . 'src/public/assets/images/shipping.jpg' ?>" alt="takeaway">
+                                        <h6 style="margin-bottom:0;line-height:normal;margin-top:0;">Delivery</h6>
                                     </div>
                                 </label>
                             </div>
@@ -103,9 +102,80 @@
 
             </div>
 
+            <div class="row warp-show swiper-no-swiping" id="pickup-time">
+                <div class="col-xs-12 gutter">
+                    <h5>Pilih waktu ambil pesanan</h5>
+                </div>
+
+                <!--20 minutes-->
+                <div class="col-xs-4 gutter">
+                    <div class="lwp-form-group">
+                        <div class="item-radio">
+                            <input type="radio"
+                                   name="time_pickup"
+                                   id="20min"
+                                   title="20 minutes"
+                                   checked>
+                            <label for="20min">
+                                <div class="row center">
+                                    <h6>20 min</h6>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!--1 hour-->
+                <div class="col-xs-4 gutter">
+                    <div class="lwp-form-group">
+                        <div class="item-radio">
+                            <input type="radio"
+                                   name="time_pickup"
+                                   id="1hour"
+                                   title="1 hour"
+                            >
+                            <label for="1hour">
+                                <div class="row center">
+                                    <h6>1 jam</h6>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!--3 hour-->
+                <div class="col-xs-4 gutter">
+                    <div class="lwp-form-group">
+                        <div class="item-radio">
+                            <input type="radio"
+                                   name="time_pickup"
+                                   id="3hour"
+                                   title="3 hour"
+                            >
+                            <label for="3hour">
+                                <div class="row center">
+                                    <h6>3 jam</h6>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 gutter">
+                    <p>Setelah pembayaran berhasil dan terverifikasi</p>
+                </div>
+
+            </div>
+
             <input type="hidden" id="user-address">
 
-            <div class="row" id="address-field">
+            <div class="row warp-hide" id="address-field">
+
+				<?php do_action( "lwcommerce/shipping/delivery/header" ) ?>
+
+                <div class="col-xs-12 gutter">
+                    <span>Alamat</span>
+                </div>
 
                 <!-- State -->
                 <div class="col-xs-12 col-sm-6 gutter">
@@ -140,6 +210,8 @@
             <!-- Shipping Services -->
             <section id="lwcommerce-shipping-services"></section>
 
+			<?php do_action( "lwcommerce/shipping/delivery/footer" ) ?>
+
 		<?php endif; ?>
     </form>
 
@@ -157,15 +229,6 @@
     </div>
 
 </div>
-
-<style>
-    #address-field {
-        display: none;
-    }
-
-
-</style>
-
 <!-- Template Shipping -->
 <script id="struct-shipping-services" type="x-template">
     <div class="row">

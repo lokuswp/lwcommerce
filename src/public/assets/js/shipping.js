@@ -1,3 +1,5 @@
+const {log} = console;
+
 (function ($) {
     'use strict'
 
@@ -36,13 +38,14 @@
                     }
 
                     // Set Extras fot take away
-                    lwpCheckout.setExtra("shipping", "Biaya Pengiriman", 'take-away', 0, "+", "fixed", "subtotal");
+                    lwpCheckout.setExtra("shipping", "Biaya Pengiriman", 'pickup', 0, "+", "fixed", "subtotal");
                     lwpCheckout.setExtraField("shipping", {
-                        provider: 'takeaway',
+                        provider: 'pickup',
                         service: 'ambil ditempat',
-                        courier: 'Take Away',
+                        courier: 'Pickup',
                         destination: '-',
                         weight: '0',
+                        time: '20min'
                     });
 
                     // Render Summary
@@ -93,7 +96,6 @@
 
     });
 
-
     /*****************************************
      * User Change City in Shipping Section
      * Getting Shipping Services Based on Selected City
@@ -108,7 +110,10 @@
 
         let destination = $('#cities').find(":selected").val();
         let cart_uuid = lokusCookie.get("lokuswp_cart_session");
+        const elmCoords = $('#input-coordinate');
+        let coordinate = 0;
 
+        if (elmCoords.length > 0) coordinate = JSON.parse(elmCoords.val());
 
         // Request to REST API
         jQuery.ajax({
@@ -116,8 +121,9 @@
             type: 'POST',
             data: {
                 action: 'lwcommerce_get_shipping_services',
-                destination: destination,
-                cart_uuid: cart_uuid,
+                destination,
+                cart_uuid,
+                coordinate,
             },
             success: function (response) {
                 if (response.success) {
@@ -175,16 +181,18 @@
         let cost = $(this).attr('cost');
         let id = $(this).attr('id');
 
-        // Ser Extras
-        lwpCheckout.setExtra("shipping", "Biaya Pengiriman", title + " - " + service, cost, "+", "fixed", "subtotal");
-        lwpCheckout.setExtraField("shipping", {
-            provider: id.split('-').slice(0, -1).join('-'),
-            service: service,
-            courier: title,
-            destination: $('#cities').find(":selected").val(),
-            address: $('#shipping_address').val(),
-            weight: 20,
-        });
+        if (id.includes('rajaongkir')) {
+            // Set Extras
+            lwpCheckout.setExtra("shipping", "Biaya Pengiriman", title + " - " + service, cost, "+", "fixed", "subtotal");
+            lwpCheckout.setExtraField("shipping", {
+                provider: id.split('-').slice(0, -1).join('-'),
+                service: service,
+                courier: title,
+                destination: $('#cities').find(":selected").val(),
+                address: $('#shipping_address').val(),
+                weight: 20,
+            });
+        }
 
         // Render Summary
         lwpRender.trxExtras().trxTotal();
@@ -203,14 +211,40 @@
         console.log("User Choose or Change Shipping Type");
 
         let id = $(this).attr("id");
+        const addressField = $("#address-field");
+        const pickupTime = $("#pickup-time");
 
         if (id == "shipping") {
-            $("#address-field").css("display", "flex");
+            addressField.removeClass("warp-hide");
+            addressField.addClass("warp-show");
+            pickupTime.removeClass("warp-show");
+            pickupTime.addClass("warp-hide");
         } else {
-            $("#address-field, #lwcommerce-shipping-services").css("display", "none");
+            addressField.removeClass("warp-show");
+            addressField.addClass("warp-hide");
+            pickupTime.removeClass("warp-hide");
+            pickupTime.addClass("warp-show");
             lwpRender.trxExtras().trxTotal();
         }
 
+    });
+
+    $(document).on('change', 'input[name="time_pickup"]', function (e) {
+        e.preventDefault();
+        console.log("User Pickup time");
+
+        let id = $(this).attr("id");
+        lwpCheckout.setExtra("shipping", "Biaya Pengiriman", 'pickup', 0, "+", "fixed", "subtotal");
+        lwpCheckout.setExtraField("shipping", {
+            provider: 'pickup',
+            service: 'ambil ditempat',
+            courier: 'Pickup',
+            destination: '-',
+            weight: '0',
+            time: id
+        });
+        // Render Summary
+        lwpRender.trxExtras().trxTotal();
     });
 
     /*****************************************

@@ -11,6 +11,7 @@ class AJAX {
 	public function get_shipping_services() {
 		$destination = abs( $_POST['destination'] );
 		$cart_uuid   = sanitize_key( $_POST['cart_uuid'] );
+		$coordinate  = $_POST['coordinate'];
 
 		if ( ! $destination ) {
 			return new \WP_Error( 'shipping_destination_empty', 'Destination is required', [ 'status' => 400 ] );
@@ -28,7 +29,6 @@ class AJAX {
 		}
 
 		$services = [];
-
 		// Loop : Shipping Method
 		foreach ( $shipping_active_list as $shipping_id => $shipping_status ) {
 
@@ -63,13 +63,16 @@ class AJAX {
 
 				$shipping_data->destination = $destination;
 				$shipping_data->weight      = $weight;
+				$shipping_data->coordinate  = $coordinate;
 
 				$services[] = apply_filters( "lwcommerce/shipping/services", [], $shipping_data, $service_allowed );
 			}
 		}
 
-		// Remove Parent Array
-		$services = array_values( $services[0] );
+		// Remove Empty Array && merge to 1 dimensional array
+		$services = array_map( 'array_filter', $services );
+		$services = array_filter( $services );
+		$services = call_user_func_array( 'array_merge', $services );
 
 		wp_send_json_success( $services );
 	}

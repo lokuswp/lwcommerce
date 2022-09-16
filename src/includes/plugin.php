@@ -48,7 +48,7 @@ class Plugin {
 		require_once LWC_PATH . 'src/includes/modules/shipping/class-manager.php';
 		require_once LWC_PATH . 'src/includes/modules/shipping/controller/class-shipping-controller.php';
 		require_once LWC_PATH . 'src/includes/modules/shipping/controller/rajaongkir/class-shipping-processing.php';
-		require_once LWC_PATH . 'src/includes/modules/shipping/controller/takeaway/class-shipping-processing.php';
+		require_once LWC_PATH . 'src/includes/modules/shipping/controller/pickup/class-shipping-processing.php';
 
 		// API
 		require_once LWC_PATH . 'src/includes/modules/shipping/api/class-rajaongkir-api.php';

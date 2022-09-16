@@ -55,7 +55,7 @@ class RajaOngkir_JNE extends Shipping\Gateway {
 
 	public function get_service( $services, $shipping_data, $service_allowed ) {
 
-		if ( $this->get_status() == "on" || $this->get_status() == "1" ) {
+		if ( $this->get_status() == "on" || $this->get_status() == "1" && $shipping_data->id === "rajaongkir-jne" ) {
 			$origin      = lwc_get_settings( 'store', 'city', 'intval' );
 			$destination = $shipping_data->destination;
 			$weight      = $shipping_data->weight;
