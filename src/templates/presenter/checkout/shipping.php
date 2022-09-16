@@ -208,7 +208,7 @@
             </div>
 
             <!-- Shipping Services -->
-            <section id="lwcommerce-shipping-services"></section>
+            <section id="lwcommerce-shipping-services" class="wrap-hide"></section>
 
 			<?php do_action( "lwcommerce/shipping/delivery/footer" ) ?>
 

@@ -213,15 +213,22 @@ const {log} = console;
         let id = $(this).attr("id");
         const addressField = $("#address-field");
         const pickupTime = $("#pickup-time");
+        const shippingService = $("#lwcommerce-shipping-services");
 
         if (id == "shipping") {
             addressField.removeClass("warp-hide");
             addressField.addClass("warp-show");
+            shippingService.removeClass("warp-hide");
+            shippingService.addClass("warp-show");
+
             pickupTime.removeClass("warp-show");
             pickupTime.addClass("warp-hide");
         } else {
             addressField.removeClass("warp-show");
             addressField.addClass("warp-hide");
+            shippingService.removeClass("warp-show");
+            shippingService.addClass("warp-hide");
+
             pickupTime.removeClass("warp-hide");
             pickupTime.addClass("warp-show");
             lwpRender.trxExtras().trxTotal();
