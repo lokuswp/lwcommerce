@@ -388,16 +388,24 @@ class AJAX {
 		$order_id      = sanitize_key( $_POST['order_id'] );
 		$action        = sanitize_text_field( $_POST['action_type'] );
 		$shipping_type = sanitize_text_field( $_POST['shipping_type'] );
+		$courier       = sanitize_text_field( $_POST['courier'] );
 
 		if ( $shipping_type !== 'digital' ) {
 			if ( $action === 'pending' ) {
 				Order::set_status( $order_id, 'processing' );
 			}
 			if ( $action === 'processing' ) {
-				Order::set_status( $order_id, 'shipped' );
+				if ( $courier !== "pickup" ) {
+					Order::set_status( $order_id, 'shipped' );
+				} else {
+					Order::set_status( $order_id, 'pickup' );
+				}
+			}
+			if ( $action === 'pickup' ) {
+				Order::set_status( $order_id );
 			}
 			if ( $action === 'shipped' ) {
-				Order::set_status( $order_id, 'completed' );
+				Order::set_status( $order_id );
 			}
 			if ( $action === 'completed' ) {
 //			Order::set_status( $order_id, 'completed' );

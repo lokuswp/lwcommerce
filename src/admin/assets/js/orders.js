@@ -44,6 +44,7 @@
 
         const renderStatus = (data) => {
             let html = '';
+
             if (data.shipping_type === 'digital' && data.order_status !== 'refunded') {
                 html += `<button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}">
                                 ${data.order_status === 'pending' ? 'Sudah Dibayar' : ''}
@@ -51,12 +52,21 @@
                                 ${data.order_status === 'completed' ? 'Refunded' : ''} 
                         </button>`;
             } else if (data.shipping_type !== 'digital' && data.order_status !== 'refunded') {
-                html += `<button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}" data-resi="${data.no_resi}" data-courier="${data.courier.toLowerCase()}">
+                if (data.courier.toLowerCase() !== 'pickup') {
+                    html += `<button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}" data-resi="${data.no_resi}" data-courier="${data.courier.toLowerCase()}">
                                 ${data.order_status === 'pending' ? 'Sudah Dibayar' : ''}
                                 ${data.order_status === 'processing' ? 'Shipped' : ''}
                                 ${data.order_status === 'shipped' ? 'Completed' : ''}
                                 ${data.order_status === 'completed' ? 'Refunded' : ''} 
                         </button>`;
+                } else {
+                    html += `<button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}" data-resi="${data.no_resi}" data-courier="${data.courier.toLowerCase()}">
+                                ${data.order_status === 'pending' ? 'Sudah Dibayar' : ''}
+                                ${data.order_status === 'processing' ? 'Ready to Pickup' : ''}
+                                ${data.order_status === 'pickup' ? 'Completed' : ''}
+                                ${data.order_status === 'completed' ? 'Refunded' : ''} 
+                        </button>`;
+                }
             }
 
             return html;
@@ -119,7 +129,7 @@
                 } else {
                     html += `<span>${data.courier.toUpperCase()} ${data.service.toUpperCase()}</span>
                              <span style="margin-top: 10px" class="lwc-text-bold">Nomor Resi</span>`;
-                    if (data.order_status === 'processing' && data.courier.toLowerCase() !== 'take away') {
+                    if (data.order_status === 'processing' && data.courier.toLowerCase() !== 'pickup') {
                         if (data.no_resi == 0) {
                             html += `<input type="text" class="lwc-input-text" placeholder="Masukkan nomor resi" id="resi">
                                 <button class="lwc-btn-rounded" id="btn-resi" data-id="${data.transaction_id}">tambah</button>`;
@@ -183,6 +193,7 @@
                                         <span style="
                                              ${data.order_status.toLowerCase() === 'pending' ? `color: #38c;` : ''}
                                              ${data.order_status.toLowerCase() === 'shipped' ? `color: #ffb300;` : ''}
+                                             ${data.order_status.toLowerCase() === 'pickup' ? `color: #ffb300;` : ''}
                                              ${data.order_status.toLowerCase() === 'completed' ? `color: #085;` : ''}
                                              ${data.order_status.toLowerCase() === 'refunded' ? `color: #ff0000;` : ''}
                                               ">
@@ -435,8 +446,9 @@
             $(this).addClass('loading');
             $(this).attr('disabled', true);
             const action = $(this).attr('data-status');
+            const courier = $(this).attr('data-courier');
 
-            if (action === 'processing' && $(this).attr('data-resi') == 0 && $(this).attr('data-courier') !== 'take away') {
+            if (action === 'processing' && $(this).attr('data-resi') == 0 && courier !== 'pickup') {
                 $(this).removeClass('loading');
                 $(this).attr('disabled', false);
                 alert('Silahkan isi nomor resi terlebih dahulu');
@@ -453,7 +465,8 @@
                     security: lwc_orders.ajax_nonce,
                     order_id: orderId,
                     action_type: action,
-                    shipping_type: shipping
+                    shipping_type: shipping,
+                    courier
                 },
                 success: data => {
                     console.log(data);

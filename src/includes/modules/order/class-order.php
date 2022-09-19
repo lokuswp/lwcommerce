@@ -12,6 +12,7 @@ class Order {
 		$status_list               = [];
 		$status_list['pending']    = 'pending';
 		$status_list['processing'] = 'processing';
+		$status_list['pickup']     = 'pickup';
 		$status_list['cancelled']  = 'cancelled';
 		$status_list['shipped']    = 'shipped';
 		$status_list['completed']  = 'completed';
