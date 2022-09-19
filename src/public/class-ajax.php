@@ -13,11 +13,11 @@ class AJAX {
 		$cart_uuid   = sanitize_key( $_POST['cart_uuid'] );
 		$coordinate  = $_POST['coordinate'];
 
-		if ( ! $destination ) {
-			return new \WP_Error( 'shipping_destination_empty', 'Destination is required', [ 'status' => 400 ] );
-		}
-
 		$shipping_active_list = lwp_get_option( "shipping_manager" );
+
+		if ( ! $destination ) {
+			unset( $shipping_active_list['rajaongkir-jne'] );
+		}
 
 		if ( empty( $shipping_active_list ) ) {
 			return new \WP_Error( 'shipping_active', 'Shipping is not active', [ 'status' => 404 ] );

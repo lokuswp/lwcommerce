@@ -103,7 +103,8 @@ const {log} = console;
      * @since 0.1.0
      *****************************************
      */
-    $(document).on('change', '#lwcommerce-shipping #cities', function (e) {
+
+    window.handleGetShippingService = function (e) {
         const shippingServiceElement = $('#lwcommerce-shipping-services');
         shippingServiceElement.children().remove();
         shippingServiceElement.addClass('loading loading-lg');
@@ -163,7 +164,9 @@ const {log} = console;
             }
         })
 
-    });
+    }
+
+    $(document).on('change', '#lwcommerce-shipping #cities', handleGetShippingService);
 
     /*****************************************
      * User Choose Shipping Service
