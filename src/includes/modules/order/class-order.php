@@ -11,6 +11,7 @@ class Order {
 
 		$status_list               = [];
 		$status_list['pending']    = 'pending';
+		$status_list['paid']       = 'paid';
 		$status_list['processing'] = 'processing';
 		$status_list['pickup']     = 'pickup';
 		$status_list['cancelled']  = 'cancelled';
@@ -33,14 +34,14 @@ class Order {
 				case 'pending':
 					break;
 				case 'processing':
-				case 'completed':
-					self::set_completed( $trx_id );
+				case 'paid':
+					self::set_paid( $trx_id );
 					break;
 			}
 		}
 	}
 
-	public static function set_completed( $trx_id ) {
+	public static function set_paid( $trx_id ) {
 
 		// Update Paid_at Column
 		lwp_transaction_update_column( $trx_id, "paid_at", lwp_current_date() );

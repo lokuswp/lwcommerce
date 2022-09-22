@@ -392,7 +392,13 @@ class AJAX {
 
 		if ( $shipping_type !== 'digital' ) {
 			if ( $action === 'pending' ) {
+				Order::set_status( $order_id, 'paid' );
+			}
+			if ( $action === 'paid' ) {
 				Order::set_status( $order_id, 'processing' );
+			}
+			if ( $action === 'cancelled' ) {
+				Order::set_status( $order_id, 'cancelled' );
 			}
 			if ( $action === 'processing' ) {
 				if ( $courier !== "pickup" ) {

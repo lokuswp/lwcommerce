@@ -49,23 +49,49 @@
                 html += `<button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}">
                                 ${data.order_status === 'pending' ? 'Sudah Dibayar' : ''}
                                 ${data.order_status === 'shipped' ? 'Completed' : ''}
-                                ${data.order_status === 'completed' ? 'Refunded' : ''} 
+                                ${lwc_orders.is_pro ? `
+                                    ${data.order_status === 'completed' ? 'Refunded' : ''} 
+                                ` : ''}
                         </button>`;
-            } else if (data.shipping_type !== 'digital' && data.order_status !== 'refunded') {
+            } else if (data.shipping_type !== 'digital' && data.order_status !== 'refunded' && data.order_status !== 'cancelled') {
                 if (data.courier.toLowerCase() !== 'pickup') {
-                    html += `<button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}" data-resi="${data.no_resi}" data-courier="${data.courier.toLowerCase()}">
+                    if (data.order_status !== 'completed') {
+                        html += `<button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}" data-resi="${data.no_resi}" data-courier="${data.courier.toLowerCase()}">
                                 ${data.order_status === 'pending' ? 'Sudah Dibayar' : ''}
+                                ${data.order_status === 'paid' ? 'Di Proses' : ''}
                                 ${data.order_status === 'processing' ? 'Shipped' : ''}
                                 ${data.order_status === 'shipped' ? 'Completed' : ''}
-                                ${data.order_status === 'completed' ? 'Refunded' : ''} 
                         </button>`;
+                    }
+                    if (lwc_orders.is_pro && data.order_status === 'completed') {
+                        html += `<button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}" data-resi="${data.no_resi}" data-courier="${data.courier.toLowerCase()}">
+                                Refunded
+                        </button>`;
+                    }
+                    if (data.order_status === 'paid') {
+                        html += `<button class="btn btn-primary order-action" data-status="cancelled" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}" data-resi="${data.no_resi}" data-courier="${data.courier.toLowerCase()}">
+                                    Dibatalkan
+                                </button>`;
+                    }
                 } else {
-                    html += `<button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}" data-resi="${data.no_resi}" data-courier="${data.courier.toLowerCase()}">
+                    if (data.order_status !== 'completed') {
+                        html += `<button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}" data-resi="${data.no_resi}" data-courier="${data.courier.toLowerCase()}">
                                 ${data.order_status === 'pending' ? 'Sudah Dibayar' : ''}
+                                ${data.order_status === 'paid' ? 'Di Proses' : ''}
                                 ${data.order_status === 'processing' ? 'Ready to Pickup' : ''}
                                 ${data.order_status === 'pickup' ? 'Completed' : ''}
-                                ${data.order_status === 'completed' ? 'Refunded' : ''} 
                         </button>`;
+                    }
+                    if (lwc_orders.is_pro && data.order_status === 'completed') {
+                        html += `<button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}" data-resi="${data.no_resi}" data-courier="${data.courier.toLowerCase()}">
+                                Refunded
+                        </button>`;
+                    }
+                    if (data.order_status === 'paid') {
+                        html += `<button class="btn btn-primary order-action" data-status="cancelled" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}" data-resi="${data.no_resi}" data-courier="${data.courier.toLowerCase()}">
+                                    Dibatalkan
+                                </button>`;
+                    }
                 }
             }
 
@@ -192,6 +218,7 @@
                                         Status:
                                         <span style="
                                              ${data.order_status.toLowerCase() === 'pending' ? `color: #38c;` : ''}
+                                             ${data.order_status.toLowerCase() === 'paid' ? `color: #10D100;` : ''}
                                              ${data.order_status.toLowerCase() === 'shipped' ? `color: #ffb300;` : ''}
                                              ${data.order_status.toLowerCase() === 'pickup' ? `color: #ffb300;` : ''}
                                              ${data.order_status.toLowerCase() === 'completed' ? `color: #085;` : ''}
