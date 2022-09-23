@@ -18,30 +18,21 @@ class Updater {
 
 		add_filter( 'network_admin_plugin_action_links', [ $this, 'plugin_row' ], 10, 4 );
 		add_filter( 'plugin_action_links', [ $this, 'plugin_row' ], 10, 4 );
-		add_action( 'in_plugin_update_message-' . $this->plugin_slug . '/' . $this->plugin_slug . '.php', [$this,'plugin_update_message'], 10, 2 );
+		add_action( 'in_plugin_update_message-' . $this->plugin_slug . '/' . $this->plugin_slug . '.php', [ $this, 'plugin_update_message' ], 10, 2 );
 		add_filter( 'plugins_api', array( $this, 'plugin_info' ), 9999, 3 );
 		add_action( 'upgrader_process_complete', array( $this, 'plugin_destroy_update' ), 10, 2 );
+
+		add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'plugin_updater_logic' ) );
+		add_filter( 'site_transient_update_plugins', array( $this, 'plugin_updater_logic' ) );
+		add_filter( 'transient_update_plugins', array( $this, 'plugin_updater_logic' ) );
 
 		// Only Run Checking Update in Plugins Page
 		if ( $pagenow == 'plugins.php' ) {
 			if ( isset( $_GET['manual-check'] ) && $_GET['manual-check'] == $this->plugin_slug ) {
 				delete_transient( $this->plugin_slug . '_update' );
 				delete_transient( $this->plugin_slug . '_update_check' );
-				$this->check_update();
-
-//				Logger::info( "[Plugin][Updater] Manually Checking Update Triggered" );
-			} else {
-				$this->check_update();
-
-//				Logger::info( "[Plugin][Updater] Automatically Checking Update  Triggered" );
 			}
 		}
-	}
-
-	public function check_update() {
-		add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'plugin_updater_logic' ) );
-		add_filter( 'site_transient_update_plugins', array( $this, 'plugin_updater_logic' ) );
-		add_filter( 'transient_update_plugins', array( $this, 'plugin_updater_logic' ) );
 	}
 
 	public function plugin_info( $res, $action, object $args ) {
