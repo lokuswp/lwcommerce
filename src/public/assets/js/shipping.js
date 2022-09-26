@@ -14,7 +14,7 @@ const {log} = console;
             jQuery('input[name="shipping_type"]').first().trigger("click");
         }
 
-        if (urlCurrent[2] != 'trx' && states.length) {
+        if (urlCurrent[2] != 'trx' && typeof(states) != 'undefined' && states != null) {
             /*****************************************
              * Get Provinces List
              * Request Provinces List from RajaOngkir API

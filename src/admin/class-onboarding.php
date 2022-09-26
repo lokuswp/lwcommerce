@@ -88,134 +88,147 @@ class Onboarding {
 		$db_orders_meta->create_table();
 
 		// Create Page
-		Helper::generate_post( "page", __( "Product List", "lwcommerce" ), "products", '[lwcommerce_product_listing filter="category"]' );
+		Helper::generate_post( "page", __( "Product List", "lwcommerce" ), "products", '[lwcommerce_product_list]' );
 
 
-        $this->create_category();
+		$this->create_category();
 		$this->create_product();
-        $this->set_appearance();
+		$this->set_appearance();
 
 		//Helper::set_translation("lwcommerce", LWC_STRING_TEXT, 'id_ID');
 
-        // Flush Permalink
-        global $wp_rewrite;
-        $wp_rewrite->set_permalink_structure( '/%postname%/' );
-        $wp_rewrite->flush_rules();
-        flush_rewrite_rules( true );
+		// Flush Permalink
+		global $wp_rewrite;
+		$wp_rewrite->set_permalink_structure( '/%postname%/' );
+		$wp_rewrite->flush_rules();
+		flush_rewrite_rules( true );
 	}
 
-    public function create_category(){
-        register_taxonomy(
-            'product_category',
-            'product',
-            array(
-                'hierarchical' => true,
-                'label'        => __( 'Category', "lwcommerce" ),
-                'query_var'    => true,
-                'public'       => true,
-                'rewrite'      => array(
-                    'slug'         => 'product-category',
-                    'with_front'   => true,
-                    'hierarchical' => true,
-                ),
-                'has_archive'  => false,
-            )
-        );
+	public function create_category() {
+		register_taxonomy(
+			'product_category',
+			'product',
+			array(
+				'hierarchical' => true,
+				'label'        => __( 'Category', "lwcommerce" ),
+				'query_var'    => true,
+				'public'       => true,
+				'rewrite'      => array(
+					'slug'         => 'product-category',
+					'with_front'   => true,
+					'hierarchical' => true,
+				),
+				'has_archive'  => false,
+			)
+		);
 
-        wp_insert_term(
-            'Plugin',
-            'product_category',
-            array(
-                'description' => 'WordPress Plugin',
-                'slug'        => 'plugin'
-            )
-        );
-        wp_insert_term(
-            'Apparel',
-            'product_category',
-            array(
-                'description' => 'Apparel',
-                'slug'        => 'apparel'
-            )
-        );
+		wp_insert_term(
+			'Plugin',
+			'product_category',
+			array(
+				'description' => 'WordPress Plugin',
+				'slug'        => 'plugin'
+			)
+		);
+		wp_insert_term(
+			'Apparel',
+			'product_category',
+			array(
+				'description' => 'Apparel',
+				'slug'        => 'apparel'
+			)
+		);
 
-        wp_insert_term(
-            __( 'Food', 'lwcommerce' ),
-            'product_category',
-            array(
-                'description' => 'Food',
-                'slug'        => 'food'
-            )
-        );
-    }
+		wp_insert_term(
+			__( 'Food', 'lwcommerce' ),
+			'product_category',
+			array(
+				'description' => 'Food',
+				'slug'        => 'food'
+			)
+		);
+	}
 
 	private function create_product() {
 
-        // Digital - Free Product
-		$digital_free_id = Helper::generate_post( "product", __( 'Plugin LWCommerce', 'lwcommerce' ), "lokuswp-lwcommerce", "WordPress Ecommerce Plugin" );
-		update_post_meta( $digital_free_id, "_product_type", "digital" );
-		update_post_meta( $digital_free_id, "_unit_price", 0 );
-		update_post_meta( $digital_free_id, "_stock", 9999 );
-		$thumbnail = LWC_URL . 'src/admin/assets/images/product/free-plugin.jpg';
-		if ( $digital_free_id ) {
-			Helper::set_featured_image( $thumbnail, $digital_free_id );
+		// Digital - Free Product
+		$free = Helper::generate_post( "product", __( 'Plugin LWCommerce', 'lwcommerce' ), "lokuswp-lwcommerce", "WordPress Ecommerce Plugin" );
+		update_post_meta( $free, "_product_type", "digital" );
+		update_post_meta( $free, "_unit_price", 0 );
+		update_post_meta( $free, "_stock", 9999 );
+		$thumbnail = LWC_URL . 'src/admin/assets/images/product/free-plugin.png';
+		if ( $free ) {
+			Helper::set_featured_image( $thumbnail, $free );
 		}
-        wp_set_object_terms($digital_free_id, 'plugin', 'product_category');
+		wp_set_object_terms( $free, 'plugin', 'product_category' );
 
 		// Digital - Paid Product
-		$digital_premium = Helper::generate_post( "product", __( 'Plugin LWDonation', 'lwcommerce' ), "lokuswp-lwdonation", "WordPress Donation Plugin" );
-		update_post_meta( $digital_premium, "_product_type", "digital" );
-		update_post_meta( $digital_premium, "_unit_price", 580000 );
-		update_post_meta( $digital_premium, "_stock", 1000 );
-		update_post_meta( $digital_premium, "_stock_unit", __( "License", "lwcommerce" ) );
-		$thumbnail = LWC_URL . 'src/admin/assets/images/product/premium-plugin.jpg';
-		if ( $digital_premium ) {
-			Helper::set_featured_image( $thumbnail, $digital_premium );
+		$digital = Helper::generate_post( "product", __( 'Plugin LWDonation', 'lwcommerce' ), "lokuswp-lwdonation", "WordPress Donation Plugin" );
+		update_post_meta( $digital, "_product_type", "digital" );
+		update_post_meta( $digital, "_unit_price", 380000 );
+		update_post_meta( $digital, "_stock", 1000 );
+		update_post_meta( $digital, "_stock_unit", __( "License", "lwcommerce" ) );
+		$thumbnail = LWC_URL . 'src/admin/assets/images/product/premium-plugin.png';
+		if ( $digital ) {
+			Helper::set_featured_image( $thumbnail, $digital );
 		}
-        wp_set_object_terms($digital_premium, 'plugin', 'product_category');
+		wp_set_object_terms( $digital, 'plugin', 'product_category' );
 
-        // Physical - Tshirt
-        $tshirt_product = Helper::generate_post( "product", __( 'Tshirt LokusWP', 'lwcommerce' ), "lokuswp-tshirt", "Official Tshirt LokusWP" );
-        update_post_meta( $tshirt_product, "_product_type", "physical" );
-        update_post_meta( $tshirt_product, "_unit_price", 120000 );
-        update_post_meta( $tshirt_product, "_stock", 100 );
-        update_post_meta( $tshirt_product, "_stock_unit", __( "Pcs", "lwcommerce" ) );
-        $thumbnail = LWC_URL . 'src/admin/assets/images/product/tshirt.jpg';
-        if ( $tshirt_product ) {
-            Helper::set_featured_image( $thumbnail, $tshirt_product );
-        }
-        wp_set_object_terms($tshirt_product, 'apparel', 'product_category');
+		// Physical - Tshirt
+		$tshirt = Helper::generate_post( "product", __( 'Tshirt LokusWP', 'lwcommerce' ), "lokuswp-tshirt", "Official Tshirt LokusWP" );
+		update_post_meta( $tshirt, "_product_type", "physical" );
+		update_post_meta( $tshirt, "_unit_price", 120000 );
+		update_post_meta( $tshirt, "_promo_price", 100000 );
+		update_post_meta( $tshirt, "_stock", 99 );
+		update_post_meta( $tshirt, "_stock_unit", __( "Pcs", "lwcommerce" ) );
+		$thumbnail = LWC_URL . 'src/admin/assets/images/product/lokuswp-tshirt.jpg';
+		if ( $tshirt ) {
+			Helper::set_featured_image( $thumbnail, $tshirt );
+		}
+		wp_set_object_terms( $tshirt, 'apparel', 'product_category' );
 
-        // Affiliate
-        $tshirt_white_product = Helper::generate_post( "product", __( 'Affiliate Tshirt', 'lwcommerce' ), "lokuswp-tshirt-affiliate", "Tshirt Afilliate to Shopee" );
-        update_post_meta( $tshirt_white_product, "_product_type", "physical" );
-        update_post_meta( $tshirt_white_product, "_unit_price", 125000 );
-        update_post_meta( $tshirt_white_product, "_stock", 10 );
-        update_post_meta( $tshirt_white_product, "_stock_unit", __( "Pcs", "lwcommerce" ) );
-        update_post_meta( $tshirt_white_product, "_btn_cart_link", 'https://tokoalus.com' );
-        update_post_meta( $tshirt_white_product, "_btn_cart_text", __( "Buy at Toko Alus", "lwcommerce" ) );
-        $thumbnail = LWC_URL . 'src/admin/assets/images/product/tshirt-white.jpg';
-        if ( $tshirt_white_product ) {
-            Helper::set_featured_image( $thumbnail, $tshirt_white_product );
-        }
-        wp_set_object_terms($tshirt_white_product, 'apparel', 'product_category');
+		// Affiliate
+		$affiliate = Helper::generate_post( "product", __( 'Affiliate Tshirt', 'lwcommerce' ), "lokuswp-tshirt-affiliate", "Tshirt Afilliate to Shopee" );
+		update_post_meta( $affiliate, "_product_type", "physical" );
+		update_post_meta( $affiliate, "_unit_price", 125000 );
+		update_post_meta( $affiliate, "_stock", 10 );
+		update_post_meta( $affiliate, "_stock_unit", __( "Pcs", "lwcommerce" ) );
+		update_post_meta( $affiliate, "_btn_cart_link", 'https://tokoalus.com' );
+		update_post_meta( $affiliate, "_btn_cart_text", __( "Beli di Marketplace", "lwcommerce" ) );
+		$thumbnail = LWC_URL . 'src/admin/assets/images/product/tshirt-affiliate.jpg';
+		if ( $affiliate ) {
+			Helper::set_featured_image( $thumbnail, $affiliate );
+		}
+		wp_set_object_terms( $affiliate, 'apparel', 'product_category' );
 
-        // Physical - Food
-        $food_product = Helper::generate_post( "product", __( 'Seblak Bandung', 'lwcommerce' ), "lokuswp-seblak", "Seblak Khas Bandung" );
-        update_post_meta( $food_product, "_product_type", "physical" );
-        update_post_meta( $food_product, "_unit_price", 15000 );
-        update_post_meta( $food_product, "_stock", 10 );
-        update_post_meta( $food_product, "_stock_unit", __( "Bowl", "lwcommerce" ) );
-        $thumbnail = LWC_URL . 'src/admin/assets/images/product/seblak.jpg';
-        if ( $food_product ) {
-            Helper::set_featured_image( $thumbnail, $food_product );
-        }
-        wp_set_object_terms($food_product, 'food', 'product_category');
+		// Physical - Food
+		$food_product = Helper::generate_post( "product", __( 'Seblak Bandung', 'lwcommerce' ), "lokuswp-seblak", "Seblak Khas Bandung" );
+		update_post_meta( $food_product, "_product_type", "physical" );
+		update_post_meta( $food_product, "_unit_price", 12000 );
+		update_post_meta( $food_product, "_stock", 10 );
+		update_post_meta( $food_product, "_stock_unit", __( "Bowl", "lwcommerce" ) );
+		$thumbnail = LWC_URL . 'src/admin/assets/images/product/seblak.jpg';
+		if ( $food_product ) {
+			Helper::set_featured_image( $thumbnail, $food_product );
+		}
+		wp_set_object_terms( $food_product, 'food', 'product_category' );
 
-    }
+		$nasigoreng = Helper::generate_post( "product", __( 'Nasi Goreng Teri', 'lwcommerce' ), "lokuswp-nasi-goreng", "Nasi Goreng Teri <br> Image by ResepKoki.id" );
+		update_post_meta( $nasigoreng, "_product_type", "physical" );
+		update_post_meta( $nasigoreng, "_unit_price", 12000 );
+		update_post_meta( $nasigoreng, "_promo_price", 10000 );
+		update_post_meta( $nasigoreng, "_stock", 10 );
+		update_post_meta( $nasigoreng, "_stock_unit", __( "Plate", "lwcommerce" ) );
+		$thumbnail = LWC_URL . 'src/admin/assets/images/product/nasigoreng.jpg';
+		if ( $nasigoreng ) {
+			Helper::set_featured_image( $thumbnail, $nasigoreng );
+		}
+		wp_set_object_terms( $nasigoreng, 'food', 'product_category' );
+
+	}
 
 	private function set_appearance() {
-        lwp_set_settings( 'lwcommerce', 'appearance', 'checkout_whatsapp', 'on' );
+		lwp_set_settings( 'lwcommerce', 'appearance', 'checkout_whatsapp', 'on' );
 	}
 
 

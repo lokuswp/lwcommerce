@@ -136,7 +136,8 @@ function lwc_transaction_logic( $transaction ) {
  */
 add_filter( "lokuswp/transaction/status/text", "lwc_transaction_status_text", 10, 1 );
 function lwc_transaction_status_text( $statuses ) {
-	$statuses['completed'] = __( "Selesai", "lwcommerce" );
+	$statuses['pickup'] = __( "Ready to Pick", "lwcommerce" );
+	$statuses['completed'] = __( "Completed", "lwcommerce" );
 
 	return $statuses;
 }

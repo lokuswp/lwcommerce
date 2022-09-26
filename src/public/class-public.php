@@ -80,7 +80,7 @@ class Frontend {
 	 */
 	public function enqueue_scripts() {
 		// Load Theme JS
-        wp_enqueue_script( 'isotope', plugins_url( '/src/includes/libraries/js/isotope/isotope.js', LWC_BASE ), array( 'jquery' ), $this->version, false );
+		wp_register_script( 'isotope', plugins_url( '/src/includes/libraries/js/isotope/isotope.js', LWC_BASE ), array( 'jquery' ), $this->version, false );
 
 
         wp_enqueue_script( $this->slug, plugins_url( '/src/public/assets/js/public.js', LWC_BASE ), array( 'jquery' ), $this->version, false );

@@ -74,8 +74,8 @@ class LWC_Order {
 				foreach ( $value->product as $product ) {
 					$product->image       = get_the_post_thumbnail_url( $product->post_id, 'thumbnail' );
 					$product->price       = lwp_currency_format( true, $product->price );
-					$product->price_promo = get_post_meta( $product->post_id, '_price_promo', true ) ? lwp_currency_format( true,
-						get_post_meta( $product->post_id, '_price_promo', true ) ) : null;
+					$product->price_promo = get_post_meta( $product->post_id, '_promo_price', true ) ? lwp_currency_format( true,
+						get_post_meta( $product->post_id, '_promo_price', true ) ) : null;
 					$product->post_title  = get_the_title( $product->post_id );
 				}
 

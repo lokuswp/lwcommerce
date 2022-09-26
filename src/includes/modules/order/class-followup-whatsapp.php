@@ -31,7 +31,7 @@ class FollowUp_Whatsapp {
 			if ( ! empty( $payment_data ) ) {
 				// Getting Template From Payment
 				$instance                               = new $payment_data['payment_class'];
-				$data['notifiction_block_payment_text'] = $instance->notification_text();
+				$data['notification_block_payment_text'] = $instance->notification_text();
 			}
 			$data['payment_data'] = $payment_data;
 		}

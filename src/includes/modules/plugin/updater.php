@@ -49,9 +49,9 @@ class Updater {
 		}
 
 		// Source of Data
-		$transient = (object) get_transient( $this->plugin_slug . '_update' );
+		$remote = (object) get_transient( $this->plugin_slug . '_update' );
 
-		if ( ! is_wp_error( $transient ) ) {
+		if ( ! is_wp_error( $remote ) ) {
 			if ( ! isset( $args->slug ) ) {
 				$args->slug = null;
 			}
@@ -61,29 +61,32 @@ class Updater {
 				// parsedown (Markdown to html)
 				require_once LWC_PATH . 'src/includes/libraries/php/Parsedown.php';
 				$parsedown = new Parsedown();
-				$assets    = current( $transient->assets ) ?? null;
+				$assets    = isset($remote->assets) ? current( $remote->assets ) : null;
 
-				$res                 = new stdClass();
-				$res->name           = $transient->name;
-				$res->slug           = $this->plugin_slug;
-				$res->version        = $transient->tag_name;
-				$res->tested         = '5.9.3';
-				$res->requires       = '5.8';
-				$res->author         = "<a href='https://lokuswp.id'>LWCommerce</a>";
-				$res->author_profile = "https://lokuswp.id";
-				if ( isset( $assets->browser_download_url ) ) {
-					$res->download_url = $assets->browser_download_url;
-					$res->trunk        = $assets->browser_download_url;
+				if( $assets ){
+					$res                 = new stdClass();
+					$res->name           = $remote->name;
+					$res->slug           = $this->plugin_slug;
+					$res->version        = $remote->tag_name;
+					$res->tested         = '6.0';
+					$res->requires       = '5.8';
+					$res->author         = "<a href='https://lokuswp.id'>LWCommerce</a>";
+					$res->author_profile = "https://lokuswp.id";
+					if ( isset( $assets->browser_download_url ) ) {
+						$res->download_url = $assets->browser_download_url;
+						$res->trunk        = $assets->browser_download_url;
+					}
+					$res->sections = array(
+						'description'  => 'Plugin Toko Online WordPress dari LokusWP', // description tab
+						'installation' => 'Upload File, dan Aktifkan Plugin', // installation tab
+						'changelog'    => $parsedown->text( $remote->body ), // changelog tab
+					);
+					$res->banners  = array(
+						'low'  => 'https://lokuswp.id/wp-content/uploads/2022/04/lwcommerce-banner-772x250-1.jpg',
+						'high' => 'https://lokuswp.id/wp-content/uploads/2022/04/lwcommerce-banner-772x250-1.jpg'
+					);
 				}
-				$res->sections = array(
-					'description'  => 'Plugin Toko Online WordPress dari LokusWP', // description tab
-					'installation' => 'Upload File, dan Aktifkan Plugin', // installation tab
-					'changelog'    => $parsedown->text( $transient->body ), // changelog tab
-				);
-				$res->banners  = array(
-					'low'  => 'https://lokuswp.id/wp-content/uploads/2022/04/lwcommerce-banner-772x250-1.jpg',
-					'high' => 'https://lokuswp.id/wp-content/uploads/2022/04/lwcommerce-banner-772x250-1.jpg'
-				);
+
 			}
 
 		}
@@ -169,9 +172,9 @@ class Updater {
 		// Display Update Notice
 		$remote_version = $remote->tag_name ?? null;
 		$remote_version = str_replace( 'v', '', $remote_version );
-		$assets         = current( $remote->assets ) ?? null;
+		$assets    = isset($remote->assets) ? current( $remote->assets ) : null;
 
-		if ( ! is_wp_error( $remote ) && version_compare( $this->plugin_version, $remote_version, '<' ) ) {
+		if ( $assets && ! is_wp_error( $remote ) && version_compare( $this->plugin_version, $remote_version, '<' ) ) {
 			$res              = new stdClass();
 			$res->slug        = $this->plugin_slug;
 			$res->plugin      = $this->plugin_slug . '/' . $this->plugin_slug . '.php';

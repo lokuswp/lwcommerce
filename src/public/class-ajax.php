@@ -47,7 +47,6 @@ class AJAX {
 					}
 				}
 
-
 				// Calculate Weight Total;
 				$weight = 0;
 				if ( $cart_uuid ) {

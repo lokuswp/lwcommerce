@@ -25,12 +25,12 @@ function lwc_get_unit_price( $product_id = null ) {
  * @return float|int
  * @since 0.1.0
  */
-function lwc_get_price_promo( int $product_id ) {
+function lwc_get_promo_price( int $product_id ) {
 	if ( ! $product_id ) {
 		$product_id = get_the_ID();
 	}
 
-	$price_promo = get_post_meta( $product_id, '_price_promo', true );
+	$price_promo = get_post_meta( $product_id, '_promo_price', true );
 
 	return isset( $price_promo ) ? (int) $price_promo : 0;
 }
@@ -50,7 +50,7 @@ function lwc_get_price( int $product_id, string $currency = "IDR" ) {
 		$product_id = get_the_ID();
 	}
 
-	$price_promo = lwc_get_price_promo( $product_id );
+	$price_promo = lwc_get_promo_price( $product_id );
 	$unit_price  = lwc_get_unit_price( $product_id );
 
 	$price = 0;
@@ -83,7 +83,7 @@ function lwc_get_price_html( $product_id = null ) {
 	}
 
 	$unit_price  = lwc_get_unit_price( $product_id );
-	$price_promo = lwc_get_price_promo( $product_id );
+	$price_promo = lwc_get_promo_price( $product_id );
 
 	if ( $unit_price == 0 ) {
 		// Free Format

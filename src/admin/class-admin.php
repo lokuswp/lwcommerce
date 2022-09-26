@@ -294,7 +294,8 @@ class Admin {
 		);
 
 		// Menu Orders
-		$awaiting = get_option( 'lwcommerce_order_awaiting' ) > 0 ? abs( get_option( 'lwcommerce_order_awaiting' ) ) : 0;
+		$order_wait = get_option( 'lwcommerce_order_awaiting' );
+		$awaiting = $order_wait > 0 ? abs( $order_wait ) : 0;
 		add_menu_page(
 			__( 'Orders', 'lwcommerce' ),
 			$awaiting ? sprintf( ( __( 'Orders', 'lwcommerce' ) . ' <span class="awaiting-mod">%d</span>' ), $awaiting ) : __( 'Orders', 'lwcommerce' ),
@@ -308,16 +309,20 @@ class Admin {
 		// Add Shortcode List to wp-admin > lwcommerce > settings > apperance
 		Shortcode_Lists::add_shortcode_list( "lwcommerce", $this->slug, $this->name, array(
 			[
-				'shortcode'   => '[lwcommerce_product_listing]',
-				'description' => __( "Product List View", 'lwcommerce' )
+				'shortcode'   => '[lwcommerce_product_list]',
+				'description' => __( "Product list view", 'lwcommerce' )
 			],
 			[
-				'shortcode'   => '[lwcommerce_product_listing mobile="true"]',
-				'description' => __( "Product List Display with Mobile First version", 'lwcommerce' )
+				'shortcode'   => '[lwcommerce_product_list column="3"]',
+				'description' => __( "Product list view 3 Column", 'lwcommerce' )
 			],
 			[
-				'shortcode'   => '[lwcommerce_product_listing filter="category"]',
-				'description' => __( "Product List View with Category Filter", 'lwcommerce' )
+				'shortcode'   => '[lwcommerce_product_list filter="category"]',
+				'description' => __( "Product list view with Category Filter", 'lwcommerce' )
+			],
+			[
+				'shortcode'   => '[lwcommerce_product_list view="mobile"]',
+				'description' => __( "Product list view Mobile First", 'lwcommerce' )
 			]
 		) );
 
@@ -326,6 +331,11 @@ class Admin {
 			'checkout_whatsapp' => [
 				'name'     => __( 'Checkout via Whatsapp', 'lwcommerce' ),
 				'desc'     => __( 'Disable/Enable Opening Whatsapp when Checkout', 'lwcommerce' ),
+				'override' => false
+			],
+			'button_whatsapp'   => [
+				'name'     => __( 'Whatsapp Button', 'lwcommerce' ),
+				'desc'     => __( 'Disable/Enable Whatsapp Button in Product List', 'lwcommerce' ),
 				'override' => false
 			]
 		) );
@@ -378,7 +388,6 @@ class Admin {
 				} );
 			}
 		}
-
 
 		// Translation Sync Clicked -> Update Version
 		if ( isset( $_GET['lwc-translation-sync'] ) ) {

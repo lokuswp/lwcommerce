@@ -9,7 +9,7 @@ get_header();
     </style>
 
     <div class="lwd-container">
-        <?= do_shortcode('[lwcommerce_product_listing]'); ?>
+        <?= do_shortcode('[lwcommerce_product_list]'); ?>
     </div>
 
 <?php

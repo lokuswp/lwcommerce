@@ -54,7 +54,7 @@ lwp_set_meta_counter( "_product_view", get_the_ID() );
     <div class="lwp-product row">
         <div class="col-xs-12 col-sm-12">
             <a href="<?php echo get_permalink(); ?>" class="product-image">
-				<?php the_post_thumbnail(); ?>
+				<?php the_post_thumbnail( 'full'); ?>
             </a>
         </div>
         <div class="col-xs-12 col-sm-12 row no-gutter">
@@ -66,13 +66,13 @@ lwp_set_meta_counter( "_product_view", get_the_ID() );
         <div class="col-xs-12 col-sm-12 row no-gutter">
 			<?php do_action( 'lokuswp/product/variant' ); ?>
         </div>
-        <div class="col-xs-12 col-sm-12 row no-gutter">
-            <div class="col-xs-5 col-sm-4">
+        <div class="col-xs-12 col-sm-12 row no-gutter" style="margin-top:12px">
+            <div class="col-xs-7 col-sm-8">
+		        <?php lwc_whatsapp_button_html(); ?>
+            </div>
+            <div class="col-xs-5 col-sm-4  end-sm">
 				<?php lwc_add_to_cart_html(); ?>
 				<?= lwc_get_stock_html(); ?>
-            </div>
-            <div class="col-xs-7 col-sm-8 end-sm">
-				<?php lwc_whatsapp_button_html(); ?>
             </div>
         </div>
         <div class="col-sm-12 no-gutter">

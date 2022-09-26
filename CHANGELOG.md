@@ -30,3 +30,16 @@
 **Added :**
 
 - Import data product
+
+# [v0.2.1]() (2022-09-20)
+
+**Added :**
+
+- Import data product
+
+# [v0.2.2]() (2022-09-25)
+
+**Fix :**
+- Plugin Updater
+- Shipping : Pick Up
+- Stock Updates

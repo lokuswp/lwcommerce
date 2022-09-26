@@ -30,7 +30,7 @@ function lwc_transaction_response_checkout_whatsapp( $response, $trx_id ) {
 		// Getting Template From Payment
 		$instance                             = new $payment_data['payment_class'];
 		$object                               = [
-			'notifiction_block_payment_text' => $instance->notification_text(),
+			'notification_block_payment_text' => $instance->notification_text(),
 		];
 		$object['payment_data']               = (array) $payment_data;
 		$object['payment_data']['expired_at'] = date( 'Y-m-d H:i:s', strtotime( '+1 day', strtotime( $transaction['created_at'] ) ) );

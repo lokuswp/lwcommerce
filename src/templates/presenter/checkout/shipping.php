@@ -56,6 +56,10 @@
                     justify-content: center;
                     align-items: center;
                 }
+
+                #pickup-time h6 {
+                    margin: 0;
+                }
             </style>
 
             <!-- Shipping Type -->
@@ -73,8 +77,8 @@
                                        cost="0" checked>
                                 <label for="pickup">
                                     <div class="row center">
-                                        <img src="<?= LWC_URL . 'src/admin/assets/images/pickup.png' ?>" alt="takeaway">
-                                        <h6>Pickup</h6>
+<!--                                        <img src="--><?//= LWC_URL . 'src/admin/assets/images/pickup.png' ?><!--" alt="takeaway">-->
+                                        <h6 style="margin-bottom:0;line-height:normal;margin-top:0;padding:6px 0;">Pickup</h6>
                                     </div>
                                 </label>
                             </div>
@@ -91,8 +95,9 @@
                                        id="shipping">
                                 <label for="shipping">
                                     <div class="row center">
-                                        <img src="<?= LWC_URL . 'src/public/assets/images/shipping.jpg' ?>" alt="takeaway">
-                                        <h6 style="margin-bottom:0;line-height:normal;margin-top:0;">Delivery</h6>
+<!--                                        <img src="--><?//= LWC_URL . 'src/public/assets/images/shipping.jpg' ?><!--"-->
+<!--                                             alt="takeaway">-->
+                                        <h6 style="margin-bottom:0;line-height:normal;margin-top:0;padding:6px 0;">Delivery</h6>
                                     </div>
                                 </label>
                             </div>
@@ -118,7 +123,7 @@
                                    checked>
                             <label for="20min">
                                 <div class="row center">
-                                    <h6>20 min</h6>
+                                    <h6>20 menit</h6>
                                 </div>
                             </label>
                         </div>
@@ -174,7 +179,7 @@
 				<?php do_action( "lwcommerce/shipping/delivery/header" ) ?>
 
                 <div class="col-xs-12 gutter">
-                    <span>Alamat</span>
+                    <h6 style="margin-bottom:12px;" class="text-primary"><?= __( "Address", "lwcommerce" ); ?></h6>
                 </div>
 
                 <!-- State -->

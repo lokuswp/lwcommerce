@@ -30,20 +30,26 @@ class LWCommerce_Boot {
 		// LokusWP Exist and `was installed` but `not activated` -> Activate
 		if ( $is_backbone_exist && ! $is_backbone_active && $lokuswp_was_installed ) {
 			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-			activate_plugins( 'lokuswp/lokuswp.php' );
+			// activate_plugins( 'lokuswp/lokuswp.php' );
 		}
 
 		// LokusWP Exist and Active
 		if ( $is_backbone_exist && $is_backbone_active && $lwcommerce_was_installed && $lokuswp_was_installed ) {
 			$this->run();
-		} else {
+		} elseif ( $is_backbone_exist && !$lwcommerce_was_installed  ) {
 			// Reactive LokusWP on Disable
 			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 			activate_plugins( 'lokuswp/lokuswp.php' );
 			$this->on_board_screen();
 		}
 
-		// TODO :: Checking Version Compatibility
+		// Image Size Mobile
+		add_image_size( 'lwc-m-p-thumbnail', 269, 269, true );
+
+		// Image Size Desktop
+		add_image_size( 'lwc-d-p-thumbnail', 269, 9999, false );
+		add_image_size( 'lwc-d-p-thumbnail-crop', 269, 269, true );
+		add_image_size( 'lwc-d-p-thumbnail-detail', 800, 9999, false );
 	}
 
 	/**
@@ -98,6 +104,50 @@ class LWCommerce_Boot {
 				include_once $classpath;
 			}
 		} );
+
+		// Helper
+
+		require_once LWC_PATH . 'src/includes/helper/func-price.php';
+		require_once LWC_PATH . 'src/includes/helper/func-stock.php';
+		require_once LWC_PATH . 'src/includes/helper/func-setter.php';
+		require_once LWC_PATH . 'src/includes/helper/func-getter.php';
+		require_once LWC_PATH . 'src/includes/helper/func-helper.php';
+		require_once LWC_PATH . 'src/includes/helper/func-order-meta.php';
+
+		// Hook
+		require_once LWC_PATH . 'src/includes/hook/cart/func-cart-processing.php';
+		require_once LWC_PATH . 'src/includes/hook/checkout/func-checkout-tab.php';
+		require_once LWC_PATH . 'src/includes/hook/checkout/func-checkout-logic.php';
+		require_once LWC_PATH . 'src/includes/hook/checkout/func-checkout-whatsapp.php';
+		require_once LWC_PATH . 'src/includes/hook/order/func-order-create.php';
+		require_once LWC_PATH . 'src/includes/hook/product/func-product.php';
+		require_once LWC_PATH . 'src/includes/hook/notification/func-notification-scheduler.php';
+
+		// Shipping Module
+		require_once LWC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
+		require_once LWC_PATH . 'src/includes/modules/shipping/class-manager.php';
+
+		if( is_admin() ){
+			require_once LWC_PATH . 'src/includes/common/class-i18n.php';
+			require_once LWC_PATH . 'src/includes/modules/shipping/controller/class-shipping-controller.php';
+			require_once LWC_PATH . 'src/includes/modules/shipping/controller/rajaongkir/class-shipping-processing.php';
+			require_once LWC_PATH . 'src/includes/modules/shipping/controller/pickup/class-shipping-processing.php';
+
+			// Shipping
+			require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-rajaongkir-jne.php';
+			require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-rajaongkir.php';
+			require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-pickup.php';
+		}
+
+		// Order
+		require_once LWC_PATH . 'src/includes/modules/order/class-order.php';
+		require_once LWC_PATH . 'src/includes/modules/order/class-lwc-order.php';
+
+		// API
+		require_once LWC_PATH . 'src/includes/modules/shipping/api/class-rajaongkir-api.php';
+		require_once LWC_PATH . 'src/includes/modules/shipping/api/class-get-services.php';
+
+
 
 		// Check if LokusWP is installed and Active
 		if ( in_array( 'lokuswp/lokuswp.php', get_option( 'active_plugins' ) ) ) {

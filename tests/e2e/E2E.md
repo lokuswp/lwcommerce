@@ -50,5 +50,10 @@ Ada 2 cara untuk membuat test pada playwright
 npx playwright codegen {url website anda}
 ```
 
+```shell script
+npx playwright test --project=lasida --headed
+```
+
+
 untuk lebih lanjut apa itu code generation dengan playwright. Kalian bisa
 mengunjungi https://playwright.dev/docs/codegen-intro

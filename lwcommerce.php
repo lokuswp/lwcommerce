@@ -6,7 +6,7 @@
  * Plugin Name:       LWCommerce
  * Plugin URI:        https://lokuswp.id/plugins/lwcommerce
  * Description:       Local First eCommerce WordPress
- * Version:           0.2.1
+ * Version:           0.2.2
  * Author:            LokusWP
  * Author URI:        https://lokuswp.id/
  * License:           GPL-3.0+
@@ -28,32 +28,39 @@ if ( ! defined( 'WPTEST' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  * Define Constant
  */
-defined( 'LWC_VERSION' ) or define( 'LWC_VERSION', '0.2.1' );
+defined( 'LWC_VERSION' ) or define( 'LWC_VERSION', '0.2.2' );
 defined( 'LWC_TEXT_VERSION' ) or define( 'LWC_TEXT_VERSION', '0.0.1' ); // Translation File Version
+defined( 'LWC_BACKBONE_REQUIRED_VERSION' ) or define( 'LWC_BACKBONE_REQUIRED_VERSION', '0.1.7' );
 
 defined( 'LWC_BASE' ) or define( 'LWC_BASE', plugin_basename( __FILE__ ) );
 defined( 'LWC_PATH' ) or define( 'LWC_PATH', plugin_dir_path( __FILE__ ) );
 defined( 'LWC_URL' ) or define( 'LWC_URL', plugin_dir_url( __FILE__ ) );
 defined( 'LWC_STORAGE' ) or define( 'LWC_STORAGE', wp_get_upload_dir()['basedir'] . '/lwcommerce' );
 
-$lwcommerce_was_installed = get_option( "lwcommerce_was_installed" );
-$is_backbone_exist        = file_exists( WP_PLUGIN_DIR . '/lokuswp/lokuswp.php' );
-
 /**
  *-----------------------*
  * Minimum Requirement System
  * PHP : 7.4
  * WordPress : 5.9
- * LokusWP : 0.1.6
+ * LokusWP : 0.2.0
  *
  * @since 0.1.0
  *-----------------------*
  **/
+$is_backbone_exist = file_exists( WP_PLUGIN_DIR . '/lokuswp/lokuswp.php' );
+$backbone_version  = $is_backbone_exist ? get_file_data( WP_PLUGIN_DIR . '/lokuswp/lokuswp.php', array( 'Version' ), false )[0] : false;
+
 if ( ! version_compare( PHP_VERSION, '7.4', '>=' ) ) {
 	add_action( 'admin_notices', 'lwc_fail_php_version' );
 } elseif ( ! version_compare( get_bloginfo( 'version' ), '5.8', '>=' ) ) {
 	add_action( 'admin_notices', 'lwc_fail_wp_version' );
-} elseif ( ! version_compare( LOKUSWP_VERSION, '0.1.6', '>=' ) && $is_backbone_exist && $lwcommerce_was_installed ) {
+} elseif ( ! $is_backbone_exist && ! get_option( "lwcommerce_was_installed" ) ) {
+
+	// Fresh Installation : Onboard
+	require_once dirname( __DIR__ ) . '/lwcommerce/src/autoload.php';
+
+} elseif ( $is_backbone_exist && version_compare( $backbone_version, LWC_BACKBONE_REQUIRED_VERSION, '<' ) ||
+           ! in_array( 'lokuswp/lokuswp.php', get_option( 'active_plugins' ) ) && $is_backbone_exist && get_option( "lwcommerce_was_installed" ) ) {
 	add_action( 'admin_notices', 'lwc_fail_lokuswp_version' );
 } else {
 	// Come On, Let's Goo !!! 🦾
@@ -69,7 +76,7 @@ if ( ! version_compare( PHP_VERSION, '7.4', '>=' ) ) {
  */
 function lwc_fail_php_version() {
 	/* translators: %s: PHP version */
-	$message      = sprintf( esc_html__( 'This plugin run but not working. LWCommerce required version of PHP %s', 'lwcommerce' ), '7.4' );
+	$message      = sprintf( esc_html__( 'LWCommerce active but not working. required version of PHP %s', 'lwcommerce' ), '7.4' );
 	$html_message = sprintf( '<div class="error">%s</div>', wpautop( $message ) );
 	echo wp_kses_post( $html_message );
 }
@@ -83,7 +90,7 @@ function lwc_fail_php_version() {
  */
 function lwc_fail_wp_version() {
 	/* translators: %s: WordPress version */
-	$message      = sprintf( esc_html__( 'This plugin run but not working. LWCommerce required version of WordPress %s+', 'lwcommerce' ), '5.8' );
+	$message      = sprintf( esc_html__( 'LWCommerce active but not working. required version of WordPress %s+', 'lwcommerce' ), '5.8' );
 	$html_message = sprintf( '<div class="error">%s</div>', wpautop( $message ) );
 	echo wp_kses_post( $html_message );
 }
@@ -97,7 +104,8 @@ function lwc_fail_wp_version() {
  */
 function lwc_fail_lokuswp_version() {
 	/* translators: %s: WordPress version */
-	$message      = sprintf( esc_html__( 'This plugin run but not working. LWCommerce required version of LokusWP %s+', 'lwcommerce' ), '0.1.6' );
+	$message      = sprintf( esc_html__( 'LWCommerce active but not working. required LokusWP %s+ to be active', 'lwcommerce' ), LWC_BACKBONE_REQUIRED_VERSION );
 	$html_message = sprintf( '<div class="error">%s</div>', wpautop( $message ) );
+	deactivate_plugins( WP_PLUGIN_DIR . '/lokuswp/lokuswp.php' );
 	echo wp_kses_post( $html_message );
 }

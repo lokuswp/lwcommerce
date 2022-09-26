@@ -58,6 +58,13 @@ const config = {
             use: {
                 ...devices['Desktop Chrome'],
             },
+        },
+        {
+            name: 'lasida',
+            browserName: 'chromium',
+            use: {
+                baseURL: 'http://localhost/wordpress/'
+            }
         }
     ],
 

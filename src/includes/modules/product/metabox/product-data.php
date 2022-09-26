@@ -48,7 +48,7 @@
                                 <span class="description text-muted">(<?php _e( "optional", 'lwcommerce' ); ?>)</span>
                             </label>
                             <div class="form-group-body has-tooltip">
-                                <input id="lokuswp-price-promo" name="_price_promo" type="text"
+                                <input id="lokuswp-price-promo" name="_promo_price" type="text"
                                        class="form-control full currency-format" placeholder="50.000"
                                        value="<?= $args['price_promo'] ?>">
                                 <a href="#" class="info-popup-toggler tooltip" toggle="tooltip" data-placement="top"
