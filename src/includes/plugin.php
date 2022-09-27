@@ -24,12 +24,15 @@ class Plugin {
 			'version' => LWC_VERSION
 		);
 
+		new Modules\Product\Post_Type_Product;
+
+
 		if ( is_admin() ) {
 			require_once LWC_PATH . 'src/admin/class-admin.php';
 			Admin::register( $lwcommerce );
 
 			// Products
-			new Modules\Product\Post_Type_Product;
+
 			new Modules\Product\Metabox_Product;
 			new Modules\Product\Import_Product;
 

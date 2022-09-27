@@ -29,8 +29,8 @@ if ( ! defined( 'WPTEST' ) ) {
  * Define Constant
  */
 defined( 'LWC_VERSION' ) or define( 'LWC_VERSION', '0.2.2' );
-defined( 'LWC_TEXT_VERSION' ) or define( 'LWC_TEXT_VERSION', '0.0.1' ); // Translation File Version
-defined( 'LWC_BACKBONE_REQUIRED_VERSION' ) or define( 'LWC_BACKBONE_REQUIRED_VERSION', '0.1.7' );
+defined( 'LWC_TEXT_VERSION' ) or define( 'LWC_TEXT_VERSION', '0.0.2' ); // Translation File Version
+defined( 'LWC_BACKBONE_REQUIRED_VERSION' ) or define( 'LWC_BACKBONE_REQUIRED_VERSION', '0.1.8' );
 
 defined( 'LWC_BASE' ) or define( 'LWC_BASE', plugin_basename( __FILE__ ) );
 defined( 'LWC_PATH' ) or define( 'LWC_PATH', plugin_dir_path( __FILE__ ) );
@@ -42,7 +42,7 @@ defined( 'LWC_STORAGE' ) or define( 'LWC_STORAGE', wp_get_upload_dir()['basedir'
  * Minimum Requirement System
  * PHP : 7.4
  * WordPress : 5.9
- * LokusWP : 0.2.0
+ * LokusWP : 0.1.8
  *
  * @since 0.1.0
  *-----------------------*

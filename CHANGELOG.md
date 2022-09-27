@@ -43,3 +43,4 @@
 - Plugin Updater
 - Shipping : Pick Up
 - Stock Updates
+- Translation Text
