@@ -46,13 +46,17 @@
             let html = '';
 
             if (data.shipping_type === 'digital' && data.order_status !== 'refunded') {
-                html += `<button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}">
+                if (data.order_status !== 'completed') {
+                    html += `<button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}">
                                 ${data.order_status === 'pending' ? 'Sudah Dibayar' : ''}
                                 ${data.order_status === 'shipped' ? 'Completed' : ''}
-                                ${lwc_orders.is_pro ? `
-                                    ${data.order_status === 'completed' ? 'Refunded' : ''} 
-                                ` : ''}
                         </button>`;
+                }
+                if (lwc_orders.is_pro && data.order_status === 'completed') {
+                    html += `<button class="btn btn-primary order-action" data-status="${data.order_status}" data-id="${data.transaction_id}" data-shipping="${data.shipping_type}" data-resi="${data.no_resi}" data-courier="${data.courier.toLowerCase()}">
+                                Refunded
+                        </button>`;
+                }
             } else if (data.shipping_type !== 'digital' && data.order_status !== 'refunded' && data.order_status !== 'cancelled') {
                 if (data.courier.toLowerCase() !== 'pickup') {
                     if (data.order_status !== 'completed') {

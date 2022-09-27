@@ -33,7 +33,7 @@ class Order {
 			switch ( $status ) {
 				case 'pending':
 					break;
-				case 'processing':
+				case 'completed':
 				case 'paid':
 					self::set_paid( $trx_id );
 					break;
