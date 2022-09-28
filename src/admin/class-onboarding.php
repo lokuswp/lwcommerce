@@ -41,7 +41,7 @@ class Onboarding {
 	/**
 	 * Register the admin page class with all the appropriate WordPress hooks.
 	 *
-	 * @param array $plugin
+	 * @param  array  $plugin
 	 */
 	public static function register( array $plugin ) {
 		$admin = new self( $plugin['slug'], $plugin['name'], $plugin['version'] );
@@ -60,9 +60,9 @@ class Onboarding {
 	/**
 	 * Onboarding constructor.
 	 *
-	 * @param string $slug
-	 * @param string $name
-	 * @param string $version
+	 * @param  string  $slug
+	 * @param  string  $name
+	 * @param  string  $version
 	 */
 	public function __construct( string $slug, string $name, string $version ) {
 		$this->slug    = $slug;
@@ -241,125 +241,10 @@ class Onboarding {
 	 ***************************************
 	 */
 	public function download_backbone() {
+		require_once LWC_PATH . "src/includes/helper/Utils.php";
+		\Utils::download_backbone();
 
-		$server = "https://digitalcraft.id/api/v1/product/plugin/update/lokuswp";
-		$remote = wp_remote_get( $server,
-			array(
-				'timeout' => 30,
-				'headers' => array(
-					'Accept' => 'application/json',
-				)
-			)
-		);
-
-		// Checking Error
-		if ( is_wp_error( $remote ) ) {
-			return $remote->get_error_message();
-		}
-
-		$remote = json_decode( $remote['body'] );
-		$result = $remote->data;
-
-		// Only Download when Remote have Download URL and Plugin not Exist in folder
-		if ( ! file_exists( WP_PLUGIN_DIR . "/lokuswp/lokuswp.php" ) && isset( $result->download_url ) ) {
-
-			// Downloading Plugin
-			$download_plugin = $this->download_plugin( $result->download_url, "lokuswp" );
-			if ( is_wp_error( $download_plugin ) ) {
-				echo $download_plugin->get_error_code();
-			} else {
-				// Run Setup Wizard
-				$this->activate_plugin( "lokuswp" );
-				echo "success_download_dependency";
-			}
-		} else {
-			// Run Setup Wizard
-			$this->activate_plugin( "lokuswp" );
-			echo "success_download_dependency";
-		}
-
-		wp_die();
-	}
-
-	public function activate_plugin( $plugin_slug ) {
-
-		if ( ! is_plugin_active( "$plugin_slug/$plugin_slug.php" ) ) {
-			$activated = activate_plugin( WP_PLUGIN_DIR . "/$plugin_slug/$plugin_slug.php", '', false, true );
-			if ( is_wp_error( $activated ) ) {
-				return new \WP_Error( "failed_activate_plugin", "Plugin activation failed! Please activate manual the plugin." );
-			} else {
-				return true; // Plugin was activated
-			}
-		} else {
-			return true; // Plugin was activated
-		}
-	}
-
-	/*****************************************
-	 * Download File via URL
-	 * Using WordPress Function to Download and Unzipping File
-	 *
-	 * @param string $download_url
-	 * @param string $plugin_slug
-	 *
-	 * @return Exception
-	 * @since 0.1.0
-	 ****************************************
-	 */
-	public function download_plugin( string $download_url, string $plugin_slug ) {
-
-		// Download URL
-		if ( ! file_exists( WP_PLUGIN_DIR . "/$plugin_slug/$plugin_slug.php" ) ) {
-
-			// Defined WP File System
-			WP_Filesystem();
-
-			// Try Downloading File form url, Network Failed Test : Passed
-			try {
-				$tmp_file = download_url( $download_url, 300 );
-				if ( is_wp_error( $tmp_file ) ) {
-					throw new Exception( 'Could download file file' );
-				}
-
-				//ray( $plugin_slug );
-
-				if ( ! copy( $tmp_file, WP_PLUGIN_DIR . '/' . $plugin_slug . '.zip' ) ) {
-					throw new Exception( 'Could not copy file' );
-				};
-				unlink( $tmp_file ); // Delete Temp File
-
-				// Unzip File in wp-content/plugins/plugin-name.zip to folder plugin-name/
-				$unzip = unzip_file( WP_PLUGIN_DIR . '/' . $plugin_slug . '.zip', WP_PLUGIN_DIR );
-				if ( is_wp_error( $unzip ) ) {
-					throw new Exception( "Failed to Unzip File" );
-				}
-
-				// Delete downloaded file
-				unlink( WP_PLUGIN_DIR . '/' . $plugin_slug . '.zip' ); // Delete zip file
-				if ( file_exists( WP_PLUGIN_DIR . '/' . $plugin_slug . '.zip' ) ) {
-					return new Exception( "Can't delete the file, because the file doesn't exist or can't be found." );
-				}
-
-				// Rename Folder based on slug
-				$directories = scandir( WP_PLUGIN_DIR );
-				foreach ( $directories as $directory ) {
-					if ( strpos( $directory, $plugin_slug ) !== false ) {
-						if ( ! rename( WP_PLUGIN_DIR . "/" . $directory, WP_PLUGIN_DIR . "/" . $plugin_slug ) ) {
-							return new Exception( "Can't rename file" );
-						}
-					}
-				}
-
-			} catch ( \Exception $e ) {
-				die ( 'File did downloade: ' . $e->getMessage() );
-			}
-
-		} else { // Plugin Exist
-
-			// Check Plugin Active Status
-			$this->activate_plugin( $plugin_slug );
-
-		}
+		wp_send_json_success();
 	}
 
 	public function get_store_screen() {
