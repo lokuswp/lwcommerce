@@ -46,7 +46,6 @@ class LWC_Order {
 			"TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when ttm.meta_key = '_extras_shipping' then ttm.meta_value else 0 end),';',2),':',-1)) AS courier",
 			"TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when ttm.meta_key = '_extras_shipping' then ttm.meta_value else 0 end),';',4),':',-1)) AS service",
 			"TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when ttm.meta_key = '_extras_shipping' then ttm.meta_value else 0 end),';',6),':',-1)) AS destination",
-			"TRIM('\"' FROM SUBSTRING_INDEX(SUBSTRING_INDEX(max(case when ttm.meta_key = '_extras_shipping' then ttm.meta_value else 0 end),';',8),':',-1)) AS address"
 		];
 
 		$data = $datatable
@@ -78,6 +77,9 @@ class LWC_Order {
 						get_post_meta( $product->post_id, '_promo_price', true ) ) : null;
 					$product->post_title  = get_the_title( $product->post_id );
 				}
+
+				//==================== Address ====================//
+				$value->address = lwp_get_transaction_meta( $value->transaction_id, "_extras_shipping" )['address'] ?? '';
 
 				//==================== Payment Logo ====================//
 				$payment            = (object) lwp_get_option( "payment-{$value->payment_id}" );

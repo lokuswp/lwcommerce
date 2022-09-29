@@ -391,32 +391,31 @@ class AJAX {
 		$courier       = sanitize_text_field( $_POST['courier'] );
 
 		if ( $shipping_type !== 'digital' ) {
-			if ( $action === 'pending' ) {
-				Order::set_status( $order_id, 'paid' );
+			switch ( $action ) {
+				case 'pending':
+					Order::set_status( $order_id, 'paid' );
+					break;
+				case 'paid':
+					Order::set_status( $order_id, 'processing' );
+					break;
+				case 'cancelled':
+					Order::set_status( $order_id, 'cancelled' );
+					break;
+				case 'processing':
+					if ( $courier !== "pickup" ) {
+						Order::set_status( $order_id, 'shipped' );
+					} else {
+						Order::set_status( $order_id, 'pickup' );
+					}
+					break;
+				case 'pickup':
+				case'shipped':
+					Order::set_status( $order_id );
+					break;
 			}
-			if ( $action === 'paid' ) {
-				Order::set_status( $order_id, 'processing' );
-			}
-			if ( $action === 'cancelled' ) {
-				Order::set_status( $order_id, 'cancelled' );
-			}
-			if ( $action === 'processing' ) {
-				if ( $courier !== "pickup" ) {
-					Order::set_status( $order_id, 'shipped' );
-				} else {
-					Order::set_status( $order_id, 'pickup' );
-				}
-			}
-			if ( $action === 'pickup' ) {
-				Order::set_status( $order_id );
-			}
-			if ( $action === 'shipped' ) {
-				Order::set_status( $order_id );
-			}
-			if ( $action === 'completed' ) {
-//			Order::set_status( $order_id, 'completed' );
-//			lwc_update_order_meta( $order_id, '_order_status', 'refunded' );
-			}
+
+			// Make action base on change status order
+			do_action( "lwcommerce/admin/order/{$action}", $order_id );
 		} else {
 			if ( $action === 'pending' ) {
 				if ( has_action( 'lokuswp/admin/order/action' ) ) {
