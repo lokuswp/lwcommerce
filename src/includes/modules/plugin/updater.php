@@ -40,7 +40,9 @@ class Updater {
 			return $res;
 		}
 
-		if ( get_transient( $this->plugin_slug . '_update' ) == 'failed_get_update' ) {
+		$transient_update = get_transient( $this->plugin_slug . '_update' );
+
+		if ( $transient_update == 'failed_get_update' ) {
 			return $res;
 		}
 
@@ -49,7 +51,7 @@ class Updater {
 		}
 
 		// Source of Data
-		$remote = (object) get_transient( $this->plugin_slug . '_update' );
+		$transient = (object) $transient_update;
 
 		if ( ! is_wp_error( $remote ) ) {
 			if ( ! isset( $args->slug ) ) {

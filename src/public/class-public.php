@@ -46,7 +46,7 @@ class Frontend {
 		add_action( 'wp_enqueue_scripts', [ $public, 'enqueue_scripts' ] );
 		add_filter( 'script_loader_tag', [ $public, 'defer_scripts' ], 10, 3 );
 
-		// add_action('wp_head', [$public, 'header']);
+		add_action( 'wp_head', [ $public, 'header' ] );
 	}
 
 	/**
@@ -83,12 +83,29 @@ class Frontend {
 		wp_register_script( 'isotope', plugins_url( '/src/includes/libraries/js/isotope/isotope.js', LWC_BASE ), array( 'jquery' ), $this->version, false );
 
 
-        wp_enqueue_script( $this->slug, plugins_url( '/src/public/assets/js/public.js', LWC_BASE ), array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->slug, plugins_url( '/src/public/assets/js/public.js', LWC_BASE ), array( 'jquery' ), $this->version, false );
 
-		$checkout_page     = lwp_get_settings( 'lokuswp', 'settings', 'checkout_page' );
-		if( $checkout_page == get_the_ID() ){
+		$checkout_page = lwp_get_settings( 'lokuswp', 'settings', 'checkout_page' );
+		if ( $checkout_page == get_the_ID() ) {
 			wp_enqueue_script( $this->slug . '-shipping', plugins_url( '/src/public/assets/js/shipping.js', LWC_BASE ), array( 'jquery' ), $this->version, false );
 		}
+
+	}
+
+	/**
+	 * Add Open Graph Product
+	 *
+	 * @return void
+	 */
+	public function header() {
+		if ( is_singular( 'product' ) ):
+			?>
+            <meta property="og:title" content="<?php the_title() ?>"/>
+            <meta property="og:description" content="<?= wp_filter_nohtml_kses( get_the_content() ) ?>"/>
+            <meta property="og:url" content="<?= get_permalink() ?>"/>
+            <meta property="og:image" content="<?php the_post_thumbnail_url( 'full' ) ?>"/>
+		<?php
+		endif;
 
 	}
 

@@ -16,7 +16,7 @@ if ( function_exists( 'lwc_pro_is_product_has_variant' ) ) {
            class="lokus-btn btn-primary btn-block"><?= $btn_cart_text ?></a>
 	<?php elseif ( $is_variant_exists && ! is_singular( 'product' ) ) : ?>
         <a href="<?= get_permalink(); ?>" target="_blank"
-           class="lokus-btn btn-primary btn-block"><?= __( "Choose Variant", "lwcommerce" ) ?></a>
+           class="lokus-btn btn-primary btn-block"><?= $btn_cart_text ? $btn_cart_text : __( "Choose Variant", "lwcommerce" ); ?></a>
 	<?php else : ?>
         <button class="lokus-btn btn-primary btn-block lwc-add-to-cart" product-id="<?php echo get_the_ID(); ?>"
                 price="<?= lwc_get_price( get_the_ID() ) ?>"
@@ -42,7 +42,7 @@ if ( function_exists( 'lwc_pro_is_product_has_variant' ) ) {
 	<?php endif; ?>
 
 	<?php if ( $whatsapp_button == "on" && ! is_singular( "product" ) ) : ?>
-        <a href="https://api.whatsapp.com/send/?phone=<?= lwp_sanitize_phone( $whatsapp ); ?>&text=<?= __( "Saya tertarik dengan produk ", "lwcommerce" ) . ' ' . htmlentities( get_the_title() ) . ' ' . __( "apa masih ada ?", "lwcommerce" ); ?>&type=phone_number&app_absent=0"
+        <a href="https://api.whatsapp.com/send/?phone=<?= lwp_sanitize_phone( $whatsapp ); ?>&text=<?= __( "Saya tertarik dengan", "lwcommerce" ) . ' ' . htmlentities( get_the_title() ) . ' ' . __( "apa masih ada ?", "lwcommerce" ); ?>&type=phone_number&app_absent=0"
            target="_blank" id="lokuswp-verify-form"
            class="lwp-btn lokus-btn btn-primary btn-block swiper-no-swiping"
            style="color:#fff;margin-top:8px;position:relative;background:#25d366;border:none;font-weight:500;">

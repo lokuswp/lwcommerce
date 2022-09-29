@@ -33,14 +33,22 @@
 
 # [v0.2.1]() (2022-09-20)
 
-**Added :**
+**Fixing :**
 
 - Import data product
 
 # [v0.2.2]() (2022-09-25)
 
-**Fix :**
+**Fixing :**
+
 - Plugin Updater
 - Shipping : Pick Up
 - Stock Updates
 - Translation Text
+
+# [v0.2.3]() (2022-09-30)
+
+**Fixing :**
+
+- OpenGraph
+- Scheme Product

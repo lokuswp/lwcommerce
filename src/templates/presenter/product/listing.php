@@ -100,18 +100,18 @@
         </ul>
     </div>
     <script>
-        jQuery(document).ready( function() {
+        jQuery(document).ready(function () {
 
-            if ( jQuery.isFunction(jQuery.fn.isotope) ) {
+            if (jQuery.isFunction(jQuery.fn.isotope)) {
                 jQuery('.grid').isotope({
                     itemSelector: '.grid-item',
                     isOriginLeft: true
                 });
 
 // filter items on button click
-                jQuery('.filter-button-group').on( 'click', 'li', function() {
+                jQuery('.filter-button-group').on('click', 'li', function () {
                     var filterValue = jQuery(this).attr('data-filter');
-                    jQuery('.grid').isotope({ filter: filterValue });
+                    jQuery('.grid').isotope({filter: filterValue});
                     jQuery('.filter-button-group li').removeClass('active');
                     jQuery(this).addClass('active');
                 });

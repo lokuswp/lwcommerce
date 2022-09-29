@@ -85,6 +85,26 @@ function lwc_get_price_html( $product_id = null ) {
 	$unit_price  = lwc_get_unit_price( $product_id );
 	$price_promo = lwc_get_promo_price( $product_id );
 
+	if ( lwc_pro_is_product_has_variant( $product_id ) ) {
+		$post_child = get_children( array(
+			'post_parent' => get_the_ID(),
+			'post_type'   => 'product_variant'
+		) ) ?: [];
+
+		$low_price  = 0;
+		$high_price = 0;
+		$prices     = [];
+		$prices_map = [];
+		foreach ( $post_child as $key => $value ) {
+			$post_id              = $value->ID;
+			$price                = lwp_get_price( $post_id );
+			$prices_map[ $price ] = strip_tags( lwc_get_price_html( $post_id ) );
+			$prices[]             = $price;
+		}
+
+		return '<span>' . $prices_map[ min( $prices ) ] . ' - ' . $prices_map[ max( $prices ) ] . '</span>';
+	}
+
 	if ( $unit_price == 0 ) {
 		// Free Format
 		$html = '<span>' . __( "Free", "lwcommerce" ) . '</span>';
@@ -96,6 +116,8 @@ function lwc_get_price_html( $product_id = null ) {
 		$html = '<span>' . lwp_currency_format( true, $price_promo ) . '</span>';
 		$html .= '<small><strike>' . lwp_currency_format( true, $unit_price ) . '</strike></small>';
 	}
+
+// TODO :: Extending
 
 	return $html;
 }

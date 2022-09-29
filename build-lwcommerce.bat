@@ -13,6 +13,10 @@ COPY  "CHANGELOG.md" "lwcommerce\CHANGELOG.md"
 echo on
 for /f "tokens=3,2,4 delims=/- " %%x in ("%date%") do set d=%%y%%x%%z
 set data=%d%
+
+mkdir "C:\xampp\htdocs\lokuswp\wp-content\plugins\lwcommerce"
+robocopy lwcommerce\. C:\xampp\htdocs\lokuswp\wp-content\plugins\lwcommerce\. /IS /S /XD
+
 Echo zipping...
 "C:\Program Files\7-Zip\7z.exe" a -tzip lwcommerce.zip lwcommerce
 echo Done!
