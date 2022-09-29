@@ -36,7 +36,7 @@ class LWCommerce_Boot {
 		// LokusWP Exist and Active
 		if ( $is_backbone_exist && $is_backbone_active && $lwcommerce_was_installed && $lokuswp_was_installed ) {
 			$this->run();
-		} elseif ( $is_backbone_exist && !$lwcommerce_was_installed  ) {
+		} elseif ( $is_backbone_exist && ! $lwcommerce_was_installed ) {
 			// Reactive LokusWP on Disable
 			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 			activate_plugins( 'lokuswp/lokuswp.php' );
@@ -126,12 +126,12 @@ class LWCommerce_Boot {
 		// Shipping Module
 		require_once LWC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
 		require_once LWC_PATH . 'src/includes/modules/shipping/class-manager.php';
+		require_once LWC_PATH . 'src/includes/modules/shipping/controller/class-shipping-controller.php';
+		require_once LWC_PATH . 'src/includes/modules/shipping/controller/rajaongkir/class-shipping-processing.php';
+		require_once LWC_PATH . 'src/includes/modules/shipping/controller/pickup/class-shipping-processing.php';
 
-		if( is_admin() ){
+		if ( is_admin() ) {
 			require_once LWC_PATH . 'src/includes/common/class-i18n.php';
-			require_once LWC_PATH . 'src/includes/modules/shipping/controller/class-shipping-controller.php';
-			require_once LWC_PATH . 'src/includes/modules/shipping/controller/rajaongkir/class-shipping-processing.php';
-			require_once LWC_PATH . 'src/includes/modules/shipping/controller/pickup/class-shipping-processing.php';
 
 			// Shipping
 			require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-rajaongkir-jne.php';
@@ -146,7 +146,6 @@ class LWCommerce_Boot {
 		// API
 		require_once LWC_PATH . 'src/includes/modules/shipping/api/class-rajaongkir-api.php';
 		require_once LWC_PATH . 'src/includes/modules/shipping/api/class-get-services.php';
-
 
 
 		// Check if LokusWP is installed and Active
