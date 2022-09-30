@@ -251,9 +251,15 @@
                                     <div class="lwc-grid-item">
                                         <div class="lwc-flex-column">
                                             <span class="lwc-text-bold">Pembeli</span>
+                                            ${data.name != '0' ? `
                                             <span style="margin-top: 10px">Name: ${data.name}</span>
+                                            ` : ``}
+                                            ${data.phone != '0' ? `
                                             <span>Phone: ${data.phone}</span>
+                                            ` : ``}
+                                            ${data.email != '0' ? `
                                             <span>Email: ${data.email}</span>
+                                            ` : ``}
                                         </div>
                                     </div>
                                     ${renderShipping(data)}

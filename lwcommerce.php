@@ -49,7 +49,6 @@ defined( 'LWC_STORAGE' ) or define( 'LWC_STORAGE', wp_get_upload_dir()['basedir'
  **/
 $is_backbone_exist = file_exists( WP_PLUGIN_DIR . '/lokuswp/lokuswp.php' );
 $backbone_version  = $is_backbone_exist ? get_file_data( WP_PLUGIN_DIR . '/lokuswp/lokuswp.php', array( 'Version' ), false )[0] : false;
-
 if ( ! version_compare( PHP_VERSION, '7.4', '>=' ) ) {
 	add_action( 'admin_notices', 'lwc_fail_php_version' );
 } elseif ( ! version_compare( get_bloginfo( 'version' ), '5.8', '>=' ) ) {
@@ -66,7 +65,6 @@ if ( ! version_compare( PHP_VERSION, '7.4', '>=' ) ) {
 	// Come On, Let's Goo !!! 🦾
 	require_once dirname( __DIR__ ) . '/lwcommerce/src/autoload.php';
 }
-
 /**
  * Admin notice for minimum PHP version.
  * Warning when the site doesn't have the minimum required PHP version.
@@ -108,4 +106,8 @@ function lwc_fail_lokuswp_version() {
 	$html_message = sprintf( '<div class="error">%s</div>', wpautop( $message ) );
 	deactivate_plugins( WP_PLUGIN_DIR . '/lokuswp/lokuswp.php' );
 	echo wp_kses_post( $html_message );
+}
+
+if ( ! $is_backbone_exist ) {
+	require_once LWC_PATH . "src/includes/helper/class-admin-notice-backbone.php";
 }

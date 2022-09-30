@@ -63,7 +63,7 @@ const config = {
             name: 'lasida',
             browserName: 'chromium',
             use: {
-                baseURL: 'http://localhost/wordpress/'
+                baseURL: 'https://sandbox.lokuswp.id'
             }
         }
     ],

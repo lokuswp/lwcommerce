@@ -11,4 +11,4 @@ const {test} = require('@playwright/test');
 // test.describe(require('./wordpress7.4/admin/product.spec.js'));
 // test.describe(require('./wordpress7.4/admin/admin-setting.spec.js'));
 
-test.describe(require('./local/guest/checkout-digital-free-product.spec.js'));
+test.describe(require('./local/guest/checkout-digital-premium-product.spec.js'));
