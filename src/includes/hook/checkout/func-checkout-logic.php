@@ -1,6 +1,14 @@
 <?php
 
 use LokusWP\Commerce\Order;
+//use LokusWP\Scheduler;
+//
+//
+//// TODO :: Create Class for Autoloading
+// Libraries
+if ( ! defined( 'WPTEST' ) ) {
+	require_once LOKUSWP_PATH . 'src/includes/libraries/php/action-scheduler/action-scheduler.php';
+}
 
 /**
  * Business Logic on Checkout
@@ -105,7 +113,7 @@ function lwc_transaction_logic( $transaction ) {
 			->set_payment( $transaction['payment_id'] )
 			->set_extras( $transaction['extras'] )
 			->create();
-		
+
 		// Set Order Status : Pending
 		Order::set_status( $trx_id, "pending" );
 
@@ -121,9 +129,9 @@ function lwc_transaction_logic( $transaction ) {
 		// Order Meta
 		lwc_update_order_meta( $trx_id, "_order_id", $trx_id );
 
-        // Add Order Counter
-        $awaiting = empty(get_option( 'lwcommerce_order_awaiting' )) ? 0 : get_option( 'lwcommerce_order_awaiting' );
-        update_option( "lwcommerce_order_awaiting", abs($awaiting) + 1 );
+		// Add Order Counter
+		$awaiting = empty( get_option( 'lwcommerce_order_awaiting' ) ) ? 0 : get_option( 'lwcommerce_order_awaiting' );
+		update_option( "lwcommerce_order_awaiting", abs( $awaiting ) + 1 );
 	}
 
 	return $transaction;
@@ -136,7 +144,7 @@ function lwc_transaction_logic( $transaction ) {
  */
 add_filter( "lokuswp/transaction/status/text", "lwc_transaction_status_text", 10, 1 );
 function lwc_transaction_status_text( $statuses ) {
-	$statuses['pickup'] = __( "Ready to Pick", "lwcommerce" );
+	$statuses['pickup']    = __( "Ready to Pick", "lwcommerce" );
 	$statuses['completed'] = __( "Completed", "lwcommerce" );
 
 	return $statuses;

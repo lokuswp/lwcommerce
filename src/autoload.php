@@ -66,10 +66,18 @@ class LWCommerce_Boot {
 		Onboarding::register( array( 'slug' => 'lwcommerce', 'name' => 'LWCommerce', 'version' => LWC_VERSION ) );
 	}
 
-	public function rest_api(){
+	public function rest_api() {
 		// Order
 		require_once LWC_PATH . 'src/includes/modules/order/class-order.php';
 		require_once LWC_PATH . 'src/includes/modules/order/class-lwc-order.php';
+	}
+
+	public function admin_settings() {
+
+		// Shipping
+		require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-rajaongkir-jne.php';
+		require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-rajaongkir.php';
+		require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-pickup.php';
 	}
 
 	/**
@@ -141,15 +149,11 @@ class LWCommerce_Boot {
 			require_once LWC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
 			require_once LWC_PATH . 'src/includes/modules/shipping/class-manager.php';
 
-			// Shipping
-			require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-rajaongkir-jne.php';
-			require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-rajaongkir.php';
-			require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-pickup.php';
 
 		}
 
 		// API
-		if (strpos($_SERVER[ 'REQUEST_URI' ], '/wp-json/') !== false && !is_admin()) {
+		if ( strpos( $_SERVER['REQUEST_URI'], '/wp-json/' ) !== false && ! is_admin() ) {
 			// Shipping Module
 			require_once LWC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
 			require_once LWC_PATH . 'src/includes/modules/shipping/class-manager.php';
@@ -158,8 +162,9 @@ class LWCommerce_Boot {
 			require_once LWC_PATH . 'src/includes/modules/shipping/api/class-get-services.php';
 		}
 
-		add_action("rest_api_init", [ $this, "rest_api"] );
-		add_action("admin_init", [ $this, "rest_api"] );
+		add_action( "rest_api_init", [ $this, "rest_api" ] );
+		add_action( "admin_init", [ $this, "rest_api" ] );
+		add_action( "lwcommerce/wp-admin/settings", [ $this, "admin_settings" ] );
 
 		// Check if LokusWP is installed and Active
 		if ( in_array( 'lokuswp/lokuswp.php', get_option( 'active_plugins' ) ) ) {

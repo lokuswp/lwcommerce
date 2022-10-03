@@ -295,7 +295,7 @@ class Admin {
 
 		// Menu Orders
 		$order_wait = get_option( 'lwcommerce_order_awaiting' );
-		$awaiting = $order_wait > 0 ? abs( $order_wait ) : 0;
+		$awaiting   = $order_wait > 0 ? abs( $order_wait ) : 0;
 		add_menu_page(
 			__( 'Orders', 'lwcommerce' ),
 			$awaiting ? sprintf( ( __( 'Orders', 'lwcommerce' ) . ' <span class="awaiting-mod">%d</span>' ), $awaiting ) : __( 'Orders', 'lwcommerce' ),
@@ -376,12 +376,11 @@ class Admin {
 		/** --- Deprecated Translation File --- */
 
 		// Translation Deprecated Notice
-		if ( get_option( 'lwcommerce_text_version' ) ) {
+		if ( is_lwp_admin() ) {
 			if ( version_compare( LWC_TEXT_VERSION, get_option( 'lwcommerce_text_version' ),
 					'>' ) && is_plugin_active( 'loco-translate/loco.php' ) ) {
 				add_action( 'admin_notices', function () {
-					$message      = esc_html__( 'LWCommerce Translation is Deprecated, Please Sync with Loco Translate',
-						'lwcommerce' );
+					$message      = $this->name . ' ' . esc_html__( 'Translation is Deprecated, Please Sync with Loco Translate', 'lwcommerce' );
 					$html_message = sprintf( '<div class="notice notice-info">%s <a href="?lwc-translation-sync" target="_blank">' . __( 'Sync Translation',
 							'lwcommerce' ) . '</a></div>', wpautop( $message ) );
 					echo wp_kses_post( $html_message );

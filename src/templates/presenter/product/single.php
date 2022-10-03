@@ -12,9 +12,9 @@ lwp_set_meta_counter( "_product_view", get_the_ID() );
 <!--    {-->
 <!--        "@context": "https://schema.org/",-->
 <!--        "@type": "Product",-->
-<!--        "name": "--><?//= the_title(); ?><!--",-->
-<!--        "image": ['--><?//= get_the_post_thumbnail_url(); ?><!--'],-->
-<!--        "description": --><?//= the_content(); ?><!--,-->
+<!--        "name": "--><? //= the_title(); ?><!--",-->
+<!--        "image": ['--><? //= get_the_post_thumbnail_url(); ?><!--'],-->
+<!--        "description": --><? //= the_content(); ?><!--,-->
 <!--        "sku": "0374984678",-->
 <!--        "mpn": "738930",-->
 <!--        "brand": {-->
@@ -40,7 +40,7 @@ lwp_set_meta_counter( "_product_view", get_the_ID() );
 <!--        },-->
 <!--        "offers": {-->
 <!--            "@type": "Offer",-->
-<!--            "url": "--><?//= get_permalink(); ?><!--",-->
+<!--            "url": "--><? //= get_permalink(); ?><!--",-->
 <!--            "priceCurrency": "IDR",-->
 <!--            "price": "500,000",-->
 <!--            "lowPrice": "119.99",-->
@@ -59,7 +59,7 @@ lwp_set_meta_counter( "_product_view", get_the_ID() );
     <div class="lwp-product row">
         <div class="col-xs-12 col-sm-12">
             <a href="<?php echo get_permalink(); ?>" class="product-image">
-				<?php the_post_thumbnail( 'full' ); ?>
+				<?php the_post_thumbnail(); ?>
             </a>
         </div>
         <div class="col-xs-12 col-sm-12 row no-gutter">

@@ -24,6 +24,7 @@ if ( isset( $_GET["tab"] ) ) {
 	$active_tab = "settings";
 }
 
+do_action( "lwcommerce/wp-admin/settings" );
 // if ($_GET["page"] == "lwcommerce" ) {
 //     require_once 'onboarding/onboarding.php';
 // }else{
