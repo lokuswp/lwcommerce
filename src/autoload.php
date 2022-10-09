@@ -163,7 +163,8 @@ class LWCommerce_Boot {
 
 		add_action( "rest_api_init", [ $this, "rest_api" ] );
 		add_action( "admin_init", [ $this, "rest_api" ] );
-		add_action( "lwcommerce/wp-admin/settings", [ $this, "admin_settings" ] );
+		add_action( "lwcommerce/wp-admin/settings", [ $this, "shipping_module" ] );
+		add_action( "lwcommerce/checkout/shipping", [ $this, "shipping_module" ] );
 
 		// Check if LokusWP is installed and Active
 		if ( in_array( 'lokuswp/lokuswp.php', get_option( 'active_plugins' ) ) ) {

@@ -13,6 +13,8 @@ class AJAX {
 		$cart_uuid   = sanitize_key( $_POST['cart_uuid'] );
 		$coordinate  = $_POST['coordinate'];
 
+		do_action( "lwcommerce/checkout/shipping" );
+
 		$shipping_active_list = lwp_get_option( "shipping_manager" );
 
 		if ( ! $destination ) {

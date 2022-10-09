@@ -77,7 +77,7 @@
                                        cost="0" checked>
                                 <label for="pickup">
                                     <div class="row center">
-<!--                                        <img src="--><?//= LWC_URL . 'src/admin/assets/images/pickup.png' ?><!--" alt="takeaway">-->
+                                        <!--                                        <img src="--><? //= LWC_URL . 'src/admin/assets/images/pickup.png' ?><!--" alt="takeaway">-->
                                         <h6 style="margin-bottom:0;line-height:normal;margin-top:0;padding:6px 0;">Pickup</h6>
                                     </div>
                                 </label>
@@ -95,8 +95,8 @@
                                        id="shipping">
                                 <label for="shipping">
                                     <div class="row center">
-<!--                                        <img src="--><?//= LWC_URL . 'src/public/assets/images/shipping.jpg' ?><!--"-->
-<!--                                             alt="takeaway">-->
+                                        <!--                                        <img src="--><? //= LWC_URL . 'src/public/assets/images/shipping.jpg' ?><!--"-->
+                                        <!--                                             alt="takeaway">-->
                                         <h6 style="margin-bottom:0;line-height:normal;margin-top:0;padding:6px 0;">Delivery</h6>
                                     </div>
                                 </label>

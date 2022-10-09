@@ -40,8 +40,6 @@ class RajaOngkir_JNE extends Shipping\Gateway {
 
 
 		add_filter( "lwcommerce/shipping/services", [ $this, "get_service" ], 10, 3 );
-
-
 	}
 
 	public function admin_manage( $shipping_id ) {
