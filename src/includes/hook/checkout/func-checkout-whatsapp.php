@@ -8,21 +8,23 @@
 add_filter( "lokuswp/rest/transaction/response", "lwc_transaction_response_checkout_whatsapp", 10, 2 );
 function lwc_transaction_response_checkout_whatsapp( $response, $trx_id ) {
 
-    // Skip when Checkout WHatsapp Off
-    if(lwp_get_settings( 'lwcommerce', 'appearance', 'checkout_whatsapp' ) != "on" ){
-        return $response;
-    }
+	// Skip when Checkout WHatsapp Off
+	if ( lwp_get_settings( 'lwcommerce', 'appearance', 'checkout_whatsapp' ) != "on" ) {
+		return $response;
+	}
 
-    // When Subtotal Zero && Item Just Once, With Product Type : Digital && Quantity : 1 = Fail this Feature
-    if( abs($response['subtotal']) == 0.0 && count($response['items']) == 1 && $response['items'][0]['product_type'] == 'digital'  && $response['items'][0]['quantity'] == 1 ){
-        return $response;
-    }
+	// When Subtotal Zero && Item Just Once, With Product Type : Digital && Quantity : 1 = Fail this Feature
+	if ( abs( $response['subtotal'] ) == 0.0 && count( $response['items'] ) == 1 && $response['items'][0]['product_type'] == 'digital' && $response['items'][0]['quantity'] == 1 ) {
+		return $response;
+	}
 
 	// Get Transaction by ID
 	$transaction = lwp_get_transaction( $trx_id );
 
 	$payment_id   = 'payment-' . $transaction['payment_id'];
 	$payment_data = lwp_get_option( $payment_id );
+
+	do_action( "lokuswp/notification/action" );
 
 	$object = [];
 	if ( ! empty( $payment_data ) && class_exists( $payment_data['payment_class'] ) ) {

@@ -6,7 +6,7 @@
  * Plugin Name:       LWCommerce
  * Plugin URI:        https://lokuswp.id/plugins/lwcommerce
  * Description:       Local First eCommerce WordPress
- * Version:           0.2.2
+ * Version:           0.2.3
  * Author:            LokusWP
  * Author URI:        https://lokuswp.id/
  * License:           GPL-3.0+
@@ -28,9 +28,9 @@ if ( ! defined( 'WPTEST' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  * Define Constant
  */
-defined( 'LWC_VERSION' ) or define( 'LWC_VERSION', '0.2.2' );
-defined( 'LWC_TEXT_VERSION' ) or define( 'LWC_TEXT_VERSION', '0.0.2' ); // Translation File Version
-defined( 'LWC_BACKBONE_REQUIRED_VERSION' ) or define( 'LWC_BACKBONE_REQUIRED_VERSION', '0.1.8' );
+defined( 'LWC_VERSION' ) or define( 'LWC_VERSION', '0.2.3' );
+defined( 'LWC_TEXT_VERSION' ) or define( 'LWC_TEXT_VERSION', '0.0.3' ); // Translation File Version
+defined( 'LWC_BACKBONE_REQUIRED_VERSION' ) or define( 'LWC_BACKBONE_REQUIRED_VERSION', '0.2.0' );
 
 defined( 'LWC_BASE' ) or define( 'LWC_BASE', plugin_basename( __FILE__ ) );
 defined( 'LWC_PATH' ) or define( 'LWC_PATH', plugin_dir_path( __FILE__ ) );

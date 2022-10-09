@@ -46,7 +46,7 @@
 - Stock Updates
 - Translation Text
 
-# [v0.2.3]() (2022-09-30)
+# [v0.2.3]() (2022-10-08)
 
 **Fixing :**
 

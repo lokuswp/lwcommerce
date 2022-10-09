@@ -72,8 +72,7 @@ class LWCommerce_Boot {
 		require_once LWC_PATH . 'src/includes/modules/order/class-lwc-order.php';
 	}
 
-	public function admin_settings() {
-
+	public function shipping_module() {
 		// Shipping
 		require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-rajaongkir-jne.php';
 		require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-rajaongkir.php';

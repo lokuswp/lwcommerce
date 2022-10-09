@@ -32,7 +32,7 @@
 
     li {
         display: inline;
-        padding: .5rem 2.4rem;
+        /*padding: .5rem 2.4rem;*/
         font-size: 16px;
         color: #636363;
         cursor: pointer;
@@ -108,7 +108,7 @@
                     isOriginLeft: true
                 });
 
-// filter items on button click
+                // filter items on button click
                 jQuery('.filter-button-group').on('click', 'li', function () {
                     var filterValue = jQuery(this).attr('data-filter');
                     jQuery('.grid').isotope({filter: filterValue});
@@ -116,8 +116,6 @@
                     jQuery(this).addClass('active');
                 });
             }
-
-
         })
     </script>
 <?php endif; ?>
