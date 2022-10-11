@@ -67,6 +67,7 @@
         text-align: center;
         text-decoration: none;
         background: #FAFAFA;
+        padding: 8px 28px;
     }
 
 
