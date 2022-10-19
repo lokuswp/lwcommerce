@@ -16,6 +16,6 @@ jobs:
       - name: Deploy to Development
         uses: sebastianpopp/git-ftp-action@releases/v3
         with:
-          url: "ftp://${{ secrets.LWC_FTP_HOST }}/lwdonation/"
+          url: "ftp://${{ secrets.LWC_FTP_HOST }}/lwcommerce/"
           user: ${{ secrets.LWC_SANDBOX_FTP_USERNAME }}
           password: ${{ secrets.LWC_SANDBOX_FTP_PASSWORD }}
