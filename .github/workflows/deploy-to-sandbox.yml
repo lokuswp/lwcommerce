@@ -1,0 +1,21 @@
+name: Continuous Deployment to SandBox Site
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+
+  continuous-deployment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Deploy to Development
+        uses: sebastianpopp/git-ftp-action@releases/v3
+        with:
+          url: "ftp://${{ secrets.LWC_FTP_HOST }}/lwdonation/"
+          user: ${{ secrets.LWC_SANDBOX_FTP_USERNAME }}
+          password: ${{ secrets.LWC_SANDBOX_FTP_PASSWORD }}
