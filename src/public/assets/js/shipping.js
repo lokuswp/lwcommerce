@@ -14,7 +14,7 @@ const {log} = console;
             jQuery('input[name="shipping_type"]').first().trigger("click");
         }
 
-        if (urlCurrent[2] != 'trx' && typeof(states) != 'undefined' && states != null) {
+        if (urlCurrent[2] != 'trx' && typeof (states) != 'undefined' && states != null) {
             /*****************************************
              * Get Provinces List
              * Request Provinces List from RajaOngkir API
@@ -150,6 +150,8 @@ const {log} = console;
 
                     shippingServiceElement.removeClass('loading loading-lg');
 
+                    swiperTabsContent.updateAutoHeight();
+
                     // Saving to Local with Cache
                     // lokusCookie.set("lokuswp_shipping_list", JSON.stringify(shippingData), 1); // 1 Day Expired
                 }
@@ -217,6 +219,9 @@ const {log} = console;
         const addressField = $("#address-field");
         const pickupTime = $("#pickup-time");
         const shippingService = $("#lwcommerce-shipping-services");
+
+        // swiperTabsNav.updateAutoHeight();
+        swiperTabsContent.updateAutoHeight();
 
         if (id == "shipping") {
             addressField.removeClass("warp-hide");

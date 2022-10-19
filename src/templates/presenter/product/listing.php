@@ -68,6 +68,7 @@
         text-decoration: none;
         background: #FAFAFA;
         padding: 8px 28px;
+        border-radius: 6px;
     }
 
 

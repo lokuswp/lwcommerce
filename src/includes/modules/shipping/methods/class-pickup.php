@@ -25,7 +25,7 @@ class Pickup extends Shipping\Gateway {
 	// Controlling Property
 	public array $country = [ 'ID' ];
 	public array $zones = [ 'local' ];
-	public string $category = "send-to-buyer";
+	public string $category = "self-pickup";
 
 	public function __construct() {
 		$config['services'] = [

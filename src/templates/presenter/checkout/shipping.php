@@ -255,7 +255,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                <h6 style="margin-bottom:0;line-height:normal;">{{name}} - {{service}}</h6>
+                                <h6 style="margin-top:4px;margin-bottom:4px;line-height:normal;">{{name}} - {{service}}</h6>
                                 <p>{{#description}}{{description}}{{/description}}</p>
                             </div>
                             <div class="col-sm-3" style="text-align: center">

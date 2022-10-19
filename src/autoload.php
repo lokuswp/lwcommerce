@@ -67,8 +67,7 @@ class LWCommerce_Boot {
 	}
 
 	public function rest_api() {
-		// Order
-		require_once LWC_PATH . 'src/includes/modules/order/class-order.php';
+
 		require_once LWC_PATH . 'src/includes/modules/order/class-lwc-order.php';
 	}
 
@@ -77,6 +76,12 @@ class LWCommerce_Boot {
 		require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-rajaongkir-jne.php';
 		require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-rajaongkir.php';
 		require_once LWC_PATH . 'src/includes/modules/shipping/methods/class-pickup.php';
+	}
+
+	public function load_plugins(){
+
+		// Order
+		require_once LWC_PATH . 'src/includes/modules/order/class-order.php';
 	}
 
 	/**
@@ -147,8 +152,6 @@ class LWCommerce_Boot {
 			// Shipping Module
 			require_once LWC_PATH . 'src/includes/modules/shipping/abstract-shipping.php';
 			require_once LWC_PATH . 'src/includes/modules/shipping/class-manager.php';
-
-
 		}
 
 		// API
@@ -161,6 +164,7 @@ class LWCommerce_Boot {
 			require_once LWC_PATH . 'src/includes/modules/shipping/api/class-get-services.php';
 		}
 
+		add_action( "init", [ $this, "load_plugins" ] );
 		add_action( "rest_api_init", [ $this, "rest_api" ] );
 		add_action( "admin_init", [ $this, "rest_api" ] );
 		add_action( "lwcommerce/wp-admin/settings", [ $this, "shipping_module" ] );

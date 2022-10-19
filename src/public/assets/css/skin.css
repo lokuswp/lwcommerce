@@ -62,14 +62,6 @@ td.product-item-detail strike {
 }
 
 
-/* Product Skin */
-
-.product-image img {
-    border: 1px solid #E5E8EB;
-    border-radius: 3% !important;
-}
-
-
 /* Product Listing */
 
 .lwc-product-item {
@@ -136,8 +128,9 @@ td.product-item-detail strike {
 /* Single Product  */
 
 .single-product .product-title {
-    padding: 8px 12px 0 0;
+    padding: 0px 12px 0 0;
     width: 100%;
+
 }
 
 /*Loading*/

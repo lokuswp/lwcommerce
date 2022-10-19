@@ -54,7 +54,7 @@ lwp_set_meta_counter( "_product_view", get_the_ID() );
 <!--</script>-->
 
 <div class="lwcommerce lwp-container">
-	<?php require_once LWC_PATH . 'src/templates/component/navigation.php'; ?>
+	<?php // require_once LWC_PATH . 'src/templates/component/navigation.php'; ?>
 
     <div class="lwp-product row">
         <div class="col-xs-12 col-sm-12">
@@ -62,36 +62,80 @@ lwp_set_meta_counter( "_product_view", get_the_ID() );
 				<?php the_post_thumbnail(); ?>
             </a>
         </div>
-        <div class="col-xs-12 col-sm-12 row no-gutter">
-            <h2 class="product-title"><?php the_title(); ?></h2>
-            <div class="product-price">
-				<?php echo lwc_get_price_html(); ?>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 row no-gutter">
-			<?php do_action( 'lokuswp/product/variant' ); ?>
-        </div>
-        <div class="col-xs-12 col-sm-12 row no-gutter" style="margin-top:12px">
-            <div class="col-xs-7 col-sm-8">
-				<?php lwc_whatsapp_button_html(); ?>
-            </div>
-            <div class="col-xs-5 col-sm-4  end-sm">
-				<?php lwc_add_to_cart_html(); ?>
+
+        <div class="lwc-product-content">
+
+            <div class="col-xs-12 col-sm-12 row no-gutter">
+                <div class="col-xs-6 col-sm-6">
+                    <h2 class="product-title"><?php the_title(); ?></h2>
+                    <div class="product-price">
+						<?php echo lwc_get_price_html(); ?>
+                    </div>
+
+                </div>
+                <div class="col-xs-6 col-sm-6 end-sm" style="display:flex;">
+                    <div class="start-sm" style="padding: 4px 12px;">
+						<?php lwc_whatsapp_button_html(); ?>
+                    </div>
+                    <div class="end-sm">
+						<?php lwc_add_to_cart_html(); ?>
+                    </div>
+                </div>
+
 				<?= lwc_get_stock_html(); ?>
             </div>
+
+
+            <div class="col-xs-12 col-sm-12 row no-gutter">
+				<?php do_action( 'lokuswp/product/variant' ); ?>
+            </div>
+
+            <br>
+            <div class="lwp-content-area col-sm-12 no-gutter">
+                <h3><?= __( "Description", "lwcommerce" ); ?></h3>
+                <p><?php the_content(); ?></p>
+            </div>
         </div>
-        <div class="col-sm-12 no-gutter">
-            <p><?php the_content(); ?></p>
-        </div>
+
     </div>
 </div>
 
 <?php require_once LWC_PATH . 'src/templates/presenter/checkout/bottom-cart-panel.php'; ?>
 
 <style>
+
+
+    .single-product .product-title{
+        font-size: 20px;
+    }
+
+    span.lwc-stock {
+        margin: 0 4px;
+        font-weight: 600;
+    }
+
+    .lwp-product img {
+        margin-bottom: -6px;
+    }
+
+    .lwc-product-content {
+        padding: 16px;
+        background: #fff;
+    }
+
+    .lwp-content-area h3 {
+        font-size: 18px;
+    }
+
     .lwp-container {
         max-width: 480px;
         margin: 0 auto;
+    }
+
+    .lwp-content-area ol,
+    .lwp-content-area ul {
+        margin-bottom: 1rem;
+        padding-left: 28px;
     }
 
     h2 {

@@ -203,7 +203,7 @@ class Updater {
 
 	public function plugin_update_message( $data ) {
 		if ( empty( $data['package'] ) ) {
-			printf( __( 'Please download in %s Member Area %s to update', 'lwcommerce' ), '<a href="https://member.lokuswp.id/" target="_blank">', '</a>' );
+			printf( ' ' . __( 'Please download in %s Member Area %s to update', 'lwcommerce' ), '<a href="https://member.lokuswp.id/" target="_blank">', '</a>' );
 		}
 	}
 

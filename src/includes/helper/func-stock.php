@@ -26,7 +26,7 @@ function lwc_get_stock_html( $product_id = null ) {
 	$stock_unit = esc_attr( get_post_meta( $product_id, '_stock_unit', true ) );
 
 	if ( $stock ) {
-		return 'Stock : <span class="lwc-stock">' . $stock . ' ' . $stock_unit . '</span>';
+		return __( "Only", 'lwcommerce' ) . '<span class="lwc-stock">' . $stock . ' ' . $stock_unit . '</span>' . __( "left in stock", "lwcommerce" );
 	}
 
 	return '';

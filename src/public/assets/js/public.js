@@ -47,4 +47,13 @@
             cancelable: true
         }));
     });
+
+    $(document).on('change', 'input[name="shipping_type"]', function (e) {
+        e.preventDefault();
+
+        // swiperTabsNav.updateAutoHeight();
+        swiperTabsContent.updateAutoHeight();
+
+
+    });
 })(jQuery);

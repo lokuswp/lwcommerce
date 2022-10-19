@@ -1,4 +1,4 @@
-name: Continuous Deployment
+name: Deploy to Sandbox
 
 on:
   push:
@@ -13,16 +13,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v1
 
-      - name: Deploy to Beta
-        uses: sebastianpopp/git-ftp-action@releases/v3
-        with:
-          url: "ftp://${{ secrets.FTP_BETA_HOST }}/lwcommerce/"
-          user: ${{ secrets.FTP_BETA_USERNAME }}
-          password: ${{ secrets.FTP_BETA_PASSWORD }}
+#      - name: Deploy to Beta
+#        uses: sebastianpopp/git-ftp-action@releases/v3
+#        with:
+#          url: "ftp://${{ secrets.FTP_BETA_HOST }}/lwcommerce/"
+#          user: ${{ secrets.FTP_BETA_USERNAME }}
+#          password: ${{ secrets.FTP_BETA_PASSWORD }}
 
-      - name: Deploy to Development
+      - name: Deploy to Sandbox
         uses: sebastianpopp/git-ftp-action@releases/v3
         with:
-          url: "ftp://${{ secrets.FTP_DEV_HOST }}/lwcommerce/"
-          user: ${{ secrets.FTP_DEV_USERNAME }}
-          password: ${{ secrets.FTP_DEV_PASSWORD }}
+          url: "ftp://${{ secrets.LWC_SANDBOX_FTP_HOST }}/lwcommerce/"
+          user: ${{ secrets.LWC_SANDBOX_USERNAME }}
+          password: ${{ secrets.LWC_SANDBOX_PASSWORD }}

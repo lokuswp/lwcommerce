@@ -60,9 +60,7 @@ if ( function_exists( 'lwc_pro_is_product_has_variant' ) ) {
 
 <style>
 
-    button.lokus-btn {
-        font-weight: normal;
-    }
+
 
     .lwp-hidden {
         display: none;

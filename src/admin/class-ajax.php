@@ -414,18 +414,17 @@ class AJAX {
 					break;
 			}
 
-			// Make action base on change status order
-			do_action( "lwcommerce/admin/order/{$action}", $order_id );
+
 		} else {
 			if ( $action === 'pending' ) {
-				if ( has_action( 'lokuswp/admin/order/action' ) ) {
-					do_action( 'lokuswp/admin/order/action', $order_id );
-				}
-				Order::set_status( $order_id, 'completed' );
+				Order::set_status( $order_id, "completed" );
 				lwc_update_order_meta( $order_id, '_order_status', 'completed' );
 				lwp_transaction_update_column( $order_id, 'status', 'paid' );
 			}
 		}
+
+		// Make action base on change status order
+		do_action( "lwcommerce/admin/order/{$action}", $order_id );
 
 		wp_send_json_success( 'success' );
 	}
