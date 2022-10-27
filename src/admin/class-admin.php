@@ -248,6 +248,26 @@ class Admin {
 			0
 		);
 
+		add_submenu_page(
+			$this->slug,
+			__( 'Notification', 'lwcommerce' ),
+			__( 'Notification', 'lwcommerce' ),
+			'manage_options',
+			'admin.php?page=lwcommerce&tab=notification',
+			'',
+			1
+		);
+
+		add_submenu_page(
+			$this->slug,
+			__( 'Shipping', 'lwcommerce' ),
+			__( 'Shipping', 'lwcommerce' ),
+			'manage_options',
+			'admin.php?page=lwcommerce&tab=shipping',
+			'',
+			2
+		);
+
 		$backbone = (array) apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
 		if ( ! in_array( 'lwcommerce/lwcommerce.php', $backbone ) ) {
 
@@ -256,7 +276,7 @@ class Admin {
 				__( 'Be a Pro', 'lwcommerce' ),
 				__( 'Be a Pro', 'lwcommerce' ),
 				'manage_options',
-				'admin.php?page=lokuswp&tab=marketplace',
+				'admin.php?page=lokuswp&tab=integrations',
 				'',
 				9999
 			);
@@ -266,7 +286,7 @@ class Admin {
 				__( 'Get More Addon', 'lwcommerce' ),
 				__( 'Get More Addon', 'lwcommerce' ),
 				'manage_options',
-				'admin.php?page=lokuswp&tab=marketplace',
+				'admin.php?page=lokuswp&tab=integrations',
 				'',
 				9999
 			);
