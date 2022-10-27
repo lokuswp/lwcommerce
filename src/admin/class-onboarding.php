@@ -231,9 +231,14 @@ class Onboarding {
 		lwp_set_settings( 'lwcommerce', 'appearance', 'checkout_whatsapp', 'on' );
 		lwp_set_settings( 'lokuswp', 'appearance', 'floating_cart', 'on' );
 
+		// Set Default :: Shipping
 		$shipping_carriers["pickup"]         = "on";
 		$shipping_carriers["rajaongkir-jne"] = "on";
 		lwp_update_option( 'shipping_manager', $shipping_carriers );
+
+		// Set Default Origin : Tangerang
+		lwp_set_settings( 'lwcommerce', 'store', 'state', '3' );
+		lwp_set_settings( 'lwcommerce', 'store', 'city', '456' );
 	}
 
 

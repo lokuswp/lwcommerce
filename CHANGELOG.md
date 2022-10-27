@@ -28,7 +28,19 @@
 - OpenGraph
 - Scheme Product
 
-# [v0.2.4]() (2022-10-26)
+# [v0.2.4]() (2022-10-27)
 
 **Fixing :**
 - Shortcode Naming
+- Plugin Updater
+- Image Size
+- FollowUp Order
+- Disable Support PHP 8/8.1
+- Filtering UI
+
+**Beta :**
+- Mode Catalog
+
+**Enhance :**
+- Shipping UI
+- Product Detail UI
