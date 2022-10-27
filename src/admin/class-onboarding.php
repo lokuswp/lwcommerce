@@ -229,6 +229,7 @@ class Onboarding {
 
 	private function set_appearance() {
 		lwp_set_settings( 'lwcommerce', 'appearance', 'checkout_whatsapp', 'on' );
+		lwp_set_settings( 'lokuswp', 'appearance', 'floating_cart', 'on' );
 	}
 
 

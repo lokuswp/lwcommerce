@@ -8,7 +8,7 @@ use stdClass;
 
 class Updater {
 
-	protected $plugin_file = LWC_BASE; /* ---CHANGE THIS--- */
+	protected string $plugin_file = LWC_BASE; /* ---CHANGE THIS--- */
 	protected string $plugin_slug = 'lwcommerce'; /* ---CHANGE THIS--- */
 	protected string $plugin_host = 'https://api.github.com/repos/lokuswp/lwcommerce/releases/latest'; /* ---CHANGE THIS--- */
 	protected string $plugin_version = LWC_VERSION; /* ---CHANGE THIS--- */
@@ -23,12 +23,11 @@ class Updater {
 		add_action( 'upgrader_process_complete', array( $this, 'plugin_destroy_update' ), 10, 2 );
 
 		add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'plugin_updater_logic' ) );
-		add_filter( 'site_transient_update_plugins', array( $this, 'plugin_updater_logic' ) );
-		add_filter( 'transient_update_plugins', array( $this, 'plugin_updater_logic' ) );
 
 		// Only Run Checking Update in Plugins Page
 		if ( $pagenow == 'plugins.php' ) {
 			if ( isset( $_GET['manual-check'] ) && $_GET['manual-check'] == $this->plugin_slug ) {
+				add_action( 'site_transient_update_plugins', array( $this, 'plugin_updater_logic' ) );
 				delete_transient( $this->plugin_slug . '_update' );
 				delete_transient( $this->plugin_slug . '_update_check' );
 			}
@@ -51,7 +50,7 @@ class Updater {
 		}
 
 		// Source of Data
-		$transient = (object) $transient_update;
+		$remote = (object) $transient_update;
 
 		if ( ! is_wp_error( $remote ) ) {
 			if ( ! isset( $args->slug ) ) {
@@ -179,16 +178,18 @@ class Updater {
 		if ( $assets && ! is_wp_error( $remote ) && version_compare( $this->plugin_version, $remote_version, '<' ) ) {
 			$res              = new stdClass();
 			$res->slug        = $this->plugin_slug;
-			$res->plugin      = $this->plugin_slug . '/' . $this->plugin_slug . '.php';
+			$res->plugin      = $this->plugin_file;
 			$res->new_version = $remote_version;
-			$res->tested      = '6.0';
+			$res->tested      = '6.0.2';
 			if ( isset( $assets->browser_download_url ) ) {
 				$res->package = $assets->browser_download_url;
 			}
 			// TODO : ERROR
-			$transient->response[ $res->plugin ] = $res;
+			$transient->response[ $this->plugin_file ] = $res;
 		}
 
+
+		raydebugger($this->plugin_file);
 		return $transient;
 	}
 

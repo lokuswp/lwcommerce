@@ -75,7 +75,7 @@ Terimakasih
 	 */
 	public function templating( $order_data ) {
 
-		$locale = lwp_get_locale_by_country( $order_data->country ); // id_ID
+		do_action( "lokuswp/notification/action" );
 
 		// Change order data to object
 		$data     = $this->prepare_data( $order_data );
@@ -83,13 +83,23 @@ Terimakasih
 
 		// Dynamic Replacing Tag based on Data, {{tag}} = value
 		foreach ( $data as $tag => $value ) {
-			$template = str_replace( "{{{$tag}}}", $value, $template );
+			if( !is_array($value)){
+				$template = str_replace( "{{{$tag}}}", $value, $template );
+			}
+
 		}
+
+		$locale = lwp_get_locale_by_country( $data->country ); // id_ID
+
+
+		raydebugger( $template );
+
 
 		$template = str_replace( "{{payment}}", lwp_get_notification_block_payment_text( $locale, $data ), $template );
 		$template = str_replace( "{{summary}}", $this->order_detail( $data ), $template );
 
 //		$template = str_replace( "{{brand_name}}", $data->store_name, $template );
+
 
 
 		return $template;

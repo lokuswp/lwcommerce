@@ -40,8 +40,8 @@ $floating_cart_distance = isset( $settings['floating_cart_distance'] ) ? abs( $s
         margin: 0 auto;
         background: #fff;
         padding: 12px 16px;
-        border-radius: 8px 8px 0 0;
-        border: 1px solid #E5E8EB;
+        /*border-radius: 8px 8px 0 0;*/
+        /*border: 1px solid #E5E8EB;*/
     }
 
     #lwcommerce-bottom-cart-panel a {

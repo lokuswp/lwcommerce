@@ -53,7 +53,6 @@
 
         // swiperTabsNav.updateAutoHeight();
         swiperTabsContent.updateAutoHeight();
-
-
     });
+
 })(jQuery);

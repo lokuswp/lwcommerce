@@ -6,6 +6,8 @@ class Product_Listing {
 
 	public function __construct() {
 		add_shortcode( 'lwcommerce_product_list', [ $this, 'render' ] );
+
+		add_shortcode( 'lwcommerce_products', [ $this, 'render' ] );
 	}
 
 	public function render( $atts ) {
@@ -13,7 +15,8 @@ class Product_Listing {
 			'product_ids' => false,
 			'mobile'      => false,
 			'filter'      => '',
-			'column'      => 4
+			'column'      => 4,
+			'mode'        => ""
 		), $atts ) );
 
 		wp_enqueue_style( "lokuswp-grid" );
@@ -23,7 +26,7 @@ class Product_Listing {
 
 		ob_start();
 
-		include_once LWC_PATH . "/src/templates/presenter/product/listing.php";
+		include LWC_PATH . "/src/templates/presenter/product/listing.php";
 
 		return ob_get_clean();
 	}

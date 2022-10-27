@@ -1,4 +1,4 @@
-name: Continuous Deployment to SandBox Site
+name: Continuous Deployment
 
 on:
   push:

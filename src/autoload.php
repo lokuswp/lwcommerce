@@ -44,12 +44,11 @@ class LWCommerce_Boot {
 		}
 
 		// Image Size Mobile
-		add_image_size( 'lwc-m-p-thumbnail', 269, 269, true );
+		add_image_size( 'lwcommerce-thumbnail-listing--mobile', 269, 269, true );
 
 		// Image Size Desktop
-		add_image_size( 'lwc-d-p-thumbnail', 269, 9999, false );
-		add_image_size( 'lwc-d-p-thumbnail-crop', 269, 269, true );
-		add_image_size( 'lwc-d-p-thumbnail-detail', 800, 9999, false );
+		add_image_size( 'lwcommerce-thumbnail-listing--desktop', 380, 9999, false );
+		add_image_size( 'lwcommerce-thumbnail-single--desktop', 800, 9999, false );
 	}
 
 	/**

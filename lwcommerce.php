@@ -28,7 +28,7 @@ if ( ! defined( 'WPTEST' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  * Define Constant
  */
-defined( 'LWC_VERSION' ) or define( 'LWC_VERSION', '0.2.3' );
+defined( 'LWC_VERSION' ) or define( 'LWC_VERSION', '0.2.4' );
 defined( 'LWC_TEXT_VERSION' ) or define( 'LWC_TEXT_VERSION', '0.0.3' ); // Translation File Version
 defined( 'LWC_BACKBONE_REQUIRED_VERSION' ) or define( 'LWC_BACKBONE_REQUIRED_VERSION', '0.2.0' );
 
@@ -45,6 +45,13 @@ $lokuswp_active           = in_array( 'lokuswp/lokuswp.php', (array) apply_filte
 // Check : PHP Version
 if ( ! version_compare( PHP_VERSION, '7.4', '>=' ) ) {
 	add_action( 'admin_notices', 'lwc_fail_php_version' );
+}
+
+// Disable Support PHP 8.0 - 8.1
+if ( version_compare( PHP_VERSION, '7.5', '>' ) ) {
+	add_action( 'admin_notices', 'lwp_fail_php_version' );
+
+	return;
 }
 
 // Check : WordPress Version

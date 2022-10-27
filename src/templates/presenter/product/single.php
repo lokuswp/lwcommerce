@@ -1,8 +1,6 @@
 <?php
 get_header();
 wp_enqueue_style( "lokuswp-grid" );
-
-lwp_set_meta_counter( "_product_view", get_the_ID() );
 ?>
 
 <!-- Open Graph -->
@@ -12,9 +10,9 @@ lwp_set_meta_counter( "_product_view", get_the_ID() );
 <!--    {-->
 <!--        "@context": "https://schema.org/",-->
 <!--        "@type": "Product",-->
-<!--        "name": "--><? //= the_title(); ?><!--",-->
-<!--        "image": ['--><? //= get_the_post_thumbnail_url(); ?><!--'],-->
-<!--        "description": --><? //= the_content(); ?><!--,-->
+<!--        "name": "--><?php //the_title(); ?><!--",-->
+<!--        "image": ['--><?//= get_the_post_thumbnail_url(); ?><!--'],-->
+<!--        "description": "--><?php //the_content(); ?><!--",-->
 <!--        "sku": "0374984678",-->
 <!--        "mpn": "738930",-->
 <!--        "brand": {-->
@@ -40,7 +38,7 @@ lwp_set_meta_counter( "_product_view", get_the_ID() );
 <!--        },-->
 <!--        "offers": {-->
 <!--            "@type": "Offer",-->
-<!--            "url": "--><? //= get_permalink(); ?><!--",-->
+<!--            "url": "--><?//= get_permalink(); ?><!--",-->
 <!--            "priceCurrency": "IDR",-->
 <!--            "price": "500,000",-->
 <!--            "lowPrice": "119.99",-->
@@ -66,19 +64,22 @@ lwp_set_meta_counter( "_product_view", get_the_ID() );
         <div class="lwc-product-content">
 
             <div class="col-xs-12 col-sm-12 row no-gutter">
-                <div class="col-xs-6 col-sm-6">
-                    <h2 class="product-title"><?php the_title(); ?></h2>
+
+                <div class="col-xs-12 col-sm-7" style="margin-bottom:8px;">
+                    <h2 class="product-title">
+                        <?php the_title(); ?>
+                    </h2>
                     <div class="product-price">
 						<?php echo lwc_get_price_html(); ?>
                     </div>
-
                 </div>
-                <div class="col-xs-6 col-sm-6 end-sm" style="display:flex;">
-                    <div class="start-sm" style="padding: 4px 12px;">
+
+                <div class="col-xs-12 col-sm-5 end-sm" style="display:flex;">
+                    <div class="start-sm" style="padding: 4px 12px 4px 0;">
 						<?php lwc_whatsapp_button_html(); ?>
                     </div>
                     <div class="end-sm">
-						<?php lwc_add_to_cart_html(); ?>
+						<?php lwc_add_to_cart_html( get_the_ID(), ['catalog_mode' => "off", 'whatsapp_button' => "off"] ); ?>
                     </div>
                 </div>
 
@@ -86,7 +87,7 @@ lwp_set_meta_counter( "_product_view", get_the_ID() );
             </div>
 
 
-            <div class="col-xs-12 col-sm-12 row no-gutter">
+            <div class="col-xs-12 col-sm-12 row no-gutter" style="margin-top: 12px;">
 				<?php do_action( 'lokuswp/product/variant' ); ?>
             </div>
 

@@ -252,6 +252,13 @@ class Metabox_Product {
 		update_post_meta( $post_id, '_unit_price', empty( $_POST['_unit_price'] ) ? 0 : lwp_currency_to_number( $_POST['_unit_price'] ) );
 		update_post_meta( $post_id, '_promo_price', empty( $_POST['_promo_price'] ) ? null : lwp_currency_to_number( $_POST['_promo_price'] ) );
 
+		// TODO :: Remove THis
+		if ( function_exists( 'lwc_pro_is_product_has_variant' ) ) {
+			if ( lwc_pro_is_product_has_variant( $post_id ) || lwc_pro_is_product_variant( $post_id ) ) {
+				update_post_meta( $post_id, '_promo_price', null );
+			}
+		}
+
         update_post_meta( $post_id, '_btn_cart_text', empty( $_POST['_btn_cart_text'] ) ? 0 : sanitize_text_field( $_POST['_btn_cart_text'] ) );
         update_post_meta( $post_id, '_btn_cart_link', empty( $_POST['_btn_cart_link'] ) ? null : sanitize_text_field( $_POST['_btn_cart_link'] ) );
 

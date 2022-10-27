@@ -309,20 +309,24 @@ class Admin {
 		// Add Shortcode List to wp-admin > lwcommerce > settings > apperance
 		Shortcode_Lists::add_shortcode_list( "lwcommerce", $this->slug, $this->name, array(
 			[
-				'shortcode'   => '[lwcommerce_product_list]',
+				'shortcode'   => '[lwcommerce_products]',
 				'description' => __( "Product list view", 'lwcommerce' )
 			],
 			[
-				'shortcode'   => '[lwcommerce_product_list column="3"]',
+				'shortcode'   => '[lwcommerce_products column="3"]',
 				'description' => __( "Product list view 3 Column", 'lwcommerce' )
 			],
 			[
-				'shortcode'   => '[lwcommerce_product_list filter="category"]',
+				'shortcode'   => '[lwcommerce_products filter="category"]',
 				'description' => __( "Product list view with Category Filter", 'lwcommerce' )
 			],
 			[
-				'shortcode'   => '[lwcommerce_product_list view="mobile"]',
+				'shortcode'   => '[lwcommerce_products view="mobile"]',
 				'description' => __( "Product list view Mobile First", 'lwcommerce' )
+			],
+			[
+				'shortcode'   => '[lwcommerce_products mode="catalog"]',
+				'description' => __( "Product list without Add to Cart Button", 'lwcommerce' )
 			]
 		) );
 
@@ -337,7 +341,12 @@ class Admin {
 				'name'     => __( 'Whatsapp Button', 'lwcommerce' ),
 				'desc'     => __( 'Disable/Enable Whatsapp Button in Product List', 'lwcommerce' ),
 				'override' => false
-			]
+			],
+			'catalog_mode' => [
+				'name'     => __( 'Catalog Mode [Beta]', 'lwcommerce' ),
+				'desc'     => __( 'Disable/Enable Add to Cart Button', 'lwcommerce' ),
+				'override' => false
+			],
 		) );
 	}
 

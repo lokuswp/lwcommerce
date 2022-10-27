@@ -74,6 +74,26 @@
 
 </style>
 
+<script>
+    jQuery(document).ready(function () {
+
+        if (jQuery.isFunction(jQuery.fn.isotope)) {
+            jQuery('.grid').isotope({
+                itemSelector: '.grid-item',
+                isOriginLeft: true
+            });
+
+            // filter items on button click
+            jQuery('.filter-button-group').on('click', 'li', function () {
+                var filterValue = jQuery(this).attr('data-filter');
+                jQuery('.grid').isotope({filter: filterValue});
+                jQuery('.filter-button-group li').removeClass('active');
+                jQuery(this).addClass('active');
+            });
+        }
+    })
+</script>
+
 <?php if ( $filter == 'category' ) : wp_enqueue_script( "isotope" ); ?>
 
     <div class="filters filter-button-group">
@@ -101,25 +121,6 @@
 
         </ul>
     </div>
-    <script>
-        jQuery(document).ready(function () {
-
-            if (jQuery.isFunction(jQuery.fn.isotope)) {
-                jQuery('.grid').isotope({
-                    itemSelector: '.grid-item',
-                    isOriginLeft: true
-                });
-
-                // filter items on button click
-                jQuery('.filter-button-group').on('click', 'li', function () {
-                    var filterValue = jQuery(this).attr('data-filter');
-                    jQuery('.grid').isotope({filter: filterValue});
-                    jQuery('.filter-button-group li').removeClass('active');
-                    jQuery(this).addClass('active');
-                });
-            }
-        })
-    </script>
 <?php endif; ?>
 
 <div class="lwc-listing row content grid">
@@ -136,10 +137,19 @@
 
 	$loop = new WP_Query( $args );
 
+	// Get outside Loop
+	$opt['whatsapp']        = lwp_sanitize_phone( lwp_get_settings( 'lwcommerce', 'store', 'whatsapp' ) );
+	$opt['catalog_mode']    = lwp_get_settings( 'lwcommerce', 'appearance', 'catalog_mode' );
+	$opt['whatsapp_button'] = lwp_get_settings( 'lwcommerce', 'appearance', 'button_whatsapp' );
+
+	if ( $mode == "catalog" ) {
+		$opt['catalog_mode'] = "on";
+	}
+
 	while ( $loop->have_posts() ) : $loop->the_post();
 
 		$col  = $column == 3 ? 'col-md-4' : 'col-md-3';
-		$size = $column == 3 ? 'lwc-d-p-thumbnail' : 'lwc-d-p-thumbnail-crop';
+		$size = $column == 3 ? 'lwcommerce-thumbnail-listing--desktop' : 'lwcommerce-thumbnail-listing--mobile';
 
 		$terms = get_the_terms( get_the_ID(), 'product_category' );
 		$term  = ( $terms ) ? implode( ' ', wp_list_pluck( $terms, 'slug' ) ) : '';
@@ -172,7 +182,7 @@
 				<?php do_action( "lwcommerce/product/listing/after_price", get_the_ID() ); ?>
             </div>
 
-			<?php do_action( "lwcommerce/product/listing/after", get_the_ID() ); ?>
+			<?php do_action( "lwcommerce/product/listing/after", get_the_ID(), $opt ); ?>
         </div>
 	<?php
 	endwhile;

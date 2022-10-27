@@ -2,10 +2,11 @@ const {test, expect} = require('@playwright/test');
 
 module.exports = function createTests() {
 
+    const BASE_URL = process.env.URL;
 
     test.beforeEach(async ({page}) => {
         // Runs before each test and signs in each page.
-        await page.goto('products');
+        await page.goto(BASE_URL + 'products');
         await expect(page).toHaveURL('products/');
     })
 
