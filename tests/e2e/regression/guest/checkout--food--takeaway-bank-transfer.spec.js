@@ -21,7 +21,7 @@ module.exports = function createTests() {
         // await page.click('#lwp-checkout')
 
         await page.getByRole('link', { name: 'Checkout' }).click();
-        await expect(page).toHaveURL('http://localhost/wordpress/checkout/');
+        await expect(page).toHaveURL('checkout/');
 
         await page.waitForSelector('#name')
         await page.click('#name')

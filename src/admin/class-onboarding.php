@@ -41,7 +41,7 @@ class Onboarding {
 	/**
 	 * Register the admin page class with all the appropriate WordPress hooks.
 	 *
-	 * @param  array  $plugin
+	 * @param array $plugin
 	 */
 	public static function register( array $plugin ) {
 		$admin = new self( $plugin['slug'], $plugin['name'], $plugin['version'] );
@@ -60,9 +60,9 @@ class Onboarding {
 	/**
 	 * Onboarding constructor.
 	 *
-	 * @param  string  $slug
-	 * @param  string  $name
-	 * @param  string  $version
+	 * @param string $slug
+	 * @param string $name
+	 * @param string $version
 	 */
 	public function __construct( string $slug, string $name, string $version ) {
 		$this->slug    = $slug;
@@ -230,6 +230,10 @@ class Onboarding {
 	private function set_appearance() {
 		lwp_set_settings( 'lwcommerce', 'appearance', 'checkout_whatsapp', 'on' );
 		lwp_set_settings( 'lokuswp', 'appearance', 'floating_cart', 'on' );
+
+		$shipping_carriers["pickup"]         = "on";
+		$shipping_carriers["rajaongkir-jne"] = "on";
+		lwp_update_option( 'shipping_manager', $shipping_carriers );
 	}
 
 

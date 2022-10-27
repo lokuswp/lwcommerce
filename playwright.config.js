@@ -57,7 +57,7 @@ const config = {
             name: 'chromium',
             use: {
                 ...devices['Desktop Chrome'],
-                baseURL: 'http://localhost/wordpress/',
+                baseURL: 'https://lwc-sandbox.lokuswp.id/production/',
                 headless: false
             }
         }
