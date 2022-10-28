@@ -6,7 +6,7 @@
  * Plugin Name:       LWCommerce
  * Plugin URI:        https://lokuswp.id/plugins/lwcommerce
  * Description:       Local First eCommerce WordPress
- * Version:           0.2.3
+ * Version:           0.2.4
  * Author:            LokusWP
  * Author URI:        https://lokuswp.id/
  * License:           GPL-3.0+

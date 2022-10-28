@@ -122,6 +122,7 @@ wp_enqueue_style( "lokuswp-grid" );
     .lwc-product-content {
         padding: 16px;
         background: #fff;
+        width: 100%;
     }
 
     .lwp-content-area h3 {

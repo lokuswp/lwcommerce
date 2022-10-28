@@ -28,7 +28,7 @@
 - OpenGraph
 - Scheme Product
 
-# [v0.2.4]() (2022-10-27)
+# [v0.2.4]() (2022-10-28)
 
 **Fixing :**
 - Shortcode Naming

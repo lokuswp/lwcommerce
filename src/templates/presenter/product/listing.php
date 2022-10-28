@@ -70,8 +70,6 @@
         padding: 8px 28px;
         border-radius: 6px;
     }
-
-
 </style>
 
 <script>
@@ -109,7 +107,7 @@
 
 			<?php if ( sizeof( $categories ) >= 1 ) : ?>
                 <li class="active" data-filter="*">
-					<?php _e( 'All', 'lsddonation-campaign' ); ?>
+					<?php _e( 'All', 'lwcommerce' ); ?>
                 </li>
 			<?php endif ?>
 
