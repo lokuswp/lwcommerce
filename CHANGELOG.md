@@ -44,3 +44,8 @@
 **Enhance :**
 - Shipping UI
 - Product Detail UI
+
+# [v0.2.5]() (2022-10-28)
+
+**Fixing :**
+- Debugger

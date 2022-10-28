@@ -99,7 +99,7 @@ function lwc_get_price_html( $product_id = null ) {
 	}
 
 	// TODO :: Extending
-	if ( function_exists( 'lwc_pro_is_product_has_variant' ) ) {
+	if ( function_exists( 'lwc_pro_is_product_has_variant' ) && function_exists( 'lwc_pro_is_product_variant' ) ) {
 
 		if ( lwc_pro_is_product_has_variant( $product_id ) || lwc_pro_is_product_variant( $product_id ) ) {
 

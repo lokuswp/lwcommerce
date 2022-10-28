@@ -92,9 +92,6 @@ Terimakasih
 		$locale = lwp_get_locale_by_country( $data->country ); // id_ID
 
 
-		raydebugger( $template );
-
-
 		$template = str_replace( "{{payment}}", lwp_get_notification_block_payment_text( $locale, $data ), $template );
 		$template = str_replace( "{{summary}}", $this->order_detail( $data ), $template );
 

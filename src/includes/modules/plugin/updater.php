@@ -188,8 +188,6 @@ class Updater {
 			$transient->response[ $this->plugin_file ] = $res;
 		}
 
-
-		raydebugger($this->plugin_file);
 		return $transient;
 	}
 
