@@ -250,12 +250,22 @@ class Admin {
 
 		add_submenu_page(
 			$this->slug,
-			__( 'Notification', 'lwcommerce' ),
-			__( 'Notification', 'lwcommerce' ),
+			__( 'Payment', 'lwcommerce' ),
+			__( 'Payment', 'lwcommerce' ),
+			'manage_options',
+			'admin.php?page=lokuswp&tab=payments',
+			'',
+			1
+		);
+
+		add_submenu_page(
+			$this->slug,
+			__( 'Notification Template', 'lwcommerce' ),
+			__( 'Notification Template', 'lwcommerce' ),
 			'manage_options',
 			'admin.php?page=lwcommerce&tab=notification',
 			'',
-			1
+			2
 		);
 
 		add_submenu_page(
@@ -265,7 +275,7 @@ class Admin {
 			'manage_options',
 			'admin.php?page=lwcommerce&tab=shipping',
 			'',
-			2
+			3
 		);
 
 		$backbone = (array) apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
@@ -280,7 +290,9 @@ class Admin {
 				'',
 				9999
 			);
+
 		} else {
+
 			add_submenu_page(
 				$this->slug,
 				__( 'Get More Addon', 'lwcommerce' ),
@@ -290,6 +302,7 @@ class Admin {
 				'',
 				9999
 			);
+
 		}
 
 		// Menu Products

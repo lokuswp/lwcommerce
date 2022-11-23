@@ -47,9 +47,9 @@
                     display: none;
                 }
 
-                .warp-show {
-                    display: flex;
-                }
+                /*.warp-show {*/
+                /*    display: block;*/
+                /*}*/
 
                 .center {
                     display: flex;
@@ -91,7 +91,7 @@
                     </div>
 				<?php endif; ?>
 
-				<?php if ( $shipping_carriers['rajaongkir-jne'] == "on" ) : ?>
+				<?php //if ( $shipping_carriers['rajaongkir-jne'] == "on" ) : ?>
                     <div class="swiper-no-swiping gutter" style="width: 100%">
                         <div class="lwp-form-group">
                             <div class="item-radio">
@@ -111,7 +111,7 @@
                             </div>
                         </div>
                     </div>
-				<?php endif; ?>
+				<?php // endif; ?>
 
             </div>
 

@@ -65,6 +65,7 @@ class AJAX {
 				$shipping_data->destination = $destination;
 				$shipping_data->weight      = $weight;
 				$shipping_data->coordinate  = $coordinate;
+				$shipping_data->id          = $shipping_id;
 
 				$services[] = apply_filters( "lwcommerce/shipping/services", [], $shipping_data, $service_allowed );
 			}

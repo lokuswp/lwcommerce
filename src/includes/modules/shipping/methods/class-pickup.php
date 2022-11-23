@@ -14,9 +14,9 @@ if ( ! defined( 'WPTEST' ) ) {
  *****************************************
  */
 class Pickup extends Shipping\Gateway {
-	public string $id = 'pickup';
+	public string $id = 'self-pickup';
 
-	public string $name = "Pickup";
+	public string $name = "Self Pickup";
 	public string $description = "Pesanan Diambil sendiri";
 	public string $logo_url = LWC_URL . 'src/admin/assets/images/pickup.png';
 
