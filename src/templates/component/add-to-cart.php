@@ -14,13 +14,13 @@ if ( $options['catalog_mode'] == "on" ) {
 ?>
 
 <div class="product-action">
-	<?php if ( $btn_cart_link ) : ?>
+	<?php if ( $btn_cart_link && $options['catalog_mode'] != "on" ) : ?>
         <a href="<?= $btn_cart_link ?>" target="_blank"
            class="lokus-btn btn-primary btn-block"><?= $btn_cart_text ?></a>
-	<?php elseif ( $is_variant_exists && ! is_singular( 'product' ) ) : ?>
+	<?php elseif ( $is_variant_exists && ! is_singular( 'product' ) && $options['catalog_mode'] != "on" ) : ?>
         <a href="<?= get_permalink(); ?>" target="_blank"
            class="lokus-btn btn-primary btn-block"><?= $btn_cart_text ? $btn_cart_text : __( "Choose Variant", "lwcommerce" ); ?></a>
-	<?php else : ?>
+	<?php elseif ( $options['catalog_mode'] != "on" ) : ?>
         <button class="lokus-btn btn-primary btn-block lwc-add-to-cart" product-id="<?php echo get_the_ID(); ?>"
                 price="<?= lwc_get_price( get_the_ID() ) ?>"
                 is-variant-exists="<?= $is_variant_exists ?>"><?= $btn_cart_text ?></button>
