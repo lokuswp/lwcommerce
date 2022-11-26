@@ -43,19 +43,20 @@ $lokuswp_version          = $is_lokuswp_exist ? get_file_data( WP_PLUGIN_DIR . '
 $lokuswp_active           = in_array( 'lokuswp/lokuswp.php', (array) apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) );
 
 // Check : PHP Version
-if ( ! version_compare( PHP_VERSION, '7.4', '>=' ) ) {
+if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
 	add_action( 'admin_notices', 'lwc_fail_php_version' );
+
+	return;
 }
 
-// Disable Support PHP 8.0 - 8.1
-if ( version_compare( PHP_VERSION, '7.5', '>' ) ) {
-	add_action( 'admin_notices', 'lwp_fail_php_version' );
+if ( version_compare( PHP_VERSION, '8.2', '>' ) ) {
+	add_action( 'admin_notices', 'lwc_fail_php_version' );
 
 	return;
 }
 
 // Check : WordPress Version
-if ( ! version_compare( get_bloginfo( 'version' ), '5.8', '>=' ) ) {
+if ( ! version_compare( get_bloginfo( 'version' ), '6.0', '>=' ) ) {
 	add_action( 'admin_notices', 'lwc_fail_wp_version' );
 }
 
@@ -68,6 +69,11 @@ if ( ! $is_lokuswp_exist && ! $lwcommerce_was_installed ) {
 // Check :: LokusWP Version
 if ( $is_lokuswp_exist && version_compare( $lokuswp_version, LWC_BACKBONE_REQUIRED_VERSION, '<' ) || ! in_array( 'lokuswp/lokuswp.php', get_option( 'active_plugins' ) ) && $is_lokuswp_exist && $lwcommerce_was_installed ) {
 	add_action( 'admin_notices', 'lwc_fail_lokuswp_version' );
+}
+
+// Activate LokusWP
+if ( $is_lokuswp_exist && !$lokuswp_active ) {
+	// Alert :: Please Activate LokusWP Backbone
 }
 
 // Come On, Let's Goo !!! 🦾

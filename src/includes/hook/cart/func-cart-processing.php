@@ -13,7 +13,7 @@ function lwc_cart_processing( $cart_item, $post_id ) {
 		$cart_item['price_promo'] = abs( lwc_get_promo_price( $post_id ) );
 
 		// Funnel Tracking
-		lwp_set_meta_counter( "_product_on_cart", $post_id );
+//		lwp_set_meta_counter( "_product_on_cart", $post_id );
 	}
 
 	return $cart_item;

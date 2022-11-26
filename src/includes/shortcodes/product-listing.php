@@ -16,7 +16,8 @@ class Product_Listing {
 			'mobile'      => false,
 			'filter'      => '',
 			'column'      => 4,
-			'mode'        => ""
+			'mode'        => "",
+			'limit'       => -1
 		), $atts ) );
 
 		wp_enqueue_style( "lokuswp-grid" );

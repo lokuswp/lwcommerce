@@ -10,7 +10,7 @@
  * @return mixed
  * @since 4.0.0
  */
-function lwc_get_settings( string $option = 'general', string $item, string $validator = 'esc_attr', string $fallback = null ) {
+function lwc_get_settings( string $option = 'general', string $item = '', string $validator = 'esc_attr', string $fallback = null ) {
 
 	$settings = lwp_get_option( 'lwcommerce_' . $option );
 

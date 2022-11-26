@@ -63,8 +63,8 @@ class RajaOngkir_API {
 	}
 
 	public function get_rajaongkir_city( $data ) {
-		$city_id     = $data->get_param( 'id' ) ? 'id=' . abs( $data->get_param( 'id' ) ) : '';
-		$province_id = $data->get_param( 'province' ) ? 'province=' . abs( $data->get_param( 'province' ) ) : '';
+		$city_id     = $data->get_param( 'id' ) ? 'id=' . intval( $data->get_param( 'id' ) ) : '';
+		$province_id = $data->get_param( 'province' ) ? 'province=' . intval( $data->get_param( 'province' ) ) : '';
 		$apikey      = '80aa49704fc30a939124a831882dea72';
 
 		// Only Getting City List based on Province ID

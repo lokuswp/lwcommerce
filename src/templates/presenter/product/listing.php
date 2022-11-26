@@ -127,7 +127,7 @@
 	$args = array(
 		'post_type'      => 'product',
 		'post_status'    => 'publish',
-		'posts_per_page' => - 1,
+		'posts_per_page' =>  $limit,
 		'orderby'        => 'date',
 		'order'          => 'DESC',
 		'cat'            => 'home',

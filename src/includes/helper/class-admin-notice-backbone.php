@@ -10,7 +10,7 @@ class Admin_Notice_Backbone {
 	public function admin_notice_check_backbone() {
 		?>
         <div class="notice notice-warning is-dismissible">
-            <p><?php _e( 'It seems like your LokusWp Plugin (Backbone) not installed or deleted.', 'lwcommerce' ); ?></p>
+            <p><?php _e( 'It seems like plugin LokusWP (Backbone) not installed or deleted.', 'lwcommerce' ); ?></p>
             <p><a href="#" id="admin-notice-download-backbone"><?php _e( 'Click here', 'lwcommerce' ); ?></a> <?php _e( 'to install the plugin', 'lwcommerce' ); ?></p>
         </div>
 		<?php
