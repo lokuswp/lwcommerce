@@ -7,10 +7,6 @@ $is_variant_exists = false;
 if ( function_exists( 'lwc_pro_is_product_has_variant' ) ) {
 	$is_variant_exists = lwc_pro_is_product_has_variant( get_the_ID() );
 }
-
-if ( $options['catalog_mode'] == "on" ) {
-	return;
-}
 ?>
 
 <div class="product-action">

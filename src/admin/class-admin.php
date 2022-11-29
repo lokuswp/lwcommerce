@@ -376,7 +376,7 @@ class Admin {
 				'override' => false
 			],
 			'catalog_mode' => [
-				'name'     => __( 'Catalog Mode [Beta]', 'lwcommerce' ),
+				'name'     => __( 'Catalog Mode', 'lwcommerce' ),
 				'desc'     => __( 'Disable/Enable Add to Cart Button', 'lwcommerce' ),
 				'override' => false
 			],

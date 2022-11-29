@@ -66,19 +66,9 @@ if ( ! $is_lokuswp_exist && ! $lwcommerce_was_installed ) {
 	require_once dirname( __DIR__ ) . '/lwcommerce/src/autoload.php';
 }
 
-// Check :: LokusWP Version
-if ( $is_lokuswp_exist && version_compare( $lokuswp_version, LWC_BACKBONE_REQUIRED_VERSION, '<' ) || ! in_array( 'lokuswp/lokuswp.php', get_option( 'active_plugins' ) ) && $is_lokuswp_exist && $lwcommerce_was_installed ) {
+// Checking Version
+if ( version_compare( $lokuswp_version, LWC_BACKBONE_REQUIRED_VERSION, '<' ) ) {
 	add_action( 'admin_notices', 'lwc_fail_lokuswp_version' );
-}
-
-// Activate LokusWP
-if ( $is_lokuswp_exist && !$lokuswp_active ) {
-	// Alert :: Please Activate LokusWP Backbone
-}
-
-// Come On, Let's Goo !!! 🦾
-if ( $is_lokuswp_exist && $lokuswp_active ) {
-	require_once dirname( __DIR__ ) . '/lwcommerce/src/autoload.php';
 }
 
 // Notice :: Backbone Downloader After Installed
@@ -86,6 +76,12 @@ if ( ! $is_lokuswp_exist ) {
 	require_once LWC_PATH . "src/includes/helper/class-admin-notice-backbone.php";
 }
 
+// Come On, Let's Goo !!! 🦾
+if ( $is_lokuswp_exist && $lokuswp_active ) {
+	require_once dirname( __DIR__ ) . '/lwcommerce/src/autoload.php';
+} else {
+	add_action( 'admin_notices', 'lwc_fail_lokuswp_version' );
+}
 
 /**
  * Admin notice for minimum PHP version.
