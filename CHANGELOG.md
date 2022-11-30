@@ -49,3 +49,9 @@
 
 **Fixing :**
 - Debugger
+
+
+# [v0.2.6]() (2022-11-29)
+
+**Compatible :**
+- PHP 8.0

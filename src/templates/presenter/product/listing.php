@@ -124,14 +124,26 @@
 <div class="lwc-listing row content grid">
 
 	<?php
+
+
 	$args = array(
 		'post_type'      => 'product',
 		'post_status'    => 'publish',
-		'posts_per_page' =>  $limit,
+		'posts_per_page' => $limit,
 		'orderby'        => 'date',
 		'order'          => 'DESC',
 		'cat'            => 'home',
 	);
+
+	if ( ! empty( $category ) ) {
+		$args['tax_query'] = array(
+			array(
+				'taxonomy' => 'product_category',
+				'field'    => 'slug',
+				'terms'    => array( sanitize_key( $category ) )
+			)
+		);
+	}
 
 	$loop = new WP_Query( $args );
 

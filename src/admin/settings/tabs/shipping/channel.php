@@ -66,7 +66,7 @@ class Shipping_Carrier {
 
                             <!-- Method -->
                             <div class="column method  text-center">
-                                <h6 style="padding-top: 8px;"><?php _e( "Send to Buyer", "lwcommerce", ); ?></h6>
+                                <h6 style="padding-top: 8px;"><?php _e( "Delivery", "lwcommerce", ); ?></h6>
                             </div>
 
                             <!-- Manage Button -->
