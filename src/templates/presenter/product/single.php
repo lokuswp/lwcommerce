@@ -117,6 +117,7 @@ wp_enqueue_style( "lokuswp-grid" );
 
     .lwp-product img {
         margin-bottom: -6px;
+        width: 100%;
     }
 
     .lwc-product-content {

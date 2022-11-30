@@ -74,7 +74,7 @@ class Admin {
 			require_once 'settings/tabs/settings.php';
 		} );
 
-		Tabs::add( 'lwcommerce', 'notification', __( 'Notification', 'lwcommerce' ), function () {
+		Tabs::add( 'lwcommerce', 'notification', __( 'Notification Template', 'lwcommerce' ), function () {
 			require_once 'settings/tabs/notification.php';
 		} );
 
@@ -248,14 +248,36 @@ class Admin {
 			0
 		);
 
+
 		add_submenu_page(
 			$this->slug,
-			__( 'Payment', 'lwcommerce' ),
-			__( 'Payment', 'lwcommerce' ),
+			__( 'Appearance', 'lwcommerce' ),
+			__( 'Appearance', 'lwcommerce' ),
+			'manage_options',
+			'admin.php?page=lokuswp&tab=configuration',
+			'',
+			1
+		);
+
+
+		add_submenu_page(
+			$this->slug,
+			__( 'Payment Method', 'lwcommerce' ),
+			__( 'Payment Method', 'lwcommerce' ),
 			'manage_options',
 			'admin.php?page=lokuswp&tab=payments',
 			'',
-			1
+			2
+		);
+
+		add_submenu_page(
+			$this->slug,
+			__( 'Notification Channel', 'lwcommerce' ),
+			__( 'Notification Channel', 'lwcommerce' ),
+			'manage_options',
+			'admin.php?page=lokuswp&tab=notification',
+			'',
+			3
 		);
 
 		add_submenu_page(
@@ -265,7 +287,7 @@ class Admin {
 			'manage_options',
 			'admin.php?page=lwcommerce&tab=notification',
 			'',
-			2
+			4
 		);
 
 		add_submenu_page(
@@ -275,7 +297,7 @@ class Admin {
 			'manage_options',
 			'admin.php?page=lwcommerce&tab=shipping',
 			'',
-			3
+			5
 		);
 
 		$backbone = (array) apply_filters( 'active_plugins', get_option( 'active_plugins' ) );

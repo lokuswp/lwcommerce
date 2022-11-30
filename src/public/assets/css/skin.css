@@ -81,6 +81,10 @@ td.product-item-detail strike {
     margin-bottom: 4px;
     text-align: left;
     line-height: 22px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
 }
 
 
