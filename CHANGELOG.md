@@ -50,8 +50,12 @@
 **Fixing :**
 - Debugger
 
-
-# [v0.2.6]() (2022-11-29)
+# [v0.3.0]() (2022-12-01)
 
 **Compatible :**
 - PHP 8.0
+
+**New Feature :**
+- Payment : Bank Mandiri, BRI, BNI
+- Mode : Katalog
+- Shortcode : Tampilan Baru

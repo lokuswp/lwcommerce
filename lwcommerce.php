@@ -30,7 +30,7 @@ if ( ! defined( 'WPTEST' ) ) {
  */
 defined( 'LWC_VERSION' ) or define( 'LWC_VERSION', '0.3.0' );
 defined( 'LWC_TEXT_VERSION' ) or define( 'LWC_TEXT_VERSION', '0.0.4' ); // Translation File Version
-defined( 'LWC_BACKBONE_REQUIRED_VERSION' ) or define( 'LWC_BACKBONE_REQUIRED_VERSION', '0.2.0' );
+defined( 'LWC_BACKBONE_REQUIRED_VERSION' ) or define( 'LWC_BACKBONE_REQUIRED_VERSION', '0.3.0' );
 
 defined( 'LWC_BASE' ) or define( 'LWC_BASE', plugin_basename( __FILE__ ) );
 defined( 'LWC_PATH' ) or define( 'LWC_PATH', plugin_dir_path( __FILE__ ) );
