@@ -92,10 +92,9 @@ wp_enqueue_style( "lokuswp-grid" );
             </div>
 
             <br>
-            <div class="lwp-content-area col-sm-12 no-gutter">
-                <h3><?= __( "Description", "lwcommerce" ); ?></h3>
-                <p><?php the_content(); ?></p>
-            </div>
+
+            <?php do_action( 'lokuswp/commerce/single/after' , get_the_ID() ); ?>
+
         </div>
 
     </div>

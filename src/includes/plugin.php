@@ -32,12 +32,8 @@ class Plugin {
 			Admin::register( $lwcommerce );
 
 			// Products
-
 			new Modules\Product\Metabox_Product;
 			new Modules\Product\Import_Product;
-
-			// System
-			new Modules\Plugin\Updater;
 
 			// Order
 			require_once LWC_PATH . 'src/includes/modules/order/class-datatable-order.php';

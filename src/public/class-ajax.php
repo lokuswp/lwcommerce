@@ -58,7 +58,7 @@ class AJAX {
 					}
 
 					foreach ( $cart_data as $cart_item ) {
-						$weight += abs( get_post_meta( $cart_item->post_id, '_weight', true ) );
+						$weight += (int) get_post_meta( $cart_item->post_id, '_weight', true );
 					};
 				}
 

@@ -26,12 +26,16 @@ class Updater {
 
 		// Only Run Checking Update in Plugins Page
 		if ( $pagenow == 'plugins.php' ) {
+
+
 			if ( isset( $_GET['manual-check'] ) && $_GET['manual-check'] == $this->plugin_slug ) {
-				add_action( 'site_transient_update_plugins', array( $this, 'plugin_updater_logic' ) );
+                add_action( 'site_transient_update_plugins', array( $this, 'plugin_updater_logic' ) );
 				delete_transient( $this->plugin_slug . '_update' );
 				delete_transient( $this->plugin_slug . '_update_check' );
 			}
 		}
+
+        raydebugger("fasfa");
 	}
 
 	public function plugin_info( $res, $action, object $args ) {
@@ -186,9 +190,11 @@ class Updater {
 			}
 			// TODO : ERROR
 			$transient->response[ $this->plugin_file ] = $res;
-		}
+        }else{
+            $transient->response[$this->plugin_file] = null;
+        }
 
-		return $transient;
+        return $transient;
 	}
 
 	public function plugin_destroy_update( $upgrader_object, $options ) {
@@ -214,3 +220,5 @@ class Updater {
 		return $links_array;
 	}
 }
+
+new Updater();

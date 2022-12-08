@@ -142,6 +142,7 @@ class LWCommerce_Boot {
 
 
 		if ( is_admin() ) {
+            require_once LWC_PATH . 'src/includes/modules/plugin/updater.php';
 			require_once LWC_PATH . 'src/includes/common/class-i18n.php';
 			require_once LWC_PATH . 'src/includes/modules/shipping/controller/class-shipping-controller.php';
 			require_once LWC_PATH . 'src/includes/modules/shipping/controller/rajaongkir/class-shipping-processing.php';

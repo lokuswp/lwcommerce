@@ -426,6 +426,8 @@ class AJAX {
 		// Make action base on change status order
 		do_action( "lwcommerce/admin/order/{$action}", $order_id );
 
+        raydebugger( $action );
+
 		wp_send_json_success( 'success' );
 	}
 
