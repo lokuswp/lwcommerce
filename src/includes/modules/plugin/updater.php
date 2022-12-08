@@ -34,8 +34,6 @@ class Updater {
 				delete_transient( $this->plugin_slug . '_update_check' );
 			}
 		}
-
-        raydebugger("fasfa");
 	}
 
 	public function plugin_info( $res, $action, object $args ) {
