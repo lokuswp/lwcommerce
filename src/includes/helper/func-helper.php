@@ -33,9 +33,9 @@ function lwc_whatsapp_button_html() {
         const whatsappNumber = '<?= $whatsapp ?>';
         btnWhatsapp.addEventListener('click', () => {
             if (whatsappNumber === '') return;
-            const productTitle = document.querySelector('.product-title').innerHTML
+            const productTitle = document.querySelector('.product-title').innerHTML.trim();
 
-            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Apakah produk *${productTitle}* masih ada?`)}`)
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Apakah *${productTitle}* masih ada?`)}`)
         })
     </script>
 	<?php

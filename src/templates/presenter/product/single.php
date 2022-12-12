@@ -65,7 +65,7 @@ wp_enqueue_style( "lokuswp-grid" );
 
             <div class="col-xs-12 col-sm-12 row no-gutter">
 
-                <div class="col-xs-12 col-sm-7" style="margin-bottom:8px;">
+                <div class="col-xs-12 col-sm-12" style="margin-bottom:8px;">
                     <h2 class="product-title">
                         <?php the_title(); ?>
                     </h2>
@@ -74,20 +74,24 @@ wp_enqueue_style( "lokuswp-grid" );
                     </div>
                 </div>
 
-                <div class="col-xs-12 col-sm-5 end-sm" style="display:flex;">
+
+				<?= lwc_get_stock_html(); ?>
+
+                <div class="col-xs-12 col-sm-12 end-sm" style="display:flex;margin-top:14px;">
                     <div class="start-sm" style="padding: 4px 12px 4px 0;">
-						<?php lwc_whatsapp_button_html(); ?>
+                        <?php lwc_whatsapp_button_html(); ?>
                     </div>
-                    <div class="end-sm">
-						<?php lwc_add_to_cart_html( get_the_ID(), ['catalog_mode' => "off", 'whatsapp_button' => "off"] ); ?>
+                    <div class="end-sm" style="width: 100%;">
+                        <?php lwc_add_to_cart_html( get_the_ID(), ['catalog_mode' => "off", 'whatsapp_button' => "off"] ); ?>
                     </div>
                 </div>
 
-				<?= lwc_get_stock_html(); ?>
+
+
             </div>
 
 
-            <div class="col-xs-12 col-sm-12 row no-gutter" style="margin-top: 12px;">
+            <div class="col-xs-12 col-sm-12 row no-gutter" >
 				<?php do_action( 'lokuswp/product/variant' ); ?>
             </div>
 
@@ -105,6 +109,9 @@ wp_enqueue_style( "lokuswp-grid" );
 <style>
 
 
+    .single-product .product-action .lokuswp-stepper{
+        margin-left: 12px;
+    }
     .single-product .product-title{
         font-size: 20px;
     }
